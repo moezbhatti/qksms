@@ -39,6 +39,7 @@
     <string name="main_menu_archive">לארכיון</string>
     <string name="main_menu_unarchive">שליפה מהארכיון</string>
     <string name="main_menu_delete">מחיקה</string>
+    <string name="main_menu_add_contact">הוספה לאנשי קשר</string>
     <string name="main_menu_pin">הצמדה למעלה</string>
     <string name="main_menu_unpin">שחרור הצמדה</string>
     <string name="main_menu_read">סימון כנקרא</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">חסימה</string>
     <string name="main_syncing">ההודעות מסונכרנות&#8230;</string>
     <string name="main_sender_you">אני: %s</string>
+    <string name="main_draft">טיוטה: %s</string>
     <string name="main_message_results_title">תוצאות בהודעות</string>
     <string name="main_message_results">%d הודעות</string>
     <string name="inbox_empty_text">ההתכתבויות של תופענה כאן</string>
@@ -176,7 +178,8 @@
     <string name="scheduled_options_title">הודעה מתוזמנת</string>
     <string-array name="scheduled_options">
         <item>לשלוח כע</item>
-        <item>מחיקה</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">מראה</string>
     <string name="settings_category_general">כללי</string>

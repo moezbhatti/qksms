@@ -39,6 +39,7 @@
     <string name="main_menu_archive">보관하기</string>
     <string name="main_menu_unarchive">보관하지 않기</string>
     <string name="main_menu_delete">지우기</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">상단에 고정하기</string>
     <string name="main_menu_unpin">고정 해제하기</string>
     <string name="main_menu_read">읽음으로 표시</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">차단</string>
     <string name="main_syncing">메시지 동기화 하기</string>
     <string name="main_sender_you">나: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">메시지 검색 결과</string>
     <string name="main_message_results">%d 개의 새로운 메시지</string>
     <string name="inbox_empty_text">대화가 여기에 나타납니다</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">예약된 메시지</string>
     <string-array name="scheduled_options">
         <item>지금 보내기</item>
-        <item>삭제</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">외관</string>
     <string name="settings_category_general">일반 설정</string>
@@ -238,7 +241,7 @@
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
     <string name="blocked_numbers_title">Blocked numbers</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>

@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archivieren</string>
     <string name="main_menu_unarchive">Wiederherstellen</string>
     <string name="main_menu_delete">Löschen</string>
+    <string name="main_menu_add_contact">Zu Kontakten hinzufügen</string>
     <string name="main_menu_pin">Oben anheften</string>
     <string name="main_menu_unpin">Loslösen</string>
     <string name="main_menu_read">Als gelesen markieren</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Blockieren</string>
     <string name="main_syncing">Synchronisiere Nachrichten&#8230;</string>
     <string name="main_sender_you">Du: %s</string>
+    <string name="main_draft">Entwurf: %s</string>
     <string name="main_message_results_title">Ergebnisse in Nachrichten</string>
     <string name="main_message_results">%d Nachrichten</string>
     <string name="inbox_empty_text">Deine Unterhaltungen werden hier angezeigt</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Geplante Nachricht</string>
     <string-array name="scheduled_options">
         <item>Sofort senden</item>
-        <item>Löschen</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Aussehen</string>
     <string name="settings_category_general">Allgemein</string>
@@ -228,34 +231,34 @@
     <string name="settings_logging_enabled">Protokollierung zur Fehlerbehebung aktiviert</string>
     <string name="settings_logging_disabled">Protokollierung zur Fehlerbehebung deaktiviert</string>
     <string name="settings_delay_duration_hint">Dauer eingeben (in Sekunden)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_title">Blockieren</string>
+    <string name="blocking_drop_title">Nachrichten verwerfen</string>
+    <string name="blocking_drop_summary">Eingehende Nachrichten von blockierten Absendern verwefen anstatt sie auszublenden</string>
+    <string name="blocking_conversations">Blockierte Unterhaltungen</string>
+    <string name="blocking_manager_title">Blockiermanager</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">In QKSMS integrierte Blockierfunktion</string>
+    <string name="blocking_manager_call_control_summary">Filtern Sie automatisch Ihre Anrufe und Nachrichten in einer geeigneten Umgeben! Community IQ™ erlaubt es Ihnen unerwünschte Nachrichten von bekannten Spamnern zu unterbinden</string>
     <string name="blocking_manager_sia_summary">Nachrichten von unerwünschten Nummern automatisch mit Hilfe der App \"Should I Answer?\" filtern</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_title">blockierte Nummer(n) kopieren</string>
+    <string name="blocking_manager_copy_summary">Zu %s wechseln und zu den existierenden blockierten Nummern kopieren</string>
+    <string name="blocked_numbers_title">blockierte Nummern</string>
+    <string name="blocked_numbers_empty">Ihre blockierte Nummern werden hier angezeigt</string>
+    <string name="blocked_numbers_add_cd">Eine neue Nummer blockieren</string>
+    <string name="blocked_numbers_dialog_title">Blockiere Texte von</string>
+    <string name="blocked_numbers_dialog_hint">Telefonnummer</string>
+    <string name="blocked_numbers_dialog_block">Blockieren</string>
+    <string name="blocked_messages_title">Blockierte Nachrichten</string>
+    <string name="blocked_messages_empty">Ihre blockierte Nachrichten werden hier angezeigt</string>
+    <string name="blocking_block_title">Blockieren</string>
+    <string name="blocking_unblock_title">Freigeben</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">Wechseln zu %s und diese Nummer blockieren</item>
+        <item quantity="other">Wechseln zu %s und diese Nummern blockieren</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="one">Wechseln zu %s und diese Nummer erlauben</item>
+        <item quantity="other">Wechseln zu %s und diese Nummern erlauben</item>
     </plurals>
     <string name="about_title">Über</string>
     <string name="about_version_title">Version</string>
@@ -314,8 +317,8 @@
         <item>Anrufen</item>
         <item>Löschen</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">Ja</string>
+    <string name="button_continue">Fortsetzen</string>
     <string name="button_cancel">Abbrechen</string>
     <string name="button_delete">Löschen</string>
     <string name="button_save">Speichern</string>

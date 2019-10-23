@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archiválás</string>
     <string name="main_menu_unarchive">Archiválás visszavonása</string>
     <string name="main_menu_delete">Törlés</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Rögzítés a tetejére</string>
     <string name="main_menu_unpin">Rögzítés törlése</string>
     <string name="main_menu_read">Megjelölés olvasottként</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Tiltás</string>
     <string name="main_syncing">Üzenetek szinkronizálása&#8230;</string>
     <string name="main_sender_you">Te: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">Eredmények az üzenetek szövegében</string>
     <string name="main_message_results">%d üzenet</string>
     <string name="inbox_empty_text">A beszélgetéseid itt jelennek meg</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Időzített üzenet</string>
     <string-array name="scheduled_options">
         <item>Küldés most</item>
-        <item>Törlés</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Megjelenés</string>
     <string name="settings_category_general">Általános</string>

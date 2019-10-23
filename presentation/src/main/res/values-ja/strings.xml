@@ -39,6 +39,7 @@
     <string name="main_menu_archive">アーカイブ</string>
     <string name="main_menu_unarchive">アーカイブしない</string>
     <string name="main_menu_delete">削除</string>
+    <string name="main_menu_add_contact">連絡先に追加</string>
     <string name="main_menu_pin">上部に固定します。</string>
     <string name="main_menu_unpin">固定を解除します。</string>
     <string name="main_menu_read">既読にする</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">ブロック</string>
     <string name="main_syncing">同期メッセージ&#8230;</string>
     <string name="main_sender_you">あなた: %s</string>
+    <string name="main_draft">ドラフト: %s</string>
     <string name="main_message_results_title">メッセージの結果</string>
     <string name="main_message_results">%d メッセージ</string>
     <string name="inbox_empty_text">会話がここに表示されます</string>
@@ -170,7 +172,8 @@
     <string name="scheduled_options_title">スケジュールされたメッセージ</string>
     <string-array name="scheduled_options">
         <item>今すぐ送る</item>
-        <item>削除</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_general">全般</string>

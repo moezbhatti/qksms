@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archiveren</string>
     <string name="main_menu_unarchive">Terugzetten uit archief</string>
     <string name="main_menu_delete">Verwijderen</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Bovenaan vastzetten</string>
     <string name="main_menu_unpin">Losmaken</string>
     <string name="main_menu_read">Markeren als gelezen</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Blokkeren</string>
     <string name="main_syncing">Berichten synchroniseren&#8230;</string>
     <string name="main_sender_you">Jij: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">Resultaten in berichten</string>
     <string name="main_message_results">%d berichten</string>
     <string name="inbox_empty_text">Je conversaties verschijnen hier</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Gepland bericht</string>
     <string-array name="scheduled_options">
         <item>Nu versturen</item>
-        <item>Verwijderen</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Uiterlijk</string>
     <string name="settings_category_general">Algemeen</string>
@@ -238,7 +241,7 @@
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatisch filteren van berichten van ongevraagde nummers met behulp van de app \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
     <string name="blocked_numbers_title">Blocked numbers</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>

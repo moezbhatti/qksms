@@ -39,6 +39,7 @@
     <string name="main_menu_archive">存档</string>
     <string name="main_menu_unarchive">取消存档</string>
     <string name="main_menu_delete">删除</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">固定到顶部</string>
     <string name="main_menu_unpin">取消固定</string>
     <string name="main_menu_read">标记为已读</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">拦截</string>
     <string name="main_syncing">正在同步信息&#8230;</string>
     <string name="main_sender_you">你：%s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">信息中的结果</string>
     <string name="main_message_results">%d 条信息</string>
     <string name="inbox_empty_text">对话会在这里显示</string>
@@ -170,7 +172,8 @@
     <string name="scheduled_options_title">预约短信</string>
     <string-array name="scheduled_options">
         <item>现在发送</item>
-        <item>删除</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">外观</string>
     <string name="settings_category_general">通用</string>
@@ -236,7 +239,7 @@
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">使用\"Should I Answer\"应用过滤未知号码的消息</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
     <string name="blocked_numbers_title">Blocked numbers</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>

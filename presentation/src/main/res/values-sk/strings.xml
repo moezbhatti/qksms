@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archivovať</string>
     <string name="main_menu_unarchive">Zrušiť archiváciu</string>
     <string name="main_menu_delete">Odstrániť</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Pripnúť na začiatok</string>
     <string name="main_menu_unpin">Odopnúť</string>
     <string name="main_menu_read">Označiť ako prečítané</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Zablokovať</string>
     <string name="main_syncing">Synchronizácia správ&#8230;</string>
     <string name="main_sender_you">Vy: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">Výsledky v správach</string>
     <string name="main_message_results">%d správ</string>
     <string name="inbox_empty_text">Tu sa zobrazia vaše konverzácie</string>
@@ -176,7 +178,8 @@
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>Odoslať teraz</item>
-        <item>Odstrániť</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Vzhľad</string>
     <string name="settings_category_general">Všeobecné</string>
@@ -242,7 +245,7 @@
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
     <string name="blocked_numbers_title">Blocked numbers</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>

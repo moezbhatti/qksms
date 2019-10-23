@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Arkiv</string>
     <string name="main_menu_unarchive">Fjern fra arkiv</string>
     <string name="main_menu_delete">Slett</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Fest øverst</string>
     <string name="main_menu_unpin">Løsne</string>
     <string name="main_menu_read">Marker som lest</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Blokker</string>
     <string name="main_syncing">Synkroniserer meldinger&#8230;</string>
     <string name="main_sender_you">Du: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">Resultater i meldinger</string>
     <string name="main_message_results">%d meldinger</string>
     <string name="inbox_empty_text">Samtalene dine vises her</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Planlagt melding</string>
     <string-array name="scheduled_options">
         <item>Send nå</item>
-        <item>Slett</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Utseende</string>
     <string name="settings_category_general">Generelt</string>

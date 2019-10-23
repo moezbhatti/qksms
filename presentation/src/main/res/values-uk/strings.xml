@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Архівувати</string>
     <string name="main_menu_unarchive">Розархівувати</string>
     <string name="main_menu_delete">Видалити</string>
+    <string name="main_menu_add_contact">Додати до контактів</string>
     <string name="main_menu_pin">Закріпити</string>
     <string name="main_menu_unpin">Відкріпити</string>
     <string name="main_menu_read">Позначити як прочитане</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Блокувати</string>
     <string name="main_syncing">Синхронізація повідомлень&#8230;</string>
     <string name="main_sender_you">Ви: %s</string>
+    <string name="main_draft">Чернетка: %s</string>
     <string name="main_message_results_title">Результати в повідомленнях</string>
     <string name="main_message_results">Повідомлень: %d</string>
     <string name="inbox_empty_text">Ваші бесіди з\'являтимуться тут</string>
@@ -176,7 +178,8 @@
     <string name="scheduled_options_title">Заплановане повідомлення</string>
     <string-array name="scheduled_options">
         <item>Надіслати зараз</item>
-        <item>Видалити</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Зовнішній вигляд</string>
     <string name="settings_category_general">Загальні</string>
@@ -232,32 +235,32 @@
     <string name="settings_logging_enabled">Ведення журналу зневаження увімкнуте</string>
     <string name="settings_logging_disabled">Ведення журналу зневаження вимкнуте</string>
     <string name="settings_delay_duration_hint">Введіть тривалість (у секундах)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_title">Блокування</string>
+    <string name="blocking_drop_title">Видалити повідомлення</string>
+    <string name="blocking_drop_summary">Видаляти вхідні повідомлення від заблокованих відправників, а не приховувати їх</string>
+    <string name="blocking_conversations">Заблоковані бесіди</string>
+    <string name="blocking_manager_title">Керування блокуванням</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">Вбудована функція блокування QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Автоматична фільтрація дзвінків та повідомлень в одному зручному місці! Community IQ™ дозволить запобігти отримуванню небажаних повідомлень від відомих спільноті спамерів</string>
     <string name="blocking_manager_sia_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
+    <string name="blocking_manager_copy_title">Скопіювати заблоковані номери</string>
+    <string name="blocking_manager_copy_summary">Продовжити з %s і записати їх замість наявних заблокованих номерів</string>
+    <string name="blocked_numbers_title">Заблоковані номери</string>
+    <string name="blocked_numbers_empty">Тут з\'являтимуться ваші заблоковані номери</string>
+    <string name="blocked_numbers_add_cd">Заблокувати новий номер</string>
     <string name="blocked_numbers_dialog_title">Блокувати SMS від</string>
     <string name="blocked_numbers_dialog_hint">Номер телефону</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
+    <string name="blocked_numbers_dialog_block">Блокувати</string>
+    <string name="blocked_messages_title">Заблоковані повідомлення</string>
     <string name="blocked_messages_empty">Ваші заблоковані повідомлення будуть відображатися тут</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_block_title">Блокувати</string>
+    <string name="blocking_unblock_title">Розблокувати</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="few">Continue to %s and block these numbers</item>
-        <item quantity="many">Continue to %s and block these numbers</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="one">Продовжити з %s і заблокувати цей номер</item>
+        <item quantity="few">Продовжити з %s і заблокувати ці номери</item>
+        <item quantity="many">Продовжити з %s і заблокувати ці номери</item>
+        <item quantity="other">Продовжити з %s і заблокувати ці номери</item>
     </plurals>
     <plurals name="blocking_unblock_external">
         <item quantity="one">Перейти до %s на дозволити цей номер</item>
@@ -323,7 +326,7 @@
         <item>Видалити</item>
     </string-array>
     <string name="button_yes">Так</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_continue">Продовжити</string>
     <string name="button_cancel">Скасувати</string>
     <string name="button_delete">Видалити</string>
     <string name="button_save">Зберегти</string>

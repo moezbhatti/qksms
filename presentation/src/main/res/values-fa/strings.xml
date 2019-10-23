@@ -39,6 +39,7 @@
     <string name="main_menu_archive">بایگانی</string>
     <string name="main_menu_unarchive">بیرون آوردن از بایگانی</string>
     <string name="main_menu_delete">حذف</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">اتصال به بالای صفحه</string>
     <string name="main_menu_unpin">Unpin</string>
     <string name="main_menu_read">علامت گذاری به عنوان خوانده شده</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">مسدود کردن</string>
     <string name="main_syncing">همگام سازی پیام ها&#8230;</string>
     <string name="main_sender_you">شما: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">نتایج در پیام ها</string>
     <string name="main_message_results">%d پیام</string>
     <string name="inbox_empty_text">مکالمات اینجا نمایش داده می‌شود</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Scheduled message</string>
     <string-array name="scheduled_options">
         <item>ارسال هم‌اکنون</item>
-        <item>حذف</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">ظاهر</string>
     <string name="settings_category_general">عمومی</string>
@@ -238,7 +241,7 @@
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">با استفاده از برنامه «باید جواب بده»، پیامها را از شماره های ناخواسته به طور خودکار فیلتر کنید</string>
     <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
     <string name="blocked_numbers_title">Blocked numbers</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>

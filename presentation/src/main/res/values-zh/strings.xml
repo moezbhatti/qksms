@@ -39,6 +39,7 @@
     <string name="main_menu_archive">封存</string>
     <string name="main_menu_unarchive">取消封存</string>
     <string name="main_menu_delete">刪除</string>
+    <string name="main_menu_add_contact">新增聯絡人</string>
     <string name="main_menu_pin">置頂至頂部</string>
     <string name="main_menu_unpin">取消置頂</string>
     <string name="main_menu_read">標記為已讀</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">攔截</string>
     <string name="main_syncing">正在同步...</string>
     <string name="main_sender_you">您：%s</string>
+    <string name="main_draft">草稿: %s</string>
     <string name="main_message_results_title">信息中的結果</string>
     <string name="main_message_results">%d 條信息</string>
     <string name="inbox_empty_text">對話會在這裡顯示</string>
@@ -170,7 +172,8 @@
     <string name="scheduled_options_title">排程訊息</string>
     <string-array name="scheduled_options">
         <item>立即發送</item>
-        <item>刪除</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">外觀</string>
     <string name="settings_category_general">通用</string>
@@ -226,32 +229,32 @@
     <string name="settings_logging_enabled">除錯日誌已啓用</string>
     <string name="settings_logging_disabled">出錯日誌已停用</string>
     <string name="settings_delay_duration_hint">輸入時長 (秒)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_title">封鎖</string>
+    <string name="blocking_drop_title">直接刪除</string>
+    <string name="blocking_drop_summary">直接刪除封鎖的簡訊，而非只有隱藏簡訊</string>
+    <string name="blocking_conversations">封鎖的對話</string>
+    <string name="blocking_manager_title">封鎖管理器</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">QKSMS內建封鎖功能</string>
+    <string name="blocking_manager_call_control_summary">自動過濾來電與簡訊！群眾智慧Community IQ™能讓你遠離不想要的垃圾簡訊</string>
     <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_title">複製封鎖號碼</string>
+    <string name="blocking_manager_copy_summary">正在複製你現有的封鎖號碼%s</string>
+    <string name="blocked_numbers_title">封鎖號碼</string>
+    <string name="blocked_numbers_empty">封鎖號碼會顯示在這裡</string>
+    <string name="blocked_numbers_add_cd">封鎖新號碼</string>
+    <string name="blocked_numbers_dialog_title">輸入封鎖號碼</string>
+    <string name="blocked_numbers_dialog_hint">電話號碼</string>
+    <string name="blocked_numbers_dialog_block">封鎖</string>
+    <string name="blocked_messages_title">封鎖的訊息</string>
+    <string name="blocked_messages_empty">封鎖的訊息會顯示在這裡</string>
+    <string name="blocking_block_title">封鎖</string>
+    <string name="blocking_unblock_title">解除封鎖</string>
     <plurals name="blocking_block_external">
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="other">正在封鎖這些號碼 %s</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="other">正在解鎖這些號碼%s</item>
     </plurals>
     <string name="about_title">關於</string>
     <string name="about_version_title">版本</string>
@@ -310,8 +313,8 @@
         <item>呼叫</item>
         <item>刪除</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">確定</string>
+    <string name="button_continue">繼續</string>
     <string name="button_cancel">取消</string>
     <string name="button_delete">刪除</string>
     <string name="button_save">儲存</string>

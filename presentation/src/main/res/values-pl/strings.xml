@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archiwizuj</string>
     <string name="main_menu_unarchive">Przywróć</string>
     <string name="main_menu_delete">Usuń</string>
+    <string name="main_menu_add_contact">Dodaj do kontaktów</string>
     <string name="main_menu_pin">Przypnij</string>
     <string name="main_menu_unpin">Odepnij</string>
     <string name="main_menu_read">Oznacz jako przeczytane</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Zablokuj</string>
     <string name="main_syncing">Synchronizowanie wiadomości&#8230;</string>
     <string name="main_sender_you">Ty: %s</string>
+    <string name="main_draft">Szkic: %s</string>
     <string name="main_message_results_title">Wyniki w wiadomościach</string>
     <string name="main_message_results">%d wiadomości</string>
     <string name="inbox_empty_text">Twoje rozmowy będą wyświetlane tutaj</string>
@@ -134,7 +136,7 @@
     <string name="info_delete">Usuń rozmowę</string>
     <string name="gallery_error">Nie można wczytać multimediów</string>
     <string name="gallery_toast_saved">Zapisano w galerii</string>
-    <string name="backup_title">Kopia zapasowa i przywracanie</string>
+    <string name="backup_title">Kopia zap. i przywr.</string>
     <string name="backup_backing_up">Tworzenie kopii zapasowej wiadomości</string>
     <string name="backup_restoring">Przywracanie z kopii zapasowej</string>
     <string name="backup_last">Ostatnia kopia zapasowa</string>
@@ -176,7 +178,8 @@
     <string name="scheduled_options_title">Zaplanowana wiadomość</string>
     <string-array name="scheduled_options">
         <item>Wyślij teraz</item>
-        <item>Usuń</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Wygląd</string>
     <string name="settings_category_general">Ogólne</string>
@@ -232,38 +235,38 @@
     <string name="settings_logging_enabled">Logi włączone</string>
     <string name="settings_logging_disabled">Logi wyłączone</string>
     <string name="settings_delay_duration_hint">Wprowadź czas (w sekundach)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_title">Blokowanie</string>
+    <string name="blocking_drop_title">Odrzuć wiadomości</string>
+    <string name="blocking_drop_summary">Odrzuć przychodzące wiadomości od zablokowanych nadawców zamiast ich ukrywać</string>
+    <string name="blocking_conversations">Zablokowane rozmowy</string>
+    <string name="blocking_manager_title">Menadżer Blokowania</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">Wbudowana funkcja blokowania w QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Automatycznie filtruj twoje rozmowy i wiadomości tekstowe w jednym wygodnym miejscu! Community IQ™ pozwala zapobiegać niechcianym wiadomościom od znanych spamerów</string>
     <string name="blocking_manager_sia_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Should I Answer?\"</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_title">Skopiuj zablokowane numery</string>
+    <string name="blocking_manager_copy_summary">Kontynuuj do %s kopiowanie twoich blokowanych numerów</string>
+    <string name="blocked_numbers_title">Zablokowane numery</string>
+    <string name="blocked_numbers_empty">Twoje blokowane numery się tu pojawią</string>
+    <string name="blocked_numbers_add_cd">Zablokuj nowy numer</string>
+    <string name="blocked_numbers_dialog_title">Blokuj wiadomości od</string>
+    <string name="blocked_numbers_dialog_hint">Numer telefonu</string>
+    <string name="blocked_numbers_dialog_block">Blokuj</string>
+    <string name="blocked_messages_title">Zablokowane wiadomości</string>
+    <string name="blocked_messages_empty">Tutaj pojawią się twoje zablokowane wiadomości</string>
+    <string name="blocking_block_title">Blokuj</string>
+    <string name="blocking_unblock_title">Odblokuj</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="few">Continue to %s and block these numbers</item>
+        <item quantity="one">Kontynuuj do %s i blokuj ten numer</item>
+        <item quantity="few">Kontynuuj do %s i blokuj te numery</item>
         <item quantity="many">Continue to %s and block these numbers</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="other">Kontynuuj do %s i blokuj te numery</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="few">Continue to %s and allow these numbers</item>
+        <item quantity="one">Kontynuuj do %s i odblokuj ten numer</item>
+        <item quantity="few">Kontynuuj do %s i odblokuj te numery</item>
         <item quantity="many">Continue to %s and allow these numbers</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="other">Kontynuuj do %s i odblokuj te numery</item>
     </plurals>
     <string name="about_title">O aplikacji</string>
     <string name="about_version_title">Wersja</string>
@@ -322,8 +325,8 @@
         <item>Zadzwoń</item>
         <item>Usuń</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">Tak</string>
+    <string name="button_continue">Kontynuuj</string>
     <string name="button_cancel">Anuluj</string>
     <string name="button_delete">Usuń</string>
     <string name="button_save">Zapisz</string>
@@ -357,7 +360,7 @@
         <item>Mały</item>
         <item>Normalny</item>
         <item>Duży</item>
-        <item>Większy</item>
+        <item>Bardzo duży</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Bez opóźnienia</item>

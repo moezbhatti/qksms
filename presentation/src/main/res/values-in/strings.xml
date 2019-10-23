@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Arsipkan</string>
     <string name="main_menu_unarchive">Batalkan arsip</string>
     <string name="main_menu_delete">Hapus</string>
+    <string name="main_menu_add_contact">Tambah ke kontak</string>
     <string name="main_menu_pin">Pin ke atas</string>
     <string name="main_menu_unpin">Lepas pin</string>
     <string name="main_menu_read">Tandai dibaca</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Blokir</string>
     <string name="main_syncing">Menyinkronkan pesan&#8230;</string>
     <string name="main_sender_you">Anda: %s</string>
+    <string name="main_draft">Draf: %s</string>
     <string name="main_message_results_title">Hasil dalam pesan</string>
     <string name="main_message_results">%d pesan</string>
     <string name="inbox_empty_text">Percakapan anda akan ditampilkan di sini</string>
@@ -170,11 +172,12 @@
     <string name="scheduled_options_title">Pesan terjadwal</string>
     <string-array name="scheduled_options">
         <item>Kirim sekarang</item>
-        <item>Hapus</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Tampilan</string>
     <string name="settings_category_general">Umum</string>
-    <string name="settings_category_qkreply">QK Reply</string>
+    <string name="settings_category_qkreply">Balasan cepat</string>
     <string name="settings_theme_title">Tema</string>
     <string name="settings_night_title">Mode malam</string>
     <string name="settings_black_title">Mode malam hitam pekat</string>
@@ -193,7 +196,7 @@
     <string name="settings_vibration_title">Getar</string>
     <string name="settings_ringtone_title">Suara</string>
     <string name="settings_ringtone_none">Tidak ada</string>
-    <string name="settings_qkreply_title">QK Reply</string>
+    <string name="settings_qkreply_title">Balasan cepat</string>
     <string name="settings_qkreply_summary">Popup untuk pesan baru</string>
     <string name="settings_qkreply_tap_dismiss_title">Ketuk untuk mengabaikan</string>
     <string name="settings_qkreply_tap_dismiss_summary">Ketuk di luar popup untuk menutupnya</string>
@@ -226,32 +229,32 @@
     <string name="settings_logging_enabled">Log awakutu diaktifkan</string>
     <string name="settings_logging_disabled">Log awakutu dinonaktifkan</string>
     <string name="settings_delay_duration_hint">Masukkan durasi (detik)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
+    <string name="blocking_title">Pemblokiran</string>
+    <string name="blocking_drop_title">Tolak pesan</string>
+    <string name="blocking_drop_summary">Tolak pesan masuk dari pengirim yang diblokir</string>
     <string name="blocking_conversations">Percakapan diblokir</string>
     <string name="blocking_manager_title">Blocking Manager</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">Fitur pemblokiran pesan di dalam QKSMS</string>
+    <string name="blocking_manager_call_control_summary">Otomatis menyaring panggilan dan pesan di dalam satu tempat! Community IQ™ memungkinkan anda memblokir pesan yang tidak diinginkan dari daftar spammer</string>
     <string name="blocking_manager_sia_summary">Secara otomatis menyaring pesan dari nomor yang tidak diinginkan menggunakan aplikasi \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Salin nomor yang diblokir</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_summary">Lanjutkan ke %s dan salin semua nomor yang diblokir</string>
+    <string name="blocked_numbers_title">Nomor yang diblokir</string>
+    <string name="blocked_numbers_empty">Nomor yang anda blokir akan ditampilkan di sini</string>
+    <string name="blocked_numbers_add_cd">Blokir nomor baru</string>
+    <string name="blocked_numbers_dialog_title">Blokir pesan sms dari</string>
+    <string name="blocked_numbers_dialog_hint">Nomor telepon</string>
+    <string name="blocked_numbers_dialog_block">Blokir</string>
+    <string name="blocked_messages_title">Pesan yang diblokir</string>
+    <string name="blocked_messages_empty">Pesan yang anda blokir akan ditampilkan di sini</string>
+    <string name="blocking_block_title">Blokir</string>
+    <string name="blocking_unblock_title">Buka blokir</string>
     <plurals name="blocking_block_external">
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="other">Lanjutkan ke %s dan blokir nomor ini</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="other">Lanjutkan ke %s dan izinkan nomor ini</item>
     </plurals>
     <string name="about_title">Tentang</string>
     <string name="about_version_title">Versi</string>
@@ -310,8 +313,8 @@
         <item>Panggil</item>
         <item>Hapus</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">Ya</string>
+    <string name="button_continue">Lanjutkan</string>
     <string name="button_cancel">Batal</string>
     <string name="button_delete">Hapus</string>
     <string name="button_save">Simpan</string>

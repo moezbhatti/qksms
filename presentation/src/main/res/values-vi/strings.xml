@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Lưu trữ</string>
     <string name="main_menu_unarchive">Hủy lưu trữ</string>
     <string name="main_menu_delete">Xóa</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Ghim lên đầu</string>
     <string name="main_menu_unpin">Bỏ ghim</string>
     <string name="main_menu_read">Đánh dấu đã đọc</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Chặn liên hệ</string>
     <string name="main_syncing">Đang đồng bộ tin nhắn&#8230;</string>
     <string name="main_sender_you">Bạn: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">Kết quả trong tin nhắn</string>
     <string name="main_message_results">%d tin nhắn</string>
     <string name="inbox_empty_text">Các cuộc trò chuyện của bạn sẽ xuất hiện ở đây</string>
@@ -170,7 +172,8 @@
     <string name="scheduled_options_title">Tin nhắn đã hẹn giờ</string>
     <string-array name="scheduled_options">
         <item>Gửi ngay</item>
-        <item>Xoá</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Giao diện</string>
     <string name="settings_category_general">Chung</string>
@@ -226,7 +229,7 @@
     <string name="settings_logging_enabled">Đã bật bản ghi gỡ lỗi</string>
     <string name="settings_logging_disabled">Đã tắt bản ghi gỡ lỗi</string>
     <string name="settings_delay_duration_hint">Nhập khoảng thời gian (giây)</string>
-    <string name="blocking_title">Blocking</string>
+    <string name="blocking_title">Đang chặn</string>
     <string name="blocking_drop_title">Loại bỏ tin nhắn</string>
     <string name="blocking_drop_summary">Loại bỏ các tin nhắn được gửi tới từ người gửi đã chặn thay vì ẩn chúng</string>
     <string name="blocking_conversations">Các cuộc trò chuyện đã chặn</string>
@@ -242,11 +245,11 @@
     <string name="blocked_numbers_add_cd">Chặn một số mới</string>
     <string name="blocked_numbers_dialog_title">Chặn văn bản từ</string>
     <string name="blocked_numbers_dialog_hint">Số điện thoại</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_numbers_dialog_block">Chặn</string>
     <string name="blocked_messages_title">Các tin nhắn đã chặn</string>
     <string name="blocked_messages_empty">Các tin nhắn bạn đã chặn sẽ xuất hiện ở đây</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_block_title">Chặn</string>
+    <string name="blocking_unblock_title">Bỏ chặn</string>
     <plurals name="blocking_block_external">
         <item quantity="other">Tiếp tục %s và chặn các số này</item>
     </plurals>
@@ -311,7 +314,7 @@
         <item>Xoá</item>
     </string-array>
     <string name="button_yes">Đồng ý</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_continue">Tiếp tục</string>
     <string name="button_cancel">Hủy</string>
     <string name="button_delete">Xóa</string>
     <string name="button_save">Lưu</string>

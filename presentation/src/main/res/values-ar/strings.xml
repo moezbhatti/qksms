@@ -39,6 +39,7 @@
     <string name="main_menu_archive">أرشفة</string>
     <string name="main_menu_unarchive">إلغاء الأرشفة</string>
     <string name="main_menu_delete">حذف</string>
+    <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">التثبيت فوق</string>
     <string name="main_menu_unpin">إلغاء التثبيت</string>
     <string name="main_menu_read">علّمه مقروء</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">حظر</string>
     <string name="main_syncing">مزامنة الرسائل&#8230;</string>
     <string name="main_sender_you">أنت: %s</string>
+    <string name="main_draft">Draft: %s</string>
     <string name="main_message_results_title">النتائج في الرسائل</string>
     <string name="main_message_results">%d رسائل</string>
     <string name="inbox_empty_text">ستظهر المحادثات الخاصة بك هنا</string>
@@ -180,7 +182,8 @@
     <string name="scheduled_options_title">الرسالة المجدولة</string>
     <string-array name="scheduled_options">
         <item>أرسل الآن</item>
-        <item>حذف</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">المظهر</string>
     <string name="settings_category_general">عام</string>
@@ -219,11 +222,11 @@
         <item>حذف</item>
         <item>مكالمة</item>
         <item>تعليمها مقروءة</item>
-        <item>Mark as unread</item>
+        <item>التحديد كمقروء</item>
     </string-array>
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
-    <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_title">توقيع</string>
     <string name="settings_unicode_title">نزع حركات التشكيل</string>
     <string name="settings_unicode_summary">حذف حركات التشكيل من المحارف في الرسائل النصية الصادرة</string>
     <string name="settings_mobile_title">أرقام الهواتف النقالة فقط</string>
@@ -236,42 +239,42 @@
     <string name="settings_logging_enabled">تسجيل التصحيح مفعَّل</string>
     <string name="settings_logging_disabled">تسجيل التصحيح معطَّل</string>
     <string name="settings_delay_duration_hint">أدخل المدة (ثوان)</string>
-    <string name="blocking_title">Blocking</string>
+    <string name="blocking_title">المحظورات</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_conversations">المحادثات المحظورة</string>
+    <string name="blocking_manager_title">مدير المحظورات</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">الترشيح التلقائي للرسائل من الأرقام غير المرغوبة باستخدام تطبيق \"Should I Answer\"</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_title">نسخ الارقام المحظورة</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">الارقام المحظورة</string>
+    <string name="blocked_numbers_empty">ارقامك المحظورة سوف تظهر هنا</string>
+    <string name="blocked_numbers_add_cd">حظر رقم جديد</string>
+    <string name="blocked_numbers_dialog_title">حظر الرسائل من</string>
+    <string name="blocked_numbers_dialog_hint">رقم الهاتف</string>
+    <string name="blocked_numbers_dialog_block">حظر</string>
+    <string name="blocked_messages_title">الرسائل المحظورة</string>
+    <string name="blocked_messages_empty">رسائلك المحظورة سوف تظهر هنا</string>
+    <string name="blocking_block_title">حظر</string>
+    <string name="blocking_unblock_title">الغاء الحظر</string>
     <plurals name="blocking_block_external">
-        <item quantity="zero">Continue to %s and block these numbers</item>
-        <item quantity="one">Continue to %s and block this number</item>
-        <item quantity="two">Continue to %s and block these numbers</item>
-        <item quantity="few">Continue to %s and block these numbers</item>
-        <item quantity="many">Continue to %s and block these numbers</item>
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="zero">الاستمرار الى %s وحظر هذا الرقم</item>
+        <item quantity="one">الاستمرار الى %s وحظر هذا الرقم</item>
+        <item quantity="two">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="few">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="many">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="other">الاستمرار الى %s واتاحة هذا الرقم</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="zero">Continue to %s and allow these numbers</item>
-        <item quantity="one">Continue to %s and allow this number</item>
-        <item quantity="two">Continue to %s and allow these numbers</item>
-        <item quantity="few">Continue to %s and allow these numbers</item>
-        <item quantity="many">Continue to %s and allow these numbers</item>
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="zero">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="one">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="two">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="few">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="many">الاستمرار الى %s واتاحة هذا الرقم</item>
+        <item quantity="other">الاستمرار الى %s واتاحة هذا الرقم</item>
     </plurals>
     <string name="about_title">حول</string>
     <string name="about_version_title">النسخة</string>
@@ -331,8 +334,8 @@
         <item>اتصال</item>
         <item>حذف</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">نعم</string>
+    <string name="button_continue">الاستمرار</string>
     <string name="button_cancel">إلغاء</string>
     <string name="button_delete">حذف</string>
     <string name="button_save">حفظ</string>
@@ -354,10 +357,10 @@
     <string name="notification_message_failed_title">لم ترسَل الرسالة</string>
     <string name="notification_message_failed_text">فشل الإرسال إلى %s</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>نظام</item>
+        <item>الغاء التفعيل</item>
+        <item>دائما مفعل</item>
+        <item>تلقائي</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>عرض الاسم والرسالة</item>

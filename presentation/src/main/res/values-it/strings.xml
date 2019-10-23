@@ -39,6 +39,7 @@
     <string name="main_menu_archive">Archivia</string>
     <string name="main_menu_unarchive">Annulla archiviazione</string>
     <string name="main_menu_delete">Elimina</string>
+    <string name="main_menu_add_contact">Aggiungi ai contatti</string>
     <string name="main_menu_pin">Blocca in alto</string>
     <string name="main_menu_unpin">Sblocca</string>
     <string name="main_menu_read">Segna come letto</string>
@@ -46,6 +47,7 @@
     <string name="main_menu_block">Sposta negli indesiderati</string>
     <string name="main_syncing">La sincronizzazione dei messaggi&#8230;</string>
     <string name="main_sender_you">Tu: %s</string>
+    <string name="main_draft">Bozza: %s</string>
     <string name="main_message_results_title">Risultati nei messaggi</string>
     <string name="main_message_results">%d messaggi</string>
     <string name="inbox_empty_text">Le tue conversazioni vengono visualizzate qui</string>
@@ -172,7 +174,8 @@
     <string name="scheduled_options_title">Messaggio pianificato</string>
     <string-array name="scheduled_options">
         <item>Invia ora</item>
-        <item>Elimina</item>
+        <item>Copy text</item>
+        <item>Delete</item>
     </string-array>
     <string name="settings_category_appearance">Aspetto</string>
     <string name="settings_category_general">Generale</string>
@@ -228,7 +231,7 @@
     <string name="settings_logging_enabled">Registrazione del debug attivata</string>
     <string name="settings_logging_disabled">Registrazione del debug disattivata</string>
     <string name="settings_delay_duration_hint">Inserisci la durata (in secondi)</string>
-    <string name="blocking_title">Blocking</string>
+    <string name="blocking_title">Bloccare</string>
     <string name="blocking_drop_title">Elimina messaggi</string>
     <string name="blocking_drop_summary">Elimina i messaggi in arrivo dai mittenti bloccati invece di nasconderli</string>
     <string name="blocking_conversations">Conversazioni bloccate</string>
@@ -244,11 +247,11 @@
     <string name="blocked_numbers_add_cd">Blocca un nuovo numero</string>
     <string name="blocked_numbers_dialog_title">Blocca i testi da</string>
     <string name="blocked_numbers_dialog_hint">Numero di telefono</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_numbers_dialog_block">Blocca</string>
     <string name="blocked_messages_title">Messaggi bloccati</string>
     <string name="blocked_messages_empty">I tuoi messaggi bloccati appariranno qui</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_block_title">Blocca</string>
+    <string name="blocking_unblock_title">Sblocca</string>
     <plurals name="blocking_block_external">
         <item quantity="one">Continua a %s e blocca questo numero</item>
         <item quantity="other">Continua a %s e blocca questi numeri</item>
@@ -315,7 +318,7 @@
         <item>Elimina</item>
     </string-array>
     <string name="button_yes">Sì</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_continue">Continua</string>
     <string name="button_cancel">Annulla</string>
     <string name="button_delete">Elimina</string>
     <string name="button_save">Salva</string>
