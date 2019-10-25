@@ -134,22 +134,22 @@ class Navigator @Inject constructor(
 
     fun showDeveloper() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showSourceCode() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showChangelog() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms/releases"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showLicense() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://github.com/moezbhatti/qksms/blob/master/LICENSE"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showBlockedConversations() {
@@ -165,7 +165,7 @@ class Navigator @Inject constructor(
 
     fun showDonation() {
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse("https://bit.ly/QKSMSDonation"))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showRating() {
@@ -175,10 +175,10 @@ class Navigator @Inject constructor(
                         or Intent.FLAG_ACTIVITY_MULTIPLE_TASK)
 
         try {
-            startActivity(intent)
+            startActivityExternal(intent)
         } catch (e: ActivityNotFoundException) {
             val url = "http://play.google.com/store/apps/details?id=com.moez.QKSMS"
-            startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
+            startActivityExternal(Intent(Intent.ACTION_VIEW, Uri.parse(url)))
         }
     }
 
@@ -188,7 +188,7 @@ class Navigator @Inject constructor(
     fun installCallControl() {
         val url = "https://play.google.com/store/apps/details?id=com.flexaspect.android.everycallcontrol"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     /**
@@ -197,7 +197,7 @@ class Navigator @Inject constructor(
     fun installSia() {
         val url = "https://play.google.com/store/apps/details?id=org.mistergroup.shouldianswer"
         val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
-        startActivity(intent)
+        startActivityExternal(intent)
     }
 
     fun showSupport() {
@@ -224,7 +224,7 @@ class Navigator @Inject constructor(
                 .setType("text/plain")
                 .putExtra(Intent.EXTRA_TEXT, "http://qklabs.com/download")
                 .let { Intent.createChooser(it, null) }
-                .let(this::startActivityExternal)
+                .let(::startActivityExternal)
     }
 
     fun addContact(address: String) {
