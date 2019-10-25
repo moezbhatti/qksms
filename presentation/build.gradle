@@ -23,14 +23,14 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     flavorDimensions "analytics"
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
-        targetSdkVersion 28
+        targetSdkVersion 29
         versionCode 2202
         versionName "3.7.3"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"

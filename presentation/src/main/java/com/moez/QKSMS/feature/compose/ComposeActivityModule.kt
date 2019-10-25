@@ -49,10 +49,10 @@ class ComposeActivityModule {
         activity.intent.data?.let {
             val data = it.toString()
             address = when {
-                it.scheme.startsWith("smsto") -> data.replace("smsto:", "")
-                it.scheme.startsWith("mmsto") -> data.replace("mmsto:", "")
-                it.scheme.startsWith("sms") -> data.replace("sms:", "")
-                it.scheme.startsWith("mms") -> data.replace("mms:", "")
+                it.scheme?.startsWith("smsto") == true -> data.replace("smsto:", "")
+                it.scheme?.startsWith("mmsto") == true -> data.replace("mmsto:", "")
+                it.scheme?.startsWith("sms") == true -> data.replace("sms:", "")
+                it.scheme?.startsWith("mms") == true -> data.replace("mms:", "")
                 else -> ""
             }
 

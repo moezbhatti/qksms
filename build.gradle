@@ -1,13 +1,13 @@
 // Top-level build file where you can add configuration options common to all sub-projects/modules.
 
 buildscript {
-    ext.androidx_appcompat_version = '1.0.2'
+    ext.androidx_appcompat_version = '1.1.0'
     ext.androidx_constraintlayout_version = '1.1.3'
-    ext.androidx_core_version = '1.0.1'
+    ext.androidx_core_version = '1.1.0'
     ext.androidx_emoji_version = '1.0.0'
     ext.androidx_exifinterface_version = '1.0.0'
     ext.androidx_testrunner_version = '1.1.0-alpha3'
-    ext.androidx_viewpager_version = '1.0.0-alpha01'
+    ext.androidx_viewpager_version = '1.0.0-beta05'
     ext.autodispose_version = '1.3.0'
     ext.conductor_version = '2.1.5'
     ext.coroutines_version = '1.2.2'
@@ -17,7 +17,7 @@ buildscript {
     ext.glide_version = "4.8.0"
     ext.junit_version = '4.12'
     ext.kotlin_version = '1.3.31'
-    ext.lifecycle_version = '2.0.0'
+    ext.lifecycle_version = '2.1.0'
     ext.material_version = '1.0.0'
     ext.mockito_version = '2.18.3'
     ext.moshi_version = '1.8.0'
