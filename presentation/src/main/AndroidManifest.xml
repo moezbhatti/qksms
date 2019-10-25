@@ -136,6 +136,8 @@
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.SmsSentReceiver" />
+        <receiver android:name=".receiver.SmsDeliveredReceiver" />
         <receiver
             android:name=".receiver.MmsSentReceiver"
             android:taskAffinity="com.moez.QKSMS.MMS_SENT" />

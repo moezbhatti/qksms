@@ -24,7 +24,6 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
-import android.content.IntentFilter
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
@@ -339,14 +338,12 @@ class MessageRepositoryImpl @Inject constructor(
                 ?: arrayListOf()
 
         val sentIntents = parts.map {
-            context.registerReceiver(SmsSentReceiver(), IntentFilter(SmsSentReceiver.ACTION))
-            val intent = Intent(SmsSentReceiver.ACTION).putExtra("id", message.id)
+            val intent = Intent(context, SmsSentReceiver::class.java).putExtra("id", message.id)
             PendingIntent.getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
         }
 
         val deliveredIntents = parts.map {
-            context.registerReceiver(SmsDeliveredReceiver(), IntentFilter(SmsDeliveredReceiver.ACTION))
-            val intent = Intent(SmsDeliveredReceiver.ACTION).putExtra("id", message.id)
+            val intent = Intent(context, SmsDeliveredReceiver::class.java).putExtra("id", message.id)
             val pendingIntent = PendingIntent
                     .getBroadcast(context, message.id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
             if (prefs.delivery.get()) pendingIntent else null
