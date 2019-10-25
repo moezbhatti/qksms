@@ -53,7 +53,6 @@ import com.moez.QKSMS.feature.compose.BubbleUtils.getBubble
 import com.moez.QKSMS.feature.compose.part.PartsAdapter
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
-import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
@@ -88,9 +87,9 @@ class MessagesAdapter @Inject constructor(
 
     }
 
-    val clicks: Subject<Message> = PublishSubject.create()
-    val partClicks: Subject<MmsPart> = PublishSubject.create()
-    val cancelSending: Subject<Message> = PublishSubject.create()
+    val clicks: Subject<Long> = PublishSubject.create()
+    val partClicks: Subject<Long> = PublishSubject.create()
+    val cancelSending: Subject<Long> = PublishSubject.create()
 
     var data: Pair<Conversation, RealmResults<Message>>? = null
         set(value) {
@@ -167,7 +166,7 @@ class MessagesAdapter @Inject constructor(
                 when (toggleSelection(message.id, false)) {
                     true -> view.isActivated = isSelected(message.id)
                     false -> {
-                        clicks.onNext(message)
+                        clicks.onNext(message.id)
                         expanded[message.id] = view.status.visibility != View.VISIBLE
                         notifyItemChanged(adapterPosition)
                     }
@@ -195,7 +194,7 @@ class MessagesAdapter @Inject constructor(
         view.findViewById<ProgressBar>(R.id.cancel)?.let { cancel ->
             val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
             cancel.setVisible(isCancellable)
-            cancel.clicks().subscribe { cancelSending.onNext(message) }
+            cancel.clicks().subscribe { cancelSending.onNext(message.id) }
             cancel.progress = 2
 
             if (isCancellable) {

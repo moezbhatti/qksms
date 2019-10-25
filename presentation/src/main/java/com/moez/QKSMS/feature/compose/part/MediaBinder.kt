@@ -47,7 +47,7 @@ class MediaBinder @Inject constructor(colors: Colors, private val context: Conte
         canGroupWithNext: Boolean
     ) {
         view.video.setVisible(part.isVideo())
-        view.setOnClickListener { clicks.onNext(part) }
+        view.setOnClickListener { clicks.onNext(part.id) }
 
         view.thumbnail.bubbleStyle = when {
             !canGroupWithPrevious && canGroupWithNext -> if (message.isMe()) BubbleImageView.Style.OUT_FIRST else BubbleImageView.Style.IN_FIRST

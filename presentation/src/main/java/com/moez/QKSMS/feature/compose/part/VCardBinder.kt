@@ -56,7 +56,7 @@ class VCardBinder @Inject constructor(colors: Colors, private val context: Conte
         BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
                 .let(view.vCardBackground::setBackgroundResource)
 
-        view.setOnClickListener { clicks.onNext(part) }
+        view.setOnClickListener { clicks.onNext(part.id) }
 
         Observable.just(part.getUri())
                 .map(context.contentResolver::openInputStream)

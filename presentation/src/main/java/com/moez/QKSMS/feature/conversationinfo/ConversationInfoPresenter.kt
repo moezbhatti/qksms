@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.feature.conversationinfo
 
-import android.content.Context
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
@@ -46,7 +45,6 @@ class ConversationInfoPresenter @Inject constructor(
     @Named("threadId") threadId: Long,
     messageRepo: MessageRepository,
     private val contactAddedListener: ContactAddedListener,
-    private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,

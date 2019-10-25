@@ -27,7 +27,7 @@ import io.reactivex.subjects.Subject
 
 abstract class PartBinder {
 
-    val clicks: Subject<MmsPart> = PublishSubject.create()
+    val clicks: Subject<Long> = PublishSubject.create()
 
     abstract val partLayout: Int
 

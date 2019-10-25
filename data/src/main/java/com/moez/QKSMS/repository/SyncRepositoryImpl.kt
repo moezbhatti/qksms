@@ -58,17 +58,6 @@ class SyncRepositoryImpl @Inject constructor(
     private val rxPrefs: RxSharedPreferences
 ) : SyncRepository {
 
-    /**
-     * Holds data that should be persisted across full syncs
-     */
-    private data class PersistedData(
-        val id: Long,
-        val archived: Boolean,
-        val blocked: Boolean,
-        val pinned: Boolean,
-        val name: String
-    )
-
     override val syncProgress: Subject<SyncRepository.SyncProgress> =
             BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
 

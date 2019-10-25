@@ -420,6 +420,7 @@ class ComposeViewModel @Inject constructor(
 
         // Retry sending
         view.messageClickIntent
+                .mapNotNull(messageRepo::getMessage)
                 .filter { message -> message.isFailedMessage() }
                 .doOnNext { message -> retrySending.execute(message) }
                 .autoDisposable(view.scope())
@@ -427,12 +428,14 @@ class ComposeViewModel @Inject constructor(
 
         // Media attachment clicks
         view.messagePartClickIntent
+                .mapNotNull(messageRepo::getPart)
                 .filter { part -> part.isImage() || part.isVideo() }
                 .autoDisposable(view.scope())
                 .subscribe { part -> navigator.showMedia(part.id) }
 
         // Non-media attachment clicks
         view.messagePartClickIntent
+                .mapNotNull(messageRepo::getPart)
                 .filter { part -> !part.isImage() && !part.isVideo() }
                 .autoDisposable(view.scope())
                 .subscribe { part ->
@@ -451,6 +454,7 @@ class ComposeViewModel @Inject constructor(
 
         // Cancel sending a message
         view.cancelSendingIntent
+                .mapNotNull(messageRepo::getMessage)
                 .doOnNext { message -> view.setDraft(message.getText()) }
                 .autoDisposable(view.scope())
                 .subscribe { message -> cancelMessage.execute(message.id) }

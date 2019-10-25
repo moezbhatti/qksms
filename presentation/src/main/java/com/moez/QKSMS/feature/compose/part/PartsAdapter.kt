@@ -49,7 +49,7 @@ class PartsAdapter @Inject constructor(
             partBinders.forEach { binder -> binder.theme = value }
         }
 
-    val clicks = Observable.merge(partBinders.map { it.clicks })
+    val clicks: Observable<Long> = Observable.merge(partBinders.map { it.clicks })
 
     private lateinit var message: Message
     private var previous: Message? = null
