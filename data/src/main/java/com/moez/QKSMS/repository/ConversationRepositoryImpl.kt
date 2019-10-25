@@ -178,12 +178,13 @@ class ConversationRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance().use { realm ->
             realm.where(Conversation::class.java)
                     .findAll()
-                    .firstOrNull { conversation ->
-                        conversation.recipients.size == recipients.size && conversation.recipients.map { it.address }.all { address ->
+                    .asSequence()
+                    .filter { conversation -> conversation.recipients.size == recipients.size }
+                    .find { conversation ->
+                        conversation.recipients.map { it.address }.all { address ->
                             recipients.any { recipient -> phoneNumberUtils.compare(recipient, address) }
                         }
-                    }
-                    ?.id
+                    }?.id
         }
     }
 
@@ -196,13 +197,16 @@ class ConversationRepositoryImpl @Inject constructor(
     }
 
     override fun getOrCreateConversation(addresses: List<String>): Conversation? {
-        return tryOrNull { TelephonyCompat.getOrCreateThreadId(context, addresses.toSet()) }
+        if (addresses.isEmpty()) {
+            return null
+        }
+
+        return (getThreadId(addresses) ?: tryOrNull { TelephonyCompat.getOrCreateThreadId(context, addresses.toSet()) })
                 ?.takeIf { threadId -> threadId != 0L }
                 ?.let { threadId ->
-                    var conversation = getConversation(threadId)
-                    if (conversation != null) conversation = Realm.getDefaultInstance().copyFromRealm(conversation)
-
-                    conversation ?: getConversationFromCp(threadId)
+                    getConversation(threadId)
+                            ?.let(Realm.getDefaultInstance()::copyFromRealm)
+                            ?: getConversationFromCp(threadId)
                 }
     }
 
