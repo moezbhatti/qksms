@@ -22,13 +22,11 @@ import android.app.PendingIntent
 import android.appwidget.AppWidgetManager
 import android.content.Context
 import android.content.Intent
-import android.graphics.Typeface
-import android.text.Spannable
-import android.text.SpannableString
-import android.text.style.StyleSpan
+import android.text.SpannableStringBuilder
 import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
+import androidx.core.text.bold
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
@@ -170,14 +168,10 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         return view
     }
 
-    private fun boldText(text: String, shouldBold: Boolean): CharSequence {
-        return if (shouldBold) {
-            SpannableString(text).apply {
-                setSpan(StyleSpan(Typeface.BOLD), 0, length, Spannable.SPAN_INCLUSIVE_INCLUSIVE)
-            }
-        } else {
-            text
-        }
+    private fun boldText(text: String, shouldBold: Boolean): CharSequence = when {
+        shouldBold -> SpannableStringBuilder()
+                .bold { append(text) }
+        else -> text
     }
 
     override fun getLoadingView(): RemoteViews {
