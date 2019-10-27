@@ -69,9 +69,7 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
         view.name.text = contact.name
         view.name.setVisible(view.name.text.isNotEmpty())
 
-        val adapter = view.addresses.adapter as PhoneNumberAdapter
-        adapter.contact = contact
-        adapter.data = contact.numbers
+        (view.addresses.adapter as PhoneNumberAdapter).data = contact.numbers
     }
 
     /**
@@ -83,5 +81,7 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
         name = contact.name
         numbers.add(contact.numbers[numberIndex])
     }
+
+    override fun areContentsTheSame(old: Contact, new: Contact): Boolean = false
 
 }

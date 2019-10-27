@@ -23,13 +23,10 @@ import android.view.ViewGroup
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
-import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.PhoneNumber
 import kotlinx.android.synthetic.main.contact_number_list_item.view.*
 
 class PhoneNumberAdapter : QkAdapter<PhoneNumber>() {
-
-    lateinit var contact: Contact
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val inflater = LayoutInflater.from(parent.context)
