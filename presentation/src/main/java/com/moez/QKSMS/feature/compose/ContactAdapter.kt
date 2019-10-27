@@ -60,7 +60,7 @@ class ContactAdapter @Inject constructor() : QkAdapter<Contact>() {
         val contact = getItem(position)
         val view = holder.containerView
 
-        view.index.text = if (contact.name[0].isLetter()) contact.name[0].toString() else "#"
+        view.index.text = if (contact.name.getOrNull(0)?.isLetter() == true) contact.name[0].toString() else "#"
         view.index.isVisible = prevContact == null ||
                 (contact.name[0].isLetter() && contact.name[0] != prevContact.name[0]) ||
                 (!contact.name[0].isLetter() && prevContact.name[0].isLetter())
