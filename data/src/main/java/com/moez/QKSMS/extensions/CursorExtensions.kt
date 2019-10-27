@@ -20,8 +20,6 @@ package com.moez.QKSMS.extensions
 
 import android.database.Cursor
 import io.reactivex.Flowable
-import io.reactivex.Maybe
-import io.reactivex.subjects.MaybeSubject
 
 fun Cursor.forEach(closeOnComplete: Boolean = true, method: (Cursor) -> Unit = {}) {
     moveToPosition(-1)
@@ -41,21 +39,6 @@ fun <T> Cursor.map(map: (Cursor) -> T): List<T> {
     }
 }
 
-fun <T> Cursor.mapWhile(map: (Cursor) -> T, predicate: (T) -> Boolean): ArrayList<T> {
-    val result = ArrayList<T>()
-
-    moveToPosition(-1)
-    while (moveToNext()) {
-        val item = map(this)
-
-        if (!predicate(item)) break
-
-        result.add(item)
-    }
-
-    return result
-}
-
 /**
  * We're using this simple implementation with .range() because of the
  * complexities of dealing with Backpressure with a Cursor. We can't simply
@@ -72,18 +55,14 @@ fun Cursor.asFlowable(): Flowable<Cursor> {
             .doOnComplete { close() }
 }
 
-fun Cursor.asMaybe(): Maybe<Cursor> {
-    val subject = MaybeSubject.create<Cursor>()
+/**
+ * Dumps the contents of the cursor as a CSV string
+ */
+fun Cursor.dump(): String {
+    val lines = mutableListOf<String>()
 
-    if (moveToFirst()) {
-        subject.onSuccess(this)
-    } else {
-        subject.onError(IndexOutOfBoundsException("The cursor has no items"))
-    }
+    lines += columnNames.joinToString(",")
+    forEach { lines += (0 until columnCount).joinToString(",", transform = ::getString) }
 
-    subject.doOnComplete { close() }
-    return subject
+    return lines.joinToString("\n")
 }
-
-
-

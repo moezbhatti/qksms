@@ -26,7 +26,7 @@ import io.realm.Sort
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 8
+        const val SCHEMA_VERSION: Long = 9
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -114,6 +114,18 @@ class QkRealmMigration : RealmMigration {
             conversations.forEach { conversation ->
                 conversation.setObject("lastMessage", messages[conversation.getLong("id")])
             }
+
+            version++
+        }
+
+        if (version == 8L) {
+            realm.schema.create("ContactGroup")
+                    .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
+                    .addField("title", String::class.java, FieldAttribute.REQUIRED)
+                    .addRealmListField("contacts", realm.schema.get("Contact"))
+
+            realm.schema.get("Contact")
+                    ?.addField("starred", Boolean::class.java, FieldAttribute.REQUIRED)
 
             version++
         }

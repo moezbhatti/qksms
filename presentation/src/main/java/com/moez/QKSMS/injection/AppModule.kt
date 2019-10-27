@@ -51,6 +51,10 @@ import com.moez.QKSMS.manager.ShortcutManager
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.manager.WidgetManagerImpl
 import com.moez.QKSMS.mapper.CursorToContact
+import com.moez.QKSMS.mapper.CursorToContactGroup
+import com.moez.QKSMS.mapper.CursorToContactGroupImpl
+import com.moez.QKSMS.mapper.CursorToContactGroupMember
+import com.moez.QKSMS.mapper.CursorToContactGroupMemberImpl
 import com.moez.QKSMS.mapper.CursorToContactImpl
 import com.moez.QKSMS.mapper.CursorToConversation
 import com.moez.QKSMS.mapper.CursorToConversationImpl
@@ -157,6 +161,12 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideCursorToContact(mapper: CursorToContactImpl): CursorToContact = mapper
+
+    @Provides
+    fun provideCursorToContactGroup(mapper: CursorToContactGroupImpl): CursorToContactGroup = mapper
+
+    @Provides
+    fun provideCursorToContactGroupMember(mapper: CursorToContactGroupMemberImpl): CursorToContactGroupMember = mapper
 
     @Provides
     fun provideCursorToConversation(mapper: CursorToConversationImpl): CursorToConversation = mapper

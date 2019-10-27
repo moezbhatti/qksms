@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -22,10 +22,8 @@ import io.realm.RealmList
 import io.realm.RealmObject
 import io.realm.annotations.PrimaryKey
 
-open class Contact(
-    @PrimaryKey var lookupKey: String = "",
-    var numbers: RealmList<PhoneNumber> = RealmList(),
-    var name: String = "",
-    var starred: Boolean = false,
-    var lastUpdate: Long = 0
+open class ContactGroup(
+    @PrimaryKey var id: Long = 0,
+    var title: String = "",
+    var contacts: RealmList<Contact> = RealmList()
 ) : RealmObject()

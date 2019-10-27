@@ -39,6 +39,7 @@ class CursorToContactImpl @Inject constructor(
                 Phone.TYPE,
                 Phone.LABEL,
                 Phone.DISPLAY_NAME,
+                Phone.STARRED,
                 Phone.CONTACT_LAST_UPDATED_TIMESTAMP
         )
 
@@ -47,7 +48,8 @@ class CursorToContactImpl @Inject constructor(
         const val COLUMN_TYPE = 2
         const val COLUMN_LABEL = 3
         const val COLUMN_DISPLAY_NAME = 4
-        const val CONTACT_LAST_UPDATED = 5
+        const val COLUMN_STARRED = 5
+        const val CONTACT_LAST_UPDATED = 6
     }
 
     override fun map(from: Cursor) = Contact().apply {
@@ -58,6 +60,7 @@ class CursorToContactImpl @Inject constructor(
                 type = Phone.getTypeLabel(context.resources, from.getInt(COLUMN_TYPE),
                         from.getString(COLUMN_LABEL)).toString()
         ))
+        starred = from.getInt(COLUMN_STARRED) != 0
         lastUpdate = from.getLong(CONTACT_LAST_UPDATED)
     }
 
