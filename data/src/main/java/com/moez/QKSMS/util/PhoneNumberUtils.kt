@@ -53,8 +53,7 @@ class PhoneNumberUtils @Inject constructor(context: Context) {
     }
 
     fun isPossibleNumber(number: CharSequence): Boolean {
-        val phoneNumber = parse(number) ?: return false
-        return phoneNumberUtil.isPossibleNumber(phoneNumber)
+        return parse(number) != null
     }
 
     fun isReallyDialable(digit: Char): Boolean {
