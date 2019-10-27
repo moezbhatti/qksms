@@ -77,10 +77,9 @@ class ContactRepositoryImpl @Inject constructor(
             Phone.getTypeLabel(context.resources, Phone.TYPE_MOBILE, "Mobile").toString()
         }
 
-        return when (prefs.mobileOnly.get()) {
+        val contactsFlowable = when (prefs.mobileOnly.get()) {
             true -> realm.where(Contact::class.java)
                     .contains("numbers.type", mobileLabel)
-                    .sort("name")
                     .findAllAsync()
                     .asFlowable()
                     .filter { it.isLoaded }
@@ -98,7 +97,6 @@ class ContactRepositoryImpl @Inject constructor(
                     }
 
             false -> realm.where(Contact::class.java)
-                    .sort("name")
                     .findAllAsync()
                     .asFlowable()
                     .filter { it.isLoaded }
@@ -106,6 +104,20 @@ class ContactRepositoryImpl @Inject constructor(
                     .map { realm.copyFromRealm(it) }
                     .subscribeOn(AndroidSchedulers.mainThread())
                     .observeOn(Schedulers.io())
+        }
+
+        return contactsFlowable.map { contacts ->
+            contacts.sortedWith(Comparator { c1, c2 ->
+                val initial = c1.name.firstOrNull()
+                val other = c2.name.firstOrNull()
+                if (initial?.isLetter() == true && other?.isLetter() != true) {
+                    -1
+                } else if (initial?.isLetter() != true && other?.isLetter() == true) {
+                    1
+                } else {
+                    c1.name.compareTo(c2.name, ignoreCase = true)
+                }
+            })
         }
     }
 
