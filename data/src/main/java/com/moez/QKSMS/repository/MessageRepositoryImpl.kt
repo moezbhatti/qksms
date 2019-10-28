@@ -358,7 +358,7 @@ class MessageRepositoryImpl @Inject constructor(
                     ArrayList(deliveredIntents)
             )
         } catch (e: IllegalArgumentException) {
-            Timber.w(e, "Message body lengths: ${parts.map { it.length }}")
+            Timber.w(e, "Message body lengths: ${parts.map { it?.length }}")
             markFailed(message.id, Telephony.MmsSms.ERR_TYPE_GENERIC)
         }
     }
