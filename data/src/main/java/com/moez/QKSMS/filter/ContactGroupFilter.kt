@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,23 +16,17 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.repository
+package com.moez.QKSMS.filter
 
-import android.net.Uri
-import com.moez.QKSMS.model.Contact
+import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.model.ContactGroup
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.realm.RealmResults
+import javax.inject.Inject
 
-interface ContactRepository {
+class ContactGroupFilter @Inject constructor(private val contactFilter: ContactFilter) : Filter<ContactGroup>() {
 
-    fun findContactUri(address: String): Single<Uri>
-
-    fun getContacts(): RealmResults<Contact>
-
-    fun getUnmanagedContacts(starred: Boolean = false): Observable<List<Contact>>
-
-    fun getUnmanagedContactGroups(): Observable<List<ContactGroup>>
+    override fun filter(item: ContactGroup, query: CharSequence): Boolean {
+        return item.title.removeAccents().contains(query, true) || // Name
+                item.contacts.any { contact -> contactFilter.filter(contact, query) } // Contacts
+    }
 
 }

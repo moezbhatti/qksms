@@ -30,7 +30,7 @@
         android:id="@+id/index"
         android:layout_width="24dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:gravity="center_horizontal"
         android:maxLength="1"
         android:textStyle="bold"
@@ -47,31 +47,31 @@
         android:id="@+id/icon"
         android:layout_width="24dp"
         android:layout_height="24dp"
-        android:layout_marginStart="12dp"
+        android:layout_marginStart="16dp"
         android:visibility="invisible"
         app:layout_constraintBottom_toBottomOf="@id/avatar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="@id/avatar" />
 
-    <com.moez.QKSMS.common.widget.AvatarView
+    <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatar"
         android:layout_width="40dp"
         android:layout_height="40dp"
-        android:layout_marginStart="24dp"
+        android:layout_marginStart="72dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toEndOf="@id/icon"
+        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0" />
 
     <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/name"
+        android:id="@+id/title"
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/addresses"
+        app:layout_constraintBottom_toTopOf="@id/subtitle"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/avatar"
@@ -79,15 +79,27 @@
         app:layout_constraintVertical_chainStyle="packed"
         tools:text="Moez Bhatti" />
 
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/subtitle"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:textColor="?android:attr/textColorTertiary"
+        app:layout_constraintBottom_toTopOf="@id/numbers"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/title"
+        app:textSize="secondary"
+        tools:text="Moez Bhatti" />
+
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/addresses"
+        android:id="@+id/numbers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@id/name"
-        app:layout_constraintTop_toBottomOf="@id/name"
+        app:layout_constraintStart_toStartOf="@id/title"
+        app:layout_constraintTop_toBottomOf="@id/subtitle"
         tools:listitem="@layout/contact_number_list_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

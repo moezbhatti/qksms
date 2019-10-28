@@ -21,6 +21,7 @@ package com.moez.QKSMS.repository
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
+import io.reactivex.Observable
 import io.realm.RealmResults
 
 interface ConversationRepository {
@@ -50,6 +51,8 @@ interface ConversationRepository {
      * Returns all conversations with an id in [threadIds]
      */
     fun getConversations(vararg threadIds: Long): RealmResults<Conversation>
+
+    fun getUnmanagedConversations(): Observable<List<Conversation>>
 
     fun getRecipient(recipientId: Long): Recipient?
 

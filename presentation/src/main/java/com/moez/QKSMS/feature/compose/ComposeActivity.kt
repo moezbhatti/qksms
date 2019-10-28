@@ -76,7 +76,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var contactsAdapter: ContactAdapter
+    @Inject lateinit var contactsAdapter: ComposeItemAdapter
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var navigator: Navigator
@@ -86,7 +86,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val queryChangedIntent: Observable<CharSequence> by lazy { chipsAdapter.textChanges }
     override val queryBackspaceIntent: Observable<*> by lazy { chipsAdapter.backspaces }
     override val queryEditorActionIntent: Observable<Int> by lazy { chipsAdapter.actions }
-    override val chipSelectedIntent: Subject<Contact> by lazy { contactsAdapter.contactSelected }
+    override val chipSelectedIntent: Subject<ComposeItem> by lazy { contactsAdapter.itemSelected }
     override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
@@ -211,7 +211,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         chipsAdapter.data = state.selectedContacts
-        contactsAdapter.data = state.contacts
+        contactsAdapter.data = state.composeItems
 
         loading.setVisible(state.loading)
 

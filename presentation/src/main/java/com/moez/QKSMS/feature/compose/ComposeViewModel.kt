@@ -37,7 +37,9 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
+import com.moez.QKSMS.feature.compose.ComposeItem.*
 import com.moez.QKSMS.filter.ContactFilter
+import com.moez.QKSMS.filter.ContactGroupFilter
 import com.moez.QKSMS.interactor.AddScheduledMessage
 import com.moez.QKSMS.interactor.CancelDelayedMessage
 import com.moez.QKSMS.interactor.ContactSync
@@ -50,6 +52,7 @@ import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Attachments
 import com.moez.QKSMS.model.Contact
+import com.moez.QKSMS.model.ContactGroup
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.PhoneNumber
@@ -89,6 +92,7 @@ class ComposeViewModel @Inject constructor(
     private val billingManager: BillingManager,
     private val cancelMessage: CancelDelayedMessage,
     private val contactFilter: ContactFilter,
+    private val contactGroupFilter: ContactGroupFilter,
     private val contactsRepo: ContactRepository,
     private val conversationRepo: ConversationRepository,
     private val deleteMessages: DeleteMessages,
@@ -110,13 +114,16 @@ class ComposeViewModel @Inject constructor(
 ) {
 
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(sharedAttachments)
-    private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts().toObservable() }
+    private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
+    private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts() }
     private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
+    private val conversation: Subject<Conversation> = BehaviorSubject.create()
+    private val messages: Subject<List<Message>> = BehaviorSubject.create()
+    private val recents: Observable<List<Conversation>> by lazy { conversationRepo.getUnmanagedConversations() }
     private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.createDefault(listOf())
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
-    private val conversation: Subject<Conversation> = BehaviorSubject.create()
-    private val messages: Subject<List<Message>> = BehaviorSubject.create()
+    private val starredContacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts(true) }
 
     init {
         val initialConversation = threadId.takeIf { it != 0L }
@@ -250,31 +257,48 @@ class ComposeViewModel @Inject constructor(
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
         Observables
-                .combineLatest(view.queryChangedIntent, contacts, selectedContacts) { query, contacts,
-                                                                                      selectedContacts ->
+                .combineLatest(
+                        view.queryChangedIntent, recents, starredContacts, contactGroups, contacts, selectedContacts
+                ) { query, recents, starredContacts, contactGroups, contacts, selectedContacts ->
+                    val composeItems = mutableListOf<ComposeItem>()
+                    if (query.isBlank()) {
+                        composeItems += recents.map(::Recent)
+                        composeItems += starredContacts.map(::Starred)
+                        composeItems += contactGroups.map(::Group)
+                        composeItems += contacts.map(::Person)
+                    } else {
+                        // If the entry is a valid destination, allow it as a recipient
+                        if (phoneNumberUtils.isPossibleNumber(query.toString())) {
+                            val newAddress = phoneNumberUtils.formatNumber(query)
+                            val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress)))
+                            composeItems += New(newContact)
+                        }
 
-                    // Strip the accents from the query. This can be an expensive operation, so
-                    // cache the result instead of doing it for each contact
-                    val normalizedQuery = query.removeAccents()
+                        // Strip the accents from the query. This can be an expensive operation, so
+                        // cache the result instead of doing it for each contact
+                        val normalizedQuery = query.removeAccents()
+                        composeItems += starredContacts
+                                .filterNot { contact -> selectedContacts.contains(contact) }
+                                .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
+                                .map(::Starred)
 
-                    var filteredContacts = contacts
-                            .filterNot { contact -> selectedContacts.contains(contact) }
-                            .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
+                        composeItems += contactGroups
+                                .filter { group -> contactGroupFilter.filter(group, normalizedQuery) }
+                                .map(::Group)
 
-                    // If the entry is a valid destination, allow it as a recipient
-                    if (phoneNumberUtils.isPossibleNumber(query.toString())) {
-                        val newAddress = phoneNumberUtils.formatNumber(query)
-                        val newContact = Contact(numbers = RealmList(PhoneNumber(address = newAddress)))
-                        filteredContacts = listOf(newContact) + filteredContacts
+                        composeItems += contacts
+                                .filterNot { contact -> selectedContacts.contains(contact) }
+                                .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
+                                .map(::Person)
                     }
 
-                    filteredContacts
+                    composeItems
                 }
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .subscribeOn(Schedulers.computation())
                 .autoDisposable(view.scope())
-                .subscribe { contacts -> newState { copy(contacts = contacts) } }
+                .subscribe { items -> newState { copy(composeItems = items) } }
 
         // Backspaces should delete the most recent contact if there's no text input
         // Close the activity if user presses back
@@ -293,8 +317,8 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(state) { _, state -> state }
                 .autoDisposable(view.scope())
                 .subscribe { state ->
-                    state.contacts.firstOrNull()?.let { contact ->
-                        contactsReducer.onNext { contacts -> contacts + contact }
+                    state.composeItems.firstOrNull()?.let { composeItem ->
+                        contactsReducer.onNext { contacts -> contacts + composeItem.getContacts() }
                     }
                 }
 
@@ -303,8 +327,10 @@ class ComposeViewModel @Inject constructor(
                 view.chipDeletedIntent.doOnNext { contact ->
                     contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
                 },
-                view.chipSelectedIntent.doOnNext { contact ->
-                    contactsReducer.onNext { contacts -> contacts.toMutableList().apply { add(contact) } }
+                view.chipSelectedIntent.doOnNext { composeItem ->
+                    contactsReducer.onNext { contacts ->
+                        contacts.toMutableList().apply { addAll(composeItem.getContacts()) }
+                    }
                 })
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })

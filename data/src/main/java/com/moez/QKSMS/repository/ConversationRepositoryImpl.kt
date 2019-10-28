@@ -23,6 +23,7 @@ import android.content.Context
 import android.provider.Telephony
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
+import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.filter.ConversationFilter
@@ -35,6 +36,9 @@ import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
 import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.tryOrNull
+import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
@@ -181,6 +185,25 @@ class ConversationRepositoryImpl @Inject constructor(
                 .where(Conversation::class.java)
                 .anyOf("id", threadIds)
                 .findAll()
+    }
+
+    override fun getUnmanagedConversations(): Observable<List<Conversation>> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Conversation::class.java)
+                .sort("date", Sort.DESCENDING)
+                .notEqualTo("id", 0L)
+                .greaterThan("count", 0)
+                .equalTo("archived", false)
+                .equalTo("blocked", false)
+                .isNotEmpty("recipients")
+                .limit(5)
+                .findAllAsync()
+                .asObservable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .map { realm.copyFromRealm(it) }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
     }
 
     override fun getRecipient(recipientId: Long): Recipient? {

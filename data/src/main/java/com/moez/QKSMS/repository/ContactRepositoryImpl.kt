@@ -25,10 +25,13 @@ import android.provider.ContactsContract
 import android.provider.ContactsContract.CommonDataKinds.Email
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.moez.QKSMS.extensions.asFlowable
+import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.model.Contact
+import com.moez.QKSMS.model.ContactGroup
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.Flowable
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
@@ -70,55 +73,68 @@ class ContactRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
-    override fun getUnmanagedContacts(): Flowable<List<Contact>> {
+    override fun getUnmanagedContacts(starred: Boolean): Observable<List<Contact>> {
         val realm = Realm.getDefaultInstance()
 
-        val mobileLabel by lazy {
-            Phone.getTypeLabel(context.resources, Phone.TYPE_MOBILE, "Mobile").toString()
+        val mobileOnly = prefs.mobileOnly.get()
+        val mobileLabel by lazy { Phone.getTypeLabel(context.resources, Phone.TYPE_MOBILE, "Mobile").toString() }
+
+        var query = realm.where(Contact::class.java)
+
+        if (mobileOnly) {
+            query = query.contains("numbers.type", mobileLabel)
         }
 
-        val contactsFlowable = when (prefs.mobileOnly.get()) {
-            true -> realm.where(Contact::class.java)
-                    .contains("numbers.type", mobileLabel)
-                    .findAllAsync()
-                    .asFlowable()
-                    .filter { it.isLoaded }
-                    .filter { it.isValid }
-                    .map { realm.copyFromRealm(it) }
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(Schedulers.io())
-                    .map { contacts ->
+        if (starred) {
+            query = query.equalTo("starred", true)
+        }
+
+        return query
+                .findAllAsync()
+                .asObservable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .map { realm.copyFromRealm(it) }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
+                .map { contacts ->
+                    if (mobileOnly) {
                         contacts.map { contact ->
                             val filteredNumbers = contact.numbers.filter { number -> number.type == mobileLabel }
                             contact.numbers.clear()
                             contact.numbers.addAll(filteredNumbers)
                             contact
                         }
+                    } else {
+                        contacts
                     }
-
-            false -> realm.where(Contact::class.java)
-                    .findAllAsync()
-                    .asFlowable()
-                    .filter { it.isLoaded }
-                    .filter { it.isValid }
-                    .map { realm.copyFromRealm(it) }
-                    .subscribeOn(AndroidSchedulers.mainThread())
-                    .observeOn(Schedulers.io())
-        }
-
-        return contactsFlowable.map { contacts ->
-            contacts.sortedWith(Comparator { c1, c2 ->
-                val initial = c1.name.firstOrNull()
-                val other = c2.name.firstOrNull()
-                if (initial?.isLetter() == true && other?.isLetter() != true) {
-                    -1
-                } else if (initial?.isLetter() != true && other?.isLetter() == true) {
-                    1
-                } else {
-                    c1.name.compareTo(c2.name, ignoreCase = true)
                 }
-            })
-        }
+                .map { contacts ->
+                    contacts.sortedWith(Comparator { c1, c2 ->
+                        val initial = c1.name.firstOrNull()
+                        val other = c2.name.firstOrNull()
+                        if (initial?.isLetter() == true && other?.isLetter() != true) {
+                            -1
+                        } else if (initial?.isLetter() != true && other?.isLetter() == true) {
+                            1
+                        } else {
+                            c1.name.compareTo(c2.name, ignoreCase = true)
+                        }
+                    })
+                }
+    }
+
+    override fun getUnmanagedContactGroups(): Observable<List<ContactGroup>> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(ContactGroup::class.java)
+                .isNotEmpty("contacts")
+                .findAllAsync()
+                .asObservable()
+                .filter { it.isLoaded }
+                .filter { it.isValid }
+                .map { realm.copyFromRealm(it) }
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(Schedulers.io())
     }
 
 }

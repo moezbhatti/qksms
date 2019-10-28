@@ -33,7 +33,7 @@ interface ComposeView : QkView<ComposeState> {
     val queryChangedIntent: Observable<CharSequence>
     val queryBackspaceIntent: Observable<*>
     val queryEditorActionIntent: Observable<Int>
-    val chipSelectedIntent: Subject<Contact>
+    val chipSelectedIntent: Subject<ComposeItem>
     val chipDeletedIntent: Subject<Contact>
     val menuReadyIntent: Observable<Unit>
     val optionsItemIntent: Observable<Int>

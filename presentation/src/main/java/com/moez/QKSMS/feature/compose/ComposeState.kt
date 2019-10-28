@@ -28,7 +28,7 @@ import io.realm.RealmResults
 data class ComposeState(
     val hasError: Boolean = false,
     val editingMode: Boolean = false,
-    val contacts: List<Contact> = ArrayList(),
+    val composeItems: List<ComposeItem> = ArrayList(),
     val contactsVisible: Boolean = false,
     val selectedConversation: Long = 0,
     val selectedContacts: List<Contact> = ArrayList(),
