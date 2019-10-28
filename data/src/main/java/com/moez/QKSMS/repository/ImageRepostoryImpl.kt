@@ -29,10 +29,9 @@ import javax.inject.Inject
 class ImageRepostoryImpl @Inject constructor(private val context: Context) : ImageRepository {
 
     override fun loadImage(uri: Uri): Bitmap? {
-        val exif = ExifInterface(context.contentResolver.openInputStream(uri))
+        val exif = context.contentResolver.openInputStream(uri)?.let(::ExifInterface)
         val bitmap = BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri))
-        val orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
-
+        val orientation = exif?.getAttributeInt(ExifInterface.TAG_ORIENTATION, ExifInterface.ORIENTATION_NORMAL)
 
         return when (orientation) {
             ExifInterface.ORIENTATION_ROTATE_90 -> rotateBitmap(bitmap, 90f)

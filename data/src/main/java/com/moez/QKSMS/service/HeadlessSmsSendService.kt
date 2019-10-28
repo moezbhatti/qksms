@@ -38,7 +38,7 @@ class HeadlessSmsSendService : IntentService("HeadlessSmsSendService") {
         AndroidInjection.inject(this)
         intent.extras?.getString(Intent.EXTRA_TEXT)?.takeIf { it.isNotBlank() }?.let { body ->
             val intentUri = intent.data
-            val recipients = getRecipients(intentUri).split(";")
+            val recipients = intentUri?.let(::getRecipients)?.split(";") ?: return@let
             val threadId = conversationRepo.getOrCreateConversation(recipients)?.id ?: 0L
             sendMessage.execute(SendMessage.Params(-1, threadId, recipients, body))
         }
