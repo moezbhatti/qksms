@@ -22,6 +22,7 @@ import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import io.reactivex.Observable

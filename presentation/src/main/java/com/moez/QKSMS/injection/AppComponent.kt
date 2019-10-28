@@ -33,7 +33,7 @@ import com.moez.QKSMS.feature.blocking.BlockingController
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
-import com.moez.QKSMS.feature.compose.DetailedChipView
+import com.moez.QKSMS.feature.compose.editing.DetailedChipView
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController

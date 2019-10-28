@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.compose
 
 import com.moez.QKSMS.compat.SubscriptionInfoCompat
+import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Conversation

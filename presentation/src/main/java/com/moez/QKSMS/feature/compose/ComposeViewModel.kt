@@ -37,7 +37,8 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
-import com.moez.QKSMS.feature.compose.ComposeItem.*
+import com.moez.QKSMS.feature.compose.editing.ComposeItem
+import com.moez.QKSMS.feature.compose.editing.ComposeItem.*
 import com.moez.QKSMS.filter.ContactFilter
 import com.moez.QKSMS.filter.ContactGroupFilter
 import com.moez.QKSMS.interactor.AddScheduledMessage

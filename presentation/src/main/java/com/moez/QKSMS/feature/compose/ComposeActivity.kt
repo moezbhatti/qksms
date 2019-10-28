@@ -53,6 +53,9 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
+import com.moez.QKSMS.feature.compose.editing.ChipsAdapter
+import com.moez.QKSMS.feature.compose.editing.ComposeItem
+import com.moez.QKSMS.feature.compose.editing.ComposeItemAdapter
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Contact
 import com.uber.autodispose.android.lifecycle.scope
