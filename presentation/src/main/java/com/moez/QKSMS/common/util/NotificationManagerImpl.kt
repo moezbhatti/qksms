@@ -157,7 +157,7 @@ class NotificationManagerImpl @Inject constructor(
                 person.setIcon(GlideApp.with(context)
                         .asBitmap()
                         .circleCrop()
-                        .load(message.address)
+                        .load("tel:${message.address}")
                         .submit(64.dpToPx(context), 64.dpToPx(context))
                         .let { futureGet -> tryOrNull(false) { futureGet.get() } }
                         ?.let(IconCompat::createWithBitmap))
@@ -182,7 +182,7 @@ class NotificationManagerImpl @Inject constructor(
                     GlideApp.with(context)
                             .asBitmap()
                             .circleCrop()
-                            .load(address)
+                            .load("tel:$address")
                             .submit(64.dpToPx(context), 64.dpToPx(context))
                 }
                 ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }

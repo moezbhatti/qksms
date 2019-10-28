@@ -42,7 +42,7 @@ class ContactImageLoader(
 ) : ModelLoader<String, InputStream> {
 
     override fun handles(model: String): Boolean {
-        return phoneNumberUtils.isPossibleNumber(model)
+        return model.startsWith("tel:")
     }
 
     override fun buildLoadData(

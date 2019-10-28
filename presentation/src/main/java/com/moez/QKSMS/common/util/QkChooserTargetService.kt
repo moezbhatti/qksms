@@ -58,7 +58,7 @@ class QkChooserTargetService : ChooserTargetService() {
                 val request = GlideApp.with(this)
                         .asBitmap()
                         .circleCrop()
-                        .load(address)
+                        .load("tel:$address")
                         .submit()
                 val bitmap = tryOrNull(false) { request.get() }
 

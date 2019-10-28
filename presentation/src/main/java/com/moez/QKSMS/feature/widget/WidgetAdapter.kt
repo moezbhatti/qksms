@@ -130,7 +130,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         contact?.numbers?.firstOrNull()?.address?.let { address ->
             val futureGet = GlideApp.with(context)
                     .asBitmap()
-                    .load(address)
+                    .load("tel:$address")
                     .submit(48.dpToPx(context), 48.dpToPx(context))
 
             try {

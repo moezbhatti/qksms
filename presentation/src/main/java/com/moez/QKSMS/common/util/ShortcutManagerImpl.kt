@@ -65,7 +65,7 @@ class ShortcutManagerImpl @Inject constructor(
                 val request = GlideApp.with(context)
                         .asBitmap()
                         .circleCrop()
-                        .load(address)
+                        .load("tel:$address")
                         .submit(shortcutManager.iconMaxWidth, shortcutManager.iconMaxHeight)
                 val bitmap = tryOrNull(false) { request.get() }
 

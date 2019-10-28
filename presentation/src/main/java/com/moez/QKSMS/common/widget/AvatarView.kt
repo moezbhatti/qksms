@@ -126,7 +126,7 @@ class AvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet
         photo.setImageDrawable(null)
         address?.let { address ->
             GlideApp.with(photo)
-                    .load(address)
+                    .load("tel:$address")
                     .signature(ObjectKey(lastUpdated ?: 0L))
                     .into(photo)
         }
