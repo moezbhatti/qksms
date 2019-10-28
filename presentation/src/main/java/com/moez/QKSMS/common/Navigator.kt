@@ -18,6 +18,8 @@
  */
 package com.moez.QKSMS.common
 
+import android.app.Activity
+import android.app.role.RoleManager
 import android.content.ActivityNotFoundException
 import android.content.Context
 import android.content.Intent
@@ -78,12 +80,19 @@ class Navigator @Inject constructor(
         startActivity(intent)
     }
 
-    fun showDefaultSmsDialog() {
-        val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
-        if (Telephony.Sms.getDefaultSmsPackage(context) != context.packageName) {
+    /**
+     * This won't work unless we use startActivityForResult
+     */
+    fun showDefaultSmsDialog(context: Activity) {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            val roleManager = context.getSystemService(RoleManager::class.java) as RoleManager
+            val intent = roleManager.createRequestRoleIntent(RoleManager.ROLE_SMS)
+            context.startActivityForResult(intent, 42389)
+        } else {
+            val intent = Intent(Telephony.Sms.Intents.ACTION_CHANGE_DEFAULT)
             intent.putExtra(Telephony.Sms.Intents.EXTRA_PACKAGE_NAME, context.packageName)
+            context.startActivity(intent)
         }
-        startActivity(intent)
     }
 
     fun showCompose(body: String? = null, images: List<Uri>? = null) {

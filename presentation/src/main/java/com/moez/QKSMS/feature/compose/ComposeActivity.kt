@@ -43,6 +43,7 @@ import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
@@ -78,6 +79,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var contactsAdapter: ContactAdapter
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
+    @Inject lateinit var navigator: Navigator
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
@@ -248,6 +250,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .setMessage(details)
                 .setCancelable(true)
                 .show()
+    }
+
+    override fun requestDefaultSms() {
+        navigator.showDefaultSmsDialog(this)
     }
 
     override fun requestStoragePermission() {

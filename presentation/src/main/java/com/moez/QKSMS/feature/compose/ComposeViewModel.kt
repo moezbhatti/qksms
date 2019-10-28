@@ -357,7 +357,7 @@ class ComposeViewModel @Inject constructor(
         // Delete the messages
         view.optionsItemIntent
                 .filter { it == R.id.delete }
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.messagesSelectedIntent, conversation) { _, messages, conversation ->
                     deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
                 }
@@ -631,7 +631,7 @@ class ComposeViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .filter { permissionManager.hasSendSms().also { if (!it) view.requestSmsPermission() } }
                 .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }

@@ -165,7 +165,7 @@ class ConversationInfoPresenter @Inject constructor(
 
         // Show the delete confirmation dialog
         view.deleteClicks()
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .autoDisposable(view.scope())
                 .subscribe { view.showDeleteDialog() }
 

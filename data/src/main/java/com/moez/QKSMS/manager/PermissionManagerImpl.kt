@@ -19,8 +19,10 @@
 package com.moez.QKSMS.manager
 
 import android.Manifest
+import android.app.role.RoleManager
 import android.content.Context
 import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.os.Build
 import android.provider.Telephony
 import androidx.core.content.ContextCompat
 import javax.inject.Inject
@@ -28,7 +30,11 @@ import javax.inject.Inject
 class PermissionManagerImpl @Inject constructor(private val context: Context) : PermissionManager {
 
     override fun isDefaultSms(): Boolean {
-        return Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
+        return if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            context.getSystemService(RoleManager::class.java)?.isRoleHeld(RoleManager.ROLE_SMS) == true
+        } else {
+            Telephony.Sms.getDefaultSmsPackage(context) == context.packageName
+        }
     }
 
     override fun hasReadSms(): Boolean {

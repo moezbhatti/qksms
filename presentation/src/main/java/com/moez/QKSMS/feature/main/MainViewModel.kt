@@ -117,7 +117,7 @@ class MainViewModel @Inject constructor(
         super.bindView(view)
 
         when {
-            !permissionManager.isDefaultSms() -> navigator.showDefaultSmsDialog()
+            !permissionManager.isDefaultSms() -> view.requestDefaultSms()
             !permissionManager.hasReadSms() || !permissionManager.hasContacts() -> view.requestPermissions()
         }
 
@@ -270,7 +270,7 @@ class MainViewModel @Inject constructor(
 
         view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.delete }
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     view.showDeleteDialog(conversations)
                 }
@@ -311,7 +311,7 @@ class MainViewModel @Inject constructor(
 
         view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.read }
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markRead.execute(conversations)
                     view.clearSelection()
@@ -321,7 +321,7 @@ class MainViewModel @Inject constructor(
 
         view.optionsItemIntent
                 .filter { itemId -> itemId == R.id.unread }
-                .filter { permissionManager.isDefaultSms().also { if (!it) navigator.showDefaultSmsDialog() } }
+                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.conversationsSelectedIntent) { _, conversations ->
                     markUnread.execute(conversations)
                     view.clearSelection()
@@ -412,7 +412,7 @@ class MainViewModel @Inject constructor(
         view.snackbarButtonIntent
                 .withLatestFrom(state) { _, state ->
                     when {
-                        !state.defaultSms -> navigator.showDefaultSmsDialog()
+                        !state.defaultSms -> view.requestDefaultSms()
                         !state.smsPermission -> view.requestPermissions()
                         !state.contactPermission -> view.requestPermissions()
                     }

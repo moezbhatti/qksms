@@ -152,6 +152,10 @@ class ConversationInfoController(
         blockingDialog.show(activity!!, conversations, block)
     }
 
+    override fun requestDefaultSms() {
+        navigator.showDefaultSmsDialog(activity!!)
+    }
+
     override fun showDeleteDialog() {
         AlertDialog.Builder(activity!!)
                 .setTitle(R.string.dialog_delete_title)

@@ -337,6 +337,10 @@ class MainActivity : QkThemedActivity(), MainView {
         }
     }
 
+    override fun requestDefaultSms() {
+        navigator.showDefaultSmsDialog(this)
+    }
+
     override fun requestPermissions() {
         ActivityCompat.requestPermissions(this, arrayOf(
                 Manifest.permission.READ_SMS,
