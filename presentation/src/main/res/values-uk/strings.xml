@@ -178,8 +178,8 @@
     <string name="scheduled_options_title">Заплановане повідомлення</string>
     <string-array name="scheduled_options">
         <item>Надіслати зараз</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Копіювати текст</item>
+        <item>Видалити</item>
     </string-array>
     <string name="settings_category_appearance">Зовнішній вигляд</string>
     <string name="settings_category_general">Загальні</string>

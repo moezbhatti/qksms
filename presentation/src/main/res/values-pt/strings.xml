@@ -174,8 +174,8 @@
     <string name="scheduled_options_title">Mensagem agendada</string>
     <string-array name="scheduled_options">
         <item>Enviar agora</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Copiar texto</item>
+        <item>Apagar</item>
     </string-array>
     <string name="settings_category_appearance">Aparência</string>
     <string name="settings_category_general">Geral</string>
@@ -241,7 +241,7 @@
     <string name="blocking_manager_call_control_summary">Filtrar automaticamente as chamadas e as mensagens no local apropriado. Community IQ™ permite-lhe descartar as mensagens que forem enviadas pelo \'spammers\' reconhecidos pela comunidade.</string>
     <string name="blocking_manager_sia_summary">Filtrar automaticamente as mensagens de números utilizando a aplicação \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Copiar números bloqueados</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Continuar para %s e substituir os números bloqueados</string>
     <string name="blocked_numbers_title">Números bloqueados</string>
     <string name="blocked_numbers_empty">Os números bloqueados aparecerão aqui</string>
     <string name="blocked_numbers_add_cd">Bloquear um novo número</string>

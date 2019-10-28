@@ -178,8 +178,8 @@
     <string name="scheduled_options_title">Запланированное сообщение</string>
     <string-array name="scheduled_options">
         <item>Отправить сейчас</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Копировать текст</item>
+        <item>Удалить</item>
     </string-array>
     <string name="settings_category_appearance">Внешний вид</string>
     <string name="settings_category_general">Общее</string>

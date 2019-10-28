@@ -178,8 +178,8 @@
     <string name="scheduled_options_title">Naplánovaná zpráva</string>
     <string-array name="scheduled_options">
         <item>Odeslat nyní</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Kopírovat text</item>
+        <item>Smazat</item>
     </string-array>
     <string name="settings_category_appearance">Vzhled</string>
     <string name="settings_category_general">Obecné</string>
@@ -245,7 +245,7 @@
     <string name="blocking_manager_call_control_summary">Automatické filtrování hovorů a zpráv na jednom místě. Community IQ™ poskytuje ochranu před nevyžádanými zprávami od komunitou označených spammerů.</string>
     <string name="blocking_manager_sia_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
     <string name="blocking_manager_copy_title">Kopírovat blokovaná čísla</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
+    <string name="blocking_manager_copy_summary">Pokračovat do %s a zkopírovat stávající zablokovaná čísla</string>
     <string name="blocked_numbers_title">Blokovaná čísla</string>
     <string name="blocked_numbers_empty">Vámi blokovaná čísla se objeví zde</string>
     <string name="blocked_numbers_add_cd">Blokovat nové číslo</string>

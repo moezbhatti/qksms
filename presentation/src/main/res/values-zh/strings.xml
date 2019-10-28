@@ -172,8 +172,8 @@
     <string name="scheduled_options_title">排程訊息</string>
     <string-array name="scheduled_options">
         <item>立即發送</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>複製文字</item>
+        <item>刪除</item>
     </string-array>
     <string name="settings_category_appearance">外觀</string>
     <string name="settings_category_general">通用</string>

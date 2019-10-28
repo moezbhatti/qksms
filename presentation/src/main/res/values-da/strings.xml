@@ -174,8 +174,8 @@
     <string name="scheduled_options_title">Planlagt besked</string>
     <string-array name="scheduled_options">
         <item>Send nu</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Kopiér tekst</item>
+        <item>Slet</item>
     </string-array>
     <string name="settings_category_appearance">Udseende</string>
     <string name="settings_category_general">Generelt</string>

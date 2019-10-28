@@ -174,8 +174,8 @@
     <string name="scheduled_options_title">Zamanlanmış mesaj</string>
     <string-array name="scheduled_options">
         <item>Şimdi gönder</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Metni kopyala</item>
+        <item>Sil</item>
     </string-array>
     <string name="settings_category_appearance">Görünüm</string>
     <string name="settings_category_general">Genel</string>

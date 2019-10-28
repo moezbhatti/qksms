@@ -174,8 +174,8 @@
     <string name="scheduled_options_title">Messaggio pianificato</string>
     <string-array name="scheduled_options">
         <item>Invia ora</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Copia testo</item>
+        <item>Cancella</item>
     </string-array>
     <string name="settings_category_appearance">Aspetto</string>
     <string name="settings_category_general">Generale</string>

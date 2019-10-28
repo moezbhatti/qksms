@@ -178,8 +178,8 @@
     <string name="scheduled_options_title">הודעה מתוזמנת</string>
     <string-array name="scheduled_options">
         <item>לשלוח כע</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>העתקת טקסט</item>
+        <item>מחיקה</item>
     </string-array>
     <string name="settings_category_appearance">מראה</string>
     <string name="settings_category_general">כללי</string>

@@ -174,8 +174,8 @@
     <string name="scheduled_options_title">Message programmé</string>
     <string-array name="scheduled_options">
         <item>Envoyer maintenant</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Copier le texte</item>
+        <item>Supprimer</item>
     </string-array>
     <string name="settings_category_appearance">Apparence</string>
     <string name="settings_category_general">Général</string>
