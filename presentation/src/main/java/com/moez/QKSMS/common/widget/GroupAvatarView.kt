@@ -27,7 +27,9 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.model.Recipient
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
 
-class GroupAvatarView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : ConstraintLayout(context, attrs) {
+class GroupAvatarView @JvmOverloads constructor(
+    context: Context, attrs: AttributeSet? = null
+) : ConstraintLayout(context, attrs) {
 
     var contacts: List<Recipient> = ArrayList()
         set(value) {

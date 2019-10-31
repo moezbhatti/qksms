@@ -324,7 +324,13 @@ class ComposeViewModel @Inject constructor(
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
         Observable.merge(
                 view.chipDeletedIntent.doOnNext { contact ->
-                    contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
+                    contactsReducer.onNext { contacts ->
+                        val result = contacts.filterNot { it == contact }
+                        if (result.isEmpty()) {
+                            newState { copy(searching = true) }
+                        }
+                        result
+                    }
                 },
                 view.chipSelectedIntent.doOnNext { composeItem ->
                     newState { copy(searching = false) }
