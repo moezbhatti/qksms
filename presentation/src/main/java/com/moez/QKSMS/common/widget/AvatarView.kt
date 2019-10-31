@@ -94,7 +94,7 @@ class AvatarView @JvmOverloads constructor(
         lookupKey = contact?.lookupKey
         name = contact?.name
         // If a contactAddress has been given, we use it. Use the contact address otherwise.
-        address = contactAddress ?: contact?.numbers?.firstOrNull()?.address
+        address = contactAddress?.takeIf { it.isNotEmpty() } ?: contact?.numbers?.firstOrNull()?.address
         lastUpdated = contact?.lastUpdate
         updateView()
     }
