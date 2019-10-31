@@ -84,6 +84,7 @@
         android:id="@+id/subtitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginTop="2dp"
         android:textColor="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toTopOf="@id/numbers"
         app:layout_constraintEnd_toEndOf="parent"
