@@ -110,6 +110,7 @@ class ComposeViewModel @Inject constructor(
     private val syncContacts: ContactSync
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && address.isBlank(),
+        searching = threadId == 0L && address.isBlank(),
         selectedConversation = threadId,
         query = query)
 ) {
@@ -243,17 +244,13 @@ class ComposeViewModel @Inject constructor(
     override fun bindView(view: ComposeView) {
         super.bindView(view)
 
-        // Set the contact suggestions list to visible at all times when in editing mode and there are no contacts
-        // selected yet, and also visible while in editing mode and there is text entered in the query field
-        Observables
-                .combineLatest(view.queryChangedIntent, selectedContacts) { query, selectedContacts ->
-                    selectedContacts.isEmpty() || query.isNotEmpty()
-                }
+        // Set the contact suggestions list to visible when the add button is pressed
+        view.optionsItemIntent
+                .filter { it == R.id.add }
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
-                .distinctUntilChanged()
                 .autoDisposable(view.scope())
-                .subscribe { contactsVisible -> newState { copy(contactsVisible = contactsVisible && editingMode) } }
+                .subscribe { newState { copy(searching = true) } }
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
@@ -318,6 +315,7 @@ class ComposeViewModel @Inject constructor(
                 .withLatestFrom(state) { _, state -> state }
                 .autoDisposable(view.scope())
                 .subscribe { state ->
+                    newState { copy(searching = false) }
                     state.composeItems.firstOrNull()?.let { composeItem ->
                         contactsReducer.onNext { contacts -> contacts + composeItem.getContacts() }
                     }
@@ -329,6 +327,7 @@ class ComposeViewModel @Inject constructor(
                     contactsReducer.onNext { contacts -> contacts.filterNot { it == contact } }
                 },
                 view.chipSelectedIntent.doOnNext { composeItem ->
+                    newState { copy(searching = false) }
                     contactsReducer.onNext { contacts ->
                         contacts.toMutableList().apply { addAll(composeItem.getContacts()) }
                     }

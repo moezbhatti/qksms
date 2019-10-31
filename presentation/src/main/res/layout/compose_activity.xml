@@ -376,6 +376,20 @@
                 android:scrollbars="vertical"
                 tools:visibility="gone" />
 
+            <com.moez.QKSMS.common.widget.QkEditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@null"
+                android:hint="@string/title_compose"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="textFilter|textNoSuggestions"
+                android:privateImeOptions="nm"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHint="?android:attr/textColorTertiary"
+                android:visibility="gone"
+                app:textSize="primary" />
+
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>

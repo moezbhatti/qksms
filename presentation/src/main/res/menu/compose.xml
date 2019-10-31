@@ -21,6 +21,13 @@
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <item
+        android:id="@+id/add"
+        android:icon="@drawable/ic_person_add_black_24dp"
+        android:title="@string/menu_add_person"
+        android:visible="false"
+        app:showAsAction="always" />
+
+    <item
         android:id="@+id/call"
         android:icon="@drawable/ic_call_white_24dp"
         android:title="@string/menu_call"

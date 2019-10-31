@@ -35,6 +35,7 @@
     <string name="setup_skip">Skip</string>
     <string name="setup_next">Continue</string>
 
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Call</string>
     <string name="menu_info">Details</string>
     <string name="menu_save">Save to gallery</string>
