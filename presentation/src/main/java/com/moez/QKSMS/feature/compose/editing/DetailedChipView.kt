@@ -27,7 +27,6 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
-import com.moez.QKSMS.model.Contact
 import kotlinx.android.synthetic.main.contact_chip_detailed.view.*
 import javax.inject.Inject
 
@@ -54,10 +53,10 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
         }
     }
 
-    fun setContact(contact: Contact) {
-        avatar.setContact(contact)
-        name.text = contact.name
-        info.text = contact.numbers.joinToString(", ") { it.address }
+    fun setChip(chip: Chip) {
+        avatar.setContact(chip.contact, chip.address)
+        name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
+        info.text = chip.address
     }
 
     fun show() {

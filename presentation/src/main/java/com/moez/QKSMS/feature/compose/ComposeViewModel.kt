@@ -37,6 +37,7 @@ import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
+import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.ComposeItem.*
 import com.moez.QKSMS.filter.ContactFilter
@@ -118,11 +119,11 @@ class ComposeViewModel @Inject constructor(
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(sharedAttachments)
     private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts() }
-    private val contactsReducer: Subject<(List<Contact>) -> List<Contact>> = PublishSubject.create()
+    private val chipsReducer: Subject<(List<Chip>) -> List<Chip>> = PublishSubject.create()
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
     private val recents: Observable<List<Conversation>> by lazy { conversationRepo.getUnmanagedConversations() }
-    private val selectedContacts: Subject<List<Contact>> = BehaviorSubject.createDefault(listOf())
+    private val selectedChips: Subject<List<Chip>> = BehaviorSubject.createDefault(listOf())
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
     private val starredContacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts(true) }
@@ -133,9 +134,9 @@ class ComposeViewModel @Inject constructor(
                 ?.asObservable()
                 ?: Observable.empty()
 
-        val selectedConversation = selectedContacts
+        val selectedConversation = selectedChips
                 .skipWhile { it.isEmpty() }
-                .map { contacts -> contacts.map { it.numbers.firstOrNull()?.address ?: "" } }
+                .map { chips -> chips.map { it.address } }
                 .distinctUntilChanged()
                 .doOnNext { newState { copy(loading = true) } }
                 .observeOn(Schedulers.io())
@@ -177,15 +178,15 @@ class ComposeViewModel @Inject constructor(
                 .subscribe(conversation::onNext)
 
         if (address.isNotBlank()) {
-            selectedContacts.onNext(listOf(Contact(numbers = RealmList(PhoneNumber(address)))))
+            selectedChips.onNext(listOf(Chip(address)))
         }
 
-        disposables += contactsReducer
-                .scan(listOf<Contact>()) { previousState, reducer -> reducer(previousState) }
-                .doOnNext { contacts -> newState { copy(selectedContacts = contacts) } }
+        disposables += chipsReducer
+                .scan(listOf<Chip>()) { previousState, reducer -> reducer(previousState) }
+                .doOnNext { chips -> newState { copy(selectedChips = chips) } }
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
-                .subscribe(selectedContacts::onNext)
+                .subscribe(selectedChips::onNext)
 
         // When the conversation changes, mark read, and update the threadId and the messages for the adapter
         disposables += conversation
@@ -256,8 +257,8 @@ class ComposeViewModel @Inject constructor(
         // that have already been selected
         Observables
                 .combineLatest(
-                        view.queryChangedIntent, recents, starredContacts, contactGroups, contacts, selectedContacts
-                ) { query, recents, starredContacts, contactGroups, contacts, selectedContacts ->
+                        view.queryChangedIntent, recents, starredContacts, contactGroups, contacts, selectedChips
+                ) { query, recents, starredContacts, contactGroups, contacts, selectedChips ->
                     val composeItems = mutableListOf<ComposeItem>()
                     if (query.isBlank()) {
                         composeItems += recents.map(::Recent)
@@ -276,7 +277,7 @@ class ComposeViewModel @Inject constructor(
                         // cache the result instead of doing it for each contact
                         val normalizedQuery = query.removeAccents()
                         composeItems += starredContacts
-                                .filterNot { contact -> selectedContacts.contains(contact) }
+                                .filterNot { contact -> selectedChips.map { it.contact }.contains(contact) }
                                 .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
                                 .map(::Starred)
 
@@ -285,7 +286,7 @@ class ComposeViewModel @Inject constructor(
                                 .map(::Group)
 
                         composeItems += contacts
-                                .filterNot { contact -> selectedContacts.contains(contact) }
+                                .filterNot { contact -> selectedChips.map { it.contact }.contains(contact) }
                                 .filter { contact -> contactFilter.filter(contact, normalizedQuery) }
                                 .map(::Person)
                     }
@@ -301,47 +302,42 @@ class ComposeViewModel @Inject constructor(
         // Backspaces should delete the most recent contact if there's no text input
         // Close the activity if user presses back
         view.queryBackspaceIntent
-                .withLatestFrom(selectedContacts, view.queryChangedIntent) { event, contacts, query ->
+                .withLatestFrom(selectedChips, view.queryChangedIntent) { event, contacts, query ->
                     if (contacts.isNotEmpty() && query.isEmpty()) {
-                        contactsReducer.onNext { it.dropLast(1) }
+                        chipsReducer.onNext { it.dropLast(1) }
                     }
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // Enter the first contact suggestion if the enter button is pressed
+        // Enter the first contact suggestion if the enter button is pressed, and enter contacts that are selected
         view.queryEditorActionIntent
                 .filter { actionId -> actionId == EditorInfo.IME_ACTION_DONE }
                 .withLatestFrom(state) { _, state -> state }
+                .mapNotNull { state -> state.composeItems.firstOrNull() }
+                .mergeWith(view.chipSelectedIntent)
                 .autoDisposable(view.scope())
-                .subscribe { state ->
+                .subscribe { composeItem ->
                     newState { copy(searching = false) }
-                    state.composeItems.firstOrNull()?.let { composeItem ->
-                        contactsReducer.onNext { contacts -> contacts + composeItem.getContacts() }
+                    chipsReducer.onNext { chips ->
+                        chips + composeItem.getContacts().map { Chip(it.numbers.first()?.address.orEmpty(), it) }
                     }
                 }
 
         // Update the list of selected contacts when a new contact is selected or an existing one is deselected
-        Observable.merge(
-                view.chipDeletedIntent.doOnNext { contact ->
-                    contactsReducer.onNext { contacts ->
+        view.chipDeletedIntent
+                .skipUntil(state.filter { state -> state.editingMode })
+                .takeUntil(state.filter { state -> !state.editingMode })
+                .autoDisposable(view.scope())
+                .subscribe { contact ->
+                    chipsReducer.onNext { contacts ->
                         val result = contacts.filterNot { it == contact }
                         if (result.isEmpty()) {
                             newState { copy(searching = true) }
                         }
                         result
                     }
-                },
-                view.chipSelectedIntent.doOnNext { composeItem ->
-                    newState { copy(searching = false) }
-                    contactsReducer.onNext { contacts ->
-                        contacts.toMutableList().apply { addAll(composeItem.getContacts()) }
-                    }
-                })
-                .skipUntil(state.filter { state -> state.editingMode })
-                .takeUntil(state.filter { state -> !state.editingMode })
-                .autoDisposable(view.scope())
-                .subscribe()
+                }
 
         // When the menu is loaded, trigger a new state so that the menu options can be rendered correctly
         view.menuReadyIntent
@@ -667,12 +663,12 @@ class ComposeViewModel @Inject constructor(
                 .filter { permissionManager.hasSendSms().also { if (!it) view.requestSmsPermission() } }
                 .withLatestFrom(view.textChangedIntent) { _, body -> body }
                 .map { body -> body.toString() }
-                .withLatestFrom(state, attachments, conversation, selectedContacts) { body, state, attachments,
-                                                                                      conversation, contacts ->
+                .withLatestFrom(state, attachments, conversation, selectedChips) { body, state, attachments,
+                                                                                   conversation, chips ->
                     val subId = state.subscription?.subscriptionId ?: -1
                     val addresses = when (conversation.recipients.isNotEmpty()) {
                         true -> conversation.recipients.map { it.address }
-                        false -> contacts.mapNotNull { it.numbers.firstOrNull()?.address }
+                        false -> chips.map { chip -> chip.address }
                     }
                     val delay = when (prefs.sendDelay.get()) {
                         Preferences.SEND_DELAY_SHORT -> 3000

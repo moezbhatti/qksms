@@ -27,48 +27,40 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.extensions.dpToPx
-import com.moez.QKSMS.model.Contact
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor() : QkAdapter<Contact>() {
+class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
 
     var view: RecyclerView? = null
-    val chipDeleted: PublishSubject<Contact> = PublishSubject.create<Contact>()
+    val chipDeleted: PublishSubject<Chip> = PublishSubject.create<Chip>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.contact_chip, parent, false)
         return QkViewHolder(view).apply {
             view.setOnClickListener {
-                val contact = getItem(adapterPosition)
-                showDetailedChip(view.context, contact)
+                val chip = getItem(adapterPosition)
+                showDetailedChip(view.context, chip)
             }
         }
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val contact = getItem(position)
+        val chip = getItem(position)
         val view = holder.containerView
 
-        view.avatar.setContact(contact)
-
-        // If the contact's name is empty, try to display a phone number instead
-        // The contacts provided here should only have one number
-        view.name.text = if (contact.name.isNotBlank()) {
-            contact.name
-        } else {
-            contact.numbers.firstOrNull { it.address.isNotBlank() }?.address ?: ""
-        }
+        view.avatar.setContact(chip.contact, chip.address)
+        view.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
     }
 
     /**
      * The [context] has to come from a view, because we're inflating a view that used themed attrs
      */
-    private fun showDetailedChip(context: Context, contact: Contact) {
+    private fun showDetailedChip(context: Context, chip: Chip) {
         val detailedChipView = DetailedChipView(context)
-        detailedChipView.setContact(contact)
+        detailedChipView.setChip(chip)
 
         val rootView = view?.rootView as ViewGroup
 
@@ -83,12 +75,8 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Contact>() {
         detailedChipView.show()
 
         detailedChipView.setOnDeleteListener {
-            chipDeleted.onNext(contact)
+            chipDeleted.onNext(chip)
             detailedChipView.hide()
         }
-    }
-
-    override fun areItemsTheSame(old: Contact, new: Contact): Boolean {
-        return old.lookupKey == new.lookupKey
     }
 }

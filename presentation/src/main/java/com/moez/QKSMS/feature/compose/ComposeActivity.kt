@@ -54,11 +54,11 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
+import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ChipsAdapter
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.ComposeItemAdapter
 import com.moez.QKSMS.model.Attachment
-import com.moez.QKSMS.model.Contact
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
@@ -91,7 +91,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val queryBackspaceIntent: Observable<*> by lazy { search.backspaces }
     override val queryEditorActionIntent: Observable<Int> by lazy { search.editorActions() }
     override val chipSelectedIntent: Subject<ComposeItem> by lazy { contactsAdapter.itemSelected }
-    override val chipDeletedIntent: Subject<Contact> by lazy { chipsAdapter.chipDeleted }
+    override val chipDeletedIntent: Subject<Chip> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val sendAsGroupIntent by lazy { sendAsGroupBackground.clicks() }
@@ -212,16 +212,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbar.menu.findItem(R.id.next)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
         toolbar.menu.findItem(R.id.clear)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
 
-        if (chipsAdapter.data.isEmpty() && state.selectedContacts.isNotEmpty()) {
+        if (chipsAdapter.data.isEmpty() && state.selectedChips.isNotEmpty()) {
             message.showKeyboard()
         }
 
-        chipsAdapter.data = state.selectedContacts
+        chipsAdapter.data = state.selectedChips
         contactsAdapter.data = state.composeItems
 
         loading.setVisible(state.loading)
 
-        sendAsGroup.setVisible(state.editingMode && state.selectedContacts.size >= 2)
+        sendAsGroup.setVisible(state.editingMode && state.selectedChips.size >= 2)
         sendAsGroupSwitch.isChecked = state.sendAsGroup
 
         messageList.setVisible(state.sendAsGroup)
