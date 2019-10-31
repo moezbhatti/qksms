@@ -22,9 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?attr/selectableItemBackground"
-    android:paddingTop="8dp"
-    android:paddingBottom="8dp">
+    android:background="?attr/selectableItemBackground">
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/index"
@@ -58,6 +56,8 @@
         android:layout_width="48dp"
         android:layout_height="48dp"
         android:layout_marginStart="68dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginBottom="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -69,6 +69,7 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
+        android:layout_marginTop="8dp"
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/subtitle"
@@ -95,6 +96,7 @@
         android:id="@+id/numbers"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
