@@ -19,11 +19,15 @@
 package com.moez.QKSMS.common.widget
 
 import android.content.Context
-import android.os.Build
 import android.util.AttributeSet
 import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
+import androidx.core.view.isVisible
+import androidx.core.view.updateLayoutParams
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.extensions.getColorCompat
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.model.Recipient
 import kotlinx.android.synthetic.main.group_avatar_view.view.*
 
@@ -37,25 +41,12 @@ class GroupAvatarView @JvmOverloads constructor(
             updateView()
         }
 
-    private val avatars by lazy { listOf(avatar1, avatar2, avatar3) }
-
     init {
         View.inflate(context, R.layout.group_avatar_view, this)
-        setBackgroundResource(R.drawable.circle)
-        clipToOutline = true
     }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
-
-        avatars.forEach { avatar ->
-            avatar.setBackgroundResource(R.drawable.rectangle)
-
-            // If we're on API 21 we need to reapply the tint after changing the background
-            if (Build.VERSION.SDK_INT < 22) {
-                avatar.applyTheme(0)
-            }
-        }
 
         if (!isInEditMode) {
             updateView()
@@ -63,10 +54,17 @@ class GroupAvatarView @JvmOverloads constructor(
     }
 
     private fun updateView() {
-        avatars.forEachIndexed { index, avatar ->
-            avatar.visibility = if (contacts.size > index) View.VISIBLE else View.GONE
-            avatar.setContact(contacts.getOrNull(index))
+        avatar1Frame.setBackgroundTint(when (contacts.size > 1) {
+            true -> context.resolveThemeColor(android.R.attr.windowBackground)
+            false -> context.getColorCompat(android.R.color.transparent)
+        })
+        avatar1Frame.updateLayoutParams<LayoutParams> {
+            matchConstraintPercentWidth = if (contacts.size > 1) 0.75f else 1.0f
         }
+        avatar2.isVisible = contacts.size > 1
+
+        avatar1.setContact(contacts.getOrNull(0))
+        avatar2.setContact(contacts.getOrNull(1))
     }
 
 }

@@ -22,34 +22,50 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="horizontal"
     tools:parentTag="com.moez.QKSMS.common.widget.GroupAvatarView">
 
-    <com.moez.QKSMS.common.widget.AvatarView
-        android:id="@+id/avatar1"
+    <FrameLayout
+        android:id="@+id/avatar2Frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@+id/avatar2"
+        app:layout_constraintDimensionRatio="1:1"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:layout_constraintWidth_percent=".75">
 
-    <com.moez.QKSMS.common.widget.AvatarView
-        android:id="@+id/avatar2"
+        <com.moez.QKSMS.common.widget.AvatarView
+            android:id="@+id/avatar2"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
+
+    <FrameLayout
+        android:id="@+id/avatar1Frame"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toTopOf="@+id/avatar3"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@+id/avatar1"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <com.moez.QKSMS.common.widget.AvatarView
-        android:id="@+id/avatar3"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?android:attr/windowBackground"
+        android:padding="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintDimensionRatio="1:1"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="@+id/avatar2"
-        app:layout_constraintTop_toBottomOf="@+id/avatar2" />
+        app:layout_constraintHorizontal_bias="0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="1"
+        app:layout_constraintWidth_percent=".75">
+
+        <com.moez.QKSMS.common.widget.AvatarView
+            android:id="@+id/avatar1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </FrameLayout>
 
 </merge>

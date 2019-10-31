@@ -25,15 +25,15 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingStart="16dp"
-    android:paddingTop="12dp"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
     android:paddingEnd="16dp"
-    android:paddingBottom="12dp">
+    android:paddingBottom="8dp">
 
     <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatars"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,7 +45,7 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="16dp"
         android:ellipsize="end"
         android:lines="1"

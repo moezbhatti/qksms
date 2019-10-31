@@ -55,9 +55,9 @@
 
     <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatar"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:layout_marginStart="72dp"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="68dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -68,7 +68,7 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="16dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="16dp"
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/subtitle"
