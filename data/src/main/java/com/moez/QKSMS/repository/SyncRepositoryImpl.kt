@@ -37,6 +37,7 @@ import com.moez.QKSMS.model.ContactGroup
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SyncLog
 import com.moez.QKSMS.util.PhoneNumberUtils
@@ -289,10 +290,25 @@ class SyncRepositoryImpl @Inject constructor(
                 ?.map { cursor -> cursorToContact.map(cursor) }
                 ?.groupBy { contact -> contact.lookupKey }
                 ?.map { contacts ->
-                    val allNumbers = contacts.value.map { it.numbers }.flatten()
+                    // Sometimes, contacts providers on the phone will create duplicate phone number entries. This
+                    // commonly happens with Whatsapp. Let's try to detect these duplicate entries and filter them out
+                    val uniqueNumbers = mutableListOf<PhoneNumber>()
+                    contacts.value
+                            .flatMap { it.numbers }
+                            .sortedBy { it.accountType }
+                            .forEach { number ->
+                                val duplicate = uniqueNumbers.any { other ->
+                                    number.accountType != other.accountType
+                                            && phoneNumberUtils.compare(number.address, other.address)
+                                }
+                                if (!duplicate) {
+                                    uniqueNumbers += number
+                                }
+                            }
+
                     contacts.value.first().apply {
                         numbers.clear()
-                        numbers.addAll(allNumbers)
+                        numbers.addAll(uniqueNumbers)
                     }
                 } ?: listOf()
     }

@@ -35,6 +35,7 @@ class CursorToContactImpl @Inject constructor(
         val URI = Phone.CONTENT_URI
         val PROJECTION = arrayOf(
                 Phone.LOOKUP_KEY,
+                Phone.ACCOUNT_TYPE_AND_DATA_SET,
                 Phone.NUMBER,
                 Phone.TYPE,
                 Phone.LABEL,
@@ -44,18 +45,20 @@ class CursorToContactImpl @Inject constructor(
         )
 
         const val COLUMN_LOOKUP_KEY = 0
-        const val COLUMN_NUMBER = 1
-        const val COLUMN_TYPE = 2
-        const val COLUMN_LABEL = 3
-        const val COLUMN_DISPLAY_NAME = 4
-        const val COLUMN_STARRED = 5
-        const val CONTACT_LAST_UPDATED = 6
+        const val COLUMN_ACCOUNT_TYPE = 1
+        const val COLUMN_NUMBER = 2
+        const val COLUMN_TYPE = 3
+        const val COLUMN_LABEL = 4
+        const val COLUMN_DISPLAY_NAME = 5
+        const val COLUMN_STARRED = 6
+        const val CONTACT_LAST_UPDATED = 7
     }
 
     override fun map(from: Cursor) = Contact().apply {
         lookupKey = from.getString(COLUMN_LOOKUP_KEY)
         name = from.getString(COLUMN_DISPLAY_NAME) ?: ""
         numbers.add(PhoneNumber(
+                accountType = from.getString(COLUMN_ACCOUNT_TYPE),
                 address = from.getString(COLUMN_NUMBER) ?: "",
                 type = Phone.getTypeLabel(context.resources, from.getInt(COLUMN_TYPE),
                         from.getString(COLUMN_LABEL)).toString()
