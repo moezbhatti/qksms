@@ -128,7 +128,9 @@ class QkRealmMigration : RealmMigration {
                     ?.addField("starred", Boolean::class.java, FieldAttribute.REQUIRED)
 
             realm.schema.get("PhoneNumber")
+                    ?.addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                     ?.addField("accountType", String::class.java, FieldAttribute.REQUIRED)
+                    ?.addField("isDefault", Boolean::class.java, FieldAttribute.REQUIRED)
 
             version++
         }

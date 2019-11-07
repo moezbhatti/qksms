@@ -22,6 +22,7 @@ import com.moez.QKSMS.compat.SubscriptionInfoCompat
 import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.model.Attachment
+import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
 import io.realm.RealmResults
@@ -32,6 +33,7 @@ data class ComposeState(
     val searching: Boolean = false,
     val composeItems: List<ComposeItem> = ArrayList(),
     val selectedConversation: Long = 0,
+    val selectedContact: Contact? = null, // For phone number picker
     val selectedChips: List<Chip> = ArrayList(),
     val sendAsGroup: Boolean = true,
     val conversationtitle: String = "",

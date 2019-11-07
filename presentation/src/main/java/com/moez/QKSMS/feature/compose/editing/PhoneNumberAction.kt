@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,15 +16,10 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.model
+package com.moez.QKSMS.feature.compose.editing
 
-import io.realm.RealmObject
-import io.realm.annotations.PrimaryKey
-
-open class PhoneNumber(
-    @PrimaryKey var id: Long = 0,
-    var accountType: String = "",
-    var address: String = "",
-    var type: String = "",
-    var isDefault: Boolean = false
-) : RealmObject()
+enum class PhoneNumberAction {
+    CANCEL,
+    JUST_ONCE,
+    ALWAYS
+}

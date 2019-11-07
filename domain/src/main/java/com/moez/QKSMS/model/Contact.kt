@@ -28,4 +28,8 @@ open class Contact(
     var name: String = "",
     var starred: Boolean = false,
     var lastUpdate: Long = 0
-) : RealmObject()
+) : RealmObject() {
+
+    fun getDefaultNumber(): PhoneNumber? = numbers.find { number -> number.isDefault }
+
+}

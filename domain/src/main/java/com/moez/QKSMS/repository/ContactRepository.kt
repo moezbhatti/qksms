@@ -35,4 +35,6 @@ interface ContactRepository {
 
     fun getUnmanagedContactGroups(): Observable<List<ContactGroup>>
 
+    fun setDefaultPhoneNumber(lookupKey: String, phoneNumberId: Long)
+
 }

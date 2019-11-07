@@ -137,4 +137,20 @@ class ContactRepositoryImpl @Inject constructor(
                 .observeOn(Schedulers.io())
     }
 
+    override fun setDefaultPhoneNumber(lookupKey: String, phoneNumberId: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+            val contact = realm.where(Contact::class.java)
+                    .equalTo("lookupKey", lookupKey)
+                    .findFirst()
+                    ?: return
+
+            realm.executeTransaction {
+                contact.numbers.forEach { number ->
+                    number.isDefault = number.id == phoneNumberId
+                }
+            }
+        }
+    }
+
 }

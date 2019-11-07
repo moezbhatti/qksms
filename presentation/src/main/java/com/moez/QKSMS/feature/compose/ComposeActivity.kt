@@ -54,10 +54,14 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
+import com.moez.QKSMS.common.widget.QkDialog
+import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ChipsAdapter
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.ComposeItemAdapter
+import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
+import com.moez.QKSMS.feature.compose.editing.PhoneNumberPickerAdapter
 import com.moez.QKSMS.model.Attachment
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -84,13 +88,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var navigator: Navigator
+    @Inject lateinit var phoneNumberAdapter: PhoneNumberPickerAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent: Observable<CharSequence> by lazy { search.textChanges() }
     override val queryBackspaceIntent: Observable<*> by lazy { search.backspaces }
     override val queryEditorActionIntent: Observable<Int> by lazy { search.editorActions() }
-    override val chipSelectedIntent: Subject<ComposeItem> by lazy { contactsAdapter.itemSelected }
+    override val composeItemPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.clicks }
+    override val composeItemLongPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.longClicks }
+    override val phoneNumberSelectedIntent: Subject<Optional<Long>> by lazy { phoneNumberAdapter.selectedItemChanges }
+    override val phoneNumberActionIntent: Subject<PhoneNumberAction> = PublishSubject.create()
     override val chipDeletedIntent: Subject<Chip> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
@@ -115,6 +123,18 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val sendIntent by lazy { send.clicks() }
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
+
+    private val phoneNumberDialog by lazy {
+        QkDialog(this).apply {
+            titleRes = R.string.compose_number_picker_title
+            adapter = phoneNumberAdapter
+            positiveButton = R.string.compose_number_picker_always
+            positiveButtonListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.ALWAYS) }
+            negativeButton = R.string.compose_number_picker_once
+            negativeButtonListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.JUST_ONCE) }
+            cancelListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.CANCEL) }
+        }
+    }
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
@@ -202,8 +222,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         if (state.editingMode && contacts.adapter == null) contacts.adapter = contactsAdapter
 
         toolbar.menu.findItem(R.id.add)?.isVisible = state.editingMode && !state.searching
-        toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
-        toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0 && state.query.isEmpty()
+        toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0
+                && state.query.isEmpty()
+        toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0
+                && state.query.isEmpty()
         toolbar.menu.findItem(R.id.copy)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.details)?.isVisible = !state.editingMode && state.selectedMessages == 1
         toolbar.menu.findItem(R.id.delete)?.isVisible = !state.editingMode && state.selectedMessages > 0
@@ -218,6 +240,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         chipsAdapter.data = state.selectedChips
         contactsAdapter.data = state.composeItems
+
+        if (state.selectedContact != null && !phoneNumberDialog.isShowing) {
+            phoneNumberAdapter.data = state.selectedContact.numbers
+            phoneNumberDialog.subtitle = state.selectedContact.name
+            phoneNumberDialog.show()
+        } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
+            phoneNumberDialog.dismiss()
+        }
 
         loading.setVisible(state.loading)
 
@@ -282,7 +312,8 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 calendar.set(Calendar.HOUR_OF_DAY, hour)
                 calendar.set(Calendar.MINUTE, minute)
                 scheduleSelectedIntent.onNext(calendar.timeInMillis)
-            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this)).show()
+            }, calendar.get(Calendar.HOUR_OF_DAY), calendar.get(Calendar.MINUTE), DateFormat.is24HourFormat(this))
+                    .show()
         }, calendar.get(Calendar.YEAR), calendar.get(Calendar.MONTH), calendar.get(Calendar.DAY_OF_MONTH)).show()
     }
 

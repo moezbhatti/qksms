@@ -243,7 +243,7 @@ class SyncRepositoryImpl @Inject constructor(
                 realm.delete(Contact::class.java)
                 realm.delete(ContactGroup::class.java)
 
-                contacts = realm.copyToRealm(contacts)
+                contacts = realm.copyToRealmOrUpdate(contacts)
                 realm.insertOrUpdate(getContactGroups(contacts))
 
                 // Update all the recipients with the new contacts
@@ -286,6 +286,13 @@ class SyncRepositoryImpl @Inject constructor(
     }
 
     private fun getContacts(): List<Contact> {
+        val defaultNumberIds = Realm.getDefaultInstance().use { realm ->
+            realm.where(PhoneNumber::class.java)
+                    .equalTo("isDefault", true)
+                    .findAll()
+                    .map { number -> number.id }
+        }
+
         return cursorToContact.getContactsCursor()
                 ?.map { cursor -> cursorToContact.map(cursor) }
                 ?.groupBy { contact -> contact.lookupKey }
@@ -297,10 +304,12 @@ class SyncRepositoryImpl @Inject constructor(
                             .flatMap { it.numbers }
                             .sortedBy { it.accountType }
                             .forEach { number ->
+                                number.isDefault = defaultNumberIds.any { id -> id == number.id }
                                 val duplicate = uniqueNumbers.any { other ->
                                     number.accountType != other.accountType
                                             && phoneNumberUtils.compare(number.address, other.address)
                                 }
+
                                 if (!duplicate) {
                                     uniqueNumbers += number
                                 }

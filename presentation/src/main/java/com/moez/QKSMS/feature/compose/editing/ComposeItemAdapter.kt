@@ -40,7 +40,8 @@ import javax.inject.Inject
 
 class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAdapter<ComposeItem>() {
 
-    val itemSelected: Subject<ComposeItem> = PublishSubject.create()
+    val clicks: Subject<ComposeItem> = PublishSubject.create()
+    val longClicks: Subject<ComposeItem> = PublishSubject.create()
 
     private val numbersViewPool = RecyclerView.RecycledViewPool()
 
@@ -57,7 +58,12 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val item = getItem(adapterPosition)
-                itemSelected.onNext(item)
+                clicks.onNext(item)
+            }
+            view.setOnLongClickListener {
+                val item = getItem(adapterPosition)
+                longClicks.onNext(item)
+                true
             }
         }
     }
