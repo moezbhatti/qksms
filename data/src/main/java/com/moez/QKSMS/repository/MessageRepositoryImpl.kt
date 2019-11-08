@@ -146,7 +146,12 @@ class MessageRepositoryImpl @Inject constructor(
         val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Media").apply { mkdirs() }
         val fileName = part.name?.takeIf { name -> name.endsWith(extension) }
                 ?: "${part.type.split("/").last()}_$date.$extension"
-        val file = File(dir, fileName)
+        var file: File
+        var index = 0
+        do {
+            file = File(dir, if (index == 0) fileName else fileName.replace(".$extension", " ($index).$extension"))
+            index++
+        } while (file.exists())
 
         try {
             FileOutputStream(file).use { outputStream ->
