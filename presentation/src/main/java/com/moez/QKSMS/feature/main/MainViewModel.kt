@@ -365,7 +365,7 @@ class MainViewModel @Inject constructor(
                             ?.recipients?.first()
                             ?.takeIf { recipient -> recipient.contact == null } != null
                     val pin = conversations.sumBy { if (it.pinned) -1 else 1 } >= 0
-                    val read = conversations.sumBy { if (it.read) -1 else 1 } >= 0
+                    val read = conversations.sumBy { if (!it.unread) -1 else 1 } >= 0
                     val selected = selection.size
 
                     when (state.page) {

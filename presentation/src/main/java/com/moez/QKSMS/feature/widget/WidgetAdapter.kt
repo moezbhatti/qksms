@@ -54,7 +54,8 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var prefs: Preferences
 
-    private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID, AppWidgetManager.INVALID_APPWIDGET_ID)
+    private val appWidgetId = intent.getIntExtra(AppWidgetManager.EXTRA_APPWIDGET_ID,
+            AppWidgetManager.INVALID_APPWIDGET_ID)
     private val smallWidget = intent.getBooleanExtra("small_widget", false)
     private var conversations: List<Conversation> = listOf()
     private val appWidgetManager by lazy { AppWidgetManager.getInstance(context) }
@@ -68,9 +69,12 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
             night && !black -> R.color.backgroundDark
             else -> R.color.white
         })
-    private val textPrimary get() = context.getColorCompat(if (night) R.color.textPrimaryDark else R.color.textPrimary)
-    private val textSecondary get() = context.getColorCompat(if (night) R.color.textSecondaryDark else R.color.textSecondary)
-    private val textTertiary get() = context.getColorCompat(if (night) R.color.textTertiaryDark else R.color.textTertiary)
+    private val textPrimary
+        get() = context.getColorCompat(if (night) R.color.textPrimaryDark else R.color.textPrimary)
+    private val textSecondary
+        get() = context.getColorCompat(if (night) R.color.textSecondaryDark else R.color.textSecondary)
+    private val textTertiary
+        get() = context.getColorCompat(if (night) R.color.textTertiaryDark else R.color.textTertiary)
 
     override fun onCreate() {
         appComponent.inject(this)
@@ -116,7 +120,6 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
             recipient.contact ?: Contact().apply { numbers.add(PhoneNumber().apply { address = recipient.address }) }
         }.firstOrNull()
 
-
         // Use the icon if there's no name, otherwise show an initial
         if (contact?.name.orEmpty().isNotEmpty()) {
             remoteViews.setTextViewText(R.id.initial, contact?.name?.substring(0, 1))
@@ -141,15 +144,16 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
         // Name
         remoteViews.setTextColor(R.id.name, textPrimary)
-        remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), !conversation.read))
+        remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), conversation.unread))
 
         // Date
-        remoteViews.setTextColor(R.id.date, if (conversation.read) textTertiary else textPrimary)
-        remoteViews.setTextViewText(R.id.date, boldText(dateFormatter.getConversationTimestamp(conversation.date), !conversation.read))
+        val timestamp = dateFormatter.getConversationTimestamp(conversation.date)
+        remoteViews.setTextColor(R.id.date, if (conversation.unread) textPrimary else textTertiary)
+        remoteViews.setTextViewText(R.id.date, boldText(timestamp, conversation.unread))
 
         // Snippet
-        remoteViews.setTextColor(R.id.snippet, if (conversation.read) textTertiary else textPrimary)
-        remoteViews.setTextViewText(R.id.snippet, boldText(conversation.snippet, !conversation.read))
+        remoteViews.setTextColor(R.id.snippet, if (conversation.unread) textPrimary else textTertiary)
+        remoteViews.setTextViewText(R.id.snippet, boldText(conversation.snippet, conversation.unread))
 
         // Launch conversation on click
         val clickIntent = Intent().putExtra("threadId", conversation.id)
@@ -168,7 +172,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         return view
     }
 
-    private fun boldText(text: String, shouldBold: Boolean): CharSequence = when {
+    private fun boldText(text: String?, shouldBold: Boolean): CharSequence? = when {
         shouldBold -> SpannableStringBuilder()
                 .bold { append(text) }
         else -> text

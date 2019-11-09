@@ -106,6 +106,6 @@ class ConversationsAdapter @Inject constructor(
     }
 
     override fun getItemViewType(position: Int): Int {
-        return if (getItem(position)?.read == true) 0 else 1
+        return if (getItem(position)?.unread == false) 0 else 1
     }
 }

@@ -25,7 +25,7 @@ import io.realm.RealmMigration
 class QkRealmMigration : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 7
+        const val SCHEMA_VERSION: Long = 8
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -92,9 +92,19 @@ class QkRealmMigration : RealmMigration {
             version++
         }
 
-        if (version < newVersion) {
-            throw IllegalStateException("Migration missing from v$oldVersion to v$newVersion")
+        if (version == 7L) {
+            realm.schema.get("Conversation")
+                    ?.addRealmObjectField("lastMessage", realm.schema.get("Message"))
+                    ?.removeField("count")
+                    ?.removeField("date")
+                    ?.removeField("snippet")
+                    ?.removeField("read")
+                    ?.removeField("me")
+
+            version++
         }
+
+        check(version >= newVersion) { "Migration missing from v$oldVersion to v$newVersion" }
     }
 
 }

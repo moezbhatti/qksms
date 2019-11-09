@@ -91,7 +91,7 @@ class BlockedMessagesAdapter @Inject constructor(
 
     override fun getItemViewType(position: Int): Int {
         val conversation = getItem(position)
-        return if (conversation?.read == true) 1 else 0
+        return if (conversation?.unread == false) 1 else 0
     }
 
 }

@@ -147,9 +147,7 @@ class SyncRepositoryImpl @Inject constructor(
                     .findAll()
                     .forEach { message ->
                         val conversation = conversations.find { conversation -> conversation.id == message.threadId }
-                        conversation?.date = message.date
-                        conversation?.snippet = message.getSummary()
-                        conversation?.me = message.isMe()
+                        conversation?.lastMessage = message
                     }
 
             realm.insertOrUpdate(conversations)

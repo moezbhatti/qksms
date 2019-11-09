@@ -19,13 +19,11 @@
 package com.moez.QKSMS.interactor
 
 import com.moez.QKSMS.manager.NotificationManager
-import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
 class MarkRead @Inject constructor(
-    private val conversationRepo: ConversationRepository,
     private val messageRepo: MessageRepository,
     private val notificationManager: NotificationManager,
     private val updateBadge: UpdateBadge
@@ -34,7 +32,6 @@ class MarkRead @Inject constructor(
     override fun buildObservable(params: List<Long>): Flowable<*> {
         return Flowable.just(params.toLongArray())
                 .doOnNext { threadIds -> messageRepo.markRead(*threadIds) }
-                .doOnNext { threadIds -> conversationRepo.updateConversations(*threadIds) } // Update the conversation
                 .doOnNext { threadIds -> threadIds.forEach(notificationManager::update) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }

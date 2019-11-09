@@ -113,7 +113,7 @@ class MessageRepositoryImpl @Inject constructor(
             realm.where(Conversation::class.java)
                     .equalTo("archived", false)
                     .equalTo("blocked", false)
-                    .equalTo("read", false)
+                    .equalTo("lastMessage.read", false)
                     .count()
         }
     }
@@ -251,13 +251,15 @@ class MessageRepositoryImpl @Inject constructor(
 
     override fun markUnread(vararg threadIds: Long) {
         Realm.getDefaultInstance()?.use { realm ->
-            val conversation = realm.where(Conversation::class.java)
+            val conversations = realm.where(Conversation::class.java)
                     .anyOf("id", threadIds)
-                    .equalTo("read", true)
+                    .equalTo("lastMessage.read", true)
                     .findAll()
 
             realm.executeTransaction {
-                conversation.forEach { it.read = false }
+                conversations.forEach { conversation ->
+                    conversation.lastMessage?.read = false
+                }
             }
         }
     }

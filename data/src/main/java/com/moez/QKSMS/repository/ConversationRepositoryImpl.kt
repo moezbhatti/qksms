@@ -54,11 +54,11 @@ class ConversationRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
+                .isNotNull("lastMessage")
                 .equalTo("archived", archived)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
-                .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
+                .sort("pinned", Sort.DESCENDING, "lastMessage.date", Sort.DESCENDING)
                 .findAllAsync()
     }
 
@@ -67,28 +67,37 @@ class ConversationRepositoryImpl @Inject constructor(
             realm.refresh()
             realm.copyFromRealm(realm.where(Conversation::class.java)
                     .notEqualTo("id", 0L)
-                    .greaterThan("count", 0)
+                    .isNotNull("lastMessage")
                     .equalTo("archived", false)
                     .equalTo("blocked", false)
                     .isNotEmpty("recipients")
-                    .sort("pinned", Sort.DESCENDING, "date", Sort.DESCENDING)
+                    .sort("pinned", Sort.DESCENDING, "lastMessage.date", Sort.DESCENDING)
                     .findAll())
         }
     }
 
     override fun getTopConversations(): List<Conversation> {
-        val realm = Realm.getDefaultInstance()
-        return realm.copyFromRealm(
-                realm.where(Conversation::class.java)
-                        .notEqualTo("id", 0L)
-                        .greaterThan("count", 0)
-                        .greaterThan("date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
-                        .equalTo("archived", false)
-                        .equalTo("blocked", false)
-                        .isNotEmpty("recipients")
-                        .sort("pinned", Sort.DESCENDING, "count", Sort.DESCENDING)
-                        .findAll()
-        )
+        return Realm.getDefaultInstance().use { realm ->
+            realm.copyFromRealm(realm.where(Conversation::class.java)
+                    .notEqualTo("id", 0L)
+                    .isNotNull("lastMessage")
+                    .beginGroup()
+                    .equalTo("pinned", true)
+                    .or()
+                    .greaterThan("lastMessage.date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
+                    .endGroup()
+                    .equalTo("archived", false)
+                    .equalTo("blocked", false)
+                    .isNotEmpty("recipients")
+                    .findAll())
+                    .sortedWith(compareByDescending<Conversation> { conversation -> conversation.pinned }
+                            .thenByDescending { conversation ->
+                                realm.where(Message::class.java)
+                                        .equalTo("threadId", conversation.id)
+                                        .greaterThan("date", System.currentTimeMillis() - TimeUnit.DAYS.toMillis(7))
+                                        .count()
+                            })
+        }
     }
 
     override fun setConversationName(id: Long, name: String) {
@@ -234,20 +243,14 @@ class ConversationRepositoryImpl @Inject constructor(
                         .equalTo("id", threadId)
                         .findFirst() ?: return
 
-                val messages = realm
+                val message = realm
                         .where(Message::class.java)
                         .equalTo("threadId", threadId)
                         .sort("date", Sort.DESCENDING)
-                        .findAll()
-
-                val message = messages.firstOrNull()
+                        .findFirst()
 
                 realm.executeTransaction {
-                    conversation.count = messages.size
-                    conversation.date = message?.date ?: 0
-                    conversation.snippet = message?.getSummary() ?: ""
-                    conversation.read = message?.read ?: true
-                    conversation.me = message?.isMe() ?: false
+                    conversation.lastMessage = message
                 }
             }
         }
