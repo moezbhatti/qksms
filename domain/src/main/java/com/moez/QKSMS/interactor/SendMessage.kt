@@ -30,7 +30,8 @@ import javax.inject.Inject
 class SendMessage @Inject constructor(
     private val context: Context,
     private val conversationRepo: ConversationRepository,
-    private val messageRepo: MessageRepository
+    private val messageRepo: MessageRepository,
+    private val updateBadge: UpdateBadge
 ) : Interactor<SendMessage.Params>() {
 
     data class Params(
@@ -63,5 +64,6 @@ class SendMessage @Inject constructor(
             }
             .doOnNext { threadId -> conversationRepo.updateConversations(threadId) }
             .doOnNext { threadId -> conversationRepo.markUnarchived(threadId) }
+            .flatMap { updateBadge.buildObservable(Unit) } // Update the widget
 
 }
