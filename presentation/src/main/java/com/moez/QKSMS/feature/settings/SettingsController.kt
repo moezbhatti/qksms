@@ -156,7 +156,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
         delivery.checkbox.isChecked = state.deliveryEnabled
 
-        signature.summary = state.signature
+        signature.summary = state.signature.takeIf { it.isNotBlank() }
+                ?: context.getString(R.string.settings_signature_summary)
 
         textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
