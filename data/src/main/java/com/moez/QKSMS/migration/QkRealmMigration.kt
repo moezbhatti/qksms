@@ -21,6 +21,7 @@ package com.moez.QKSMS.migration
 import io.realm.DynamicRealm
 import io.realm.FieldAttribute
 import io.realm.RealmMigration
+import io.realm.Sort
 
 class QkRealmMigration : RealmMigration {
 
@@ -100,6 +101,19 @@ class QkRealmMigration : RealmMigration {
                     ?.removeField("snippet")
                     ?.removeField("read")
                     ?.removeField("me")
+
+            val conversations = realm.where("Conversation")
+                    .findAll()
+
+            val messages = realm.where("Message")
+                    .sort("date", Sort.DESCENDING)
+                    .distinct("threadId")
+                    .findAll()
+                    .associateBy { message -> message.getLong("threadId") }
+
+            conversations.forEach { conversation ->
+                conversation.setObject("lastMessage", messages[conversation.getLong("id")])
+            }
 
             version++
         }
