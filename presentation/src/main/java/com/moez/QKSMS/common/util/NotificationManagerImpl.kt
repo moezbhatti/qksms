@@ -135,6 +135,7 @@ class NotificationManagerImpl @Inject constructor(
                 .setDeleteIntent(seenPI)
                 .setSound(ringtone)
                 .setLights(Color.WHITE, 500, 2000)
+                .setWhen(conversation.lastMessage?.date ?: System.currentTimeMillis())
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
         // Tell the notification if it's a group message
