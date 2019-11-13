@@ -28,6 +28,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
+
 import com.android.mms.MmsConfig;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
@@ -38,16 +39,20 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadOrigInd;
-import timber.log.Timber;
+import com.klinker.android.send_message.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
+import timber.log.Timber;
+
 import static android.provider.Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION;
 import static android.provider.Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION;
-import static com.google.android.mms.pdu_alt.PduHeaders.*;
+import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_DELIVERY_IND;
+import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_NOTIFICATION_IND;
+import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_READ_ORIG_IND;
 
 /**
  * Receives Intent.WAP_PUSH_RECEIVED_ACTION intents and starts the
@@ -141,7 +146,8 @@ public class PushReceiver extends BroadcastReceiver {
                                 downloadedUrls.add(location);
                             }
 
-                            DownloadManager.getInstance().downloadMultimediaMessage(mContext, location, uri, true);
+                            int subId = intent.getIntExtra("subscription", Utils.getDefaultSubscriptionId());
+                            DownloadManager.getInstance().downloadMultimediaMessage(mContext, location, uri, true, subId);
                         } else {
                             Timber.v("Skip downloading duplicate message: " + new String(nInd.getContentLocation()));
                         }

@@ -300,7 +300,7 @@ public class TransactionService extends Service implements Observer {
                             Uri uri = ContentUris.withAppendedId(Mms.CONTENT_URI,
                                     cursor.getLong(columnIndexOfMsgId));
                             com.android.mms.transaction.DownloadManager.getInstance().
-                                    downloadMultimediaMessage(this, PushReceiver.getContentLocation(this, uri), uri, false);
+                                    downloadMultimediaMessage(this, PushReceiver.getContentLocation(this, uri), uri, false,  Utils.getDefaultSubscriptionId());
 
                             // can't handle many messages at once.
                             break;
@@ -688,7 +688,7 @@ public class TransactionService extends Service implements Observer {
                                 Uri u = Uri.parse(args.getUri());
                                 com.android.mms.transaction.DownloadManager.getInstance().
                                         downloadMultimediaMessage(TransactionService.this,
-                                                ((RetrieveTransaction) transaction).getContentLocation(TransactionService.this, u), u, false);
+                                                ((RetrieveTransaction) transaction).getContentLocation(TransactionService.this, u), u, false, Utils.getDefaultSubscriptionId());
                                 return;
 
 
