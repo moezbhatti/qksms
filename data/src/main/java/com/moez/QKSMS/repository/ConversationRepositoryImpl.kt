@@ -190,9 +190,9 @@ class ConversationRepositoryImpl @Inject constructor(
     override fun getUnmanagedConversations(): Observable<List<Conversation>> {
         val realm = Realm.getDefaultInstance()
         return realm.where(Conversation::class.java)
-                .sort("date", Sort.DESCENDING)
+                .sort("lastMessage.date", Sort.DESCENDING)
                 .notEqualTo("id", 0L)
-                .greaterThan("count", 0)
+                .isNotNull("lastMessage")
                 .equalTo("archived", false)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
