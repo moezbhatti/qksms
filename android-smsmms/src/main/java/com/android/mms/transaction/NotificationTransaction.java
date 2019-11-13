@@ -28,6 +28,7 @@ import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.provider.Telephony.Threads;
 import android.telephony.TelephonyManager;
+
 import com.android.mms.MmsConfig;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
@@ -38,13 +39,20 @@ import com.google.android.mms.pdu_alt.PduComposer;
 import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
+import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.klinker.android.send_message.BroadcastUtils;
-import timber.log.Timber;
 
 import java.io.IOException;
 
-import static com.android.mms.transaction.TransactionState.*;
-import static com.google.android.mms.pdu_alt.PduHeaders.*;
+import timber.log.Timber;
+
+import static com.android.mms.transaction.TransactionState.FAILED;
+import static com.android.mms.transaction.TransactionState.INITIALIZED;
+import static com.android.mms.transaction.TransactionState.SUCCESS;
+import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_RETRIEVE_CONF;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_DEFERRED;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_RETRIEVED;
+import static com.google.android.mms.pdu_alt.PduHeaders.STATUS_UNRECOGNIZED;
 
 /**
  * The NotificationTransaction is responsible for handling multimedia
@@ -180,9 +188,15 @@ public class NotificationTransaction extends Transaction implements Runnable {
                     Uri uri = p.persist(pdu, Inbox.CONTENT_URI, true,
                             true, null);
 
+                    RetrieveConf retrieveConf = (RetrieveConf) pdu;
+
                     // Use local time instead of PDU time
-                    ContentValues values = new ContentValues(1);
+                    ContentValues values = new ContentValues(2);
                     values.put(Mms.DATE, System.currentTimeMillis() / 1000L);
+                    try {
+                        values.put(Mms.DATE_SENT, retrieveConf.getDate());
+                    } catch (Exception ignored) {
+                    }
                     SqliteWrapper.update(mContext, mContext.getContentResolver(),
                             uri, values, null, null);
 

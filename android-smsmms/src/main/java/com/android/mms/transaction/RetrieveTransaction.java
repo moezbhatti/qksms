@@ -24,6 +24,7 @@ import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.text.TextUtils;
+
 import com.android.mms.MmsConfig;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
@@ -35,9 +36,10 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
 import com.klinker.android.send_message.Utils;
-import timber.log.Timber;
 
 import java.io.IOException;
+
+import timber.log.Timber;
 
 /**
  * The RetrieveTransaction is responsible for retrieving multimedia
@@ -155,8 +157,12 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                             true, null);
 
                     // Use local time instead of PDU time
-                    ContentValues values = new ContentValues(2);
+                    ContentValues values = new ContentValues(3);
                     values.put(Mms.DATE, System.currentTimeMillis() / 1000L);
+                    try {
+                        values.put(Mms.DATE_SENT, retrieveConf.getDate());
+                    } catch (Exception ignored) {
+                    }
                     values.put(Mms.MESSAGE_SIZE, resp.length);
                     SqliteWrapper.update(mContext, mContext.getContentResolver(),
                             msgUri, values, null, null);
