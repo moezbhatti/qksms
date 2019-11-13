@@ -162,7 +162,7 @@ class SyncRepositoryImpl @Inject constructor(
 
         // Sync recipients
         recipientCursor?.use {
-            val contacts = realm.copyToRealm(getContacts())
+            val contacts = realm.copyToRealmOrUpdate(getContacts())
             val recipients = recipientCursor.map { cursor ->
                 progress++
                 syncProgress.onNext(SyncRepository.SyncProgress.Running(max, progress, false))
