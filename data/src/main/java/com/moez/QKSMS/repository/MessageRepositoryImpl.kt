@@ -33,6 +33,8 @@ import android.webkit.MimeTypeMap
 import androidx.core.content.contentValuesOf
 import com.google.android.mms.ContentType
 import com.google.android.mms.MMSPart
+import com.google.android.mms.pdu_alt.MultimediaMessagePdu
+import com.google.android.mms.pdu_alt.PduPersister
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
@@ -330,8 +332,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .map { attachment -> attachment.vCard.toByteArray() }
                     .map { vCard -> MMSPart("contact", ContentType.TEXT_VCARD, vCard) }
 
-            val transaction = Transaction(context)
-            transaction.sendNewMessage(subId, threadId, addresses.map(phoneNumberUtils::normalizeNumber), parts, null)
+            Transaction(context).sendNewMessage(subId, threadId, addresses, parts, null, null)
         }
     }
 
@@ -368,6 +369,25 @@ class MessageRepositoryImpl @Inject constructor(
             Timber.w(e, "Message body lengths: ${parts.map { it?.length }}")
             markFailed(message.id, Telephony.MmsSms.ERR_TYPE_GENERIC)
         }
+    }
+
+    override fun resendMms(message: Message) {
+        val subId = message.subId
+        val threadId = message.threadId
+        val pdu = tryOrNull {
+            PduPersister.getPduPersister(context).load(message.getUri()) as MultimediaMessagePdu
+        } ?: return
+
+        val addresses = pdu.to.map { it.string }.filter { it.isNotBlank() }
+        val parts = message.parts.mapNotNull { part ->
+            val bytes = tryOrNull {
+                context.contentResolver.openInputStream(part.getUri())?.use { inputStream -> inputStream.readBytes() }
+            } ?: return@mapNotNull null
+
+            MMSPart(part.name.orEmpty(), part.type, bytes)
+        }
+
+        Transaction(context).sendNewMessage(subId, threadId, addresses, parts, message.subject, message.getUri())
     }
 
     override fun cancelDelayedSms(id: Long) {
@@ -489,12 +509,17 @@ class MessageRepositoryImpl @Inject constructor(
             message?.let {
                 // Update the message in realm
                 realm.executeTransaction {
-                    message.boxId = Telephony.Sms.MESSAGE_TYPE_OUTBOX
+                    message.boxId = when (message.isSms()) {
+                        true -> Telephony.Sms.MESSAGE_TYPE_OUTBOX
+                        false -> Telephony.Mms.MESSAGE_BOX_OUTBOX
+                    }
                 }
 
                 // Update the message in the native ContentProvider
-                val values = ContentValues()
-                values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_OUTBOX)
+                val values = when (message.isSms()) {
+                    true -> contentValuesOf(Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX)
+                    false -> contentValuesOf(Telephony.Mms.MESSAGE_BOX to Telephony.Mms.MESSAGE_BOX_OUTBOX)
+                }
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
         }

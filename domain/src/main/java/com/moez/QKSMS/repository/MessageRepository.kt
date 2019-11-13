@@ -74,6 +74,8 @@ interface MessageRepository {
      */
     fun sendSms(message: Message)
 
+    fun resendMms(message: Message)
+
     /**
      * Attempts to cancel sending the message with the given id
      */

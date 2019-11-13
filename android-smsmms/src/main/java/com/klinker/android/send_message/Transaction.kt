@@ -83,8 +83,7 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
      *
      * @param threadId is the thread id of who to send the message to (can also be set to Transaction.NO_THREAD_ID)
      */
-    fun sendNewMessage(subId: Int, threadId: Long, addresses: List<String>, parts: List<MMSPart>, subject: String?) {
-
+    fun sendNewMessage(subId: Int, threadId: Long, addresses: List<String>, parts: List<MMSPart>, subject: String?, existingUri: Uri?) {
         RateController.init(context)
         DownloadManager.init(context)
 
@@ -95,7 +94,7 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
 
             val sendReq = buildPdu(context, addresses, subject, parts)
             val persister = PduPersister.getPduPersister(context)
-            val messageUri = persister.persist(sendReq, Uri.parse("content://mms/outbox"), true, true, null)
+            val messageUri = existingUri ?: persister.persist(sendReq, Uri.parse("content://mms/outbox"), true, true, null)
 
             val sentIntent = Intent(MMS_SENT)
             BroadcastUtils.addClassName(context, sentIntent, MMS_SENT)

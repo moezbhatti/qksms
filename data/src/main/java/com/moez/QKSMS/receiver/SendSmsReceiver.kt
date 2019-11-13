@@ -39,7 +39,7 @@ class SendSmsReceiver : BroadcastReceiver() {
                 ?.let(messageRepo::getMessage)
                 ?.let { message ->
                     val result = goAsync()
-                    retrySending.execute(message) { result.finish() }
+                    retrySending.execute(message.id) { result.finish() }
                 }
     }
 

@@ -422,7 +422,7 @@ class ComposeViewModel @Inject constructor(
         view.messageClickIntent
                 .mapNotNull(messageRepo::getMessage)
                 .filter { message -> message.isFailedMessage() }
-                .doOnNext { message -> retrySending.execute(message) }
+                .doOnNext { message -> retrySending.execute(message.id) }
                 .autoDisposable(view.scope())
                 .subscribe()
 
