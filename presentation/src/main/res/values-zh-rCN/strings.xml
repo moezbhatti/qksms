@@ -217,6 +217,7 @@
     <string name="settings_delivery_title">送达确认</string>
     <string name="settings_delivery_summary">确认短信已成功送达</string>
     <string name="settings_signature_title">签名</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">删除读音符号</string>
     <string name="settings_unicode_summary">删除短信中字母上的读音符号</string>
     <string name="settings_mobile_title">仅限手机号码</string>

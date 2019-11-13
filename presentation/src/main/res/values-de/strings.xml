@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Zustellbestätigungen</string>
     <string name="settings_delivery_summary">Bestätigung, dass Nachrichten erfolgreich gesendet wurden</string>
     <string name="settings_signature_title">Signatur</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Akzente entfernen</string>
     <string name="settings_unicode_summary">Akzente aus Zeichen in ausgehenden SMS-Nachrichten entfernen</string>
     <string name="settings_mobile_title">Nur Mobilfunknummern</string>

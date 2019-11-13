@@ -223,6 +223,7 @@
     <string name="settings_delivery_title">Potvrzení o doručení</string>
     <string name="settings_delivery_summary">Potvrdit, že zprávy byly odeslány úspěšně</string>
     <string name="settings_signature_title">Podpis</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Odstranit diakritiku</string>
     <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných SMS zprávách</string>
     <string name="settings_mobile_title">Pouze mobilní čísla</string>

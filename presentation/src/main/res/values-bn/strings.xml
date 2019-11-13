@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">ডেলিভারি নিশ্চিতকরন</string>
     <string name="settings_delivery_summary">নিশ্চিত করুন যে বার্তা সফলভাবে পাঠানো হয়েছে</string>
     <string name="settings_signature_title">স্বাক্ষর</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">কথার টান সরিয়ে দিন</string>
     <string name="settings_unicode_summary">বহির্গামী এসএমএস বার্তার অক্ষর থেকে কথার টান সরিয়ে দিন</string>
     <string name="settings_mobile_title">শুধু মোবাইল নম্বর</string>

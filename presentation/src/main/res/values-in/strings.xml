@@ -172,8 +172,8 @@
     <string name="scheduled_options_title">Pesan terjadwal</string>
     <string-array name="scheduled_options">
         <item>Kirim sekarang</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Salin teks</item>
+        <item>Hapus</item>
     </string-array>
     <string name="settings_category_appearance">Tampilan</string>
     <string name="settings_category_general">Umum</string>
@@ -217,6 +217,7 @@
     <string name="settings_delivery_title">Konfirmasi pengiriman</string>
     <string name="settings_delivery_summary">Mengonfirmasi bahwa pesan telah berhasil dikirim</string>
     <string name="settings_signature_title">Tanda tangan</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Hapus aksen</string>
     <string name="settings_unicode_summary">Membuang aksen dari karakter di dalam pesan SMS keluar</string>
     <string name="settings_mobile_title">Hanya nomor seluler</string>
@@ -233,7 +234,7 @@
     <string name="blocking_drop_title">Tolak pesan</string>
     <string name="blocking_drop_summary">Tolak pesan masuk dari pengirim yang diblokir</string>
     <string name="blocking_conversations">Percakapan diblokir</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_manager_title">Pengelola Pemblokiran</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Fitur pemblokiran pesan di dalam QKSMS</string>
     <string name="blocking_manager_call_control_summary">Otomatis menyaring panggilan dan pesan di dalam satu tempat! Community IQ™ memungkinkan anda memblokir pesan yang tidak diinginkan dari daftar spammer</string>

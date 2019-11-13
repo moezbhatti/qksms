@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Conferme di recapito</string>
     <string name="settings_delivery_summary">Conferma che i messaggi siano stati inviati con successo</string>
     <string name="settings_signature_title">Firma</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Elimina gli accenti</string>
     <string name="settings_unicode_summary">Rimuovi gli accenti dai caratteri negli SMS in uscita</string>
     <string name="settings_mobile_title">Solo numeri mobili</string>

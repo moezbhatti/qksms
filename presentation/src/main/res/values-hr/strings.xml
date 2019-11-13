@@ -221,6 +221,7 @@
     <string name="settings_delivery_title">Potvrde o dostavi</string>
     <string name="settings_delivery_summary">Budite sigurni da su se poruke uspješno poslale</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Strip naglasci</string>
     <string name="settings_unicode_summary">Uklonite naglaske sa znakova u odlaznim SMS porukama</string>
     <string name="settings_mobile_title">Mobile numbers only</string>

@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Leveransrapporter</string>
     <string name="settings_delivery_summary">Bekräfta att meddelanden har skickats</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Ta bort accenter</string>
     <string name="settings_unicode_summary">Ta bort accenter från tecken i utåtgående SMS-meddelanden</string>
     <string name="settings_mobile_title">Endast mobilnummer</string>

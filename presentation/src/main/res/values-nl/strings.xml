@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Afleverrapporten</string>
     <string name="settings_delivery_summary">Bevestig dat berichten met succes zijn verzonden</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Verwijder accenten</string>
     <string name="settings_unicode_summary">Verwijder accenten van karakters voor uitgaande berichten</string>
     <string name="settings_mobile_title">Alleen GSM-nummers</string>

@@ -227,6 +227,7 @@
     <string name="settings_delivery_title">تأكيدات الإستلام</string>
     <string name="settings_delivery_summary">تأكيد أنه تم إرسال الرسائل بنجاح</string>
     <string name="settings_signature_title">توقيع</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">نزع حركات التشكيل</string>
     <string name="settings_unicode_summary">حذف حركات التشكيل من المحارف في الرسائل النصية الصادرة</string>
     <string name="settings_mobile_title">أرقام الهواتف النقالة فقط</string>

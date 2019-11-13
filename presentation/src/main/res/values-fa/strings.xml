@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">تأیید تحویل</string>
     <string name="settings_delivery_summary">تأیید ارسال موفق پیام</string>
     <string name="settings_signature_title">امضا</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">حذف لهجه‌ها</string>
     <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
     <string name="settings_mobile_title">فقط شماره های تلفن</string>

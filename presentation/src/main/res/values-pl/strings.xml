@@ -178,8 +178,8 @@
     <string name="scheduled_options_title">Zaplanowana wiadomość</string>
     <string-array name="scheduled_options">
         <item>Wyślij teraz</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Skopiuj treść</item>
+        <item>Usuń</item>
     </string-array>
     <string name="settings_category_appearance">Wygląd</string>
     <string name="settings_category_general">Ogólne</string>
@@ -223,6 +223,7 @@
     <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
     <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
     <string name="settings_signature_title">Podpis</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Usuwaj ogonki</string>
     <string name="settings_unicode_summary">Usuwaj ogonki ze znaków w wiadomościach</string>
     <string name="settings_mobile_title">Tylko numery komórkowe</string>

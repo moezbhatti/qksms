@@ -223,6 +223,7 @@
     <string name="settings_delivery_title">Звіти про доставку</string>
     <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
     <string name="settings_signature_title">Підпис</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Видалити акценти</string>
     <string name="settings_unicode_summary">Видалення акцентів з символів у вихідних SMS-повідомленнях</string>
     <string name="settings_mobile_title">Лише номери мобільних</string>

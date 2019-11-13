@@ -217,6 +217,7 @@
     <string name="settings_delivery_title">Xác nhận đã gửi tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
     <string name="settings_signature_title">Chữ ký</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Bỏ dấu</string>
     <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
     <string name="settings_mobile_title">Lọc số di động</string>

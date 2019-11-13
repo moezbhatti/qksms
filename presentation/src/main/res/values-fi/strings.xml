@@ -19,27 +19,27 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <resources>
-    <string name="shortcut_compose_long_label">New conversation</string>
-    <string name="shortcut_compose_short_label">Compose</string>
-    <string name="shortcut_compose_disabled_message">Shortcut disabled</string>
-    <string name="title_archived">Arkistoidut</string>
+    <string name="shortcut_compose_long_label">Uusi keskustelu</string>
+    <string name="shortcut_compose_short_label">Kirjoita</string>
+    <string name="shortcut_compose_disabled_message">Pikakuvake pois käytöstä</string>
+    <string name="title_archived">Arkisto</string>
     <string name="title_settings">Asetukset</string>
     <string name="title_notification_prefs">Ilmoitukset</string>
     <string name="title_theme">Teema</string>
-    <string name="title_conversations">Haku saapuneista&#8230;</string>
-    <string name="title_compose">Kirjoita</string>
+    <string name="title_conversations">Hae saapuneista&#8230;</string>
+    <string name="title_compose">Kirjoita nimi tai numero</string>
     <string name="setup_skip">Ohita</string>
     <string name="setup_next">Jatka</string>
     <string name="menu_call">Soita</string>
-    <string name="menu_info">Tiedot</string>
+    <string name="menu_info">Lisätiedot</string>
     <string name="menu_save">Tallenna galleriaan</string>
     <string name="main_drawer_open_cd">Avaa navigointilaatikko</string>
     <string name="main_title_selected">%d valittu</string>
-    <string name="main_menu_clear">Tyhjä</string>
+    <string name="main_menu_clear">Tyhjennä</string>
     <string name="main_menu_archive">Arkistoi</string>
     <string name="main_menu_unarchive">Poista arkistosta</string>
     <string name="main_menu_delete">Poista</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">Lisää yhteystietoihin</string>
     <string name="main_menu_pin">Kiinnitä</string>
     <string name="main_menu_unpin">Irrota</string>
     <string name="main_menu_read">Merkitse luetuksi</string>
@@ -47,7 +47,7 @@
     <string name="main_menu_block">Estä</string>
     <string name="main_syncing">Synkronoidaan viestejä&#8230;</string>
     <string name="main_sender_you">Sinä: %s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">Luonnos: %s</string>
     <string name="main_message_results_title">Tuloksia viesteissä</string>
     <string name="main_message_results">%d viestiä</string>
     <string name="inbox_empty_text">Keskustelusi näkyvät tässä</string>
@@ -68,9 +68,9 @@
     <string name="drawer_more">Lisää</string>
     <string name="drawer_settings">Asetukset</string>
     <string name="drawer_help">Apu ja palaute</string>
-    <string name="drawer_invite">Invite friends</string>
-    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
-    <string name="rate_title">Nautitko QKSMS:tä?</string>
+    <string name="drawer_invite">Kutsu kavereita</string>
+    <string name="drawer_plus_banner_summary">Avaa mahtavia uusia ominaisuuksia ja tue kehitystä</string>
+    <string name="rate_title">Tykkäätkö QKSMS:tä?</string>
     <string name="rate_summary">Jaa rakkautta ja arvostele meidät Google Playssä!</string>
     <string name="rate_okay">Okei!</string>
     <string name="rate_dismiss">HYLKÄÄ</string>
@@ -81,7 +81,7 @@
     </plurals>
     <string-array name="message_options">
         <item>Kopioi teksti</item>
-        <item>Välitä</item>
+        <item>Edelleenlähetä</item>
         <item>Poista</item>
     </string-array>
     <string name="compose_title_selected">%d valittu</string>
@@ -89,11 +89,11 @@
     <string name="compose_send_group_title">Lähetä ryhmäviestinä</string>
     <string name="compose_send_group_summary">Vastaanottajat ja vastaukset näkyvät kaikille</string>
     <string name="compose_messages_empty">Tämä on keskustelusi alku. Sano jotain mukavaa!</string>
-    <string name="compose_vcard_label">Contact card</string>
-    <string name="compose_scheduled_for">Scheduled for</string>
+    <string name="compose_vcard_label">Käyntikortti</string>
+    <string name="compose_scheduled_for">Ajoitettu</string>
     <string name="compose_scheduled_future">Valitun ajan täytyy olla tulevaisuudessa!</string>
-    <string name="compose_scheduled_plus">Sinun täytyy avata QKSMS + käyttääksesi ajoitettua viestintää</string>
-    <string name="compose_scheduled_toast">Added to scheduled messages</string>
+    <string name="compose_scheduled_plus">Sinun täytyy avata QKSMS+ ajoittaaksesi viestejä</string>
+    <string name="compose_scheduled_toast">Viesti ajoitettu</string>
     <string name="compose_hint">Kirjoita viesti&#8230;</string>
     <string name="compose_menu_copy">Kopioi teksti</string>
     <string name="compose_menu_forward">Forward</string>
@@ -116,55 +116,55 @@
     <string name="compose_gallery_cd">Liitä kuva</string>
     <string name="compose_camera_cd">Ota kuva</string>
     <string name="compose_schedule_cd">Ajoita viesti</string>
-    <string name="compose_contact_cd">Attach a contact</string>
-    <string name="compose_contact_error">Error reading contact</string>
-    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_contact_cd">Liitä yhteystieto</string>
+    <string name="compose_contact_error">Yhteystiedon lukuvirhe</string>
+    <string name="compose_sim_cd">%s valittu, vaihda SIM-kortti</string>
     <string name="compose_send_cd">Lähetä viesti</string>
     <string name="message_status_sending">Lähetetään&#8230;</string>
     <string name="message_status_delivered">Toimitettu: %s</string>
     <string name="message_status_failed">Lähettäminen epäonnistui. Yritä uudelleen napauttamalla</string>
-    <string name="info_title">Tiedot</string>
+    <string name="info_title">Lisätiedot</string>
     <string name="info_name">Keskustelun otsikko</string>
     <string name="info_notifications">Ilmoitukset</string>
     <string name="info_theme">Teema</string>
     <string name="info_archive">Arkistoi</string>
     <string name="info_unarchive">Poista arkistosta</string>
     <string name="info_block">Estä</string>
-    <string name="info_unblock">Poista esto</string>
+    <string name="info_unblock">Salli</string>
     <string name="info_delete">Poista keskustelu</string>
-    <string name="gallery_error">Couldn\'t load media</string>
+    <string name="gallery_error">Mediaa ei voitu ladata</string>
     <string name="gallery_toast_saved">Tallennettu galleriaan</string>
-    <string name="backup_title">Backup and restore</string>
-    <string name="backup_backing_up">Backing up messages</string>
-    <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
-    <string name="backup_loading">Loading&#8230;</string>
-    <string name="backup_never">Never</string>
-    <string name="backup_restore_title">Restore</string>
-    <string name="backup_restore_summary">Select a backup</string>
-    <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
-    <string name="backup_restore_error_backup">Backup in progress&#8230;</string>
-    <string name="backup_restore_error_restore">Restore in progress&#8230;</string>
-    <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
-    <string name="backup_restore_stop_title">Stop restore</string>
-    <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
-    <string name="backup_restore_dialog_title">Backups</string>
-    <string name="backup_restore_dialog_empty">No backups found</string>
+    <string name="backup_title">Varmuuskopioi ja palauta</string>
+    <string name="backup_backing_up">Viestejä varmuuskopioidaan</string>
+    <string name="backup_restoring">Viestejä palautetaan</string>
+    <string name="backup_last">Viimeisin varmuuskopio</string>
+    <string name="backup_loading">Ladataan&#8230;</string>
+    <string name="backup_never">Ei koskaan</string>
+    <string name="backup_restore_title">Palauta</string>
+    <string name="backup_restore_summary">Valitse varmuuskopio</string>
+    <string name="backup_restore_error_plus">Ole hyvä ja avaa QKSMS+ käyttääksesi varmuuskopiointia ja palautusta</string>
+    <string name="backup_restore_error_backup">Varmuuskopiointi käynnissä&#8230;</string>
+    <string name="backup_restore_error_restore">Palautus käynnissä&#8230;</string>
+    <string name="backup_restore_confirm_title">Palauta varmuuskopio</string>
+    <string name="backup_restore_confirm_message">Oletko varma, että haluat palauttaa viestisi tästä varmuuskopiosta?</string>
+    <string name="backup_restore_stop_title">Pysäytä palautus</string>
+    <string name="backup_restore_stop_message">Viestit, jotka on jo palautettu, pysyvät laitteessasi</string>
+    <string name="backup_restore_dialog_title">Varmuuskopiot</string>
+    <string name="backup_restore_dialog_empty">Varmuuskopioita ei löytynyt</string>
     <plurals name="backup_message_count">
-        <item quantity="one">%d message</item>
-        <item quantity="other">%d messages</item>
+        <item quantity="one">%d viesti</item>
+        <item quantity="other">%d viestiä</item>
     </plurals>
-    <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
-    <string name="backup_now">Backup now</string>
-    <string name="backup_progress_parsing">Parsing backup&#8230;</string>
-    <string name="backup_progress_running">%d/%d messages</string>
-    <string name="backup_progress_saving">Saving backup&#8230;</string>
-    <string name="backup_progress_syncing">Syncing messages&#8230;</string>
-    <string name="backup_progress_finished">Finished!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_disclaimer">Tällä hetkellä vain SMS-viestejä voidaan varmuuskopioita ja palauttaa. MMS-viestien tuki ja ajoitetut varmuuskopiot saapuvat pian!</string>
+    <string name="backup_now">Varmuuskopioi nyt</string>
+    <string name="backup_progress_parsing">Varmuuskopiota jäsennetään&#8230;</string>
+    <string name="backup_progress_running">%d/%d viestiä</string>
+    <string name="backup_progress_saving">Varmuuskopiota tallennetaan&#8230;</string>
+    <string name="backup_progress_syncing">Synkronoidaan viestejä&#8230;</string>
+    <string name="backup_progress_finished">Valmis!</string>
+    <string name="backup_notification_channel_name">Varmuuskopiointi ja palautus</string>
     <string name="scheduled_title">Ajoitettu</string>
-    <string name="scheduled_empty_description">Automatically send a message, at the exact moment you\'d like</string>
+    <string name="scheduled_empty_description">Lähetä viesti automaattisesti haluamallasi ajankohdalla</string>
     <string name="scheduled_empty_message_1">Hey! When was your birthday again?</string>
     <string name="scheduled_empty_message_2">Se on joulukuun 23. päivänä</string>
     <string name="scheduled_empty_message_3">Hyvää syntymäpäivää! Katso miten hyvä ystävä olen, muistan syntymäpäiväsi</string>
@@ -174,15 +174,15 @@
     <string name="scheduled_options_title">Ajoitettu viesti</string>
     <string-array name="scheduled_options">
         <item>Lähetä nyt</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Kopioi teksti</item>
+        <item>Poista</item>
     </string-array>
     <string name="settings_category_appearance">Ulkoasu</string>
     <string name="settings_category_general">Yleiset</string>
-    <string name="settings_category_qkreply">QK Reply</string>
+    <string name="settings_category_qkreply">QK Vastaus</string>
     <string name="settings_theme_title">Teema</string>
     <string name="settings_night_title">Yötila</string>
-    <string name="settings_black_title">Pelkkä musta yötila</string>
+    <string name="settings_black_title">Musta yötilä</string>
     <string name="settings_night_start_title">Aloitusaika</string>
     <string name="settings_night_end_title">Lopetusaika</string>
     <string name="settings_text_size_title">Fonttikoko</string>
@@ -194,34 +194,35 @@
     <string name="settings_notification_action_1">Nappi 1</string>
     <string name="settings_notification_action_2">Nappi 2</string>
     <string name="settings_notification_action_3">Nappi 3</string>
-    <string name="settings_notification_previews_title">Notification previews</string>
+    <string name="settings_notification_previews_title">Esikatselut ilmoituksessa</string>
     <string name="settings_vibration_title">Värinä</string>
     <string name="settings_ringtone_title">Ääni</string>
     <string name="settings_ringtone_none">Ei mitään</string>
-    <string name="settings_qkreply_title">QK Reply</string>
-    <string name="settings_qkreply_summary">Popup for new messages</string>
-    <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>
+    <string name="settings_qkreply_title">QK Vastaus</string>
+    <string name="settings_qkreply_summary">Ponnahdusikkuna uusille viesteille</string>
+    <string name="settings_qkreply_tap_dismiss_title">Sulje napauttamalla</string>
     <string name="settings_qkreply_tap_dismiss_summary">Tap outside of the popup to close it</string>
     <string name="settings_delayed_title">Lykätty lähetys</string>
-    <string name="settings_swipe_actions">Swipe actions</string>
+    <string name="settings_swipe_actions">Pyyhkäisytoiminnot</string>
     <string name="settings_swipe_actions_summary">Configure swipe actions for conversations</string>
-    <string name="settings_swipe_actions_right">Right swipe</string>
-    <string name="settings_swipe_actions_left">Left swipe</string>
-    <string name="settings_swipe_actions_change">CHANGE</string>
+    <string name="settings_swipe_actions_right">Pyyhkäisy oikealle</string>
+    <string name="settings_swipe_actions_left">Pyyhkäisy vasemmalle</string>
+    <string name="settings_swipe_actions_change">MUUTA</string>
     <string-array name="settings_swipe_actions">
-        <item>None</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Call</item>
-        <item>Mark as read</item>
-        <item>Mark as unread</item>
+        <item>Ei mitään</item>
+        <item>Arkistoi</item>
+        <item>Poista</item>
+        <item>Soita</item>
+        <item>Merkitse luetuksi</item>
+        <item>Merkitse lukemattomaksi</item>
     </string-array>
-    <string name="settings_delivery_title">Delivery confirmations</string>
-    <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-    <string name="settings_signature_title">Signature</string>
-    <string name="settings_unicode_title">Strip accents</string>
-    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
-    <string name="settings_mobile_title">Mobile numbers only</string>
+    <string name="settings_delivery_title">Välitystiedot</string>
+    <string name="settings_delivery_summary">Vahvista, että viestit lähetettiin onnistuneesti</string>
+    <string name="settings_signature_title">Allekirjoitus</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_unicode_title">Käytä yksinkertaisia merkkejä</string>
+    <string name="settings_unicode_summary">Käytä yksinkertaisia merkkejä lähtevissä SMS-viesteissä</string>
+    <string name="settings_mobile_title">Vain matkapuhelinnumerot</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
     <string name="settings_mms_size_title">Pakkaa MMS-liitteet automaattisesti</string>
     <string name="settings_sync_title">Synkronoi viestit</string>
@@ -231,27 +232,27 @@
     <string name="settings_logging_enabled">Debug logging enabled</string>
     <string name="settings_logging_disabled">Debug logging disabled</string>
     <string name="settings_delay_duration_hint">Syötä kesto (sekuntia)</string>
-    <string name="blocking_title">Blocking</string>
+    <string name="blocking_title">Esto</string>
     <string name="blocking_drop_title">Drop messages</string>
     <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_conversations">Estetyt keskustelut</string>
+    <string name="blocking_manager_title">Estojen hallinta</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_title">Kopioi estetyt numerot</string>
     <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocked_numbers_title">Estetyt numerot</string>
+    <string name="blocked_numbers_empty">Estämäsi numerot näkyvät tässä</string>
+    <string name="blocked_numbers_add_cd">Estä uusi numero</string>
+    <string name="blocked_numbers_dialog_title">Estä viestit numerosta</string>
+    <string name="blocked_numbers_dialog_hint">Puhelinnumero</string>
+    <string name="blocked_numbers_dialog_block">Estä</string>
+    <string name="blocked_messages_title">Estetyt viestit</string>
+    <string name="blocked_messages_empty">Estämäsi viestit näkyvät täällä</string>
+    <string name="blocking_block_title">Estä</string>
+    <string name="blocking_unblock_title">Salli</string>
     <plurals name="blocking_block_external">
         <item quantity="one">Continue to %s and block this number</item>
         <item quantity="other">Continue to %s and block these numbers</item>
@@ -268,7 +269,7 @@
     <string name="about_contact_title">Yhteystiedot</string>
     <string name="about_license_title">Lisenssi</string>
     <string name="about_copyright_title">Tekijänoikeus</string>
-    <string name="qksms_plus_description_title">Support development, unlock everything</string>
+    <string name="qksms_plus_description_title">Tue kehitystä, avaa kaikki</string>
     <string name="qksms_plus_description_summary">You can save a starving developer for just %s</string>
     <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Lifetime upgrade for %1$s %2$s</string>
@@ -289,7 +290,7 @@
     <string name="qksms_plus_scheduled_summary">Ajoita viestit lähtemään automaattisesti tiettyinä aikoina ja päivinä</string>
     <string name="qksms_plus_delayed_title">Lykätty lähetys</string>
     <string name="qksms_plus_delayed_summary">Odota muutama sekunti ennen viestin lähettämistä</string>
-    <string name="qksms_plus_night_title">Automatic night mode</string>
+    <string name="qksms_plus_night_title">Automaattinen yötila</string>
     <string name="qksms_plus_night_summary">Enable night mode based on the time of day</string>
     <string name="qksms_plus_blacklist_title">Edistynyt estäminen</string>
     <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
@@ -303,7 +304,7 @@
     <string name="widget_more">Näytä lisää keskusteluja</string>
     <string name="qkreply_menu_read">Merkitse luetuksi</string>
     <string name="qkreply_menu_call">Soita</string>
-    <string name="qkreply_menu_delete">Delete</string>
+    <string name="qkreply_menu_delete">Poista</string>
     <string name="qkreply_menu_expand">Näytä lisää</string>
     <string name="qkreply_menu_collapse">Näytä vähemmän</string>
     <string name="qkreply_menu_view">Avaa keskustelu</string>
@@ -315,14 +316,14 @@
         <item>Merkitse luetuksi</item>
         <item>Vastaa</item>
         <item>Soita</item>
-        <item>Delete</item>
+        <item>Poista</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">Kyllä</string>
+    <string name="button_continue">Jatka</string>
     <string name="button_cancel">Peruuta</string>
     <string name="button_delete">Poista</string>
     <string name="button_save">Tallenna</string>
-    <string name="button_stop">Stop</string>
+    <string name="button_stop">Lopeta</string>
     <string name="button_more">Lisää</string>
     <string name="button_set">Aseta</string>
     <string name="button_undo">Peru</string>
@@ -336,10 +337,10 @@
     <string name="notification_message_failed_title">Viestiä ei lähetetty</string>
     <string name="notification_message_failed_text">Viestin lähetys vastaanottajalle %s epäonnistui</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Järjestelmä</item>
+        <item>Pois käytöstä</item>
+        <item>Aina päällä</item>
+        <item>Automaattinen</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>Näytä nimi ja viesti</item>

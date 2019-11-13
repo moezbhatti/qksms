@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Confirmaciones de envió</string>
     <string name="settings_delivery_summary">Confirmar cuando los mensajes se envien con éxito</string>
     <string name="settings_signature_title">Firma</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Detalles en tiras</string>
     <string name="settings_unicode_summary">Quitar acentos de caracteres en los mensajes SMS salientes</string>
     <string name="settings_mobile_title">Sólo números móviles</string>

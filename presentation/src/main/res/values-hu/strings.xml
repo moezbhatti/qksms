@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>
     <string name="settings_signature_title">Aláírás</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Ékezetek törlése</string>
     <string name="settings_unicode_summary">A kimenő SMS-üzenetek ékezetes karaktereinek átalakítása</string>
     <string name="settings_mobile_title">Csak mobilszámok</string>

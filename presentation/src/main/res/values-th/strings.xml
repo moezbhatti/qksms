@@ -217,6 +217,7 @@
     <string name="settings_delivery_title">ยืนยันการส่ง</string>
     <string name="settings_delivery_summary">ยืนยันว่า ส่งข้อความเรียบร้อยแล้ว</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">ลบอักษรพิเศษ accents</string>
     <string name="settings_unicode_summary">ลบอักษรพิเศษ accents ออกจากข้อความ SMS ที่กำลังจะส่งออก</string>
     <string name="settings_mobile_title">Mobile numbers only</string>

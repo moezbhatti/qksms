@@ -218,11 +218,12 @@
         <item>Удалить</item>
         <item>Позвонить</item>
         <item>Отметить прочитанным</item>
-        <item>Пометить непрочитанным</item>
+        <item>Отметить непрочитанным</item>
     </string-array>
     <string name="settings_delivery_title">Отчёты о доставке</string>
     <string name="settings_delivery_summary">Подтверждение успешной отправки сообщений</string>
     <string name="settings_signature_title">Подпись</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Удалять акценты</string>
     <string name="settings_unicode_summary">Удаление акцентов с символов в исходящих SMS-сообщениях</string>
     <string name="settings_mobile_title">Только мобильные номера</string>

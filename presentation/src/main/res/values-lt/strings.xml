@@ -223,6 +223,7 @@
     <string name="settings_delivery_title">Žinučių pristatymo patvirtinimai</string>
     <string name="settings_delivery_summary">Patvirtinti, kad pranešimai buvo sėkmingai išsiųsti</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Trinti akcentus</string>
     <string name="settings_unicode_summary">Ištrinti jūsų SMS žinučių simbolių akcentus</string>
     <string name="settings_mobile_title">Mobile numbers only</string>

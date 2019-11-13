@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">전송 확인</string>
     <string name="settings_delivery_summary">전송 성공을 확인합니다</string>
     <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">스트립 악센트</string>
     <string name="settings_unicode_summary">SMS를 주고받을 때, 대문자 없애기</string>
     <string name="settings_mobile_title">전화번호만 보이기</string>

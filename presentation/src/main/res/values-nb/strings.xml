@@ -219,6 +219,7 @@
     <string name="settings_delivery_title">Leveringsbekreftelse</string>
     <string name="settings_delivery_summary">Bekreft at melding ble sendt</string>
     <string name="settings_signature_title">Signatur</string>
+    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Ta bort akutt-tegn</string>
     <string name="settings_unicode_summary">Ta bort akutt-tegn fra utgående meldinger</string>
     <string name="settings_mobile_title">Kun mobilnummre</string>
