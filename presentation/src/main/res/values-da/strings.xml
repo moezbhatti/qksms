@@ -219,7 +219,7 @@
     <string name="settings_delivery_title">Leveringskvitteringer</string>
     <string name="settings_delivery_summary">Bekræft, at SMS\'er er afsendt korrekt</string>
     <string name="settings_signature_title">Signatur</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Føj en signatur til slutningen af dine beskeder</string>
     <string name="settings_unicode_title">Fjern betoninger</string>
     <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
     <string name="settings_mobile_title">Kun mobilnumre</string>

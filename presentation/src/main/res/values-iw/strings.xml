@@ -223,7 +223,7 @@
     <string name="settings_delivery_title">אישור מסירה</string>
     <string name="settings_delivery_summary">אישור שההודעות נשלחו בהצלחה</string>
     <string name="settings_signature_title">חתימה</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">הוספת חתימה לסוף ההודעות שלך</string>
     <string name="settings_unicode_title">סינון סימנים דיאקריטיים</string>
     <string name="settings_unicode_summary">הסרת סימנים דיאקריטיים מתווים במסרונים יוצאים</string>
     <string name="settings_mobile_title">מספרי ניידים בלבד</string>

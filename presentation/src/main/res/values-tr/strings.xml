@@ -219,7 +219,7 @@
     <string name="settings_delivery_title">İletim raporları</string>
     <string name="settings_delivery_summary">Mesajınızın sorunsuz gönderildiğinin onayını alın</string>
     <string name="settings_signature_title">İmza</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Mesajlarınızın sonuna bir imza ekleyin</string>
     <string name="settings_unicode_title">Şeritli aksanlar</string>
     <string name="settings_unicode_summary">Giden SMS mesajlarından aksanlı karakterleri kaldırın</string>
     <string name="settings_mobile_title">Sadece cep telefonu numaraları</string>

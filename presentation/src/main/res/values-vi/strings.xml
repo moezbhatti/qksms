@@ -39,7 +39,7 @@
     <string name="main_menu_archive">Lưu trữ</string>
     <string name="main_menu_unarchive">Hủy lưu trữ</string>
     <string name="main_menu_delete">Xóa</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">Thêm vào danh bạ</string>
     <string name="main_menu_pin">Ghim lên đầu</string>
     <string name="main_menu_unpin">Bỏ ghim</string>
     <string name="main_menu_read">Đánh dấu đã đọc</string>
@@ -47,7 +47,7 @@
     <string name="main_menu_block">Chặn liên hệ</string>
     <string name="main_syncing">Đang đồng bộ tin nhắn&#8230;</string>
     <string name="main_sender_you">Bạn: %s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">Bản nháp: %s</string>
     <string name="main_message_results_title">Kết quả trong tin nhắn</string>
     <string name="main_message_results">%d tin nhắn</string>
     <string name="inbox_empty_text">Các cuộc trò chuyện của bạn sẽ xuất hiện ở đây</string>
@@ -172,8 +172,8 @@
     <string name="scheduled_options_title">Tin nhắn đã hẹn giờ</string>
     <string-array name="scheduled_options">
         <item>Gửi ngay</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Sao chép kí tự</item>
+        <item>Xoá</item>
     </string-array>
     <string name="settings_category_appearance">Giao diện</string>
     <string name="settings_category_general">Chung</string>
@@ -217,7 +217,7 @@
     <string name="settings_delivery_title">Xác nhận đã gửi tin</string>
     <string name="settings_delivery_summary">Xác nhận rằng các tin nhắn được gửi thành công</string>
     <string name="settings_signature_title">Chữ ký</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Thêm chữ kí vào cuối đoạn tin nhắn của bạn</string>
     <string name="settings_unicode_title">Bỏ dấu</string>
     <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
     <string name="settings_mobile_title">Lọc số di động</string>

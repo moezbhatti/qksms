@@ -217,7 +217,7 @@
     <string name="settings_delivery_title">配信確認</string>
     <string name="settings_delivery_summary">メッセージが正常に送信されたことを確認します</string>
     <string name="settings_signature_title">署名</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">メッセージの最後に署名を追加します</string>
     <string name="settings_unicode_title">アクセントの除去</string>
     <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
     <string name="settings_mobile_title">携帯電話番号のみ</string>
