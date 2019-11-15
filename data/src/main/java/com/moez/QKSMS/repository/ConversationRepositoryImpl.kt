@@ -368,6 +368,8 @@ class ConversationRepositoryImpl @Inject constructor(
                 ?.let { conversation ->
                     val realm = Realm.getDefaultInstance()
                     val contacts = realm.copyFromRealm(realm.where(Contact::class.java).findAll())
+                    val lastMessage = realm.where(Message::class.java).equalTo("threadId", threadId)
+                            .sort("date", Sort.DESCENDING).findFirst()?.let(realm::copyFromRealm)
 
                     val recipients = conversation.recipients
                             .map { recipient -> recipient.id }
@@ -387,6 +389,7 @@ class ConversationRepositoryImpl @Inject constructor(
 
                     conversation.recipients.clear()
                     conversation.recipients.addAll(recipients)
+                    conversation.lastMessage = lastMessage
                     realm.executeTransaction { it.insertOrUpdate(conversation) }
                     realm.close()
 
