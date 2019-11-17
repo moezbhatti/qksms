@@ -71,12 +71,19 @@ class ContactsViewModel @Inject constructor(
                 }
             }
 
+    private var shouldOpenKeyboard: Boolean = true
+
     init {
         syncContacts.execute(Unit)
     }
 
     override fun bindView(view: ContactsContract) {
         super.bindView(view)
+
+        if (shouldOpenKeyboard) {
+            view.openKeyboard()
+            shouldOpenKeyboard = false
+        }
 
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected

@@ -47,6 +47,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
+import com.moez.QKSMS.common.util.extensions.hideKeyboard
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
@@ -207,10 +208,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         toolbar.menu.findItem(R.id.next)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
         toolbar.menu.findItem(R.id.clear)?.isVisible = state.selectedMessages == 0 && state.query.isNotEmpty()
 
-        if (chipsAdapter.data.isEmpty() && state.selectedChips.isNotEmpty()) {
-            message.showKeyboard()
-        }
-
         chipsAdapter.data = state.selectedChips
 
         loading.setVisible(state.loading)
@@ -289,10 +286,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun showContacts(chips: List<Chip>) {
+        message.hideKeyboard()
         val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
         val intent = Intent(this, ContactsActivity::class.java)
                 .putExtra(ContactsActivity.ChipsKey, serialized)
         startActivityForResult(intent, SELECT_CONTACT_REQUEST_CODE)
+    }
+
+    override fun showKeyboard() {
+        message.postDelayed({
+            message.showKeyboard()
+        }, 200)
     }
 
     override fun requestCamera() {

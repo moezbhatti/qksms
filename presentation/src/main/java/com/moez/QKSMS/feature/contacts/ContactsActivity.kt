@@ -27,6 +27,8 @@ import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.extensions.hideKeyboard
+import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.common.widget.QkDialog
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
@@ -95,7 +97,14 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         }
     }
 
+    override fun openKeyboard() {
+        search.postDelayed({
+            search.showKeyboard()
+        }, 200)
+    }
+
     override fun finish(result: HashMap<String, String?>) {
+        search.hideKeyboard()
         val intent = Intent().putExtra(ChipsKey, result)
         setResult(Activity.RESULT_OK, intent)
         finish()

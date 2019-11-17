@@ -35,6 +35,7 @@ interface ContactsContract : QkView<ContactsState> {
     val phoneNumberSelectedIntent: Subject<Optional<Long>>
     val phoneNumberActionIntent: Subject<PhoneNumberAction>
 
+    fun openKeyboard()
     fun finish(result: HashMap<String, String?>)
 
 }

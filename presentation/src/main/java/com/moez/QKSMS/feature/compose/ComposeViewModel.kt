@@ -243,6 +243,7 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { chips ->
                     chipsReducer.onNext { list -> list + chips }
+                    view.showKeyboard()
                 }
 
         // Set the contact suggestions list to visible when the add button is pressed
