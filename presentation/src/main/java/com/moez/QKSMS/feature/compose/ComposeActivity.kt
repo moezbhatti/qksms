@@ -41,7 +41,6 @@ import androidx.lifecycle.ViewModelProviders
 import com.google.android.flexbox.FlexboxLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
@@ -54,14 +53,9 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
-import com.moez.QKSMS.common.widget.QkDialog
-import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ChipsAdapter
-import com.moez.QKSMS.feature.compose.editing.ComposeItem
-import com.moez.QKSMS.feature.compose.editing.ComposeItemAdapter
-import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
-import com.moez.QKSMS.feature.compose.editing.PhoneNumberPickerAdapter
+import com.moez.QKSMS.feature.contacts.ContactsActivity
 import com.moez.QKSMS.model.Attachment
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -73,32 +67,26 @@ import kotlinx.android.synthetic.main.compose_activity.*
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
+import kotlin.collections.HashMap
 
 class ComposeActivity : QkThemedActivity(), ComposeView {
 
     companion object {
-        private const val CAMERA_REQUEST_CODE = 0
-        private const val GALLERY_REQUEST_CODE = 1
-        private const val CONTACT_REQUEST_CODE = 2
+        private const val SELECT_CONTACT_REQUEST_CODE = 0
+        private const val TAKE_PHOTO_REQUEST_CODE = 1
+        private const val ATTACH_PHOTO_REQUEST_CODE = 2
+        private const val ATTACH_CONTACT_REQUEST_CODE = 3
     }
 
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
     @Inject lateinit var chipsAdapter: ChipsAdapter
-    @Inject lateinit var contactsAdapter: ComposeItemAdapter
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject lateinit var messageAdapter: MessagesAdapter
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var phoneNumberAdapter: PhoneNumberPickerAdapter
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
-    override val queryChangedIntent: Observable<CharSequence> by lazy { search.textChanges() }
-    override val queryBackspaceIntent: Observable<*> by lazy { search.backspaces }
-    override val queryEditorActionIntent: Observable<Int> by lazy { search.editorActions() }
-    override val composeItemPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.clicks }
-    override val composeItemLongPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.longClicks }
-    override val phoneNumberSelectedIntent: Subject<Optional<Long>> by lazy { phoneNumberAdapter.selectedItemChanges }
-    override val phoneNumberActionIntent: Subject<PhoneNumberAction> = PublishSubject.create()
+    override val chipsSelectedIntent: Subject<HashMap<String, String?>> = PublishSubject.create()
     override val chipDeletedIntent: Subject<Chip> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
@@ -124,18 +112,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
 
-    private val phoneNumberDialog by lazy {
-        QkDialog(this).apply {
-            titleRes = R.string.compose_number_picker_title
-            adapter = phoneNumberAdapter
-            positiveButton = R.string.compose_number_picker_always
-            positiveButtonListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.ALWAYS) }
-            negativeButton = R.string.compose_number_picker_once
-            negativeButtonListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.JUST_ONCE) }
-            cancelListener = { phoneNumberActionIntent.onNext(PhoneNumberAction.CANCEL) }
-        }
-    }
-
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
     private var cameraDestination: Uri? = null
@@ -153,7 +129,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         chipsAdapter.view = chips
 
-        contacts.itemAnimator = null
         chips.itemAnimator = null
         chips.layoutManager = FlexboxLayoutManager(this)
 
@@ -209,19 +184,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         toolbarSubtitle.setVisible(state.query.isNotEmpty())
-        toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition, state.searchResults)
+        toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition,
+                state.searchResults)
 
         toolbarTitle.setVisible(!state.editingMode)
-        chips.setVisible(state.editingMode && !state.searching)
-        search.setVisible(state.editingMode && state.searching)
-        contacts.setVisible(state.editingMode && state.searching)
-        composeBar.setVisible(!state.searching && !state.loading)
+        chips.setVisible(state.editingMode)
+        composeBar.setVisible(!state.loading)
 
         // Don't set the adapters unless needed
         if (state.editingMode && chips.adapter == null) chips.adapter = chipsAdapter
-        if (state.editingMode && contacts.adapter == null) contacts.adapter = contactsAdapter
 
-        toolbar.menu.findItem(R.id.add)?.isVisible = state.editingMode && !state.searching
+        toolbar.menu.findItem(R.id.add)?.isVisible = state.editingMode
         toolbar.menu.findItem(R.id.call)?.isVisible = !state.editingMode && state.selectedMessages == 0
                 && state.query.isEmpty()
         toolbar.menu.findItem(R.id.info)?.isVisible = !state.editingMode && state.selectedMessages == 0
@@ -239,15 +212,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
 
         chipsAdapter.data = state.selectedChips
-        contactsAdapter.data = state.composeItems
-
-        if (state.selectedContact != null && !phoneNumberDialog.isShowing) {
-            phoneNumberAdapter.data = state.selectedContact.numbers
-            phoneNumberDialog.subtitle = state.selectedContact.name
-            phoneNumberDialog.show()
-        } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
-            phoneNumberDialog.dismiss()
-        }
 
         loading.setVisible(state.loading)
 
@@ -321,7 +285,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         val intent = Intent(Intent.ACTION_PICK)
                 .setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE)
 
-        startActivityForResult(Intent.createChooser(intent, null), CONTACT_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), ATTACH_CONTACT_REQUEST_CODE)
+    }
+
+    override fun showContacts(chips: List<Chip>) {
+        val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
+        val intent = Intent(this, ContactsActivity::class.java)
+                .putExtra(ContactsActivity.ChipsKey, serialized)
+        startActivityForResult(intent, SELECT_CONTACT_REQUEST_CODE)
     }
 
     override fun requestCamera() {
@@ -331,17 +302,17 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, cameraDestination)
-        startActivityForResult(Intent.createChooser(intent, null), CAMERA_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), TAKE_PHOTO_REQUEST_CODE)
     }
 
     override fun requestGallery() {
         val intent = Intent(Intent.ACTION_PICK)
-                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false)
+                .putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
                 .addFlags(Intent.FLAG_GRANT_PERSISTABLE_URI_PERMISSION)
                 .putExtra(Intent.EXTRA_LOCAL_ONLY, false)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .setType("image/*")
-        startActivityForResult(Intent.createChooser(intent, null), GALLERY_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), ATTACH_PHOTO_REQUEST_CODE)
     }
 
     override fun setDraft(draft: String) = message.setText(draft)
@@ -376,12 +347,26 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
-        if (resultCode == Activity.RESULT_OK) {
-            when (requestCode) {
-                CAMERA_REQUEST_CODE -> cameraDestination?.let(attachmentSelectedIntent::onNext)
-                GALLERY_REQUEST_CODE -> data?.data?.let(attachmentSelectedIntent::onNext)
-                CONTACT_REQUEST_CODE -> data?.data?.let(contactSelectedIntent::onNext)
+        when {
+            requestCode == SELECT_CONTACT_REQUEST_CODE -> {
+                chipsSelectedIntent.onNext(data?.getSerializableExtra(ContactsActivity.ChipsKey)
+                        ?.let { serializable -> serializable as? HashMap<String, String?> }
+                        ?: hashMapOf())
             }
+            requestCode == TAKE_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+                cameraDestination?.let(attachmentSelectedIntent::onNext)
+            }
+            requestCode == ATTACH_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+                data?.clipData?.itemCount
+                        ?.let { count -> 0 until count }
+                        ?.mapNotNull { i -> data.clipData?.getItemAt(i)?.uri }
+                        ?.forEach(attachmentSelectedIntent::onNext)
+                        ?: data?.data?.let(attachmentSelectedIntent::onNext)
+            }
+            requestCode == ATTACH_CONTACT_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+                data?.data?.let(contactSelectedIntent::onNext)
+            }
+            else -> super.onActivityResult(requestCode, resultCode, data)
         }
     }
 

@@ -22,10 +22,7 @@ import android.net.Uri
 import androidx.annotation.StringRes
 import androidx.core.view.inputmethod.InputContentInfoCompat
 import com.moez.QKSMS.common.base.QkView
-import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.Chip
-import com.moez.QKSMS.feature.compose.editing.ComposeItem
-import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
 import com.moez.QKSMS.model.Attachment
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
@@ -33,13 +30,7 @@ import io.reactivex.subjects.Subject
 interface ComposeView : QkView<ComposeState> {
 
     val activityVisibleIntent: Observable<Boolean>
-    val queryChangedIntent: Observable<CharSequence>
-    val queryBackspaceIntent: Observable<*>
-    val queryEditorActionIntent: Observable<Int>
-    val composeItemPressedIntent: Subject<ComposeItem>
-    val composeItemLongPressedIntent: Subject<ComposeItem>
-    val phoneNumberSelectedIntent: Subject<Optional<Long>>
-    val phoneNumberActionIntent: Subject<PhoneNumberAction>
+    val chipsSelectedIntent: Subject<HashMap<String, String?>>
     val chipDeletedIntent: Subject<Chip>
     val menuReadyIntent: Observable<Unit>
     val optionsItemIntent: Observable<Int>
@@ -70,6 +61,7 @@ interface ComposeView : QkView<ComposeState> {
     fun requestDefaultSms()
     fun requestStoragePermission()
     fun requestSmsPermission()
+    fun showContacts(chips: List<Chip>)
     fun requestCamera()
     fun requestGallery()
     fun requestDatePicker()

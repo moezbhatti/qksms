@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,27 +16,12 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.repository
+package com.moez.QKSMS.feature.contacts
 
-import android.net.Uri
+import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.model.Contact
-import com.moez.QKSMS.model.ContactGroup
-import io.reactivex.Observable
-import io.reactivex.Single
-import io.realm.RealmResults
 
-interface ContactRepository {
-
-    fun findContactUri(address: String): Single<Uri>
-
-    fun getContacts(): RealmResults<Contact>
-
-    fun getUnmanagedContact(lookupKey: String): Contact?
-
-    fun getUnmanagedContacts(starred: Boolean = false): Observable<List<Contact>>
-
-    fun getUnmanagedContactGroups(): Observable<List<ContactGroup>>
-
-    fun setDefaultPhoneNumber(lookupKey: String, phoneNumberId: Long)
-
-}
+data class ContactsState(
+    val composeItems: List<ComposeItem> = ArrayList(),
+    val selectedContact: Contact? = null // For phone number picker
+)

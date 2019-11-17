@@ -109,6 +109,7 @@
             android:windowSoftInputMode="adjustResize" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
         <activity android:name=".feature.backup.BackupActivity" />
+        <activity android:name=".feature.contacts.ContactsActivity" />
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>

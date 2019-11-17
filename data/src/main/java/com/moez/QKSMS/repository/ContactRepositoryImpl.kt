@@ -73,6 +73,15 @@ class ContactRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
+    override fun getUnmanagedContact(lookupKey: String): Contact? {
+        return Realm.getDefaultInstance().use { realm ->
+            realm.where(Contact::class.java)
+                    .equalTo("lookupKey", lookupKey)
+                    .findFirst()
+                    ?.let(realm::copyFromRealm)
+        }
+    }
+
     override fun getUnmanagedContacts(starred: Boolean): Observable<List<Contact>> {
         val realm = Realm.getDefaultInstance()
 

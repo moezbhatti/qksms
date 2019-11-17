@@ -54,7 +54,7 @@
         android:text="@string/compose_messages_empty"
         android:textColor="?android:attr/textColorTertiary"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
         app:textSize="secondary" />
 
     <ProgressBar
@@ -75,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="sendAsGroupBackground, sendAsGroupTitle, sendAsGroupSummary, sendAsGroupSwitch, sendAsGroupShadow"
+        app:constraint_referenced_ids="sendAsGroupBackground,sendAsGroupTitle,sendAsGroupSummary,sendAsGroupSwitch,sendAsGroupShadow"
         tools:visibility="visible" />
 
     <View
@@ -131,28 +131,11 @@
         android:background="@drawable/ab_shadow"
         app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contacts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?android:attr/windowBackground"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingTop="8dp"
-        android:paddingBottom="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:listitem="@layout/contact_list_item"
-        tools:visibility="gone" />
-
     <androidx.constraintlayout.widget.Group
         android:id="@+id/composeBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="composeBackground, messageBackground, attachments, attach, message, counter, send" />
+        app:constraint_referenced_ids="composeBackground,messageBackground,attachments,attach,message,counter,send" />
 
     <View
         android:id="@+id/composeBackground"
@@ -185,7 +168,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="scheduledTitle, scheduledTime, scheduledCancel, scheduledSeparator" />
+        app:constraint_referenced_ids="scheduledTitle,scheduledTime,scheduledCancel,scheduledSeparator" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/scheduledTitle"
@@ -338,13 +321,11 @@
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constrainedHeight="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="140dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -376,20 +357,6 @@
                 android:scrollbars="vertical"
                 tools:visibility="gone" />
 
-            <com.moez.QKSMS.common.widget.QkEditText
-                android:id="@+id/search"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:background="@null"
-                android:hint="@string/title_compose"
-                android:imeOptions="flagNoExtractUi"
-                android:inputType="textFilter|textNoSuggestions"
-                android:privateImeOptions="nm"
-                android:textColor="?android:attr/textColorPrimary"
-                android:textColorHint="?android:attr/textColorTertiary"
-                android:visibility="gone"
-                app:textSize="primary" />
-
         </LinearLayout>
 
     </androidx.appcompat.widget.Toolbar>
@@ -411,8 +378,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="contact, contactLabel, schedule, scheduleLabel, gallery, galleryLabel, camera,
-         cameraLabel, attachingBackground" />
+        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,gallery,galleryLabel,camera,cameraLabel,attachingBackground" />
 
     <View
         android:id="@+id/attachingBackground"
