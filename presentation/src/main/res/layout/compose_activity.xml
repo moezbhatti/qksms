@@ -39,7 +39,7 @@
         app:layout_constraintBottom_toBottomOf="@id/composeBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
         app:stackFromEnd="true"
         tools:listitem="@layout/message_list_item_in" />
 
