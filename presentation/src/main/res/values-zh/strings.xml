@@ -217,7 +217,7 @@
     <string name="settings_delivery_title">送達確認</string>
     <string name="settings_delivery_summary">確認訊息已成功送達</string>
     <string name="settings_signature_title">簽名</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">在訊息結尾添加簽名</string>
     <string name="settings_unicode_title">刪除讀音符號</string>
     <string name="settings_unicode_summary">刪除訊息中字母上的讀音符號</string>
     <string name="settings_mobile_title">僅限手機號碼</string>

@@ -219,7 +219,7 @@
     <string name="settings_delivery_title">Accusés de réception</string>
     <string name="settings_delivery_summary">Demander un accusé de réception pour chaque SMS envoyé</string>
     <string name="settings_signature_title">Signature</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Ajouter une signature à la fin de vos messages</string>
     <string name="settings_unicode_title">Enlever les accents</string>
     <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
     <string name="settings_mobile_title">Numéros de mobile</string>

@@ -162,7 +162,7 @@
     <string name="backup_progress_saving">Αποθήκευση αντιγράφου ασφαλείας&#8230;</string>
     <string name="backup_progress_syncing">Συγχρονισμός μηνυμάτων&#8230;</string>
     <string name="backup_progress_finished">Ολοκληρώθηκε!</string>
-    <string name="backup_notification_channel_name">Backup and restore</string>
+    <string name="backup_notification_channel_name">Αντίγραφα ασφαλείας και επαναφορά</string>
     <string name="scheduled_title">Προγραμματισμένα</string>
     <string name="scheduled_empty_description">Στείλτε μήνυμα αυτόματα, την ακριβή στιγμή που επιθυμείτε</string>
     <string name="scheduled_empty_message_1">Γεια! Πότε είπαμε ότι έχεις γενέθλια;</string>
