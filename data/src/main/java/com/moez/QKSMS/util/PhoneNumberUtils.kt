@@ -44,10 +44,8 @@ class PhoneNumberUtils @Inject constructor(context: Context) {
         }
 
         if (PhoneNumberUtils.compare(first, second)) {
-            val firstNumber = parse(first) ?: return false
-            val secondNumber = parse(second) ?: return false
-            val matchType = phoneNumberUtil.isNumberMatch(firstNumber, secondNumber)
-            if (matchType >= PhoneNumberUtil.MatchType.NSN_MATCH) {
+            val matchType = phoneNumberUtil.isNumberMatch(first, second)
+            if (matchType >= PhoneNumberUtil.MatchType.SHORT_NSN_MATCH) {
                 return true
             }
         }
