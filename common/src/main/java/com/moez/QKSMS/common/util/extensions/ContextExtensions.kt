@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common.util.extensions
 
 import android.content.Context
+import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
 import android.widget.Toast
@@ -29,6 +30,12 @@ import com.moez.QKSMS.util.tryOrNull
 fun Context.getColorCompat(colorRes: Int): Int {
     //return black as a default color, in case an invalid color ID was passed in
     return tryOrNull { ContextCompat.getColor(this, colorRes) } ?: Color.BLACK
+}
+
+fun Context.getColorStateListCompat(colorStateListRes: Int): ColorStateList {
+    //return black as a default color, in case an invalid color ID was passed in
+    return tryOrNull { ContextCompat.getColorStateList(this, colorStateListRes) }
+            ?: ColorStateList.valueOf(Color.BLACK)
 }
 
 /**
@@ -53,6 +60,14 @@ fun Context.resolveThemeColor(attributeId: Int, default: Int = 0): Int {
     val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
 
     return if (wasResolved) getColorCompat(outValue.resourceId) else default
+}
+
+fun Context.resolveThemeColorStateList(attributeId: Int, default: Int = 0): ColorStateList {
+    val outValue = TypedValue()
+    val wasResolved = theme.resolveAttribute(attributeId, outValue, true)
+
+
+    return getColorStateListCompat(if (wasResolved) outValue.resourceId else default)
 }
 
 fun Context.makeToast(@StringRes res: Int, duration: Int = Toast.LENGTH_SHORT) {
