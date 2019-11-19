@@ -31,6 +31,8 @@ class BlockingRepositoryImpl @Inject constructor(
 
     override fun blockNumber(vararg addresses: String) {
         Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
             val blockedNumbers = realm.where(BlockedNumber::class.java).findAll()
             val newAddresses = addresses.filter { address ->
                 blockedNumbers.none { number -> phoneNumberUtils.compare(number.address, address) }
@@ -40,7 +42,9 @@ class BlockingRepositoryImpl @Inject constructor(
                     .max("id")?.toLong() ?: -1
 
             realm.executeTransaction {
-                realm.insert(newAddresses.mapIndexed { index, address -> BlockedNumber(maxId + 1 + index, address) })
+                realm.insert(newAddresses.mapIndexed { index, address ->
+                    BlockedNumber(maxId + 1 + index, address)
+                })
             }
         }
     }
