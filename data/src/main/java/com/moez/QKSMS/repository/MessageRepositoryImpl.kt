@@ -303,6 +303,12 @@ class MessageRepositoryImpl @Inject constructor(
                 parts += MMSPart("text", ContentType.TEXT_PLAIN, signedBody.toByteArray())
             }
 
+            val smsManager = subId.takeIf { it != -1 }
+                    ?.let(SmsManagerFactory::createSmsManager)
+                    ?: SmsManager.getDefault()
+            val width = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_WIDTH)
+            val height = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
+
             // Add the GIFs as attachments
             parts += attachments
                     .mapNotNull { attachment -> attachment as? Attachment.Image }
@@ -317,7 +323,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .mapNotNull { attachment -> attachment as? Attachment.Image }
                     .filter { attachment -> !attachment.isGif(context) }
                     .mapNotNull { attachment -> attachment.getUri() }
-                    .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri) } }
+                    .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri, width, height) } }
                     .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
                     .map { bitmap ->
                         val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()

@@ -70,7 +70,7 @@ import com.moez.QKSMS.repository.ContactRepositoryImpl
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.ConversationRepositoryImpl
 import com.moez.QKSMS.repository.ImageRepository
-import com.moez.QKSMS.repository.ImageRepostoryImpl
+import com.moez.QKSMS.repository.ImageRepositoryImpl
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.MessageRepositoryImpl
 import com.moez.QKSMS.repository.ScheduledMessageRepository
@@ -185,7 +185,7 @@ class AppModule(private var application: Application) {
     fun provideConversationRepository(repository: ConversationRepositoryImpl): ConversationRepository = repository
 
     @Provides
-    fun provideImageRepository(repository: ImageRepostoryImpl): ImageRepository = repository
+    fun provideImageRepository(repository: ImageRepositoryImpl): ImageRepository = repository
 
     @Provides
     fun provideMessageRepository(repository: MessageRepositoryImpl): MessageRepository = repository
