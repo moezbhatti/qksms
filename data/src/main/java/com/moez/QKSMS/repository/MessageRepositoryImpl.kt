@@ -50,7 +50,6 @@ import com.moez.QKSMS.receiver.SendSmsReceiver
 import com.moez.QKSMS.receiver.SmsDeliveredReceiver
 import com.moez.QKSMS.receiver.SmsSentReceiver
 import com.moez.QKSMS.util.ImageUtils
-import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import io.realm.Case
@@ -71,7 +70,6 @@ class MessageRepositoryImpl @Inject constructor(
     private val context: Context,
     private val imageRepository: ImageRepository,
     private val messageIds: KeyManager,
-    private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val syncRepository: SyncRepository
 ) : MessageRepository {
@@ -97,6 +95,7 @@ class MessageRepositoryImpl @Inject constructor(
 
     override fun getMessage(id: Long): Message? {
         return Realm.getDefaultInstance()
+                .also { realm -> realm.refresh() }
                 .where(Message::class.java)
                 .equalTo("id", id)
                 .findFirst()

@@ -27,10 +27,9 @@ import javax.inject.Inject
 class RetrySending @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long>() {
 
     override fun buildObservable(params: Long): Flowable<Message> {
-
         return Flowable.just(params)
+                .doOnNext(messageRepo::markSending)
                 .mapNotNull(messageRepo::getMessage)
-                .doOnNext { message -> messageRepo.markSending(message.id) }
                 .doOnNext { message ->
                     when (message.isSms()) {
                         true -> messageRepo.sendSms(message)

@@ -34,13 +34,10 @@ class SendSmsReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
 
-        intent.getLongExtra("id", -1L)
-                .takeIf { it >= 0 }
-                ?.let(messageRepo::getMessage)
-                ?.let { message ->
-                    val result = goAsync()
-                    retrySending.execute(message.id) { result.finish() }
-                }
+        val messageId = intent.getLongExtra("id", -1L).takeIf { it >= 0 } ?: return
+
+        val result = goAsync()
+        retrySending.execute(messageId) { result.finish() }
     }
 
 }
