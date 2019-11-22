@@ -239,7 +239,7 @@
     <string name="blocking_manager_title">Gestor de bloqueios</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Funcionalidade de bloqueio, nativa no QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Filtrar automaticamente as chamadas e as mensagens no local apropriado. Community IQ™ permite-lhe descartar as mensagens que forem enviadas pelo \'spammers\' reconhecidos pela comunidade.</string>
+    <string name="blocking_manager_call_control_summary">Filtrar automaticamente as chamadas e as mensagens com a aplicação Community IQ™, com a qual pode descartar as mensagens que forem enviadas pelo \'spammers\' reconhecidos na comunidade</string>
     <string name="blocking_manager_sia_summary">Automaticamente filtrar mensagens não solicitadas usando o aplicativo \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Copiar números bloqueados</string>
     <string name="blocking_manager_copy_summary">Continuar para %s e substituir os números bloqueados</string>
