@@ -31,8 +31,8 @@ android {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
         targetSdkVersion 28 // Don't upgrade to 29 until we support Scoped storage
-        versionCode 2207
-        versionName "3.7.8"
+        versionCode 2208
+        versionName "3.7.9"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
