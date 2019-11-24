@@ -64,7 +64,7 @@ fun View.setBackgroundTint(color: Int) {
 
     // API 21 doesn't support this
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-        background?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        background?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
     backgroundTintList = ColorStateList.valueOf(color)

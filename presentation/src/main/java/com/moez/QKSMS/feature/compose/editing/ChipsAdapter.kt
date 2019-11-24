@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.compose.editing
 
 import android.content.Context
+import android.os.Build
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
@@ -27,7 +28,10 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.extensions.dpToPx
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.contact_chip.*
 import kotlinx.android.synthetic.main.contact_chip.view.*
 import javax.inject.Inject
 
@@ -40,6 +44,11 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.contact_chip, parent, false)
         return QkViewHolder(view).apply {
+            // These theme attributes don't apply themselves on API 21
+            if (Build.VERSION.SDK_INT <= 22) {
+                content.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
+            }
+
             view.setOnClickListener {
                 val chip = getItem(adapterPosition)
                 showDetailedChip(view.context, chip)
