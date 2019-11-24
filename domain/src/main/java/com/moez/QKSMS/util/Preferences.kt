@@ -145,6 +145,15 @@ class Preferences @Inject constructor(context: Context, private val rxPrefs: RxS
         }
     }
 
+    fun wakeScreen(threadId: Long = 0): Preference<Boolean> {
+        val default = rxPrefs.getBoolean("wake", false)
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getBoolean("wake_$threadId", default.get())
+        }
+    }
+
     fun vibration(threadId: Long = 0): Preference<Boolean> {
         val default = rxPrefs.getBoolean("vibration", true)
 

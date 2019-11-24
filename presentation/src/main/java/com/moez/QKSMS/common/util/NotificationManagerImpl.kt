@@ -30,12 +30,14 @@ import android.graphics.Color
 import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
+import android.os.PowerManager
 import android.provider.ContactsContract
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
 import androidx.core.app.RemoteInput
 import androidx.core.app.TaskStackBuilder
+import androidx.core.content.getSystemService
 import androidx.core.graphics.drawable.IconCompat
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.dpToPx
@@ -279,6 +281,17 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         notificationManager.notify(threadId.toInt(), notification.build())
+
+        // Wake screen
+        if (prefs.wakeScreen(threadId).get()) {
+            context.getSystemService<PowerManager>()?.let { powerManager ->
+                if (!powerManager.isInteractive) {
+                    val flags = PowerManager.SCREEN_DIM_WAKE_LOCK or PowerManager.ACQUIRE_CAUSES_WAKEUP
+                    val wakeLock = powerManager.newWakeLock(flags, context.packageName)
+                    wakeLock.acquire(5000)
+                }
+            }
+        }
     }
 
     override fun notifyFailed(msgId: Long) {
