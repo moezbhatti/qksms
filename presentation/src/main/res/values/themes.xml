@@ -44,8 +44,8 @@
         <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
-        <item name="colorPrimary">@color/toolbarLight</item>
-        <item name="colorPrimaryDark">@color/statusBarLight</item>
+        <item name="colorPrimary">@color/backgroundLight</item>
+        <item name="colorPrimaryDark">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="switchThumbEnabled">@color/switchThumbEnabledLight</item>
         <item name="switchThumbDisabled">@color/switchThumbDisabledLight</item>
@@ -61,8 +61,8 @@
         <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
-        <item name="colorPrimary">@color/toolbarLight</item>
-        <item name="colorPrimaryDark">@color/statusBarLight</item>
+        <item name="colorPrimary">@color/backgroundLight</item>
+        <item name="colorPrimaryDark">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="windowActionBar">false</item>
     </style>

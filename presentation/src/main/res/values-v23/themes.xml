@@ -21,7 +21,7 @@
 
     <!-- On Marshmallow, use the light status bar -->
     <style name="AppTheme" parent="AppBaseTheme">
-        <item name="android:statusBarColor">@color/statusBarLight</item>
+        <item name="android:statusBarColor">@color/backgroundLight</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>
 

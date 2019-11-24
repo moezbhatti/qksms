@@ -24,9 +24,6 @@
     <color name="rippleLight">#1f000000</color>
     <color name="rippleDark">#33ffffff</color>
 
-    <color name="statusBarLight">#FFFFFF</color>
-    <color name="statusBarDark">#1d262b</color>
-
     <color name="toolbarLight">#FFFFFF</color>
     <color name="toolbarDark">#1d262b</color>
     <color name="toolbarTranslucent">#88000000</color>
@@ -47,7 +44,8 @@
     <color name="textTertiaryDark">#80ffffff</color>
 
     <color name="bubbleLight">#ECEFF1</color>
-    <color name="bubbleDark">#242a2f</color>
+    <color name="bubbleDark">#151B1F</color>
+    <color name="bubbleBlack">#0F1113</color>
 
     <color name="separatorLight">#0C000000</color>
     <color name="separatorDark">#1AFFFFFF</color>
