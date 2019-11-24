@@ -18,15 +18,22 @@
  */
 package com.moez.QKSMS.migration
 
+import com.moez.QKSMS.extensions.map
+import com.moez.QKSMS.mapper.CursorToContactImpl
 import io.realm.DynamicRealm
+import io.realm.DynamicRealmObject
 import io.realm.FieldAttribute
+import io.realm.RealmList
 import io.realm.RealmMigration
 import io.realm.Sort
+import javax.inject.Inject
 
-class QkRealmMigration : RealmMigration {
+class QkRealmMigration @Inject constructor(
+    private val cursorToContact: CursorToContactImpl
+) : RealmMigration {
 
     companion object {
-        const val SCHEMA_VERSION: Long = 9
+        const val SchemaVersion: Long = 9
     }
 
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
@@ -119,19 +126,48 @@ class QkRealmMigration : RealmMigration {
         }
 
         if (version == 8L) {
+            // Delete this data since we'll need to repopulate it with its new primaryKey
+            realm.delete("PhoneNumber")
+
             realm.schema.create("ContactGroup")
                     .addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                     .addField("title", String::class.java, FieldAttribute.REQUIRED)
                     .addRealmListField("contacts", realm.schema.get("Contact"))
 
-            realm.schema.get("Contact")
-                    ?.addField("starred", Boolean::class.java, FieldAttribute.REQUIRED)
-                    ?.addField("photoUri", String::class.java)
-
             realm.schema.get("PhoneNumber")
                     ?.addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
                     ?.addField("accountType", String::class.java, FieldAttribute.REQUIRED)
                     ?.addField("isDefault", Boolean::class.java, FieldAttribute.REQUIRED)
+
+            val phoneNumbers = cursorToContact.getContactsCursor()
+                    ?.map(cursorToContact::map)
+                    ?.distinctBy { contact -> contact.numbers.firstOrNull()?.id } // Each row has only one number
+                    ?.groupBy { contact -> contact.lookupKey }
+                    ?: mapOf()
+
+            realm.schema.get("Contact")
+                    ?.addField("starred", Boolean::class.java, FieldAttribute.REQUIRED)
+                    ?.addField("photoUri", String::class.java)
+                    ?.transform { realmContact ->
+                        val numbers = RealmList<DynamicRealmObject>()
+                        phoneNumbers[realmContact.get("lookupKey")]
+                                ?.flatMap { contact -> contact.numbers }
+                                ?.map { number ->
+                                    realm.createObject("PhoneNumber", number.id).apply {
+                                        setString("accountType", number.accountType)
+                                        setString("address", number.address)
+                                        setString("type", number.type)
+                                    }
+                                }
+                                ?.let(numbers::addAll)
+
+                        val photoUri = phoneNumbers[realmContact.get("lookupKey")]
+                                ?.firstOrNull { number -> number.photoUri != null }
+                                ?.photoUri
+
+                        realmContact.setList("numbers", numbers)
+                        realmContact.setString("photoUri", photoUri)
+                    }
 
             version++
         }

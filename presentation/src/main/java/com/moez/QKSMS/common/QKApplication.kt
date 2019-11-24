@@ -61,19 +61,20 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
+    @Inject lateinit var realmMigration: QkRealmMigration
 
     override fun onCreate() {
         super.onCreate()
 
+        AppComponentManager.init(this)
+        appComponent.inject(this)
+
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
-                .migration(QkRealmMigration())
-                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+                .migration(realmMigration)
+                .schemaVersion(QkRealmMigration.SchemaVersion)
                 .build())
-
-        AppComponentManager.init(this)
-        appComponent.inject(this)
 
         packageManager.getInstallerPackageName(packageName)?.let { installer ->
             analyticsManager.setUserProperty("Installer", installer)
