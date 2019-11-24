@@ -44,23 +44,12 @@ class ComposeActivityModule {
     @Provides
     @Named("addresses")
     fun provideAddresses(activity: ComposeActivity): List<String> {
-        activity.intent.data?.let {
-            val data = it.toString()
-            var address = when {
-                it.scheme?.startsWith("smsto") == true -> data.replace("smsto:", "")
-                it.scheme?.startsWith("mmsto") == true -> data.replace("mmsto:", "")
-                it.scheme?.startsWith("sms") == true -> data.replace("sms:", "")
-                it.scheme?.startsWith("mms") == true -> data.replace("mms:", "")
-                else -> ""
-            }
-
-            // The dialer app on Oreo sends a URL encoded string, make sure to decode it
-            if (address.contains('%')) address = URLDecoder.decode(address, "UTF-8")
-
-            return address.split(",")
-        }
-
-        return listOf()
+        return activity.intent
+                ?.decodedDataString()
+                ?.substringAfter(':') // Remove scheme
+                ?.replaceAfter("?", "") // Remove query
+                ?.split(",")
+                ?: listOf()
     }
 
     @Provides
@@ -68,6 +57,11 @@ class ComposeActivityModule {
     fun provideSharedText(activity: ComposeActivity): String {
         return activity.intent.extras?.getString(Intent.EXTRA_TEXT)
                 ?: activity.intent.extras?.getString("sms_body")
+                ?: activity.intent?.decodedDataString()
+                        ?.substringAfter('?') // Query string
+                        ?.split(',')
+                        ?.firstOrNull { param -> param.startsWith("body") }
+                        ?.substringAfter('=')
                 ?: ""
     }
 
@@ -84,5 +78,14 @@ class ComposeActivityModule {
     @IntoMap
     @ViewModelKey(ComposeViewModel::class)
     fun provideComposeViewModel(viewModel: ComposeViewModel): ViewModel = viewModel
+
+    // The dialer app on Oreo sends a URL encoded string, make sure to decode it
+    private fun Intent.decodedDataString(): String? {
+        val data = data?.toString()
+        if (data?.contains('%') == true) {
+           return URLDecoder.decode(data, "UTF-8")
+        }
+        return data
+    }
 
 }
