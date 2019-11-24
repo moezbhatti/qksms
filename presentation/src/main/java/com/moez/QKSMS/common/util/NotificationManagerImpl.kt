@@ -19,6 +19,7 @@
 package com.moez.QKSMS.common.util
 
 import android.annotation.SuppressLint
+import android.app.Notification
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.app.PendingIntent
@@ -26,6 +27,7 @@ import android.content.ContentUris
 import android.content.Context
 import android.content.Intent
 import android.graphics.Color
+import android.media.AudioAttributes
 import android.net.Uri
 import android.os.Build
 import android.provider.ContactsContract
@@ -112,8 +114,8 @@ class NotificationManagerImpl @Inject constructor(
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
-        taskStackBuilder.addParentStack(ComposeActivity::class.java)
-        taskStackBuilder.addNextIntent(contentIntent)
+                .addParentStack(ComposeActivity::class.java)
+                .addNextIntent(contentIntent)
         val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 10000, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val seenIntent = Intent(context, MarkSeenReceiver::class.java).putExtra("threadId", threadId)
@@ -123,6 +125,10 @@ class NotificationManagerImpl @Inject constructor(
         val ringtone = prefs.ringtone(threadId).get()
                 .takeIf { it.isNotEmpty() }
                 ?.let(Uri::parse)
+                ?.also { uri ->
+                    // https://commonsware.com/blog/2016/09/07/notifications-sounds-android-7p0-aggravation.html
+                    context.grantUriPermission("com.android.systemui", uri, Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                }
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
@@ -342,6 +348,11 @@ class NotificationManagerImpl @Inject constructor(
                 lightColor = Color.WHITE
                 enableVibration(true)
                 vibrationPattern = VIBRATE_PATTERN
+                lockscreenVisibility = Notification.VISIBILITY_PUBLIC
+                setSound(prefs.ringtone().get().let(Uri::parse), AudioAttributes.Builder()
+                        .setUsage(AudioAttributes.USAGE_NOTIFICATION)
+                        .setContentType(AudioAttributes.CONTENT_TYPE_SPEECH)
+                        .build())
             }
 
             notificationManager.createNotificationChannel(channel)
