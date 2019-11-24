@@ -47,6 +47,7 @@ import javax.inject.Inject
 class ContactsActivity : QkThemedActivity(), ContactsContract {
 
     companion object {
+        const val SharingKey = "sharing"
         const val ChipsKey = "chips"
     }
 

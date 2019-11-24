@@ -48,6 +48,7 @@ import kotlinx.coroutines.rx2.awaitFirst
 import javax.inject.Inject
 
 class ContactsViewModel @Inject constructor(
+    sharing: Boolean,
     serializedChips: HashMap<String, String?>,
     syncContacts: ContactSync,
     private val contactFilter: ContactFilter,
@@ -60,7 +61,9 @@ class ContactsViewModel @Inject constructor(
 
     private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts() }
-    private val recents: Observable<List<Conversation>> by lazy { conversationRepo.getUnmanagedConversations() }
+    private val recents: Observable<List<Conversation>> by lazy {
+        if (sharing) conversationRepo.getUnmanagedConversations() else Observable.just(listOf())
+    }
     private val starredContacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts(true) }
 
     private val selectedChips = Observable.just(serializedChips)

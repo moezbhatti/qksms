@@ -284,10 +284,11 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), ATTACH_CONTACT_REQUEST_CODE)
     }
 
-    override fun showContacts(chips: List<Chip>) {
+    override fun showContacts(sharing: Boolean, chips: List<Chip>) {
         message.hideKeyboard()
         val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
         val intent = Intent(this, ContactsActivity::class.java)
+                .putExtra(ContactsActivity.SharingKey, sharing)
                 .putExtra(ContactsActivity.ChipsKey, serialized)
         startActivityForResult(intent, SELECT_CONTACT_REQUEST_CODE)
     }

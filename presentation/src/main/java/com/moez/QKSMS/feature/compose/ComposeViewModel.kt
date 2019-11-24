@@ -224,9 +224,10 @@ class ComposeViewModel @Inject constructor(
     override fun bindView(view: ComposeView) {
         super.bindView(view)
 
+        val sharing = sharedText.isNotEmpty() || sharedAttachments.isNotEmpty()
         if (shouldShowContacts) {
             shouldShowContacts = false
-            view.showContacts(selectedChips.blockingFirst())
+            view.showContacts(sharing, selectedChips.blockingFirst())
         }
 
         view.chipsSelectedIntent
@@ -257,7 +258,7 @@ class ComposeViewModel @Inject constructor(
         view.optionsItemIntent
                 .filter { it == R.id.add }
                 .withLatestFrom(selectedChips) { _, chips ->
-                    view.showContacts(chips)
+                    view.showContacts(sharing, chips)
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
@@ -269,7 +270,7 @@ class ComposeViewModel @Inject constructor(
                     chipsReducer.onNext { contacts ->
                         val result = contacts.filterNot { it == contact }
                         if (result.isEmpty()) {
-                            view.showContacts(result)
+                            view.showContacts(sharing, result)
                         }
                         result
                     }

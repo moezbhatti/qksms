@@ -28,6 +28,11 @@ import dagger.multibindings.IntoMap
 class ContactsActivityModule {
 
     @Provides
+    fun provideIsSharing(activity: ContactsActivity): Boolean {
+        return activity.intent.extras?.getBoolean(ContactsActivity.SharingKey, false) ?: false
+    }
+
+    @Provides
     fun provideChips(activity: ContactsActivity): HashMap<String, String?> {
         return activity.intent.extras?.getSerializable(ContactsActivity.ChipsKey)
                 ?.let { serializable -> serializable as? HashMap<String, String?> }
