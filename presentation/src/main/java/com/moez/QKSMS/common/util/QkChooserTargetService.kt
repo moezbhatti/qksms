@@ -52,13 +52,13 @@ class QkChooserTargetService : ChooserTargetService() {
     }
 
     private fun createShortcutForConversation(conversation: Conversation): ChooserTarget {
-        val icon = when {
-            conversation.recipients.size == 1 -> {
-                val address = conversation.recipients.first()!!.address
+        val icon = when (conversation.recipients.size) {
+            1 -> {
+                val photoUri = conversation.recipients.first()?.contact?.photoUri
                 val request = GlideApp.with(this)
                         .asBitmap()
                         .circleCrop()
-                        .load("tel:$address")
+                        .load(photoUri)
                         .submit()
                 val bitmap = tryOrNull(false) { request.get() }
 

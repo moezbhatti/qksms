@@ -54,7 +54,7 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
     }
 
     fun setChip(chip: Chip) {
-        avatar.setContact(chip.contact, chip.address)
+        avatar.setContact(chip.contact)
         name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
         info.text = chip.address
     }

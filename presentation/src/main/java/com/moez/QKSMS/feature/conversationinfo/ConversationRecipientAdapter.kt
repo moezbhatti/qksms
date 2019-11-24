@@ -55,7 +55,7 @@ class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipi
         val view = holder.containerView
 
         view.avatar.threadId = threadId
-        view.avatar.setContact(recipient)
+        view.avatar.setContact(recipient.contact)
 
         view.name.text = recipient.contact?.name ?: recipient.address
 

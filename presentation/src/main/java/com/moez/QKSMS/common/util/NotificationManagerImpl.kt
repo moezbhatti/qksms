@@ -154,11 +154,10 @@ class NotificationManagerImpl @Inject constructor(
                         .firstOrNull { phoneNumberUtils.compare(it.address, message.address) }
 
                 person.setName(recipient?.getDisplayName() ?: message.address)
-
                 person.setIcon(GlideApp.with(context)
                         .asBitmap()
                         .circleCrop()
-                        .load("tel:${message.address}")
+                        .load(recipient?.contact?.photoUri)
                         .submit(64.dpToPx(context), 64.dpToPx(context))
                         .let { futureGet -> tryOrNull(false) { futureGet.get() } }
                         ?.let(IconCompat::createWithBitmap))
@@ -178,12 +177,12 @@ class NotificationManagerImpl @Inject constructor(
 
         // Set the large icon
         val avatar = conversation.recipients.takeIf { it.size == 1 }
-                ?.first()?.address
-                ?.let { address ->
+                ?.first()?.contact?.photoUri
+                ?.let { photoUri ->
                     GlideApp.with(context)
                             .asBitmap()
                             .circleCrop()
-                            .load("tel:$address")
+                            .load(photoUri)
                             .submit(64.dpToPx(context), 64.dpToPx(context))
                 }
                 ?.let { futureGet -> tryOrNull(false) { futureGet.get() } }

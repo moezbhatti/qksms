@@ -234,7 +234,7 @@ class MessagesAdapter @Inject constructor(
         // Bind the avatar
         if (!message.isMe()) {
             view.avatar.threadId = conversation?.id ?: 0
-            view.avatar.setContact(contactCache[message.address])
+            view.avatar.setContact(contactCache[message.address]?.contact)
             view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
         }
 

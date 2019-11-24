@@ -22,7 +22,6 @@ import android.content.Context
 import android.util.AttributeSet
 import android.view.View
 import android.widget.FrameLayout
-import com.bumptech.glide.signature.ObjectKey
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
@@ -30,7 +29,6 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Contact
-import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.GlideApp
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
@@ -54,7 +52,7 @@ class AvatarView @JvmOverloads constructor(
 
     private var lookupKey: String? = null
     private var name: String? = null
-    private var address: String? = null
+    private var photoUri: String? = null
     private var lastUpdated: Long? = null
 
     init {
@@ -69,32 +67,12 @@ class AvatarView @JvmOverloads constructor(
     }
 
     /**
-     * If the [recipient] has a contact: use the contact's avatar, but keep the address.
-     * Use the recipient address otherwise.
-     */
-    fun setContact(recipient: Recipient?) {
-        // If the recipient has a contact, just use that and return
-        recipient?.contact?.let { contact ->
-            setContact(contact, recipient.address)
-            return
-        }
-
-        lookupKey = null
-        name = null
-        address = recipient?.address
-        lastUpdated = 0
-        updateView()
-    }
-
-    /**
      * Use the [contact] information to display the avatar.
-     * A specific [contactAddress] can be specified (useful when the contact has several addresses).
      */
-    fun setContact(contact: Contact?, contactAddress: String? = null) {
+    fun setContact(contact: Contact?) {
         lookupKey = contact?.lookupKey
         name = contact?.name
-        // If a contactAddress has been given, we use it. Use the contact address otherwise.
-        address = contactAddress?.takeIf { it.isNotEmpty() } ?: contact?.numbers?.firstOrNull()?.address
+        photoUri = contact?.photoUri
         lastUpdated = contact?.lastUpdate
         updateView()
     }
@@ -108,7 +86,7 @@ class AvatarView @JvmOverloads constructor(
         }
     }
 
-    fun applyTheme(threadId: Long) {
+    private fun applyTheme(threadId: Long) {
         colors.theme(threadId).run {
             setBackgroundTint(theme)
             initial.setTextColor(textPrimary)
@@ -130,10 +108,9 @@ class AvatarView @JvmOverloads constructor(
         }
 
         photo.setImageDrawable(null)
-        address?.let { address ->
+        photoUri?.let { photoUri ->
             GlideApp.with(photo)
-                    .load("tel:$address")
-                    .signature(ObjectKey(lastUpdated ?: 0L))
+                    .load(photoUri)
                     .into(photo)
         }
     }

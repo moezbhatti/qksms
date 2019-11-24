@@ -40,6 +40,7 @@ import com.moez.QKSMS.model.PhoneNumber
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.GlideApp
 import com.moez.QKSMS.util.Preferences
+import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 
 class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
@@ -130,17 +131,11 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         }
 
         remoteViews.setImageViewBitmap(R.id.photo, null)
-        contact?.numbers?.firstOrNull()?.address?.let { address ->
-            val futureGet = GlideApp.with(context)
-                    .asBitmap()
-                    .load("tel:$address")
-                    .submit(48.dpToPx(context), 48.dpToPx(context))
-
-            try {
-                remoteViews.setImageViewBitmap(R.id.photo, futureGet.get())
-            } catch (e: Exception) {
-            }
-        }
+        val futureGet = GlideApp.with(context)
+                .asBitmap()
+                .load(contact?.photoUri)
+                .submit(48.dpToPx(context), 48.dpToPx(context))
+        tryOrNull(false) { remoteViews.setImageViewBitmap(R.id.photo, futureGet.get()) }
 
         // Name
         remoteViews.setTextColor(R.id.name, textPrimary)

@@ -51,7 +51,7 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
         val chip = getItem(position)
         val view = holder.containerView
 
-        view.avatar.setContact(chip.contact, chip.address)
+        view.avatar.setContact(chip.contact)
         view.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
     }
 

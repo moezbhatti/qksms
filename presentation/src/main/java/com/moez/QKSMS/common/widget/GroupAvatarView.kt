@@ -63,8 +63,8 @@ class GroupAvatarView @JvmOverloads constructor(
         }
         avatar2.isVisible = contacts.size > 1
 
-        avatar1.setContact(contacts.getOrNull(0))
-        avatar2.setContact(contacts.getOrNull(1))
+        avatar1.setContact(contacts.getOrNull(0)?.contact)
+        avatar2.setContact(contacts.getOrNull(1)?.contact)
     }
 
 }
