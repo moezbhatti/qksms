@@ -23,33 +23,28 @@ import android.database.ContentObserver
 import android.net.Uri
 import android.os.Handler
 import android.provider.ContactsContract
-import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.BehaviorSubject
 import javax.inject.Inject
 
 /**
  * Listens for a contact being added, and then syncs it to Realm
- *
- * TODO: Stop listening automatically. Currently, this will only happen if the contact is added
  */
 class ContactAddedListenerImpl @Inject constructor(
-    private val context: Context,
-    private val syncRepo: SyncRepository
+    private val context: Context
 ) : ContactAddedListener {
 
     companion object {
         private val URI = ContactsContract.CommonDataKinds.Phone.CONTENT_URI
     }
 
-    override fun listen(address: String): Observable<*> {
+    override fun listen(): Observable<*> {
         return ContactContentObserver(context).observable
-                .filter { syncRepo.syncContact(address) }
     }
 
     private class ContactContentObserver(context: Context) : ContentObserver(Handler()) {
 
-        private val subject = PublishSubject.create<Unit>()
+        private val subject = BehaviorSubject.createDefault<Unit>(Unit)
 
         val observable: Observable<Unit> = subject
                 .doOnSubscribe { context.contentResolver.registerContentObserver(URI, true, this) }

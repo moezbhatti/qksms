@@ -33,6 +33,7 @@ import com.moez.QKSMS.interactor.MarkUnarchived
 import com.moez.QKSMS.interactor.MarkUnpinned
 import com.moez.QKSMS.interactor.MarkUnread
 import com.moez.QKSMS.interactor.MigratePreferences
+import com.moez.QKSMS.interactor.SyncContacts
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.manager.ChangelogManager
@@ -55,10 +56,10 @@ import javax.inject.Inject
 
 class MainViewModel @Inject constructor(
     billingManager: BillingManager,
+    contactAddedListener: ContactAddedListener,
     markAllSeen: MarkAllSeen,
     migratePreferences: MigratePreferences,
     syncRepository: SyncRepository,
-    private val contactAddedListener: ContactAddedListener,
     private val changelogManager: ChangelogManager,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
@@ -72,6 +73,7 @@ class MainViewModel @Inject constructor(
     private val permissionManager: PermissionManager,
     private val prefs: Preferences,
     private val ratingManager: RatingManager,
+    private val syncContacts: SyncContacts,
     private val syncMessages: SyncMessages
 ) : QkViewModel<MainView, MainState>(MainState(page = Inbox(data = conversationRepo.getConversations()))) {
 
@@ -81,6 +83,7 @@ class MainViewModel @Inject constructor(
         disposables += markArchived
         disposables += markUnarchived
         disposables += migratePreferences
+        disposables += syncContacts
         disposables += syncMessages
 
         // Show the syncing UI
@@ -108,6 +111,12 @@ class MainViewModel @Inject constructor(
         if (lastSync == 0 && permissionManager.isDefaultSms() && permissionManager.hasReadSms() && permissionManager.hasContacts()) {
             syncMessages.execute(Unit)
         }
+
+        // Sync contacts when we detect a change
+        disposables += contactAddedListener.listen()
+                .debounce(1, TimeUnit.SECONDS)
+                .subscribeOn(Schedulers.io())
+                .subscribe { syncContacts.execute(Unit) }
 
         ratingManager.addSession()
         markAllSeen.execute(Unit)
@@ -287,7 +296,6 @@ class MainViewModel @Inject constructor(
                 .map { conversation -> conversation.recipients }
                 .mapNotNull { recipients -> recipients[0]?.address?.takeIf { recipients.size == 1 } }
                 .doOnNext(navigator::addContact)
-                .flatMap(contactAddedListener::listen)
                 .autoDisposable(view.scope())
                 .subscribe()
 

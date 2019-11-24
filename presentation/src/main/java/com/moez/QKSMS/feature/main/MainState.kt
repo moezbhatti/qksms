@@ -29,7 +29,7 @@ data class MainState(
     val drawerOpen: Boolean = false,
     val upgraded: Boolean = true,
     val showRating: Boolean = false,
-    val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle(),
+    val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle,
     val defaultSms: Boolean = true,
     val smsPermission: Boolean = true,
     val contactPermission: Boolean = true

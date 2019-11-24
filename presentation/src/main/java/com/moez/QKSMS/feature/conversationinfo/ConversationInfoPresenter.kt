@@ -26,14 +26,12 @@ import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkArchived
 import com.moez.QKSMS.interactor.MarkUnarchived
-import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
-import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.BehaviorSubject
@@ -44,7 +42,6 @@ import javax.inject.Named
 class ConversationInfoPresenter @Inject constructor(
     @Named("threadId") threadId: Long,
     messageRepo: MessageRepository,
-    private val contactAddedListener: ContactAddedListener,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,
@@ -105,16 +102,9 @@ class ConversationInfoPresenter @Inject constructor(
         // Add or display the contact
         view.recipientClicks()
                 .mapNotNull(conversationRepo::getRecipient)
-                .flatMap { recipient ->
-                    val lookupKey = recipient.contact?.lookupKey
-                    if (lookupKey != null) {
-                        navigator.showContact(lookupKey)
-                        Observable.empty<Unit>()
-                    } else {
-                        // Allow the user to add the contact, then listen for changes
-                        navigator.addContact(recipient.address)
-                        contactAddedListener.listen(recipient.address)
-                    }
+                .doOnNext { recipient ->
+                    recipient.contact?.lookupKey?.let(navigator::showContact)
+                            ?: navigator.addContact(recipient.address)
                 }
                 .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY)) // ... this should be the default
                 .subscribe()

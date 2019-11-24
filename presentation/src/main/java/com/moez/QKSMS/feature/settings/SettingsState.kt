@@ -42,5 +42,5 @@ data class SettingsState(
     val mobileOnly: Boolean = false,
     val maxMmsSizeSummary: String = "100KB",
     val maxMmsSizeId: Int = 100,
-    val syncProgress: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle()
+    val syncProgress: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle
 )

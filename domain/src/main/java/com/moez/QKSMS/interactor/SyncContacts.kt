@@ -21,7 +21,6 @@ package com.moez.QKSMS.interactor
 import com.moez.QKSMS.repository.SyncRepository
 import io.reactivex.Flowable
 import timber.log.Timber
-import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SyncContacts @Inject constructor(private val syncManager: SyncRepository) : Interactor<Unit>() {
@@ -30,8 +29,7 @@ class SyncContacts @Inject constructor(private val syncManager: SyncRepository) 
         return Flowable.just(System.currentTimeMillis())
                 .doOnNext { syncManager.syncContacts() }
                 .map { startTime -> System.currentTimeMillis() - startTime }
-                .map { elapsed -> TimeUnit.MILLISECONDS.toSeconds(elapsed) }
-                .doOnNext { seconds -> Timber.v("Completed sync in $seconds seconds") }
+                .doOnNext { duration -> Timber.v("Completed sync in ${duration}ms") }
     }
 
 }

@@ -27,7 +27,6 @@ import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
 import com.moez.QKSMS.filter.ContactFilter
 import com.moez.QKSMS.filter.ContactGroupFilter
-import com.moez.QKSMS.interactor.SyncContacts
 import com.moez.QKSMS.interactor.SetDefaultPhoneNumber
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.ContactGroup
@@ -50,7 +49,6 @@ import javax.inject.Inject
 class ContactsViewModel @Inject constructor(
     sharing: Boolean,
     serializedChips: HashMap<String, String?>,
-    syncContacts: SyncContacts,
     private val contactFilter: ContactFilter,
     private val contactGroupFilter: ContactGroupFilter,
     private val contactsRepo: ContactRepository,
@@ -75,10 +73,6 @@ class ContactsViewModel @Inject constructor(
             }
 
     private var shouldOpenKeyboard: Boolean = true
-
-    init {
-        syncContacts.execute(Unit)
-    }
 
     override fun bindView(view: ContactsContract) {
         super.bindView(view)

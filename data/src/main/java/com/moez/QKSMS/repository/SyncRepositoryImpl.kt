@@ -65,7 +65,7 @@ class SyncRepositoryImpl @Inject constructor(
 ) : SyncRepository {
 
     override val syncProgress: Subject<SyncRepository.SyncProgress> =
-            BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle())
+            BehaviorSubject.createDefault(SyncRepository.SyncProgress.Idle)
 
     override fun syncMessages() {
 
@@ -185,7 +185,7 @@ class SyncRepositoryImpl @Inject constructor(
         // Only delete this after the sync has successfully completed
         oldBlockedSenders.delete()
 
-        syncProgress.onNext(SyncRepository.SyncProgress.Idle())
+        syncProgress.onNext(SyncRepository.SyncProgress.Idle)
     }
 
     override fun syncMessage(uri: Uri): Message? {
@@ -257,32 +257,6 @@ class SyncRepositoryImpl @Inject constructor(
             }
 
         }
-    }
-
-    override fun syncContact(address: String): Boolean {
-        // See if there's a contact that matches this phone number
-        var contact = getContacts().find { contact ->
-            contact.numbers.any { number -> phoneNumberUtils.compare(number.address, address) }
-        } ?: return false
-
-        Realm.getDefaultInstance().use { realm ->
-            val recipients = realm.where(Recipient::class.java).findAll().filter { recipient ->
-                contact.numbers.any { number ->
-                    phoneNumberUtils.compare(recipient.address, number.address)
-                }
-            }
-
-            realm.executeTransaction {
-                contact = realm.copyToRealmOrUpdate(contact)
-
-                // Update all the matching recipients with the new contact
-                recipients.forEach { recipient -> recipient.contact = contact }
-
-                realm.insertOrUpdate(recipients)
-            }
-        }
-
-        return true
     }
 
     private fun getContacts(): List<Contact> {
