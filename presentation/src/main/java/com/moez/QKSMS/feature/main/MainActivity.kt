@@ -23,6 +23,7 @@ import android.animation.ObjectAnimator
 import android.app.AlertDialog
 import android.content.Intent
 import android.content.res.ColorStateList
+import android.os.Build
 import android.os.Bundle
 import android.view.Gravity
 import android.view.Menu
@@ -184,6 +185,11 @@ class MainActivity : QkThemedActivity(), MainView {
 
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
+
+        // These theme attributes don't apply themselves on API 21
+        if (Build.VERSION.SDK_INT <= 22) {
+            toolbarSearch.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
+        }
     }
 
     override fun onNewIntent(intent: Intent?) {

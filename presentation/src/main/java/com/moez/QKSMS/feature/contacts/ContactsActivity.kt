@@ -20,6 +20,7 @@ package com.moez.QKSMS.feature.contacts
 
 import android.app.Activity
 import android.content.Intent
+import android.os.Build
 import android.os.Bundle
 import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
@@ -30,6 +31,8 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.ViewModelFactory
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.extensions.hideKeyboard
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.showKeyboard
 import com.moez.QKSMS.common.widget.QkDialog
 import com.moez.QKSMS.extensions.Optional
@@ -86,6 +89,11 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
 
         contacts.itemAnimator = null
         contacts.adapter = contactsAdapter
+
+        // These theme attributes don't apply themselves on API 21
+        if (Build.VERSION.SDK_INT <= 22) {
+            search.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
+        }
     }
 
     override fun render(state: ContactsState) {
