@@ -37,7 +37,7 @@ class GroupAvatarView @JvmOverloads constructor(
 
     var contacts: List<Recipient> = ArrayList()
         set(value) {
-            field = value
+            field = value.sortedWith(compareByDescending { contact -> contact.contact?.lookupKey })
             updateView()
         }
 
