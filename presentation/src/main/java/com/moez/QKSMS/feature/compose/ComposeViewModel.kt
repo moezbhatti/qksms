@@ -300,11 +300,20 @@ class ComposeViewModel @Inject constructor(
         // Copy the message contents
         view.optionsItemIntent
                 .filter { it == R.id.copy }
-                .withLatestFrom(view.messagesSelectedIntent) { _, messages ->
-                    messages?.firstOrNull()?.let { messageRepo.getMessage(it) }?.let { message ->
-                        ClipboardUtils.copy(context, message.getText())
-                        context.makeToast(R.string.toast_copied)
+                .withLatestFrom(view.messagesSelectedIntent) { _, messageIds ->
+                    val messages = messageIds.mapNotNull(messageRepo::getMessage).sortedBy { it.date }
+                    val text = when (messages.size) {
+                        1 -> messages.first().getText()
+                        else -> messages.foldIndexed("") { index, acc, message ->
+                            when {
+                                index == 0 -> message.getText()
+                                messages[index - 1].compareSender(message) -> "$acc\n${message.getText()}"
+                                else -> "$acc\n\n${message.getText()}"
+                            }
+                        }
                     }
+
+                    ClipboardUtils.copy(context, text)
                 }
                 .autoDisposable(view.scope())
                 .subscribe { view.clearSelection() }
