@@ -39,6 +39,7 @@
     <string name="menu_call">Call</string>
     <string name="menu_info">Details</string>
     <string name="menu_save">Save to gallery</string>
+    <string name="menu_share">Share</string>
 
     <string name="main_drawer_open_cd">Open navigation drawer</string>
     <string name="main_title_selected">%d selected</string>

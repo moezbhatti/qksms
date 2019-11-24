@@ -23,4 +23,8 @@
         android:id="@+id/save"
         android:title="@string/menu_save" />
 
+    <item
+        android:id="@+id/share"
+        android:title="@string/menu_share" />
+
 </menu>

@@ -266,6 +266,17 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
+    fun shareFile(file: File) {
+        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
+        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
+        val intent = Intent(Intent.ACTION_SEND)
+                .setType(type)
+                .putExtra(Intent.EXTRA_STREAM, data)
+                .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+        startActivityExternal(intent)
+    }
+
     fun showNotificationSettings(threadId: Long = 0) {
         val intent = Intent(context, NotificationPrefsActivity::class.java)
         intent.putExtra("threadId", threadId)
