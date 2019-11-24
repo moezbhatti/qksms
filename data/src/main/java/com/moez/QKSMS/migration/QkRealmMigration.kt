@@ -136,7 +136,7 @@ class QkRealmMigration @Inject constructor(
 
             realm.schema.get("PhoneNumber")
                     ?.addField("id", Long::class.java, FieldAttribute.PRIMARY_KEY, FieldAttribute.REQUIRED)
-                    ?.addField("accountType", String::class.java, FieldAttribute.REQUIRED)
+                    ?.addField("accountType", String::class.java)
                     ?.addField("isDefault", Boolean::class.java, FieldAttribute.REQUIRED)
 
             val phoneNumbers = cursorToContact.getContactsCursor()
