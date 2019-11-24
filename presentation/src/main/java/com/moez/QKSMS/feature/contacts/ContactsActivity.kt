@@ -21,7 +21,9 @@ package com.moez.QKSMS.feature.contacts
 import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProviders
+import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.editorActions
 import com.jakewharton.rxbinding2.widget.textChanges
 import com.moez.QKSMS.R
@@ -53,7 +55,7 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     @Inject lateinit var viewModelFactory: ViewModelFactory
 
     override val queryChangedIntent: Observable<CharSequence> by lazy { search.textChanges() }
-    override val queryBackspaceIntent: Observable<*> by lazy { search.backspaces }
+    override val queryClearedIntent: Observable<*> by lazy { cancel.clicks() }
     override val queryEditorActionIntent: Observable<Int> by lazy { search.editorActions() }
     override val composeItemPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.clicks }
     override val composeItemLongPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.longClicks }
@@ -86,6 +88,8 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     }
 
     override fun render(state: ContactsState) {
+        cancel.isVisible = state.query.length > 1
+
         contactsAdapter.data = state.composeItems
 
         if (state.selectedContact != null && !phoneNumberDialog.isShowing) {
@@ -95,6 +99,10 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         } else if (state.selectedContact == null && phoneNumberDialog.isShowing) {
             phoneNumberDialog.dismiss()
         }
+    }
+
+    override fun clearQuery() {
+        search.text = null
     }
 
     override fun openKeyboard() {

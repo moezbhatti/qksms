@@ -22,6 +22,7 @@ import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.model.Contact
 
 data class ContactsState(
+    val query: String = "",
     val composeItems: List<ComposeItem> = ArrayList(),
     val selectedContact: Contact? = null // For phone number picker
 )

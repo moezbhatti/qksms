@@ -47,21 +47,47 @@
         style="@style/Toolbar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        app:contentInsetStartWithNavigation="0dp"
         app:layout_constrainedHeight="true"
         app:layout_constraintTop_toTopOf="parent">
 
-        <com.moez.QKSMS.common.widget.QkEditText
-            android:id="@+id/search"
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@null"
-            android:hint="@string/title_compose"
-            android:imeOptions="flagNoExtractUi"
-            android:inputType="textFilter|textNoSuggestions"
-            android:privateImeOptions="nm"
-            android:textColor="?android:attr/textColorPrimary"
-            android:textColorHint="?android:attr/textColorTertiary"
-            app:textSize="primary" />
+            android:animateLayoutChanges="true">
+
+            <com.moez.QKSMS.common.widget.QkEditText
+                android:id="@+id/search"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginBottom="8dp"
+                android:background="@drawable/rounded_rectangle_24dp"
+                android:backgroundTint="?attr/bubbleColor"
+                android:hint="@string/title_compose"
+                android:imeOptions="flagNoExtractUi"
+                android:inputType="textFilter|textNoSuggestions"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:privateImeOptions="nm"
+                android:textColor="?android:attr/textColorPrimary"
+                android:textColorHint="?android:attr/textColorTertiary"
+                app:textSize="primary" />
+
+            <ImageView
+                android:id="@+id/cancel"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:layout_gravity="center_vertical|end"
+                android:layout_marginEnd="8dp"
+                android:background="?android:attr/selectableItemBackgroundBorderless"
+                android:padding="8dp"
+                android:src="@drawable/ic_cancel_black_24dp"
+                android:tint="?android:attr/textColorSecondary"
+                android:visibility="gone" />
+
+        </FrameLayout>
 
     </androidx.appcompat.widget.Toolbar>
 

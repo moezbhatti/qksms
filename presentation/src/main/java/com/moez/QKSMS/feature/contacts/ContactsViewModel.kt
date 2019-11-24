@@ -85,6 +85,16 @@ class ContactsViewModel @Inject constructor(
             shouldOpenKeyboard = false
         }
 
+        // Update the state's query, so we know if we should show the cancel button
+        view.queryChangedIntent
+                .autoDisposable(view.scope())
+                .subscribe { query -> newState { copy(query = query.toString()) } }
+
+        // Clear the query
+        view.queryClearedIntent
+                .autoDisposable(view.scope())
+                .subscribe { view.clearQuery() }
+
         // Update the list of contact suggestions based on the query input, while also filtering out any contacts
         // that have already been selected
         Observables

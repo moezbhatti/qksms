@@ -24,7 +24,7 @@
     <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:divider">@color/separatorDark</item>
         <item name="android:navigationBarColor">@color/backgroundDark</item>
-        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
+        <item name="android:queryBackground">@color/bubbleDark</item>
         <item name="android:statusBarColor">@color/statusBarDark</item>
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>

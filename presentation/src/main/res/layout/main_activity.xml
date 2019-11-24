@@ -53,7 +53,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginBottom="8dp"
                 android:background="@drawable/rounded_rectangle_24dp"
-                android:backgroundTint="?android:attr/queryBackground"
+                android:backgroundTint="?attr/bubbleColor"
                 android:hint="@string/title_conversations"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
