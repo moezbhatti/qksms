@@ -168,6 +168,14 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         (view.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
     }
 
-    override fun areContentsTheSame(old: ComposeItem, new: ComposeItem): Boolean = false
+    override fun areItemsTheSame(old: ComposeItem, new: ComposeItem): Boolean {
+        val oldIds = old.getContacts().map { contact -> contact.lookupKey }
+        val newIds = new.getContacts().map { contact -> contact.lookupKey }
+        return oldIds == newIds
+    }
+
+    override fun areContentsTheSame(old: ComposeItem, new: ComposeItem): Boolean {
+        return false
+    }
 
 }

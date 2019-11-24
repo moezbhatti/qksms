@@ -87,7 +87,6 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         showBackButton(true)
         viewModel.bindView(this)
 
-        contacts.itemAnimator = null
         contacts.adapter = contactsAdapter
 
         // These theme attributes don't apply themselves on API 21
