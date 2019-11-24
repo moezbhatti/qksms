@@ -73,10 +73,12 @@ import kotlin.collections.HashMap
 class ComposeActivity : QkThemedActivity(), ComposeView {
 
     companion object {
-        private const val SELECT_CONTACT_REQUEST_CODE = 0
-        private const val TAKE_PHOTO_REQUEST_CODE = 1
-        private const val ATTACH_PHOTO_REQUEST_CODE = 2
-        private const val ATTACH_CONTACT_REQUEST_CODE = 3
+        private const val SelectContactRequestCode = 0
+        private const val TakePhotoRequestCode = 1
+        private const val AttachPhotoRequestCode = 2
+        private const val AttachContactRequestCode = 3
+
+        private const val CameraDestinationKey = "camera_destination"
     }
 
     @Inject lateinit var attachmentAdapter: AttachmentAdapter
@@ -281,7 +283,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         val intent = Intent(Intent.ACTION_PICK)
                 .setType(ContactsContract.CommonDataKinds.Phone.CONTENT_TYPE)
 
-        startActivityForResult(Intent.createChooser(intent, null), ATTACH_CONTACT_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), AttachContactRequestCode)
     }
 
     override fun showContacts(sharing: Boolean, chips: List<Chip>) {
@@ -290,7 +292,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         val intent = Intent(this, ContactsActivity::class.java)
                 .putExtra(ContactsActivity.SharingKey, sharing)
                 .putExtra(ContactsActivity.ChipsKey, serialized)
-        startActivityForResult(intent, SELECT_CONTACT_REQUEST_CODE)
+        startActivityForResult(intent, SelectContactRequestCode)
     }
 
     override fun showKeyboard() {
@@ -306,7 +308,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
                 .putExtra(MediaStore.EXTRA_OUTPUT, cameraDestination)
-        startActivityForResult(Intent.createChooser(intent, null), TAKE_PHOTO_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), TakePhotoRequestCode)
     }
 
     override fun requestGallery() {
@@ -316,7 +318,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .putExtra(Intent.EXTRA_LOCAL_ONLY, false)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
                 .setType("image/*")
-        startActivityForResult(Intent.createChooser(intent, null), ATTACH_PHOTO_REQUEST_CODE)
+        startActivityForResult(Intent.createChooser(intent, null), AttachPhotoRequestCode)
     }
 
     override fun setDraft(draft: String) = message.setText(draft)
@@ -352,26 +354,36 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         when {
-            requestCode == SELECT_CONTACT_REQUEST_CODE -> {
+            requestCode == SelectContactRequestCode -> {
                 chipsSelectedIntent.onNext(data?.getSerializableExtra(ContactsActivity.ChipsKey)
                         ?.let { serializable -> serializable as? HashMap<String, String?> }
                         ?: hashMapOf())
             }
-            requestCode == TAKE_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+            requestCode == TakePhotoRequestCode && resultCode == Activity.RESULT_OK -> {
                 cameraDestination?.let(attachmentSelectedIntent::onNext)
             }
-            requestCode == ATTACH_PHOTO_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+            requestCode == AttachPhotoRequestCode && resultCode == Activity.RESULT_OK -> {
                 data?.clipData?.itemCount
                         ?.let { count -> 0 until count }
                         ?.mapNotNull { i -> data.clipData?.getItemAt(i)?.uri }
                         ?.forEach(attachmentSelectedIntent::onNext)
                         ?: data?.data?.let(attachmentSelectedIntent::onNext)
             }
-            requestCode == ATTACH_CONTACT_REQUEST_CODE && resultCode == Activity.RESULT_OK -> {
+            requestCode == AttachContactRequestCode && resultCode == Activity.RESULT_OK -> {
                 data?.data?.let(contactSelectedIntent::onNext)
             }
             else -> super.onActivityResult(requestCode, resultCode, data)
         }
+    }
+
+    override fun onSaveInstanceState(outState: Bundle) {
+        outState.putParcelable(CameraDestinationKey, cameraDestination)
+        super.onSaveInstanceState(outState)
+    }
+
+    override fun onRestoreInstanceState(savedInstanceState: Bundle?) {
+        cameraDestination = savedInstanceState?.getParcelable(CameraDestinationKey)
+        super.onRestoreInstanceState(savedInstanceState)
     }
 
     override fun onBackPressed() = backPressedIntent.onNext(Unit)

@@ -493,7 +493,7 @@ class ComposeViewModel @Inject constructor(
                 view.attachmentSelectedIntent.map { uri -> Attachment.Image(uri) },
                 view.inputContentIntent.map { inputContent -> Attachment.Image(inputContent = inputContent) })
                 .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
-                .doOnNext { attachments.onNext(it) }
+                .doOnNext(attachments::onNext)
                 .autoDisposable(view.scope())
                 .subscribe { newState { copy(attaching = false) } }
 
