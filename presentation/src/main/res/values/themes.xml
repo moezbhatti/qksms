@@ -20,7 +20,6 @@
 <resources>
 
     <attr name="bubbleColor" format="reference" />
-    <attr name="composeBackground" format="reference" />
     <attr name="switchThumbEnabled" format="color" />
     <attr name="switchThumbDisabled" format="color" />
     <attr name="switchTrackEnabled" format="color" />
@@ -41,13 +40,12 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_tertiary</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
         <item name="colorPrimary">@color/toolbarLight</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
-        <item name="composeBackground">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="switchThumbEnabled">@color/switchThumbEnabledLight</item>
         <item name="switchThumbDisabled">@color/switchThumbDisabledLight</item>
@@ -60,18 +58,17 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_tertiary</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
         <item name="colorPrimary">@color/toolbarLight</item>
         <item name="colorPrimaryDark">@color/statusBarLight</item>
-        <item name="composeBackground">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="windowActionBar">false</item>
     </style>
 
     <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:colorBackground">@color/white</item>
+        <item name="android:colorBackground">@color/backgroundLight</item>
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 

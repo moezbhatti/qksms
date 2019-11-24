@@ -62,6 +62,7 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
 
         setFinishOnTouchOutside(prefs.qkreplyTapDismiss.get())
         setContentView(R.layout.qkreply_activity)
+        window.setBackgroundDrawable(null)
         window.clearFlags(WindowManager.LayoutParams.FLAG_DIM_BEHIND)
         window.setLayout(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT)
         viewModel.bindView(this)
@@ -77,10 +78,10 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {
             toolbar.setBackgroundTint(resolveThemeColor(R.attr.colorPrimary))
-            background.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            background.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
             messageBackground.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
-            composeBackgroundSolid.setBackgroundTint(resolveThemeColor(R.attr.composeBackground))
+            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
+            composeBackgroundSolid.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
         }
     }
 

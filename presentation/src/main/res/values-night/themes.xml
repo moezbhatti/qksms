@@ -35,7 +35,6 @@
         <item name="bubbleColor">@color/bubbleDark</item>
         <item name="colorPrimary">@color/toolbarDark</item>
         <item name="colorPrimaryDark">@color/statusBarDark</item>
-        <item name="composeBackground">@color/backgroundDark</item>
         <item name="selectableItemBackground">@drawable/ripple_dark</item>
         <item name="switchThumbEnabled">@color/switchThumbEnabledDark</item>
         <item name="switchThumbDisabled">@color/switchThumbDisabledDark</item>
@@ -48,12 +47,11 @@
         <item name="android:textColorPrimary">@color/text_primary</item>
         <item name="android:textColorSecondary">@color/text_secondary</item>
         <item name="android:textColorTertiary">@color/text_tertiary</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
         <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleDark</item>
         <item name="colorPrimary">@color/toolbarDark</item>
         <item name="colorPrimaryDark">@color/statusBarDark</item>
-        <item name="composeBackground">@color/backgroundDark</item>
         <item name="selectableItemBackground">@drawable/ripple_dark</item>
         <item name="windowActionBar">false</item>
     </style>
@@ -70,14 +68,13 @@
         <item name="android:windowBackground">@color/black</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="composeBackground">@color/black</item>
     </style>
 
     <style name="AppThemeDialog.Black">
+        <item name="android:windowBackground">@color/black</item>
         <item name="actionBarPopupTheme">@style/PopupTheme.Black</item>
         <item name="colorPrimary">@color/black</item>
         <item name="colorPrimaryDark">@color/black</item>
-        <item name="composeBackground">@color/black</item>
     </style>
 
     <style name="PopupTheme.Black">

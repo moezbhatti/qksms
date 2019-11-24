@@ -26,9 +26,9 @@
     android:layout_gravity="center"
     android:layout_margin="24dp"
     android:background="@drawable/rounded_rectangle_4dp"
-    android:backgroundTint="?attr/composeBackground"
+    android:backgroundTint="?android:attr/windowBackground"
     android:elevation="8dp"
-    tools:context="com.moez.QKSMS.feature.qkreply.QkReplyActivity">
+    tools:context=".feature.qkreply.QkReplyActivity">
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messages"
@@ -48,19 +48,17 @@
     <View
         android:id="@+id/composeBackgroundGradient"
         android:layout_width="match_parent"
-        android:layout_height="8dp"
+        android:layout_height="12dp"
         android:layout_marginTop="8dp"
-        android:background="@drawable/compose_bar_background"
-        android:backgroundTint="?attr/composeBackground"
+        android:background="?android:attr/windowBackground"
         app:layout_constraintBottom_toTopOf="@id/composeBackgroundSolid" />
 
     <View
         android:id="@+id/composeBackgroundSolid"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_marginTop="8dp"
         android:background="@drawable/rounded_rectangle_bottom_4dp"
-        android:backgroundTint="?attr/composeBackground"
+        android:backgroundTint="?android:attr/windowBackground"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintTop_toBottomOf="@id/messages"
         app:layout_constraintTop_toTopOf="@id/message"
@@ -70,11 +68,11 @@
         android:id="@+id/messageBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginEnd="8dp"
         android:background="@drawable/rounded_rectangle_22dp"
         android:backgroundTint="?attr/bubbleColor"
-        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintEnd_toEndOf="@id/send"
+        app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toStartOf="@id/message"
         app:layout_constraintTop_toTopOf="@id/message" />
 
@@ -83,10 +81,9 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginStart="8dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
+        android:layout_marginBottom="12dp"
         android:background="@null"
-        android:elevation="4dp"
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
@@ -107,18 +104,16 @@
         android:layout_height="44dp"
         android:background="?attr/selectableItemBackground"
         android:contentDescription="@string/compose_sim_cd"
-        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_sim_card_black_24dp"
         android:tint="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/message"
-        app:layout_constraintEnd_toStartOf="@id/send" />
+        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="4dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimaryInverse"
         android:textSize="14dp"
@@ -135,7 +130,6 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:elevation="4dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toTopOf="@id/send"
@@ -150,7 +144,6 @@
         android:layout_height="44dp"
         android:layout_marginEnd="8dp"
         android:contentDescription="@string/compose_send_cd"
-        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_send_black_24dp"
         android:tint="?android:textColorSecondary"
@@ -176,6 +169,7 @@
     </androidx.appcompat.widget.Toolbar>
 
     <View
+        android:id="@+id/view2"
         android:layout_width="match_parent"
         android:layout_height="8dp"
         android:background="@drawable/ab_shadow"

@@ -33,7 +33,7 @@
     <color name="toolbarSearchBackgroundLight">#0D000000</color>
     <color name="toolbarSearchBackgroundDark">#26000000</color>
 
-    <color name="backgroundLight">#ECEFF1</color>
+    <color name="backgroundLight">#FFFFFF</color>
     <color name="backgroundDark">#192025</color>
 
     <color name="textPrimary">#49555F</color>
@@ -48,7 +48,7 @@
     <color name="textSecondaryDisabledDark">#67ffffff</color>
     <color name="textTertiaryDark">#80ffffff</color>
 
-    <color name="bubbleLight">#FFFFFF</color>
+    <color name="bubbleLight">#ECEFF1</color>
     <color name="bubbleDark">#242a2f</color>
 
     <color name="separatorLight">#0C000000</color>

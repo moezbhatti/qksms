@@ -30,7 +30,7 @@
         android:layout_height="36dp"
         android:layout_margin="4dp"
         android:background="@drawable/chip_background"
-        android:backgroundTint="?attr/composeBackground"
+        android:backgroundTint="?attr/bubbleColor"
         android:orientation="horizontal">
 
         <com.moez.QKSMS.common.widget.AvatarView
