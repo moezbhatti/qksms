@@ -224,7 +224,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         attachments.setVisible(state.attachments.isNotEmpty())
         attachmentAdapter.data = state.attachments
 
-        attach.animate().rotation(if (state.attaching) 45f else 0f).start()
+        attach.animate().rotation(if (state.attaching) 135f else 0f).start()
         attaching.isVisible = state.attaching
 
         counter.text = state.remaining
