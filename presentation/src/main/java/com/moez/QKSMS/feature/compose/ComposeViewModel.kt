@@ -52,6 +52,7 @@ import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.ActiveSubscriptionObservable
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
 import com.uber.autodispose.android.lifecycle.scope
@@ -89,6 +90,7 @@ class ComposeViewModel @Inject constructor(
     private val messageRepo: MessageRepository,
     private val navigator: Navigator,
     private val permissionManager: PermissionManager,
+    private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val retrySending: RetrySending,
     private val sendMessage: SendMessage,
@@ -229,10 +231,15 @@ class ComposeViewModel @Inject constructor(
 
         view.chipsSelectedIntent
                 .withLatestFrom(selectedChips) { hashmap, chips ->
+                    // If there's no contacts already selected, and the user cancelled the contact
+                    // selection, close the activity
                     if (hashmap.isEmpty() && chips.isEmpty()) {
                         newState { copy(hasError = true) }
                     }
-                    hashmap
+                    // Filter out any numbers that are already selected
+                    hashmap.filter { (address) ->
+                        chips.none { chip -> phoneNumberUtils.compare(address, chip.address) }
+                    }
                 }
                 .filter { hashmap -> hashmap.isNotEmpty() }
                 .map { hashmap ->
