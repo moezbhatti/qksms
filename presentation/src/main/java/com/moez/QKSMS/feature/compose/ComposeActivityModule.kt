@@ -42,13 +42,11 @@ class ComposeActivityModule {
     fun provideThreadId(activity: ComposeActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
 
     @Provides
-    @Named("address")
-    fun provideAddress(activity: ComposeActivity): String {
-        var address = ""
-
+    @Named("addresses")
+    fun provideAddresses(activity: ComposeActivity): List<String> {
         activity.intent.data?.let {
             val data = it.toString()
-            address = when {
+            var address = when {
                 it.scheme?.startsWith("smsto") == true -> data.replace("smsto:", "")
                 it.scheme?.startsWith("mmsto") == true -> data.replace("mmsto:", "")
                 it.scheme?.startsWith("sms") == true -> data.replace("sms:", "")
@@ -58,9 +56,11 @@ class ComposeActivityModule {
 
             // The dialer app on Oreo sends a URL encoded string, make sure to decode it
             if (address.contains('%')) address = URLDecoder.decode(address, "UTF-8")
+
+            return address.split(",")
         }
 
-        return address
+        return listOf()
     }
 
     @Provides

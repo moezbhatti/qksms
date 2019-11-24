@@ -74,7 +74,7 @@ import javax.inject.Named
 class ComposeViewModel @Inject constructor(
     @Named("query") private val query: String,
     @Named("threadId") private val threadId: Long,
-    @Named("address") private val address: String,
+    @Named("addresses") private val addresses: List<String>,
     @Named("text") private val sharedText: String,
     @Named("attachments") private val sharedAttachments: Attachments,
     private val contactRepo: ContactRepository,
@@ -96,7 +96,7 @@ class ComposeViewModel @Inject constructor(
     private val sendMessage: SendMessage,
     private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
-        editingMode = threadId == 0L && address.isBlank(),
+        editingMode = threadId == 0L && addresses.isEmpty(),
         selectedConversation = threadId,
         query = query)
 ) {
@@ -109,7 +109,7 @@ class ComposeViewModel @Inject constructor(
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
 
-    private var shouldShowContacts = threadId == 0L && address.isBlank()
+    private var shouldShowContacts = threadId == 0L && addresses.isEmpty()
 
     init {
         val initialConversation = threadId.takeIf { it != 0L }
@@ -160,8 +160,8 @@ class ComposeViewModel @Inject constructor(
                 .filter { conversation -> conversation.isValid }
                 .subscribe(conversation::onNext)
 
-        if (address.isNotBlank()) {
-            selectedChips.onNext(listOf(Chip(address)))
+        if (addresses.isNotEmpty()) {
+            selectedChips.onNext(addresses.map { address -> Chip(address) })
         }
 
         disposables += chipsReducer
