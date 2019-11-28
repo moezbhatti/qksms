@@ -32,16 +32,21 @@ class BlockedNumberTextWatcher(
         editText.addTextChangedListener(this)
     }
 
-    override fun afterTextChanged(s: Editable?) = Unit
+    override fun afterTextChanged(s: Editable?) {
+        editText.removeTextChangedListener(this)
 
-    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
-
-    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
         val formatted = s?.let(phoneNumberUtils::formatNumber)
         if (s?.toString() != formatted && formatted != null) {
             editText.setText(formatted)
             editText.setSelection(formatted.length)
         }
+
+        editText.addTextChangedListener(this)
+    }
+
+    override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) = Unit
+
+    override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
     }
 
     fun dispose() {

@@ -39,7 +39,6 @@
         android:layout_height="wrap_content"
         android:background="@null"
         android:hint="@string/blocked_numbers_dialog_hint"
-        android:inputType="phone"
         android:paddingStart="24dp"
         android:paddingTop="16dp"
         android:paddingEnd="24dp"
