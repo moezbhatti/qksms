@@ -23,7 +23,7 @@ jobs:
             tar xvf secrets.tar
       - run:
           name: Gradle build
-          command: ./gradlew :presentation:assembleWithAnalyticsRelease :presentation:bundleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
+          command: ./gradlew :presentation:assembleWithAnalyticsRelease :presentation:bundleWithAnalyticsRelease
       - store_artifacts:
           path: presentation/build/outputs
           destination: builds
