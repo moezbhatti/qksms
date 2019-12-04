@@ -28,8 +28,8 @@ jobs:
           path: presentation/build/outputs/apk
           destination: builds
       - store_artifacts:
-        path: presentation/build/outputs/bundle
-        destination: builds
+          path: presentation/build/outputs/bundle
+          destination: builds
       - persist_to_workspace:
           root: presentation/build/outputs
           paths: .
