@@ -49,7 +49,7 @@ jobs:
       - store_test_results:
           path: presentation/build/test-results
 
-  publish-github-release:
+  deploy:
     docker:
       - image: cibuilds/github:0.10
     steps:
