@@ -339,6 +339,7 @@ class MessageRepositoryImpl @Inject constructor(
                     .map { attachment -> attachment.vCard.toByteArray() }
                     .map { vCard -> MMSPart("contact", ContentType.TEXT_VCARD, vCard) }
 
+            // We need to strip the separators from outgoing MMS, or else they'll appear to have sent and not go through
             val transaction = Transaction(context)
             val recipients = addresses.map(phoneNumberUtils::normalizeNumber)
             transaction.sendNewMessage(subId, threadId, recipients, parts, null, null)
