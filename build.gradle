@@ -16,7 +16,7 @@ buildscript {
     ext.exoplayer_version = "2.8.1"
     ext.glide_version = "4.8.0"
     ext.junit_version = '4.12'
-    ext.kotlin_version = '1.3.31'
+    ext.kotlin_version = '1.3.60'
     ext.lifecycle_version = '2.1.0'
     ext.material_version = '1.0.0'
     ext.mockito_version = '2.18.3'
@@ -42,7 +42,7 @@ buildscript {
     }
 
     dependencies {
-        classpath 'com.android.tools.build:gradle:3.4.2'
+        classpath 'com.android.tools.build:gradle:3.5.2'
         classpath 'com.google.gms:google-services:4.2.0'
         classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
         classpath 'io.fabric.tools:gradle:1.29.0'
@@ -67,4 +67,18 @@ allprojects {
 
 task clean(type: Delete) {
     delete rootProject.buildDir
+}
+
+subprojects {
+    afterEvaluate {
+        if (project.hasProperty('kapt')) {
+            kapt {
+                // we expect this closure to run over a org.jetbrains.kotlin.gradle.plugin.KaptExtension
+                javacOptions {
+                    option("-source", "8")
+                    option("-target", "8")
+                }
+            }
+        }
+    }
 }
