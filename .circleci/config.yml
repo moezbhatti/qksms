@@ -19,7 +19,7 @@ jobs:
       - run:
           name: Decrypt and unzip secrets
           command: |
-            openssl aes-256-cbc -d -in secrets.tar.enc -k ${SECRETS_KEY} -iv ${SECRETS_IV} >> secrets.tar
+            openssl aes-256-cbc -d -in secrets.tar.enc -md sha1 -k ${SECRETS_KEY} -iv ${SECRETS_IV} >> secrets.tar
             tar xvf secrets.tar
       - run:
           name: Gradle build
