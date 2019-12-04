@@ -17,6 +17,11 @@ jobs:
             - ~/.gradle
           key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}-{{ checksum  "data/build.gradle" }}-{{ checksum  "domain/build.gradle" }}
       - run:
+          name: Decrypt and unzip secrets
+          command: |
+            openssl aes-256-cbc -d -in secrets.tar.enc -k ${SECRETS_KEY} -iv ${SECRETS_IV} >> secrets.tar
+            tar xvf secrets.tar
+      - run:
           name: Gradle build
           command: ./gradlew :presentation:assembleWithAnalyticsRelease :presentation:bundleWithAnalyticsRelease assembleAndroidTest -PtestCoverageEnabled='true'
       - store_artifacts:
