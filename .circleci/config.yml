@@ -60,7 +60,7 @@ jobs:
           at: presentation/build/outputs
       - run:
           name: "Publish Release on GitHub"
-          command: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} presentation/build/outputs/
+          command: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} presentation/build/outputs/
 
 workflows:
   version: 2
