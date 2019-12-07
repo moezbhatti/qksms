@@ -59,7 +59,7 @@ allprojects {
         maven { url 'https://maven.google.com' }
         maven {
             name 'glide-snapshot'
-            url 'http://oss.sonatype.org/content/repositories/snapshots'
+            url 'https://oss.sonatype.org/content/repositories/snapshots'
         }
         mavenCentral()
     }
