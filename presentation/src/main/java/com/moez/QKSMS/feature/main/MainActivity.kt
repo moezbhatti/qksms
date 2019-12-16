@@ -155,7 +155,6 @@ class MainActivity : QkThemedActivity(), MainView {
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         theme
-                .doOnNext { recyclerView.scrapViews() }
                 .autoDisposable(scope())
                 .subscribe { theme ->
                     // Set the color for the drawer icons
@@ -182,6 +181,10 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
                 }
+
+        allThemes
+                .autoDisposable(scope())
+                .subscribe { recyclerView.scrapViews() }
 
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)

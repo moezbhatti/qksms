@@ -28,6 +28,8 @@ import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
 import android.provider.Telephony
+import android.provider.Telephony.Mms
+import android.provider.Telephony.Sms
 import android.telephony.SmsManager
 import android.webkit.MimeTypeMap
 import androidx.core.content.contentValuesOf
@@ -108,6 +110,25 @@ class MessageRepositoryImpl @Inject constructor(
                 .where(Message::class.java)
                 .equalTo("parts.id", id)
                 .findFirst()
+    }
+
+    override fun getLastIncomingMessage(threadId: Long): RealmResults<Message> {
+        return Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .equalTo("threadId", threadId)
+                .beginGroup()
+                .beginGroup()
+                .equalTo("type", "sms")
+                .`in`("boxId", arrayOf(Sms.MESSAGE_TYPE_INBOX, Sms.MESSAGE_TYPE_ALL))
+                .endGroup()
+                .or()
+                .beginGroup()
+                .equalTo("type", "mms")
+                .`in`("boxId", arrayOf(Mms.MESSAGE_BOX_INBOX, Mms.MESSAGE_BOX_ALL))
+                .endGroup()
+                .endGroup()
+                .sort("date", Sort.DESCENDING)
+                .findAll()
     }
 
     override fun getUnreadCount(): Long {
@@ -239,13 +260,13 @@ class MessageRepositoryImpl @Inject constructor(
         }
 
         val values = ContentValues()
-        values.put(Telephony.Sms.SEEN, true)
-        values.put(Telephony.Sms.READ, true)
+        values.put(Sms.SEEN, true)
+        values.put(Sms.READ, true)
 
         threadIds.forEach { threadId ->
             try {
                 val uri = ContentUris.withAppendedId(Telephony.MmsSms.CONTENT_CONVERSATIONS_URI, threadId)
-                context.contentResolver.update(uri, values, "${Telephony.Sms.READ} = 0", null)
+                context.contentResolver.update(uri, values, "${Sms.READ} = 0", null)
             } catch (exception: Exception) {
                 Timber.w(exception)
             }
@@ -421,7 +442,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.subId = subId
 
             id = messageIds.newId()
-            boxId = Telephony.Sms.MESSAGE_TYPE_OUTBOX
+            boxId = Sms.MESSAGE_TYPE_OUTBOX
             type = "sms"
             read = true
             seen = true
@@ -432,20 +453,20 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to the native content provider
         val values = contentValuesOf(
-                Telephony.Sms.ADDRESS to address,
-                Telephony.Sms.BODY to body,
-                Telephony.Sms.DATE to System.currentTimeMillis(),
-                Telephony.Sms.READ to true,
-                Telephony.Sms.SEEN to true,
-                Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX,
-                Telephony.Sms.THREAD_ID to threadId
+                Sms.ADDRESS to address,
+                Sms.BODY to body,
+                Sms.DATE to System.currentTimeMillis(),
+                Sms.READ to true,
+                Sms.SEEN to true,
+                Sms.TYPE to Sms.MESSAGE_TYPE_OUTBOX,
+                Sms.THREAD_ID to threadId
         )
 
         if (prefs.canUseSubId.get()) {
-            values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
+            values.put(Sms.SUBSCRIPTION_ID, message.subId)
         }
 
-        val uri = context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
+        val uri = context.contentResolver.insert(Sms.CONTENT_URI, values)
 
         // Update the contentId after the message has been inserted to the content provider
         // The message might have been deleted by now, so only proceed if it's valid
@@ -479,7 +500,7 @@ class MessageRepositoryImpl @Inject constructor(
 
             id = messageIds.newId()
             threadId = TelephonyCompat.getOrCreateThreadId(context, address)
-            boxId = Telephony.Sms.MESSAGE_TYPE_INBOX
+            boxId = Sms.MESSAGE_TYPE_INBOX
             type = "sms"
             read = activeConversationManager.getActiveConversation() == threadId
         }
@@ -489,16 +510,16 @@ class MessageRepositoryImpl @Inject constructor(
 
         // Insert the message to the native content provider
         val values = contentValuesOf(
-                Telephony.Sms.ADDRESS to address,
-                Telephony.Sms.BODY to body,
-                Telephony.Sms.DATE_SENT to sentTime
+                Sms.ADDRESS to address,
+                Sms.BODY to body,
+                Sms.DATE_SENT to sentTime
         )
 
         if (prefs.canUseSubId.get()) {
-            values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
+            values.put(Sms.SUBSCRIPTION_ID, message.subId)
         }
 
-        context.contentResolver.insert(Telephony.Sms.Inbox.CONTENT_URI, values)?.lastPathSegment?.toLong()?.let { id ->
+        context.contentResolver.insert(Sms.Inbox.CONTENT_URI, values)?.lastPathSegment?.toLong()?.let { id ->
             // Update the contentId after the message has been inserted to the content provider
             realm.executeTransaction { managedMessage?.contentId = id }
         }
@@ -520,15 +541,15 @@ class MessageRepositoryImpl @Inject constructor(
                 // Update the message in realm
                 realm.executeTransaction {
                     message.boxId = when (message.isSms()) {
-                        true -> Telephony.Sms.MESSAGE_TYPE_OUTBOX
-                        false -> Telephony.Mms.MESSAGE_BOX_OUTBOX
+                        true -> Sms.MESSAGE_TYPE_OUTBOX
+                        false -> Mms.MESSAGE_BOX_OUTBOX
                     }
                 }
 
                 // Update the message in the native ContentProvider
                 val values = when (message.isSms()) {
-                    true -> contentValuesOf(Telephony.Sms.TYPE to Telephony.Sms.MESSAGE_TYPE_OUTBOX)
-                    false -> contentValuesOf(Telephony.Mms.MESSAGE_BOX to Telephony.Mms.MESSAGE_BOX_OUTBOX)
+                    true -> contentValuesOf(Sms.TYPE to Sms.MESSAGE_TYPE_OUTBOX)
+                    false -> contentValuesOf(Mms.MESSAGE_BOX to Mms.MESSAGE_BOX_OUTBOX)
                 }
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
@@ -543,12 +564,12 @@ class MessageRepositoryImpl @Inject constructor(
             message?.let {
                 // Update the message in realm
                 realm.executeTransaction {
-                    message.boxId = Telephony.Sms.MESSAGE_TYPE_SENT
+                    message.boxId = Sms.MESSAGE_TYPE_SENT
                 }
 
                 // Update the message in the native ContentProvider
                 val values = ContentValues()
-                values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_SENT)
+                values.put(Sms.TYPE, Sms.MESSAGE_TYPE_SENT)
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
         }
@@ -562,14 +583,14 @@ class MessageRepositoryImpl @Inject constructor(
             message?.let {
                 // Update the message in realm
                 realm.executeTransaction {
-                    message.boxId = Telephony.Sms.MESSAGE_TYPE_FAILED
+                    message.boxId = Sms.MESSAGE_TYPE_FAILED
                     message.errorCode = resultCode
                 }
 
                 // Update the message in the native ContentProvider
                 val values = ContentValues()
-                values.put(Telephony.Sms.TYPE, Telephony.Sms.MESSAGE_TYPE_FAILED)
-                values.put(Telephony.Sms.ERROR_CODE, resultCode)
+                values.put(Sms.TYPE, Sms.MESSAGE_TYPE_FAILED)
+                values.put(Sms.ERROR_CODE, resultCode)
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
         }
@@ -583,16 +604,16 @@ class MessageRepositoryImpl @Inject constructor(
             message?.let {
                 // Update the message in realm
                 realm.executeTransaction {
-                    message.deliveryStatus = Telephony.Sms.STATUS_COMPLETE
+                    message.deliveryStatus = Sms.STATUS_COMPLETE
                     message.dateSent = System.currentTimeMillis()
                     message.read = true
                 }
 
                 // Update the message in the native ContentProvider
                 val values = ContentValues()
-                values.put(Telephony.Sms.STATUS, Telephony.Sms.STATUS_COMPLETE)
-                values.put(Telephony.Sms.DATE_SENT, System.currentTimeMillis())
-                values.put(Telephony.Sms.READ, true)
+                values.put(Sms.STATUS, Sms.STATUS_COMPLETE)
+                values.put(Sms.DATE_SENT, System.currentTimeMillis())
+                values.put(Sms.READ, true)
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
         }
@@ -606,7 +627,7 @@ class MessageRepositoryImpl @Inject constructor(
             message?.let {
                 // Update the message in realm
                 realm.executeTransaction {
-                    message.deliveryStatus = Telephony.Sms.STATUS_FAILED
+                    message.deliveryStatus = Sms.STATUS_FAILED
                     message.dateSent = System.currentTimeMillis()
                     message.read = true
                     message.errorCode = resultCode
@@ -614,10 +635,10 @@ class MessageRepositoryImpl @Inject constructor(
 
                 // Update the message in the native ContentProvider
                 val values = ContentValues()
-                values.put(Telephony.Sms.STATUS, Telephony.Sms.STATUS_FAILED)
-                values.put(Telephony.Sms.DATE_SENT, System.currentTimeMillis())
-                values.put(Telephony.Sms.READ, true)
-                values.put(Telephony.Sms.ERROR_CODE, resultCode)
+                values.put(Sms.STATUS, Sms.STATUS_FAILED)
+                values.put(Sms.DATE_SENT, System.currentTimeMillis())
+                values.put(Sms.READ, true)
+                values.put(Sms.ERROR_CODE, resultCode)
                 context.contentResolver.update(message.getUri(), values, null, null)
             }
         }

@@ -66,10 +66,10 @@ class Colors @Inject constructor(private val context: Context, private val prefs
     private val secondaryTextLuminance = measureLuminance(context.getColorCompat(R.color.textSecondaryDark))
     private val tertiaryTextLuminance = measureLuminance(context.getColorCompat(R.color.textTertiaryDark))
 
-    fun theme(threadId: Long = 0): Theme = Theme(prefs.theme(threadId).get(), this)
+    fun theme(recipientId: Long = 0): Theme = Theme(prefs.theme(recipientId).get(), this)
 
-    fun themeObservable(threadId: Long = 0): Observable<Theme> {
-        return prefs.theme(threadId).asObservable()
+    fun themeObservable(recipientId: Long = 0): Observable<Theme> {
+        return prefs.theme(recipientId).asObservable()
                 .map { color -> Theme(color, this) }
     }
 

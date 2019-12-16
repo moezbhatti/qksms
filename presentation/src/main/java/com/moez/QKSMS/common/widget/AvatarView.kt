@@ -43,7 +43,7 @@ class AvatarView @JvmOverloads constructor(
     /**
      * This value can be changes if we should use the theme from a particular conversation
      */
-    var threadId: Long = 0
+    var recipientId: Long = 0
         set(value) {
             if (field == value) return
             field = value
@@ -81,13 +81,13 @@ class AvatarView @JvmOverloads constructor(
         super.onFinishInflate()
 
         if (!isInEditMode) {
-            applyTheme(threadId)
+            applyTheme(recipientId)
             updateView()
         }
     }
 
-    private fun applyTheme(threadId: Long) {
-        colors.theme(threadId).run {
+    private fun applyTheme(recipientId: Long) {
+        colors.theme(recipientId).run {
             setBackgroundTint(theme)
             initial.setTextColor(textPrimary)
             icon.setTint(textPrimary)

@@ -27,6 +27,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.ClipboardUtils
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.MessageDetailsFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
@@ -77,6 +78,7 @@ class ComposeViewModel @Inject constructor(
     @Named("addresses") private val addresses: List<String>,
     @Named("text") private val sharedText: String,
     @Named("attachments") private val sharedAttachments: Attachments,
+    private val colors: Colors,
     private val contactRepo: ContactRepository,
     private val context: Context,
     private val activeConversationManager: ActiveConversationManager,
@@ -97,7 +99,7 @@ class ComposeViewModel @Inject constructor(
     private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && addresses.isEmpty(),
-        selectedConversation = threadId,
+        threadId = threadId,
         query = query)
 ) {
 
@@ -171,13 +173,13 @@ class ComposeViewModel @Inject constructor(
                 .takeUntil(state.filter { state -> !state.editingMode })
                 .subscribe(selectedChips::onNext)
 
-        // When the conversation changes, mark read, and update the threadId and the messages for the adapter
+        // When the conversation changes, mark read, and update the recipientId and the messages for the adapter
         disposables += conversation
                 .distinctUntilChanged { conversation -> conversation.id }
                 .observeOn(AndroidSchedulers.mainThread())
                 .map { conversation ->
                     val messages = messageRepo.getMessages(conversation.id)
-                    newState { copy(selectedConversation = conversation.id, messages = Pair(conversation, messages)) }
+                    newState { copy(threadId = conversation.id, messages = Pair(conversation, messages)) }
                     messages
                 }
                 .switchMap { messages -> messages.asObservable() }

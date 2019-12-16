@@ -68,7 +68,7 @@ class ScheduledMessageAdapter @Inject constructor(
         val view = holder.containerView
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients
-        view.avatars.contacts = message.recipients.map { address -> Recipient(address = address) }
+        view.avatars.recipients = message.recipients.map { address -> Recipient(address = address) }
 
         view.recipients.text = message.recipients.joinToString(",") { address ->
             contactCache[address]?.name?.takeIf { it.isNotBlank() } ?: address

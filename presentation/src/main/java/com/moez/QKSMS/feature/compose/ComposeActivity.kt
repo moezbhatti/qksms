@@ -151,6 +151,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .doOnNext { attach.setTint(it.textPrimary) }
                 .doOnNext { messageAdapter.theme = it }
                 .autoDisposable(scope())
+                .subscribe()
+
+        allThemes
+                .autoDisposable(scope())
                 .subscribe { messageList.scrapViews() }
 
         window.callback = ComposeWindowCallback(window.callback, this)
@@ -177,7 +181,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             return
         }
 
-        threadId.onNext(state.selectedConversation)
+        threadId.onNext(state.threadId)
 
         title = when {
             state.selectedMessages > 0 -> getString(R.string.compose_title_selected, state.selectedMessages)

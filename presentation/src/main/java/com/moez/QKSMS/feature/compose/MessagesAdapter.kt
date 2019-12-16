@@ -98,9 +98,6 @@ class MessagesAdapter @Inject constructor(
             field = value
             contactCache.clear()
 
-            // Update the theme
-            theme = colors.theme(value?.first?.id ?: 0)
-
             updateData(value?.second)
         }
 
@@ -145,9 +142,6 @@ class MessagesAdapter @Inject constructor(
             view.findViewById<ProgressBar>(R.id.cancel).setTint(theme.theme)
         } else {
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
-            view.avatar.threadId = conversation?.id ?: 0
-            view.body.setTextColor(theme.textPrimary)
-            view.body.setBackgroundTint(theme.theme)
         }
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
@@ -186,6 +180,11 @@ class MessagesAdapter @Inject constructor(
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
         val view = viewHolder.containerView
+
+        val theme = when (message.isOutgoingMessage()) {
+            true -> colors.theme()
+            false -> colors.theme(contactCache[message.address]?.id ?: 0)
+        }
 
         // Update the selected state
         view.isActivated = isSelected(message.id) || highlight == message.id
@@ -231,11 +230,14 @@ class MessagesAdapter @Inject constructor(
         val media = message.parts.filter { !it.isSmil() && !it.isText() }
         view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
 
-        // Bind the avatar
+        // Bind the avatar and bubble colour
         if (!message.isMe()) {
-            view.avatar.threadId = conversation?.id ?: 0
+            view.avatar.recipientId = contactCache[message.address]?.id ?: 0
             view.avatar.setContact(contactCache[message.address]?.contact)
             view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+
+            view.body.setTextColor(theme.textPrimary)
+            view.body.setBackgroundTint(theme.theme)
         }
 
         // Bind the body text

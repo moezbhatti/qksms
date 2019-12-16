@@ -28,7 +28,7 @@ import io.realm.RealmResults
 data class ComposeState(
     val hasError: Boolean = false,
     val editingMode: Boolean = false,
-    val selectedConversation: Long = 0,
+    val threadId: Long = 0,
     val selectedChips: List<Chip> = ArrayList(),
     val sendAsGroup: Boolean = true,
     val conversationtitle: String = "",

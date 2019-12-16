@@ -113,6 +113,11 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         val conversation = conversationRepo.getConversation(threadId) ?: return
+        val lastRecipient = conversation.lastMessage?.let { lastMessage ->
+            conversation.recipients.find { recipient ->
+                phoneNumberUtils.compare(recipient.address, lastMessage.address)
+            }
+        } ?: conversation.recipients.firstOrNull()
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
         val taskStackBuilder = TaskStackBuilder.create(context)
@@ -134,7 +139,7 @@ class NotificationManagerImpl @Inject constructor(
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setCategory(NotificationCompat.CATEGORY_MESSAGE)
-                .setColor(colors.theme(threadId).theme)
+                .setColor(colors.theme(lastRecipient?.id ?: 0).theme)
                 .setPriority(NotificationCompat.PRIORITY_MAX)
                 .setSmallIcon(R.drawable.ic_notification)
                 .setNumber(messages.size)
@@ -158,8 +163,9 @@ class NotificationManagerImpl @Inject constructor(
             val person = Person.Builder()
 
             if (!message.isMe()) {
-                val recipient = conversation.recipients
-                        .firstOrNull { phoneNumberUtils.compare(it.address, message.address) }
+                val recipient = conversation.recipients.find { recipient ->
+                    phoneNumberUtils.compare(recipient.address, message.address)
+                }
 
                 person.setName(recipient?.getDisplayName() ?: message.address)
                 person.setIcon(GlideApp.with(context)
@@ -302,6 +308,12 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         val conversation = conversationRepo.getConversation(message.threadId) ?: return
+        val lastRecipient = conversation.lastMessage?.let { lastMessage ->
+            conversation.recipients.find { recipient ->
+                phoneNumberUtils.compare(recipient.address, lastMessage.address)
+            }
+        } ?: conversation.recipients.firstOrNull()
+
         val threadId = conversation.id
 
         val contentIntent = Intent(context, ComposeActivity::class.java).putExtra("threadId", threadId)
@@ -313,7 +325,7 @@ class NotificationManagerImpl @Inject constructor(
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setContentTitle(context.getString(R.string.notification_message_failed_title))
                 .setContentText(context.getString(R.string.notification_message_failed_text, conversation.getTitle()))
-                .setColor(colors.theme(threadId).theme)
+                .setColor(colors.theme(lastRecipient?.id ?: 0).theme)
                 .setPriority(NotificationManagerCompat.IMPORTANCE_MAX)
                 .setSmallIcon(R.drawable.ic_notification_failed)
                 .setAutoCancel(true)

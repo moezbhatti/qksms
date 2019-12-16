@@ -54,7 +54,7 @@ class QkReplyViewModel @Inject constructor(
     private val navigator: Navigator,
     private val sendMessage: SendMessage,
     private val subscriptionManager: SubscriptionManagerCompat
-) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState(selectedConversation = threadId)) {
+) : QkViewModel<QkReplyView, QkReplyState>(QkReplyState(threadId = threadId)) {
 
     private val conversation by lazy {
         conversationRepo.getConversationAsync(threadId)

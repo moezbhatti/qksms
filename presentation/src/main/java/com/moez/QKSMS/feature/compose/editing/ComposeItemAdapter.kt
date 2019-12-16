@@ -87,7 +87,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
 
         view.icon.isVisible = false
 
-        view.avatar.contacts = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(Recipient(contact = contact))
 
         view.title.text = contact.numbers.joinToString { it.address }
 
@@ -102,7 +102,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         view.icon.isVisible = prev !is ComposeItem.Recent
         view.icon.setImageResource(R.drawable.ic_history_black_24dp)
 
-        view.avatar.contacts = conversation.recipients
+        view.avatar.recipients = conversation.recipients
 
         view.title.text = conversation.getTitle()
 
@@ -123,7 +123,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         view.icon.isVisible = prev !is ComposeItem.Starred
         view.icon.setImageResource(R.drawable.ic_star_black_24dp)
 
-        view.avatar.contacts = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(Recipient(contact = contact))
 
         view.title.text = contact.name
 
@@ -139,7 +139,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         view.icon.isVisible = prev !is ComposeItem.Group
         view.icon.setImageResource(R.drawable.ic_people_black_24dp)
 
-        view.avatar.contacts = group.contacts.map { contact -> Recipient(contact = contact) }
+        view.avatar.recipients = group.contacts.map { contact -> Recipient(contact = contact) }
 
         view.title.text = group.title
 
@@ -158,7 +158,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
 
         view.icon.isVisible = false
 
-        view.avatar.contacts = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(Recipient(contact = contact))
 
         view.title.text = contact.name
 

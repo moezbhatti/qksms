@@ -32,6 +32,7 @@ import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.util.PhoneNumberUtils
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
@@ -39,7 +40,8 @@ class ConversationsAdapter @Inject constructor(
     private val colors: Colors,
     private val context: Context,
     private val dateFormatter: DateFormatter,
-    private val navigator: Navigator
+    private val navigator: Navigator,
+    private val phoneNumberUtils: PhoneNumberUtils
 ) : QkRealmAdapter<Conversation>() {
 
     init {
@@ -60,7 +62,6 @@ class ConversationsAdapter @Inject constructor(
             view.snippet.maxLines = 5
 
             view.unread.isVisible = true
-            view.unread.setTint(colors.theme().theme)
 
             view.date.setTypeface(view.date.typeface, Typeface.BOLD)
             view.date.setTextColor(textColorPrimary)
@@ -85,11 +86,12 @@ class ConversationsAdapter @Inject constructor(
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
+        val lastMessage = conversation.lastMessage ?: return
         val view = viewHolder.containerView
 
         view.isActivated = isSelected(conversation.id)
 
-        view.avatars.contacts = conversation.recipients
+        view.avatars.recipients = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
@@ -99,6 +101,16 @@ class ConversationsAdapter @Inject constructor(
             else -> conversation.snippet
         }
         view.pinned.isVisible = conversation.pinned
+
+        // If the last message wasn't incoming, then the colour doesn't really matter anyway
+        val recipient = when (conversation.recipients.size) {
+            1 -> conversation.recipients.firstOrNull()
+            else -> conversation.recipients.find { recipient ->
+                phoneNumberUtils.compare(recipient.address, lastMessage.address)
+            }
+        }
+
+        view.unread.setTint(colors.theme(recipient?.id ?: 0).theme)
     }
 
     override fun getItemId(index: Int): Long {

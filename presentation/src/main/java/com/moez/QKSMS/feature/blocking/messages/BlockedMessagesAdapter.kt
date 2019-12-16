@@ -73,7 +73,7 @@ class BlockedMessagesAdapter @Inject constructor(
 
         view.isActivated = isSelected(conversation.id)
 
-        view.avatars.contacts = conversation.recipients
+        view.avatars.recipients = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
         view.date.text = dateFormatter.getConversationTimestamp(conversation.date)

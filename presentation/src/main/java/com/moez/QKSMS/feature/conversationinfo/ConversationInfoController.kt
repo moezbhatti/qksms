@@ -78,10 +78,9 @@ class ConversationInfoController(
         media.adapter = mediaAdapter
         media.addItemDecoration(itemDecoration)
 
-        themedActivity
-                ?.theme
+        themedActivity?.theme
                 ?.autoDisposable(scope())
-                ?.subscribe { recipients?.scrapViews() }
+                ?.subscribe { recipients.scrapViews() }
     }
 
     override fun onAttach(view: View) {
@@ -91,15 +90,15 @@ class ConversationInfoController(
         showBackButton(true)
     }
 
-    override fun recipientClicks(): Observable<Long> = recipientAdapter.clicks
+    override fun contactClicks(): Observable<Long> = recipientAdapter.contactClicks
+
+    override fun themeClicks(): Observable<Long> = recipientAdapter.themeClicks
 
     override fun nameClicks(): Observable<*> = name.clicks()
 
     override fun nameChanges(): Observable<String> = nameChangeSubject
 
     override fun notificationClicks(): Observable<*> = notifications.clicks()
-
-    override fun themeClicks(): Observable<*> = themePrefs.clicks()
 
     override fun archiveClicks(): Observable<*> = archive.clicks()
 
@@ -115,16 +114,12 @@ class ConversationInfoController(
             return
         }
 
-        themedActivity?.threadId?.onNext(state.threadId)
-        recipientAdapter.threadId = state.threadId
         recipientAdapter.updateData(state.recipients)
 
         name.setVisible(state.recipients?.size ?: 0 >= 2)
         name.summary = state.name
 
         notifications.isEnabled = !state.blocked
-
-        themePrefs.isEnabled = !state.blocked
 
         archive.isEnabled = !state.blocked
         archive.title = activity?.getString(when (state.archived) {
@@ -142,8 +137,8 @@ class ConversationInfoController(
 
     override fun showNameDialog(name: String) = nameDialog.setText(name).show()
 
-    override fun showThemePicker(threadId: Long) {
-        router.pushController(RouterTransaction.with(ThemePickerController(threadId))
+    override fun showThemePicker(recipientId: Long) {
+        router.pushController(RouterTransaction.with(ThemePickerController(recipientId))
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
     }

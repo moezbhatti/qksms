@@ -73,7 +73,7 @@ class SearchAdapter @Inject constructor(
         }
         view.title.text = title
 
-        view.avatars.contacts = result.conversation.recipients
+        view.avatars.recipients = result.conversation.recipients
 
         when (result.messages == 0) {
             true -> {

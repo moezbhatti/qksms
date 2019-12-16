@@ -30,6 +30,11 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeBoolean
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.extensions.asObservable
+import com.moez.QKSMS.extensions.mapNotNull
+import com.moez.QKSMS.repository.ConversationRepository
+import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
@@ -51,6 +56,9 @@ import javax.inject.Inject
 abstract class QkThemedActivity : QkActivity() {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var conversationRepo: ConversationRepository
+    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
     @Inject lateinit var prefs: Preferences
 
     /**
@@ -61,10 +69,40 @@ abstract class QkThemedActivity : QkActivity() {
 
     /**
      * Switch the theme if the threadId changes
+     * Set it based on the latest message in the conversation
      */
-    val theme = threadId
+    val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
-            .switchMap { threadId -> colors.themeObservable(threadId) }
+            .switchMap { threadId ->
+                val conversation = conversationRepo.getConversation(threadId)
+                when {
+                    conversation == null -> Observable.just(0L)
+
+                    conversation.recipients.size == 1 -> Observable.just(conversation.recipients.first()?.id ?: 0L)
+
+                    else -> messageRepo.getLastIncomingMessage(conversation.id)
+                            .asObservable()
+                            .mapNotNull { messages -> messages.firstOrNull() }
+                            .distinctUntilChanged { message -> message.address }
+                            .mapNotNull { message ->
+                                conversation.recipients.find { recipient ->
+                                    phoneNumberUtils.compare(recipient.address, message.address)
+                                }
+                            }
+                            .map { recipient -> recipient.id }
+                            .startWith(conversation.recipients.firstOrNull()?.id ?: 0)
+                            .distinctUntilChanged()
+                }
+            }
+            .switchMap { colors.themeObservable(it) }
+
+    /**
+     * Emits an event whenever any theme changes, whether it be global or for some recipient. This is useful
+     * for invalidating recyclerviews
+     */
+    val allThemes by lazy {
+        prefs.keyChanges.filter { key -> key.contains("theme") }
+    }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {

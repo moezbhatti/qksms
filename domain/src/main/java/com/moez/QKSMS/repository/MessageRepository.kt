@@ -32,6 +32,8 @@ interface MessageRepository {
 
     fun getMessageForPart(id: Long): Message?
 
+    fun getLastIncomingMessage(threadId: Long): RealmResults<Message>
+
     fun getUnreadCount(): Long
 
     fun getPart(id: Long): MmsPart?

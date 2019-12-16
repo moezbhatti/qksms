@@ -100,7 +100,7 @@ class ConversationInfoPresenter @Inject constructor(
         super.bindIntents(view)
 
         // Add or display the contact
-        view.recipientClicks()
+        view.contactClicks()
                 .mapNotNull(conversationRepo::getRecipient)
                 .doOnNext { recipient ->
                     recipient.contact?.lookupKey?.let(navigator::showContact)
@@ -108,6 +108,11 @@ class ConversationInfoPresenter @Inject constructor(
                 }
                 .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY)) // ... this should be the default
                 .subscribe()
+
+        // Show the theme settings for the conversation
+        view.themeClicks()
+                .autoDisposable(view.scope())
+                .subscribe(view::showThemePicker)
 
         // Show the conversation title dialog
         view.nameClicks()
@@ -129,12 +134,6 @@ class ConversationInfoPresenter @Inject constructor(
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> navigator.showNotificationSettings(conversation.id) }
-
-        // Show the theme settings for the conversation
-        view.themeClicks()
-                .withLatestFrom(conversation) { _, conversation -> conversation }
-                .autoDisposable(view.scope())
-                .subscribe { conversation -> view.showThemePicker(conversation.id) }
 
         // Toggle the archived state of the conversation
         view.archiveClicks()

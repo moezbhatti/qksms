@@ -20,24 +20,24 @@ package com.moez.QKSMS.feature.conversationinfo
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.model.Recipient
-import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import javax.inject.Inject
 
-class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipient>() {
+class ConversationRecipientAdapter @Inject constructor(
+    private val colors: Colors
+) : QkRealmAdapter<Recipient>() {
 
-    var threadId: Long = 0L
-    val clicks: Subject<Long> = PublishSubject.create()
-
-    private val disposables = CompositeDisposable()
+    val contactClicks: Subject<Long> = PublishSubject.create()
+    val themeClicks: Subject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -45,7 +45,12 @@ class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipi
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val recipient = getItem(adapterPosition) ?: return@setOnClickListener
-                clicks.onNext(recipient.id)
+                contactClicks.onNext(recipient.id)
+            }
+
+            view.theme.setOnClickListener {
+                val recipient = getItem(adapterPosition) ?: return@setOnClickListener
+                themeClicks.onNext(recipient.id)
             }
         }
     }
@@ -54,7 +59,7 @@ class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipi
         val recipient = getItem(position) ?: return
         val view = holder.containerView
 
-        view.avatar.threadId = threadId
+        view.avatar.recipientId = recipient.id
         view.avatar.setContact(recipient.contact)
 
         view.name.text = recipient.contact?.name ?: recipient.address
@@ -63,11 +68,9 @@ class ConversationRecipientAdapter @Inject constructor() : QkRealmAdapter<Recipi
         view.address.setVisible(recipient.contact != null)
 
         view.add.setVisible(recipient.contact == null)
-    }
 
-    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
-        super.onDetachedFromRecyclerView(recyclerView)
-        disposables.clear()
+        val theme = colors.theme(recipient.id)
+        view.theme.setTint(theme.theme)
     }
 
 }

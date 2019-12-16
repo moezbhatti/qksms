@@ -18,6 +18,8 @@
  */
 package com.moez.QKSMS.migration
 
+import android.annotation.SuppressLint
+import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.mapper.CursorToContactImpl
 import io.realm.DynamicRealm
@@ -29,13 +31,15 @@ import io.realm.Sort
 import javax.inject.Inject
 
 class QkRealmMigration @Inject constructor(
-    private val cursorToContact: CursorToContactImpl
+    private val cursorToContact: CursorToContactImpl,
+    private val prefs: RxSharedPreferences
 ) : RealmMigration {
 
     companion object {
         const val SchemaVersion: Long = 9
     }
 
+    @SuppressLint("ApplySharedPref")
     override fun migrate(realm: DynamicRealm, oldVersion: Long, newVersion: Long) {
         var version = oldVersion
 
@@ -168,6 +172,23 @@ class QkRealmMigration @Inject constructor(
                         realmContact.setList("numbers", numbers)
                         realmContact.setString("photoUri", photoUri)
                     }
+
+            // Migrate conversation themes
+            val recipients = mutableMapOf<Long, Int>() // Map of recipientId:theme
+            realm.where("Conversation").findAll().forEach { conversation ->
+                val pref = prefs.getInteger("theme_${conversation.getLong("id")}")
+                if (pref.isSet) {
+                    conversation.getList("Recipient").forEach { recipient ->
+                        recipients[recipient.getLong("id")] = pref.get()
+                    }
+
+                    pref.delete()
+                }
+            }
+
+            recipients.forEach { (recipientId, theme) ->
+                prefs.getInteger("theme_$recipientId").set(theme)
+            }
 
             version++
         }

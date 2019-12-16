@@ -41,7 +41,7 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
 
     @Inject lateinit var colors: Colors
 
-    private val threadId: Subject<Long> = BehaviorSubject.create()
+    private val recipientId: Subject<Long> = BehaviorSubject.create()
 
     var pager: ViewPager? = null
         set(value) {
@@ -55,8 +55,8 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
         if (!isInEditMode) appComponent.inject(this)
     }
 
-    fun setThreadId(id: Long) {
-        threadId.onNext(id)
+    fun setRecipientId(id: Long) {
+        recipientId.onNext(id)
     }
 
     private fun recreate() {
@@ -90,9 +90,9 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
                 intArrayOf(android.R.attr.state_activated),
                 intArrayOf(-android.R.attr.state_activated))
 
-        threadId
+        recipientId
                 .distinctUntilChanged()
-                .switchMap { threadId -> colors.themeObservable(threadId) }
+                .switchMap { recipientId -> colors.themeObservable(recipientId) }
                 .map { theme ->
                     val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
                     ColorStateList(states, intArrayOf(theme.theme, textSecondary))

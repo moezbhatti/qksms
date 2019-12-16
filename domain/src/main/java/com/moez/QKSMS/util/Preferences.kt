@@ -19,16 +19,22 @@
 package com.moez.QKSMS.util
 
 import android.content.Context
+import android.content.SharedPreferences
 import android.os.Build
 import android.provider.Settings
 import com.f2prateek.rx.preferences2.Preference
 import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.common.util.extensions.versionCode
+import io.reactivex.Observable
 import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class Preferences @Inject constructor(context: Context, private val rxPrefs: RxSharedPreferences) {
+class Preferences @Inject constructor(
+    context: Context,
+    private val rxPrefs: RxSharedPreferences,
+    private val sharedPrefs: SharedPreferences
+) {
 
     companion object {
         const val NIGHT_MODE_SYSTEM = 0
@@ -118,12 +124,28 @@ class Preferences @Inject constructor(context: Context, private val rxPrefs: RxS
         }
     }
 
-    fun theme(threadId: Long = 0): Preference<Int> {
+    /**
+     * Returns a stream of preference keys for changing preferences
+     */
+    val keyChanges: Observable<String> = Observable.create<String> { emitter ->
+        // Making this a lambda would cause it to be GCd
+        val listener = SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
+            emitter.onNext(key)
+        }
+
+        emitter.setCancellable {
+            sharedPrefs.unregisterOnSharedPreferenceChangeListener(listener)
+        }
+
+        sharedPrefs.registerOnSharedPreferenceChangeListener(listener)
+    }.share()
+
+    fun theme(recipientId: Long = 0): Preference<Int> {
         val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
 
-        return when (threadId) {
+        return when (recipientId) {
             0L -> default
-            else -> rxPrefs.getInteger("theme_$threadId", default.get())
+            else -> rxPrefs.getInteger("theme_$recipientId", default.get())
         }
     }
 
