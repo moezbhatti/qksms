@@ -64,15 +64,8 @@ class GroupAvatarView @JvmOverloads constructor(
         avatar2.isVisible = recipients.size > 1
 
 
-        recipients.getOrNull(0).let { recipient ->
-            avatar1.recipientId = recipient?.id ?: 0
-            avatar1.setContact(recipient?.contact)
-        }
-
-        recipients.getOrNull(1).let { recipient ->
-            avatar2.recipientId = recipient?.id ?: 0
-            avatar2.setContact(recipient?.contact)
-        }
+        recipients.getOrNull(0).run(avatar1::setRecipient)
+        recipients.getOrNull(1).run(avatar2::setRecipient)
     }
 
 }

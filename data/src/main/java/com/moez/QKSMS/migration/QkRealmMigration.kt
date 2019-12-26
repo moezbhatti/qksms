@@ -19,9 +19,9 @@
 package com.moez.QKSMS.migration
 
 import android.annotation.SuppressLint
-import com.f2prateek.rx.preferences2.RxSharedPreferences
 import com.moez.QKSMS.extensions.map
 import com.moez.QKSMS.mapper.CursorToContactImpl
+import com.moez.QKSMS.util.Preferences
 import io.realm.DynamicRealm
 import io.realm.DynamicRealmObject
 import io.realm.FieldAttribute
@@ -32,7 +32,7 @@ import javax.inject.Inject
 
 class QkRealmMigration @Inject constructor(
     private val cursorToContact: CursorToContactImpl,
-    private val prefs: RxSharedPreferences
+    private val prefs: Preferences
 ) : RealmMigration {
 
     companion object {
@@ -176,7 +176,7 @@ class QkRealmMigration @Inject constructor(
             // Migrate conversation themes
             val recipients = mutableMapOf<Long, Int>() // Map of recipientId:theme
             realm.where("Conversation").findAll().forEach { conversation ->
-                val pref = prefs.getInteger("theme_${conversation.getLong("id")}")
+                val pref = prefs.theme(conversation.getLong("id"))
                 if (pref.isSet) {
                     conversation.getList("Recipient").forEach { recipient ->
                         recipients[recipient.getLong("id")] = pref.get()
@@ -187,8 +187,11 @@ class QkRealmMigration @Inject constructor(
             }
 
             recipients.forEach { (recipientId, theme) ->
-                prefs.getInteger("theme_$recipientId").set(theme)
+                prefs.theme(recipientId).set(theme)
             }
+
+            // This is enabled for new users, but the behaviour shouldn't change automatically for old users
+            prefs.autoColor.set(false)
 
             version++
         }

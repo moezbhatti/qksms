@@ -183,7 +183,7 @@ class MessagesAdapter @Inject constructor(
 
         val theme = when (message.isOutgoingMessage()) {
             true -> colors.theme()
-            false -> colors.theme(contactCache[message.address]?.id ?: 0)
+            false -> colors.theme(contactCache[message.address])
         }
 
         // Update the selected state
@@ -232,8 +232,7 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the avatar and bubble colour
         if (!message.isMe()) {
-            view.avatar.recipientId = contactCache[message.address]?.id ?: 0
-            view.avatar.setContact(contactCache[message.address]?.contact)
+            view.avatar.setRecipient(contactCache[message.address])
             view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
 
             view.body.setTextColor(theme.textPrimary)

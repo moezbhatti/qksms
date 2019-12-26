@@ -30,6 +30,7 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.model.Recipient
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.*
 import kotlinx.android.synthetic.main.contact_chip.view.*
@@ -60,7 +61,7 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
         val chip = getItem(position)
         val view = holder.containerView
 
-        view.avatar.setContact(chip.contact)
+        view.avatar.setRecipient(Recipient(id = -1, contact = chip.contact))
         view.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
     }
 

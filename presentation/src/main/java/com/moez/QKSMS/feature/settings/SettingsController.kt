@@ -161,6 +161,9 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
         textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
+
+        autoColor.checkbox.isChecked = state.autoColor
+
         systemFont.checkbox.isChecked = state.systemFontEnabled
 
         unicode.checkbox.isChecked = state.stripUnicodeEnabled

@@ -83,7 +83,7 @@ class MainActivity : QkThemedActivity(), MainView {
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val onNewIntentIntent: Subject<Intent> = PublishSubject.create()
-    override val activityResumedIntent: Subject<Unit> = PublishSubject.create()
+    override val activityResumedIntent: Subject<Boolean> = PublishSubject.create()
     override val queryChangedIntent by lazy { toolbarSearch.textChanges() }
     override val composeIntent by lazy { compose.clicks() }
     override val drawerOpenIntent: Observable<Boolean> by lazy {
@@ -181,10 +181,6 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
                 }
-
-        allThemes
-                .autoDisposable(scope())
-                .subscribe { recyclerView.scrapViews() }
 
         itemTouchCallback.adapter = conversationsAdapter
         conversationsAdapter.autoScrollToStart(recyclerView)
@@ -330,7 +326,12 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun onResume() {
         super.onResume()
-        activityResumedIntent.onNext(Unit)
+        activityResumedIntent.onNext(true)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        activityResumedIntent.onNext(false)
     }
 
     override fun onDestroy() {
@@ -364,6 +365,10 @@ class MainActivity : QkThemedActivity(), MainView {
 
     override fun clearSelection() {
         conversationsAdapter.clearSelection()
+    }
+
+    override fun themeChanged() {
+        recyclerView.scrapViews()
     }
 
     override fun showBlockingDialog(conversations: List<Long>, block: Boolean) {

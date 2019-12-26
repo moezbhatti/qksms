@@ -394,6 +394,13 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe(view::scrollToMessage)
 
+        // Theme changes
+        prefs.keyChanges
+                .filter { key -> key.contains("theme") }
+                .doOnNext { view.themeChanged() }
+                .autoDisposable(view.scope())
+                .subscribe()
+
         // Retry sending
         view.messageClickIntent
                 .mapNotNull(messageRepo::getMessage)

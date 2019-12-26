@@ -110,7 +110,7 @@ class ConversationsAdapter @Inject constructor(
             }
         }
 
-        view.unread.setTint(colors.theme(recipient?.id ?: 0).theme)
+        view.unread.setTint(colors.theme(recipient).theme)
     }
 
     override fun getItemId(index: Int): Long {

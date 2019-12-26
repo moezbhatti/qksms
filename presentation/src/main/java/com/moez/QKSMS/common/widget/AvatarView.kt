@@ -28,7 +28,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.injection.appComponent
-import com.moez.QKSMS.model.Contact
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.GlideApp
 import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
@@ -40,28 +40,20 @@ class AvatarView @JvmOverloads constructor(
     @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
 
-    /**
-     * This value can be changes if we should use the theme from a particular conversation
-     */
-    var recipientId: Long = 0
-        set(value) {
-            if (field == value) return
-            field = value
-            applyTheme(value)
-        }
-
     private var lookupKey: String? = null
     private var name: String? = null
     private var photoUri: String? = null
     private var lastUpdated: Long? = null
+    private var theme: Colors.Theme
 
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
         }
 
-        View.inflate(context, R.layout.avatar_view, this)
+        theme = colors.theme()
 
+        View.inflate(context, R.layout.avatar_view, this)
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
     }
@@ -69,11 +61,12 @@ class AvatarView @JvmOverloads constructor(
     /**
      * Use the [contact] information to display the avatar.
      */
-    fun setContact(contact: Contact?) {
-        lookupKey = contact?.lookupKey
-        name = contact?.name
-        photoUri = contact?.photoUri
-        lastUpdated = contact?.lastUpdate
+    fun setRecipient(recipient: Recipient?) {
+        lookupKey = recipient?.contact?.lookupKey
+        name = recipient?.contact?.name
+        photoUri = recipient?.contact?.photoUri
+        lastUpdated = recipient?.contact?.lastUpdate
+        theme = colors.theme(recipient)
         updateView()
     }
 
@@ -81,20 +74,16 @@ class AvatarView @JvmOverloads constructor(
         super.onFinishInflate()
 
         if (!isInEditMode) {
-            applyTheme(recipientId)
             updateView()
         }
     }
 
-    private fun applyTheme(recipientId: Long) {
-        colors.theme(recipientId).run {
-            setBackgroundTint(theme)
-            initial.setTextColor(textPrimary)
-            icon.setTint(textPrimary)
-        }
-    }
-
     private fun updateView() {
+        // Apply theme
+        setBackgroundTint(theme.theme)
+        initial.setTextColor(theme.textPrimary)
+        icon.setTint(theme.textPrimary)
+
         if (name?.isNotEmpty() == true) {
             val initials = name?.split(" ").orEmpty()
                     .filter { name -> name.isNotEmpty() }

@@ -59,8 +59,7 @@ class ConversationRecipientAdapter @Inject constructor(
         val recipient = getItem(position) ?: return
         val view = holder.containerView
 
-        view.avatar.recipientId = recipient.id
-        view.avatar.setContact(recipient.contact)
+        view.avatar.setRecipient(recipient)
 
         view.name.text = recipient.contact?.name ?: recipient.address
 
@@ -69,7 +68,7 @@ class ConversationRecipientAdapter @Inject constructor(
 
         view.add.setVisible(recipient.contact == null)
 
-        val theme = colors.theme(recipient.id)
+        val theme = colors.theme(recipient)
         view.theme.setTint(theme.theme)
     }
 

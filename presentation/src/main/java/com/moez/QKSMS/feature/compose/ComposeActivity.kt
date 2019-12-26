@@ -153,10 +153,6 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .autoDisposable(scope())
                 .subscribe()
 
-        allThemes
-                .autoDisposable(scope())
-                .subscribe { messageList.scrapViews() }
-
         window.callback = ComposeWindowCallback(window.callback, this)
 
         // These theme attributes don't apply themselves on API 21
@@ -297,6 +293,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
                 .putExtra(ContactsActivity.SharingKey, sharing)
                 .putExtra(ContactsActivity.ChipsKey, serialized)
         startActivityForResult(intent, SelectContactRequestCode)
+    }
+
+    override fun themeChanged() {
+        messageList.scrapViews()
     }
 
     override fun showKeyboard() {

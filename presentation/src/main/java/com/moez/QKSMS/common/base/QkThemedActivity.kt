@@ -30,6 +30,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeBoolean
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.repository.ConversationRepository
@@ -76,9 +77,9 @@ abstract class QkThemedActivity : QkActivity() {
             .switchMap { threadId ->
                 val conversation = conversationRepo.getConversation(threadId)
                 when {
-                    conversation == null -> Observable.just(0L)
+                    conversation == null -> Observable.just(Optional(null))
 
-                    conversation.recipients.size == 1 -> Observable.just(conversation.recipients.first()?.id ?: 0L)
+                    conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
 
                     else -> messageRepo.getLastIncomingMessage(conversation.id)
                             .asObservable()
@@ -89,20 +90,12 @@ abstract class QkThemedActivity : QkActivity() {
                                     phoneNumberUtils.compare(recipient.address, message.address)
                                 }
                             }
-                            .map { recipient -> recipient.id }
-                            .startWith(conversation.recipients.firstOrNull()?.id ?: 0)
+                            .map { recipient -> Optional(recipient) }
+                            .startWith(Optional(conversation.recipients.firstOrNull()))
                             .distinctUntilChanged()
                 }
             }
-            .switchMap { colors.themeObservable(it) }
-
-    /**
-     * Emits an event whenever any theme changes, whether it be global or for some recipient. This is useful
-     * for invalidating recyclerviews
-     */
-    val allThemes by lazy {
-        prefs.keyChanges.filter { key -> key.contains("theme") }
-    }
+            .switchMap { colors.themeObservable(it.value) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {

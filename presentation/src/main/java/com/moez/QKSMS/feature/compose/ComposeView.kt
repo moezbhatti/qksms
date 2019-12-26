@@ -62,6 +62,7 @@ interface ComposeView : QkView<ComposeState> {
     fun requestStoragePermission()
     fun requestSmsPermission()
     fun showContacts(sharing: Boolean, chips: List<Chip>)
+    fun themeChanged()
     fun showKeyboard()
     fun requestCamera()
     fun requestGallery()

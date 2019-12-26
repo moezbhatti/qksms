@@ -90,6 +90,7 @@ class Preferences @Inject constructor(
     val nightStart = rxPrefs.getString("nightStart", "18:00")
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
     val black = rxPrefs.getBoolean("black", false)
+    val autoColor = rxPrefs.getBoolean("autoColor", true)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)
@@ -140,12 +141,13 @@ class Preferences @Inject constructor(
         sharedPrefs.registerOnSharedPreferenceChangeListener(listener)
     }.share()
 
-    fun theme(recipientId: Long = 0): Preference<Int> {
-        val default = rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
-
+    fun theme(
+        recipientId: Long = 0,
+        default: Int = rxPrefs.getInteger("theme", 0xFF0097A7.toInt()).get()
+    ): Preference<Int> {
         return when (recipientId) {
-            0L -> default
-            else -> rxPrefs.getInteger("theme_$recipientId", default.get())
+            0L -> rxPrefs.getInteger("theme", 0xFF0097A7.toInt())
+            else -> rxPrefs.getInteger("theme_$recipientId", default)
         }
     }
 

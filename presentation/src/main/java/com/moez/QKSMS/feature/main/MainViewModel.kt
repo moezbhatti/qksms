@@ -131,6 +131,7 @@ class MainViewModel @Inject constructor(
         }
 
         val permissions = view.activityResumedIntent
+                .filter { resumed -> resumed }
                 .observeOn(Schedulers.io())
                 .map { Triple(permissionManager.isDefaultSms(), permissionManager.hasReadSms(), permissionManager.hasContacts()) }
                 .distinctUntilChanged()
@@ -201,6 +202,20 @@ class MainViewModel @Inject constructor(
                 .map(conversationRepo::searchConversations)
                 .autoDisposable(view.scope())
                 .subscribe { data -> newState { copy(page = Searching(loading = false, data = data)) } }
+
+        view.activityResumedIntent
+                .filter { resumed -> !resumed }
+                .switchMap {
+                    // Take until the activity is resumed
+                    prefs.keyChanges
+                            .filter { key -> key.contains("theme") }
+                            .map { true }
+                            .mergeWith(prefs.autoColor.asObservable())
+                            .doOnNext { view.themeChanged() }
+                            .takeUntil(view.activityResumedIntent.filter { resumed -> resumed })
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
 
         view.composeIntent
                 .autoDisposable(view.scope())
