@@ -94,7 +94,7 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
 
             val sendReq = buildPdu(context, addresses, subject, parts)
             val persister = PduPersister.getPduPersister(context)
-            val messageUri = existingUri ?: persister.persist(sendReq, Uri.parse("content://mms/outbox"), true, true, null)
+            val messageUri = existingUri ?: persister.persist(sendReq, Uri.parse("content://mms/outbox"), threadId, true, true, null)
 
             val sentIntent = Intent(MMS_SENT)
             BroadcastUtils.addClassName(context, sentIntent, MMS_SENT)

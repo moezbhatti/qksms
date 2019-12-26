@@ -107,8 +107,8 @@ public class PushReceiver extends BroadcastReceiver {
                             break;
                         }
 
-                        Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"), true,
-                                true, null);
+                        Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"),
+                                PduPersister.DUMMY_THREAD_ID, true, true, null);
                         // Update thread ID for ReadOrigInd & DeliveryInd.
                         ContentValues values = new ContentValues(1);
                         values.put(Mms.THREAD_ID, threadId);
@@ -136,7 +136,8 @@ public class PushReceiver extends BroadcastReceiver {
                             // Save the pdu. If we can start downloading the real pdu immediately,
                             // don't allow persist() to create a thread for the notificationInd
                             // because it causes UI jank.
-                            Uri uri = p.persist(pdu, Inbox.CONTENT_URI, true, true, null);
+                            Uri uri = p.persist(pdu, Inbox.CONTENT_URI,
+                                    PduPersister.DUMMY_THREAD_ID, true, true, null);
 
                             String location = getContentLocation(mContext, uri);
                             if (downloadedUrls.contains(location)) {

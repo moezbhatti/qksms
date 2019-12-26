@@ -110,9 +110,8 @@ public class NotificationTransaction extends Transaction implements Runnable {
         try {
             // Save the pdu. If we can start downloading the real pdu immediately, don't allow
             // persist() to create a thread for the notificationInd because it causes UI jank.
-            mUri = PduPersister.getPduPersister(context).persist(
-                        ind, Inbox.CONTENT_URI, !allowAutoDownload(mContext),
-                    true, null);
+            mUri = PduPersister.getPduPersister(context).persist(ind, Inbox.CONTENT_URI,
+                    PduPersister.DUMMY_THREAD_ID, !allowAutoDownload(mContext), true, null);
         } catch (MmsException e) {
             Timber.e(e, "Failed to save NotificationInd in constructor.");
             throw new IllegalArgumentException();
@@ -185,8 +184,8 @@ public class NotificationTransaction extends Transaction implements Runnable {
                 } else {
                     // Save the received PDU (must be a M-RETRIEVE.CONF).
                     PduPersister p = PduPersister.getPduPersister(mContext);
-                    Uri uri = p.persist(pdu, Inbox.CONTENT_URI, true,
-                            true, null);
+                    Uri uri = p.persist(pdu, Inbox.CONTENT_URI, PduPersister.DUMMY_THREAD_ID,
+                            true, true, null);
 
                     RetrieveConf retrieveConf = (RetrieveConf) pdu;
 

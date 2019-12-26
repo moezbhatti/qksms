@@ -153,8 +153,8 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 } else {
                     // Store M-Retrieve.conf into Inbox
                     PduPersister persister = PduPersister.getPduPersister(mContext);
-                    msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI, true,
-                            true, null);
+                    msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI,
+                            PduPersister.DUMMY_THREAD_ID, true, true, null);
 
                     // Use local time instead of PDU time
                     ContentValues values = new ContentValues(3);

@@ -67,7 +67,7 @@ import java.util.Set;
 public class PduPersister {
     private static final boolean LOCAL_LOGV = false;
 
-    private static final long DUMMY_THREAD_ID = Long.MAX_VALUE;
+    public static final long DUMMY_THREAD_ID = Long.MAX_VALUE;
     private static final int DEFAULT_SUBSCRIPTION = 0;
     private static final int MAX_TEXT_BODY_SIZE = 300 * 1024;
 
@@ -1263,6 +1263,7 @@ public class PduPersister {
      *
      * @param pdu             The PDU object to be stored.
      * @param uri             Where to store the given PDU object.
+     * @param threadId
      * @param createThreadId  if true, this function may create a thread id for the recipients
      * @param groupMmsEnabled if true, all of the recipients addressed in the PDU will be used
      *                        to create the associated thread. When false, only the sender will be used in finding or
@@ -1271,7 +1272,7 @@ public class PduPersister {
      * @return A Uri which can be used to access the stored PDU.
      */
 
-    public Uri persist(GenericPdu pdu, Uri uri, boolean createThreadId, boolean groupMmsEnabled,
+    public Uri persist(GenericPdu pdu, Uri uri, long threadId, boolean createThreadId, boolean groupMmsEnabled,
                        HashMap<Uri, InputStream> preOpenedFiles) throws MmsException {
 
         if (uri == null) {
@@ -1400,8 +1401,7 @@ public class PduPersister {
                     loadRecipients(PduHeaders.TO, recipients, addressMap, false);
                     break;
             }
-            long threadId = DUMMY_THREAD_ID;
-            if (createThreadId && !recipients.isEmpty()) {
+            if (threadId == DUMMY_THREAD_ID && createThreadId && !recipients.isEmpty()) {
                 // Given all the recipients associated with this message, find (or create) the
                 // correct thread.
                 threadId = Threads.getOrCreateThreadId(mContext, recipients);

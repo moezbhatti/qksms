@@ -169,7 +169,7 @@ public class DownloadRequest extends MmsRequest {
 //            }
             // Store the downloaded message
             final PduPersister persister = PduPersister.getPduPersister(context);
-            final Uri messageUri = persister.persist(pdu, Telephony.Mms.Inbox.CONTENT_URI, true, true, null);
+            final Uri messageUri = persister.persist(pdu, Telephony.Mms.Inbox.CONTENT_URI, PduPersister.DUMMY_THREAD_ID, true, true, null);
             if (messageUri == null) {
                 Timber.e("DownloadRequest.persistIfRequired: can not persist message");
                 return null;
