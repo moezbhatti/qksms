@@ -29,21 +29,35 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forwardTouches
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.extensions.associateByNotNull
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.ContactGroup
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Recipient
+import com.moez.QKSMS.repository.ConversationRepository
+import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 import javax.inject.Inject
 
-class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAdapter<ComposeItem>() {
+class ComposeItemAdapter @Inject constructor(
+    private val colors: Colors,
+    private val conversationRepo: ConversationRepository
+) : QkAdapter<ComposeItem>() {
 
     val clicks: Subject<ComposeItem> = PublishSubject.create()
     val longClicks: Subject<ComposeItem> = PublishSubject.create()
 
     private val numbersViewPool = RecyclerView.RecycledViewPool()
+    private val disposables = CompositeDisposable()
+
+    var recipients: Map<String, Recipient> = mapOf()
+        set(value) {
+            field = value
+            notifyDataSetChanged()
+        }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -87,7 +101,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
 
         view.icon.isVisible = false
 
-        view.avatar.recipients = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(createRecipient(contact))
 
         view.title.text = contact.numbers.joinToString { it.address }
 
@@ -123,7 +137,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         view.icon.isVisible = prev !is ComposeItem.Starred
         view.icon.setImageResource(R.drawable.ic_star_black_24dp)
 
-        view.avatar.recipients = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(createRecipient(contact))
 
         view.title.text = contact.name
 
@@ -139,7 +153,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
         view.icon.isVisible = prev !is ComposeItem.Group
         view.icon.setImageResource(R.drawable.ic_people_black_24dp)
 
-        view.avatar.recipients = group.contacts.map { contact -> Recipient(contact = contact) }
+        view.avatar.recipients = group.contacts.map(::createRecipient)
 
         view.title.text = group.title
 
@@ -158,7 +172,7 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
 
         view.icon.isVisible = false
 
-        view.avatar.recipients = listOf(Recipient(contact = contact))
+        view.avatar.recipients = listOf(createRecipient(contact))
 
         view.title.text = contact.name
 
@@ -166,6 +180,22 @@ class ComposeItemAdapter @Inject constructor(private val colors: Colors) : QkAda
 
         view.numbers.isVisible = true
         (view.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
+    }
+
+    private fun createRecipient(contact: Contact): Recipient {
+        return recipients[contact.lookupKey] ?: Recipient(
+            address = contact.numbers.firstOrNull()?.address ?: "",
+            contact = contact)
+    }
+
+    override fun onAttachedToRecyclerView(recyclerView: RecyclerView) {
+        disposables += conversationRepo.getUnmanagedRecipients()
+                .map { recipients -> recipients.associateByNotNull { recipient -> recipient.contact?.lookupKey } }
+                .subscribe { recipients -> this@ComposeItemAdapter.recipients = recipients }
+    }
+
+    override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {
+        disposables.clear()
     }
 
     override fun areItemsTheSame(old: ComposeItem, new: ComposeItem): Boolean {

@@ -54,6 +54,8 @@ interface ConversationRepository {
 
     fun getUnmanagedConversations(): Observable<List<Conversation>>
 
+    fun getUnmanagedRecipients(): Observable<List<Recipient>>
+
     fun getRecipient(recipientId: Long): Recipient?
 
     fun getThreadId(recipient: String): Long?

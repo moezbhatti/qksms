@@ -206,6 +206,17 @@ class ConversationRepositoryImpl @Inject constructor(
                 .observeOn(Schedulers.io())
     }
 
+    override fun getUnmanagedRecipients(): Observable<List<Recipient>> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Recipient::class.java)
+                .isNotNull("contact")
+                .findAllAsync()
+                .asObservable()
+                .filter { it.isLoaded && it.isValid }
+                .map { realm.copyFromRealm(it) }
+                .subscribeOn(AndroidSchedulers.mainThread())
+    }
+
     override fun getRecipient(recipientId: Long): Recipient? {
         return Realm.getDefaultInstance()
                 .where(Recipient::class.java)
