@@ -75,6 +75,7 @@ class Preferences @Inject constructor(
     }
 
     // Internal
+    val didSetReferrer = rxPrefs.getBoolean("didSetReferrer", false)
     val night = rxPrefs.getBoolean("night", false)
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
     val version = rxPrefs.getInteger("version", context.versionCode)

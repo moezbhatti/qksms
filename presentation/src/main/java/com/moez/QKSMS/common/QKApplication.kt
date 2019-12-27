@@ -31,6 +31,7 @@ import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.ReferralManager
 import com.moez.QKSMS.migration.QkMigration
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
@@ -43,6 +44,9 @@ import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.HasServiceInjector
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
@@ -62,6 +66,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
     @Inject lateinit var realmMigration: QkRealmMigration
+    @Inject lateinit var referralManager: ReferralManager
 
     override fun onCreate() {
         super.onCreate()
@@ -76,8 +81,8 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
                 .schemaVersion(QkRealmMigration.SchemaVersion)
                 .build())
 
-        packageManager.getInstallerPackageName(packageName)?.let { installer ->
-            analyticsManager.setUserProperty("Installer", installer)
+        GlobalScope.launch(Dispatchers.IO) {
+            referralManager.trackReferrer()
         }
 
         nightModeManager.updateCurrentTheme()

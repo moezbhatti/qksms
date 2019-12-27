@@ -48,6 +48,8 @@ import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.manager.PermissionManagerImpl
 import com.moez.QKSMS.manager.RatingManager
+import com.moez.QKSMS.manager.ReferralManager
+import com.moez.QKSMS.manager.ReferralManagerImpl
 import com.moez.QKSMS.manager.ShortcutManager
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.manager.WidgetManagerImpl
@@ -159,6 +161,9 @@ class AppModule(private var application: Application) {
 
     @Provides
     fun provideShortcutManager(manager: ShortcutManagerImpl): ShortcutManager = manager
+
+    @Provides
+    fun provideReferralManager(manager: ReferralManagerImpl): ReferralManager = manager
 
     @Provides
     fun provideWidgetManager(manager: WidgetManagerImpl): WidgetManager = manager
