@@ -34,6 +34,8 @@ android {
         versionCode 2209
         versionName "3.7.10"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+
+        setProperty("archivesBaseName", "QKSMS-v${versionName}")
     }
 
     signingConfigs {
