@@ -32,7 +32,7 @@ android {
 
     defaultConfig {
         minSdkVersion 21
-        targetSdkVersion 28 // Don't upgrade to 29 until we support Scoped storage
+        targetSdkVersion 29
     }
 }
 
