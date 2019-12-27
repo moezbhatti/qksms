@@ -18,9 +18,13 @@
  */
 package com.moez.QKSMS.feature.conversationinfo
 
+import android.content.Context
 import androidx.lifecycle.Lifecycle
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
+import com.moez.QKSMS.common.util.ClipboardUtils
+import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.interactor.DeleteConversations
@@ -32,6 +36,7 @@ import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.BehaviorSubject
@@ -42,6 +47,7 @@ import javax.inject.Named
 class ConversationInfoPresenter @Inject constructor(
     @Named("threadId") threadId: Long,
     messageRepo: MessageRepository,
+    private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val deleteConversations: DeleteConversations,
     private val markArchived: MarkArchived,
@@ -100,7 +106,7 @@ class ConversationInfoPresenter @Inject constructor(
         super.bindIntents(view)
 
         // Add or display the contact
-        view.contactClicks()
+        view.recipientClicks()
                 .mapNotNull(conversationRepo::getRecipient)
                 .doOnNext { recipient ->
                     recipient.contact?.lookupKey?.let(navigator::showContact)
@@ -108,6 +114,17 @@ class ConversationInfoPresenter @Inject constructor(
                 }
                 .autoDisposable(view.scope(Lifecycle.Event.ON_DESTROY)) // ... this should be the default
                 .subscribe()
+
+        // Copy phone number
+        view.recipientLongClicks()
+                .mapNotNull(conversationRepo::getRecipient)
+                .map { recipient -> recipient.address }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { address ->
+                    ClipboardUtils.copy(context, address)
+                    context.makeToast(R.string.info_copied_address)
+                }
 
         // Show the theme settings for the conversation
         view.themeClicks()

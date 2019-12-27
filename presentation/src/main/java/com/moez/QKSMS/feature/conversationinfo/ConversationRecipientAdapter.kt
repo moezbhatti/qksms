@@ -36,7 +36,8 @@ class ConversationRecipientAdapter @Inject constructor(
     private val colors: Colors
 ) : QkRealmAdapter<Recipient>() {
 
-    val contactClicks: Subject<Long> = PublishSubject.create()
+    val recipientClicks: Subject<Long> = PublishSubject.create()
+    val recipientLongClicks: Subject<Long> = PublishSubject.create()
     val themeClicks: Subject<Long> = PublishSubject.create()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
@@ -45,7 +46,13 @@ class ConversationRecipientAdapter @Inject constructor(
         return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val recipient = getItem(adapterPosition) ?: return@setOnClickListener
-                contactClicks.onNext(recipient.id)
+                recipientClicks.onNext(recipient.id)
+            }
+
+            view.setOnLongClickListener {
+                val recipient = getItem(adapterPosition) ?: return@setOnLongClickListener false
+                recipientLongClicks.onNext(recipient.id)
+                return@setOnLongClickListener true
             }
 
             view.theme.setOnClickListener {

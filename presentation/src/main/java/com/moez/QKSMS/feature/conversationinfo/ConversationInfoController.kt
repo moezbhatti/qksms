@@ -90,7 +90,9 @@ class ConversationInfoController(
         showBackButton(true)
     }
 
-    override fun contactClicks(): Observable<Long> = recipientAdapter.contactClicks
+    override fun recipientClicks(): Observable<Long> = recipientAdapter.recipientClicks
+
+    override fun recipientLongClicks(): Observable<Long> = recipientAdapter.recipientLongClicks
 
     override fun themeClicks(): Observable<Long> = recipientAdapter.themeClicks
 

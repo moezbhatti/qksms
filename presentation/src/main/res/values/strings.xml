@@ -145,6 +145,7 @@
     <string name="message_status_failed">Failed to send. Tap to try again</string>
 
     <string name="info_title">Details</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Notifications</string>
     <string name="info_theme">Theme</string>
