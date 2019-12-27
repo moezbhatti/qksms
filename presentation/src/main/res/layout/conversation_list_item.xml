@@ -30,6 +30,17 @@
     android:paddingEnd="16dp"
     android:paddingBottom="12dp">
 
+    <ImageView
+        android:id="@+id/checked"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:alpha="0"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0"
+        app:srcCompat="@drawable/ic_check_circle_24dp" />
+
     <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatars"
         android:layout_width="48dp"

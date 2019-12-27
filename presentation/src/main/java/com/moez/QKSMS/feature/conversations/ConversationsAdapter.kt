@@ -18,9 +18,12 @@
  */
 package com.moez.QKSMS.feature.conversations
 
+import android.animation.AnimatorInflater
+import android.animation.AnimatorSet
 import android.content.Context
 import android.graphics.Typeface
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import com.moez.QKSMS.R
@@ -70,7 +73,11 @@ class ConversationsAdapter @Inject constructor(
             view.setOnClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
-                    true -> view.isActivated = isSelected(conversation.id)
+                    true -> {
+                        view.isActivated = isSelected(conversation.id)
+                        // add selection image
+                        flipAvatarPic(view)
+                    }
                     false -> navigator.showConversation(conversation.id)
                 }
             }
@@ -78,6 +85,8 @@ class ConversationsAdapter @Inject constructor(
                 val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
                 view.isActivated = isSelected(conversation.id)
+                // add selection image
+                flipAvatarPic(view)
                 true
             }
         }
@@ -87,7 +96,10 @@ class ConversationsAdapter @Inject constructor(
         val conversation = getItem(position) ?: return
         val view = viewHolder.containerView
 
+        val origActivated = view.isActivated
         view.isActivated = isSelected(conversation.id)
+        // add selection image
+        if (origActivated != view.isActivated) flipAvatarPic(view)
 
         view.avatars.contacts = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
@@ -107,5 +119,25 @@ class ConversationsAdapter @Inject constructor(
 
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position)?.unread == false) 0 else 1
+    }
+
+    // add selection image
+    private fun flipAvatarPic(parentView: View) {
+        if (parentView.isActivated) {
+            animatorFlipViews(parentView.avatars, parentView.checked)
+        } else {
+            animatorFlipViews(parentView.checked, parentView.avatars)
+        }
+    }
+
+    private fun animatorFlipViews(oldView: View, newView: View) {
+        val animatorSetOldView = AnimatorInflater.loadAnimator(oldView.context, R.animator.flip_front) as AnimatorSet
+        animatorSetOldView.setTarget(oldView)
+        val animatorSetNewView = AnimatorInflater.loadAnimator(newView.context, R.animator.flip_back) as AnimatorSet
+        animatorSetNewView.setTarget(newView)
+
+        val combAnimatorSet = AnimatorSet()
+        combAnimatorSet.playSequentially(animatorSetOldView,animatorSetNewView)
+        combAnimatorSet.start()
     }
 }
