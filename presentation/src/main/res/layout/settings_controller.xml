@@ -178,6 +178,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/longAsMms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_message_black_24dp"
+            app:summary="@string/settings_long_as_mms_summary"
+            app:title="@string/settings_long_as_mms_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/mmsSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

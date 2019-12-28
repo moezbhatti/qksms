@@ -112,6 +112,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.mobileOnly.asObservable()
                 .subscribe { enabled -> newState { copy(mobileOnly = enabled) } }
 
+        disposables += prefs.longAsMms.asObservable()
+                .subscribe { enabled -> newState { copy(longAsMms = enabled) } }
+
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
         disposables += prefs.mmsSize.asObservable()
@@ -174,6 +177,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
                         R.id.mobileOnly -> prefs.mobileOnly.set(!prefs.mobileOnly.get())
+
+                        R.id.longAsMms -> prefs.longAsMms.set(!prefs.longAsMms.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
 

@@ -302,13 +302,20 @@ class MessageRepositoryImpl @Inject constructor(
             else -> prefs.signature.get()
         }
 
+        val smsManager = subId.takeIf { it != -1 }
+                ?.let(SmsManagerFactory::createSmsManager)
+                ?: SmsManager.getDefault()
+
         // We only care about stripping SMS
         val strippedBody = when (prefs.unicode.get()) {
             true -> StripAccents.stripAccents(signedBody)
             false -> signedBody
         }
 
-        if (addresses.size == 1 && attachments.isEmpty()) { // SMS
+        val parts = smsManager.divideMessage(strippedBody).orEmpty()
+        val forceMms = prefs.longAsMms.get() && parts.size > 1
+
+        if (addresses.size == 1 && attachments.isEmpty() && !forceMms) { // SMS
             if (delay > 0) { // With delay
                 val sendTime = System.currentTimeMillis() + delay
                 val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, sendTime)

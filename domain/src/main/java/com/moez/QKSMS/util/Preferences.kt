@@ -109,6 +109,7 @@ class Preferences @Inject constructor(
     val signature = rxPrefs.getString("signature", "")
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)
+    val longAsMms = rxPrefs.getBoolean("longAsMms", false)
     val mmsSize = rxPrefs.getInteger("mmsSize", 300)
     val logging = rxPrefs.getBoolean("logging", false)
 
