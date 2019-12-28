@@ -302,10 +302,16 @@ class MessageRepositoryImpl @Inject constructor(
             else -> prefs.signature.get()
         }
 
+        // We only care about stripping SMS
+        val strippedBody = when (prefs.unicode.get()) {
+            true -> StripAccents.stripAccents(signedBody)
+            false -> signedBody
+        }
+
         if (addresses.size == 1 && attachments.isEmpty()) { // SMS
             if (delay > 0) { // With delay
                 val sendTime = System.currentTimeMillis() + delay
-                val message = insertSentSms(subId, threadId, addresses.first(), signedBody, sendTime)
+                val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, sendTime)
 
                 val intent = getIntentForDelayedSms(message.id)
 
@@ -316,7 +322,7 @@ class MessageRepositoryImpl @Inject constructor(
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
                 }
             } else { // No delay
-                val message = insertSentSms(subId, threadId, addresses.first(), signedBody, System.currentTimeMillis())
+                val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, System.currentTimeMillis())
                 sendSms(message)
             }
         } else { // MMS
