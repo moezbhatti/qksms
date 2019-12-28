@@ -142,13 +142,18 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), conversation.unread))
 
         // Date
-        val timestamp = dateFormatter.getConversationTimestamp(conversation.date)
+        val timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
         remoteViews.setTextColor(R.id.date, if (conversation.unread) textPrimary else textTertiary)
         remoteViews.setTextViewText(R.id.date, boldText(timestamp, conversation.unread))
 
         // Snippet
+        val snippet = when {
+            conversation.draft.isNotEmpty() -> context.getString(R.string.main_draft, conversation.draft)
+            conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
+            else -> conversation.snippet
+        }
         remoteViews.setTextColor(R.id.snippet, if (conversation.unread) textPrimary else textTertiary)
-        remoteViews.setTextViewText(R.id.snippet, boldText(conversation.snippet, conversation.unread))
+        remoteViews.setTextViewText(R.id.snippet, boldText(snippet, conversation.unread))
 
         // Launch conversation on click
         val clickIntent = Intent().putExtra("threadId", conversation.id)

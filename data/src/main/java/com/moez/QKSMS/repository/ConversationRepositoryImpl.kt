@@ -58,11 +58,18 @@ class ConversationRepositoryImpl @Inject constructor(
         return Realm.getDefaultInstance()
                 .where(Conversation::class.java)
                 .notEqualTo("id", 0L)
-                .isNotNull("lastMessage")
                 .equalTo("archived", archived)
                 .equalTo("blocked", false)
                 .isNotEmpty("recipients")
-                .sort("pinned", Sort.DESCENDING, "lastMessage.date", Sort.DESCENDING)
+                .beginGroup()
+                .isNotNull("lastMessage")
+                .or()
+                .isNotEmpty("draft")
+                .endGroup()
+                .sort(
+                        arrayOf("pinned", "draft", "lastMessage.date"),
+                        arrayOf(Sort.DESCENDING, Sort.DESCENDING, Sort.DESCENDING)
+                )
                 .findAllAsync()
     }
 
@@ -71,11 +78,18 @@ class ConversationRepositoryImpl @Inject constructor(
             realm.refresh()
             realm.copyFromRealm(realm.where(Conversation::class.java)
                     .notEqualTo("id", 0L)
-                    .isNotNull("lastMessage")
                     .equalTo("archived", false)
                     .equalTo("blocked", false)
                     .isNotEmpty("recipients")
-                    .sort("pinned", Sort.DESCENDING, "lastMessage.date", Sort.DESCENDING)
+                    .beginGroup()
+                    .isNotNull("lastMessage")
+                    .or()
+                    .isNotEmpty("draft")
+                    .endGroup()
+                    .sort(
+                            arrayOf("pinned", "draft", "lastMessage.date"),
+                            arrayOf(Sort.DESCENDING, Sort.DESCENDING, Sort.DESCENDING)
+                    )
                     .findAll())
         }
     }

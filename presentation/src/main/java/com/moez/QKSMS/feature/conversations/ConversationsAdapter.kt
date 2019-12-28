@@ -86,7 +86,6 @@ class ConversationsAdapter @Inject constructor(
 
     override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
-        val lastMessage = conversation.lastMessage ?: return
         val view = viewHolder.containerView
 
         view.isActivated = isSelected(conversation.id)
@@ -94,7 +93,7 @@ class ConversationsAdapter @Inject constructor(
         view.avatars.recipients = conversation.recipients
         view.title.collapseEnabled = conversation.recipients.size > 1
         view.title.text = conversation.getTitle()
-        view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
+        view.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
         view.snippet.text = when {
             conversation.draft.isNotEmpty() -> context.getString(R.string.main_draft, conversation.draft)
             conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
@@ -103,8 +102,9 @@ class ConversationsAdapter @Inject constructor(
         view.pinned.isVisible = conversation.pinned
 
         // If the last message wasn't incoming, then the colour doesn't really matter anyway
-        val recipient = when (conversation.recipients.size) {
-            1 -> conversation.recipients.firstOrNull()
+        val lastMessage = conversation.lastMessage
+        val recipient = when {
+            conversation.recipients.size == 1 || lastMessage == null -> conversation.recipients.firstOrNull()
             else -> conversation.recipients.find { recipient ->
                 phoneNumberUtils.compare(recipient.address, lastMessage.address)
             }
