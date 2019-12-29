@@ -36,6 +36,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.theme_list_item.view.*
+import kotlinx.android.synthetic.main.theme_palette_list_item.*
 import kotlinx.android.synthetic.main.theme_palette_list_item.view.*
 import javax.inject.Inject
 
@@ -70,7 +71,6 @@ class ThemeAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val palette = getItem(position)
-        val view = holder.containerView
 
         val screenWidth = Resources.getSystem().displayMetrics.widthPixels
         val minPadding = (16 * 6).dpToPx(context)
@@ -81,12 +81,12 @@ class ThemeAdapter @Inject constructor(
         }
         val swatchPadding = (screenWidth - size * 5) / 12
 
-        view.palette.removeAllViews()
-        view.palette.setPadding(swatchPadding, swatchPadding, swatchPadding, swatchPadding)
+        holder.palette.removeAllViews()
+        holder.palette.setPadding(swatchPadding, swatchPadding, swatchPadding, swatchPadding)
 
         (palette.subList(0, 5) + palette.subList(5, 10).reversed())
                 .mapIndexed { index, color ->
-                    LayoutInflater.from(context).inflate(R.layout.theme_list_item, view.palette, false).apply {
+                    LayoutInflater.from(context).inflate(R.layout.theme_list_item, holder.palette, false).apply {
 
                         // Send clicks to the selected subject
                         setOnClickListener { colorSelected.onNext(color) }
@@ -107,7 +107,7 @@ class ThemeAdapter @Inject constructor(
                         }
                     }
                 }
-                .forEach { theme -> view.palette.addView(theme) }
+                .forEach { theme -> holder.palette.addView(theme) }
     }
 
 }

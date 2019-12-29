@@ -18,7 +18,7 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
-import android.view.View
+import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
@@ -36,7 +36,7 @@ abstract class PartBinder {
     abstract fun canBindPart(part: MmsPart): Boolean
 
     abstract fun bindPart(
-        view: View,
+        holder: QkViewHolder,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,

@@ -31,6 +31,7 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.blocked_list_item.*
 import kotlinx.android.synthetic.main.blocked_list_item.view.*
 import javax.inject.Inject
 
@@ -69,24 +70,23 @@ class BlockedMessagesAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
-        val view = holder.containerView
 
-        view.isActivated = isSelected(conversation.id)
+        holder.containerView.isActivated = isSelected(conversation.id)
 
-        view.avatars.recipients = conversation.recipients
-        view.title.collapseEnabled = conversation.recipients.size > 1
-        view.title.text = conversation.getTitle()
-        view.date.text = dateFormatter.getConversationTimestamp(conversation.date)
+        holder.avatars.recipients = conversation.recipients
+        holder.title.collapseEnabled = conversation.recipients.size > 1
+        holder.title.text = conversation.getTitle()
+        holder.date.text = dateFormatter.getConversationTimestamp(conversation.date)
 
-        view.blocker.text = when (conversation.blockingClient) {
+        holder.blocker.text = when (conversation.blockingClient) {
             Preferences.BLOCKING_MANAGER_CC -> context.getString(R.string.blocking_manager_call_control_title)
             Preferences.BLOCKING_MANAGER_SIA -> context.getString(R.string.blocking_manager_sia_title)
             else -> null
         }
 
-        view.reason.text = conversation.blockReason
-        view.blocker.isVisible = view.blocker.text.isNotEmpty()
-        view.reason.isVisible = view.blocker.text.isNotEmpty()
+        holder.reason.text = conversation.blockReason
+        holder.blocker.isVisible = holder.blocker.text.isNotEmpty()
+        holder.reason.isVisible = holder.blocker.text.isNotEmpty()
     }
 
     override fun getItemViewType(position: Int): Int {

@@ -29,6 +29,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.util.GlideApp
+import kotlinx.android.synthetic.main.conversation_media_list_item.*
 import kotlinx.android.synthetic.main.conversation_media_list_item.view.*
 import javax.inject.Inject
 
@@ -50,14 +51,13 @@ class ConversationMediaAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = getItem(position) ?: return
-        val view = holder.containerView
 
         GlideApp.with(context)
                 .load(part.getUri())
                 .fitCenter()
-                .into(view.thumbnail)
+                .into(holder.thumbnail)
 
-        view.video.setVisible(part.isVideo())
+        holder.video.setVisible(part.isVideo())
     }
 
 }

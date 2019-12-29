@@ -19,7 +19,6 @@
 package com.moez.QKSMS.feature.compose.editing
 
 import android.view.LayoutInflater
-import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
@@ -39,6 +38,7 @@ import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.contact_list_item.*
 import kotlinx.android.synthetic.main.contact_list_item.view.*
 import javax.inject.Inject
 
@@ -85,101 +85,100 @@ class ComposeItemAdapter @Inject constructor(
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val prevItem = if (position > 0) getItem(position - 1) else null
         val item = getItem(position)
-        val view = holder.containerView
 
         when (item) {
-            is ComposeItem.New -> bindNew(view, item.value)
-            is ComposeItem.Recent -> bindRecent(view, item.value, prevItem)
-            is ComposeItem.Starred -> bindStarred(view, item.value, prevItem)
-            is ComposeItem.Person -> bindPerson(view, item.value, prevItem)
-            is ComposeItem.Group -> bindGroup(view, item.value, prevItem)
+            is ComposeItem.New -> bindNew(holder, item.value)
+            is ComposeItem.Recent -> bindRecent(holder, item.value, prevItem)
+            is ComposeItem.Starred -> bindStarred(holder, item.value, prevItem)
+            is ComposeItem.Person -> bindPerson(holder, item.value, prevItem)
+            is ComposeItem.Group -> bindGroup(holder, item.value, prevItem)
         }
     }
 
-    private fun bindNew(view: View, contact: Contact) {
-        view.index.isVisible = false
+    private fun bindNew(holder: QkViewHolder, contact: Contact) {
+        holder.index.isVisible = false
 
-        view.icon.isVisible = false
+        holder.icon.isVisible = false
 
-        view.avatar.recipients = listOf(createRecipient(contact))
+        holder.avatar.recipients = listOf(createRecipient(contact))
 
-        view.title.text = contact.numbers.joinToString { it.address }
+        holder.title.text = contact.numbers.joinToString { it.address }
 
-        view.subtitle.isVisible = false
+        holder.subtitle.isVisible = false
 
-        view.numbers.isVisible = false
+        holder.numbers.isVisible = false
     }
 
-    private fun bindRecent(view: View, conversation: Conversation, prev: ComposeItem?) {
-        view.index.isVisible = false
+    private fun bindRecent(holder: QkViewHolder, conversation: Conversation, prev: ComposeItem?) {
+        holder.index.isVisible = false
 
-        view.icon.isVisible = prev !is ComposeItem.Recent
-        view.icon.setImageResource(R.drawable.ic_history_black_24dp)
+        holder.icon.isVisible = prev !is ComposeItem.Recent
+        holder.icon.setImageResource(R.drawable.ic_history_black_24dp)
 
-        view.avatar.recipients = conversation.recipients
+        holder.avatar.recipients = conversation.recipients
 
-        view.title.text = conversation.getTitle()
+        holder.title.text = conversation.getTitle()
 
-        view.subtitle.isVisible = conversation.recipients.size > 1 && conversation.name.isBlank()
-        view.subtitle.text = conversation.recipients.joinToString(", ") { recipient ->
+        holder.subtitle.isVisible = conversation.recipients.size > 1 && conversation.name.isBlank()
+        holder.subtitle.text = conversation.recipients.joinToString(", ") { recipient ->
             recipient.contact?.name ?: recipient.address
         }
 
-        view.numbers.isVisible = conversation.recipients.size == 1
-        (view.numbers.adapter as PhoneNumberAdapter).data = conversation.recipients
+        holder.numbers.isVisible = conversation.recipients.size == 1
+        (holder.numbers.adapter as PhoneNumberAdapter).data = conversation.recipients
                 .mapNotNull { recipient -> recipient.contact }
                 .flatMap { contact -> contact.numbers }
     }
 
-    private fun bindStarred(view: View, contact: Contact, prev: ComposeItem?) {
-        view.index.isVisible = false
+    private fun bindStarred(holder: QkViewHolder, contact: Contact, prev: ComposeItem?) {
+        holder.index.isVisible = false
 
-        view.icon.isVisible = prev !is ComposeItem.Starred
-        view.icon.setImageResource(R.drawable.ic_star_black_24dp)
+        holder.icon.isVisible = prev !is ComposeItem.Starred
+        holder.icon.setImageResource(R.drawable.ic_star_black_24dp)
 
-        view.avatar.recipients = listOf(createRecipient(contact))
+        holder.avatar.recipients = listOf(createRecipient(contact))
 
-        view.title.text = contact.name
+        holder.title.text = contact.name
 
-        view.subtitle.isVisible = false
+        holder.subtitle.isVisible = false
 
-        view.numbers.isVisible = true
-        (view.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
+        holder.numbers.isVisible = true
+        (holder.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
     }
 
-    private fun bindGroup(view: View, group: ContactGroup, prev: ComposeItem?) {
-        view.index.isVisible = false
+    private fun bindGroup(holder: QkViewHolder, group: ContactGroup, prev: ComposeItem?) {
+        holder.index.isVisible = false
 
-        view.icon.isVisible = prev !is ComposeItem.Group
-        view.icon.setImageResource(R.drawable.ic_people_black_24dp)
+        holder.icon.isVisible = prev !is ComposeItem.Group
+        holder.icon.setImageResource(R.drawable.ic_people_black_24dp)
 
-        view.avatar.recipients = group.contacts.map(::createRecipient)
+        holder.avatar.recipients = group.contacts.map(::createRecipient)
 
-        view.title.text = group.title
+        holder.title.text = group.title
 
-        view.subtitle.isVisible = true
-        view.subtitle.text = group.contacts.joinToString(", ") { it.name }
+        holder.subtitle.isVisible = true
+        holder.subtitle.text = group.contacts.joinToString(", ") { it.name }
 
-        view.numbers.isVisible = false
+        holder.numbers.isVisible = false
     }
 
-    private fun bindPerson(view: View, contact: Contact, prev: ComposeItem?) {
-        view.index.isVisible = true
-        view.index.text = if (contact.name.getOrNull(0)?.isLetter() == true) contact.name[0].toString() else "#"
-        view.index.isVisible = prev !is ComposeItem.Person ||
+    private fun bindPerson(holder: QkViewHolder, contact: Contact, prev: ComposeItem?) {
+        holder.index.isVisible = true
+        holder.index.text = if (contact.name.getOrNull(0)?.isLetter() == true) contact.name[0].toString() else "#"
+        holder.index.isVisible = prev !is ComposeItem.Person ||
                 (contact.name[0].isLetter() && !contact.name[0].equals(prev.value.name[0], ignoreCase = true)) ||
                 (!contact.name[0].isLetter() && prev.value.name[0].isLetter())
 
-        view.icon.isVisible = false
+        holder.icon.isVisible = false
 
-        view.avatar.recipients = listOf(createRecipient(contact))
+        holder.avatar.recipients = listOf(createRecipient(contact))
 
-        view.title.text = contact.name
+        holder.title.text = contact.name
 
-        view.subtitle.isVisible = false
+        holder.subtitle.isVisible = false
 
-        view.numbers.isVisible = true
-        (view.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
+        holder.numbers.isVisible = true
+        (holder.numbers.adapter as PhoneNumberAdapter).data = contact.numbers
     }
 
     private fun createRecipient(contact: Contact): Recipient {

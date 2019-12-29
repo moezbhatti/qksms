@@ -39,8 +39,9 @@ import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.util.GlideApp
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.gallery_image_page.*
 import kotlinx.android.synthetic.main.gallery_image_page.view.*
-import kotlinx.android.synthetic.main.gallery_video_page.view.*
+import kotlinx.android.synthetic.main.gallery_video_page.*
 import java.util.*
 import javax.inject.Inject
 
@@ -90,7 +91,6 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = getItem(position) ?: return
-        val view = holder.containerView
         when (getItemViewType(position)) {
             VIEW_TYPE_IMAGE -> {
                 // We need to explicitly request a gif from glide for animations to work
@@ -98,12 +98,12 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
                     ContentType.IMAGE_GIF -> GlideApp.with(context)
                             .asGif()
                             .load(part.getUri())
-                            .into(view.image)
+                            .into(holder.image)
 
                     else -> GlideApp.with(context)
                             .asBitmap()
                             .load(part.getUri())
-                            .into(view.image)
+                            .into(holder.image)
                 }
             }
 
@@ -111,7 +111,7 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
                 val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
                 val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
                 val exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
-                view.video.player = exoPlayer
+                holder.video.player = exoPlayer
                 exoPlayers.add(exoPlayer)
 
                 val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "QKSMS"))

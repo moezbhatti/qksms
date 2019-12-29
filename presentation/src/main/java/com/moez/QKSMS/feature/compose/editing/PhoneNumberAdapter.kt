@@ -24,7 +24,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.model.PhoneNumber
-import kotlinx.android.synthetic.main.contact_number_list_item.view.*
+import kotlinx.android.synthetic.main.contact_number_list_item.*
 
 class PhoneNumberAdapter : QkAdapter<PhoneNumber>() {
 
@@ -36,10 +36,9 @@ class PhoneNumberAdapter : QkAdapter<PhoneNumber>() {
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val number = getItem(position)
-        val view = holder.containerView
 
-        view.address.text = number.address
-        view.type.text = number.type
+        holder.address.text = number.address
+        holder.type.text = number.type
     }
 
     override fun areItemsTheSame(old: PhoneNumber, new: PhoneNumber): Boolean {

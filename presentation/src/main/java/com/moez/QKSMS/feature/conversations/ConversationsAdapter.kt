@@ -33,6 +33,7 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.util.PhoneNumberUtils
+import kotlinx.android.synthetic.main.conversation_list_item.*
 import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
@@ -84,22 +85,21 @@ class ConversationsAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
-        val view = viewHolder.containerView
 
-        view.isActivated = isSelected(conversation.id)
+        holder.containerView.isActivated = isSelected(conversation.id)
 
-        view.avatars.recipients = conversation.recipients
-        view.title.collapseEnabled = conversation.recipients.size > 1
-        view.title.text = conversation.getTitle()
-        view.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
-        view.snippet.text = when {
+        holder.avatars.recipients = conversation.recipients
+        holder.title.collapseEnabled = conversation.recipients.size > 1
+        holder.title.text = conversation.getTitle()
+        holder.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
+        holder.snippet.text = when {
             conversation.draft.isNotEmpty() -> context.getString(R.string.main_draft, conversation.draft)
             conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
             else -> conversation.snippet
         }
-        view.pinned.isVisible = conversation.pinned
+        holder.pinned.isVisible = conversation.pinned
 
         // If the last message wasn't incoming, then the colour doesn't really matter anyway
         val lastMessage = conversation.lastMessage
@@ -110,7 +110,7 @@ class ConversationsAdapter @Inject constructor(
             }
         }
 
-        view.unread.setTint(colors.theme(recipient).theme)
+        holder.unread.setTint(colors.theme(recipient).theme)
     }
 
     override fun getItemId(index: Int): Long {

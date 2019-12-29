@@ -29,6 +29,7 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.model.Recipient
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.conversation_recipient_list_item.*
 import kotlinx.android.synthetic.main.conversation_recipient_list_item.view.*
 import javax.inject.Inject
 
@@ -64,19 +65,18 @@ class ConversationRecipientAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val recipient = getItem(position) ?: return
-        val view = holder.containerView
 
-        view.avatar.setRecipient(recipient)
+        holder.avatar.setRecipient(recipient)
 
-        view.name.text = recipient.contact?.name ?: recipient.address
+        holder.name.text = recipient.contact?.name ?: recipient.address
 
-        view.address.text = recipient.address
-        view.address.setVisible(recipient.contact != null)
+        holder.address.text = recipient.address
+        holder.address.setVisible(recipient.contact != null)
 
-        view.add.setVisible(recipient.contact == null)
+        holder.add.setVisible(recipient.contact == null)
 
         val theme = colors.theme(recipient)
-        view.theme.setTint(theme.theme)
+        holder.theme.setTint(theme.theme)
     }
 
 }

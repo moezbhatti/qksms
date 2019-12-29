@@ -33,7 +33,8 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.attachment_contact_list_item.view.*
+import kotlinx.android.synthetic.main.attachment_contact_list_item.*
+import kotlinx.android.synthetic.main.attachment_image_list_item.*
 import kotlinx.android.synthetic.main.attachment_image_list_item.view.*
 import javax.inject.Inject
 
@@ -69,18 +70,17 @@ class AttachmentAdapter @Inject constructor(
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val attachment = getItem(position)
-        val view = holder.containerView
 
         when (attachment) {
             is Attachment.Image -> Glide.with(context)
                     .load(attachment.getUri())
-                    .into(view.thumbnail)
+                    .into(holder.thumbnail)
 
             is Attachment.Contact -> Observable.just(attachment.vCard)
                     .mapNotNull { vCard -> Ezvcard.parse(vCard).first() }
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { vcard -> view.name?.text = vcard.formattedName.value }
+                    .subscribe { vcard -> holder.name?.text = vcard.formattedName.value }
         }
     }
 

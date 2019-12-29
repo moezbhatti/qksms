@@ -59,7 +59,15 @@ import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.message_list_item_in.*
+import kotlinx.android.synthetic.main.message_list_item_in.attachments
+import kotlinx.android.synthetic.main.message_list_item_in.body
+import kotlinx.android.synthetic.main.message_list_item_in.sim
+import kotlinx.android.synthetic.main.message_list_item_in.simIndex
+import kotlinx.android.synthetic.main.message_list_item_in.status
+import kotlinx.android.synthetic.main.message_list_item_in.timestamp
 import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import kotlinx.android.synthetic.main.message_list_item_out.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -175,11 +183,10 @@ class MessagesAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(viewHolder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val message = getItem(position) ?: return
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
-        val view = viewHolder.containerView
 
         val theme = when (message.isOutgoingMessage()) {
             true -> colors.theme()
@@ -187,10 +194,10 @@ class MessagesAdapter @Inject constructor(
         }
 
         // Update the selected state
-        view.isActivated = isSelected(message.id) || highlight == message.id
+        holder.containerView.isActivated = isSelected(message.id) || highlight == message.id
 
         // Bind the cancel view
-        view.findViewById<ProgressBar>(R.id.cancel)?.let { cancel ->
+        holder.cancel?.let { cancel ->
             val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
             cancel.setVisible(isCancellable)
             cancel.clicks().subscribe { cancelSending.onNext(message.id) }
@@ -212,31 +219,31 @@ class MessagesAdapter @Inject constructor(
         }
 
         // Bind the message status
-        bindStatus(viewHolder, message, next)
+        bindStatus(holder, message, next)
 
         // Bind the timestamp
         val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
         val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId } ?: -1
 
-        view.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        view.simIndex.text = "${simIndex + 1}"
+        holder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+        holder.simIndex.text = "${simIndex + 1}"
 
-        view.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
+        holder.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
                 || message.subId != previous?.subId && simIndex != -1)
-        view.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
-        view.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
+        holder.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
+        holder.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
 
         // Bind the grouping
         val media = message.parts.filter { !it.isSmil() && !it.isText() }
-        view.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
+        holder.containerView.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
 
         // Bind the avatar and bubble colour
         if (!message.isMe()) {
-            view.avatar.setRecipient(contactCache[message.address])
-            view.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+            holder.avatar.setRecipient(contactCache[message.address])
+            holder.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
 
-            view.body.setTextColor(theme.textPrimary)
-            view.body.setBackgroundTint(theme.theme)
+            holder.body.setTextColor(theme.textPrimary)
+            holder.body.setBackgroundTint(theme.theme)
         }
 
         // Bind the body text
@@ -262,31 +269,29 @@ class MessagesAdapter @Inject constructor(
             }
         }
         val emojiOnly = messageText.isNotBlank() && messageText.matches(EMOJI_REGEX)
-        textViewStyler.setTextSize(view.body, when (emojiOnly) {
+        textViewStyler.setTextSize(holder.body, when (emojiOnly) {
             true -> TextViewStyler.SIZE_EMOJI
             false -> TextViewStyler.SIZE_PRIMARY
         })
 
-        view.body.text = messageText
-        view.body.setVisible(message.isSms() || messageText.isNotBlank())
-        view.body.setBackgroundResource(getBubble(
+        holder.body.text = messageText
+        holder.body.setVisible(message.isSms() || messageText.isNotBlank())
+        holder.body.setBackgroundResource(getBubble(
                 emojiOnly = emojiOnly,
                 canGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty(),
                 canGroupWithNext = canGroup(message, next),
                 isMe = message.isMe()))
 
         // Bind the attachments
-        val partsAdapter = view.attachments.adapter as PartsAdapter
+        val partsAdapter = holder.attachments.adapter as PartsAdapter
         partsAdapter.theme = theme
-        partsAdapter.setData(message, previous, next, view)
+        partsAdapter.setData(message, previous, next, holder)
     }
 
-    private fun bindStatus(viewHolder: QkViewHolder, message: Message, next: Message?) {
-        val view = viewHolder.containerView
-
+    private fun bindStatus(holder: QkViewHolder, message: Message, next: Message?) {
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
 
-        view.status.text = when {
+        holder.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered,
                     dateFormatter.getTimestamp(message.dateSent))
@@ -300,7 +305,7 @@ class MessagesAdapter @Inject constructor(
             else -> dateFormatter.getTimestamp(message.date)
         }
 
-        view.status.setVisible(when {
+        holder.status.setVisible(when {
             expanded[message.id] == true -> true
             message.isSending() -> true
             message.isFailedMessage() -> true

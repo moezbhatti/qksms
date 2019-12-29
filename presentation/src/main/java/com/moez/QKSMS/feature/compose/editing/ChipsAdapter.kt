@@ -33,7 +33,6 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.model.Recipient
 import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.*
-import kotlinx.android.synthetic.main.contact_chip.view.*
 import javax.inject.Inject
 
 class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
@@ -59,10 +58,9 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val chip = getItem(position)
-        val view = holder.containerView
 
-        view.avatar.setRecipient(Recipient(id = -1, contact = chip.contact))
-        view.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
+        holder.avatar.setRecipient(Recipient(id = -1, contact = chip.contact))
+        holder.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
     }
 
     /**
