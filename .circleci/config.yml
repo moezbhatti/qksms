@@ -24,12 +24,11 @@ jobs:
       - run:
           name: Gradle build
           command: ./gradlew :presentation:assembleWithAnalyticsRelease :presentation:bundleWithAnalyticsRelease
+      - run:
+          name: Flatten outputs
+          command: find presentation/build/outputs -mindepth 2 -type f -exec mv -i '{}' presentation/build/outputs/ ';'
       - store_artifacts:
-          path: presentation/build/outputs/apk
-          destination: builds
-      - store_artifacts:
-          path: presentation/build/outputs/bundle
-          destination: builds
+          path: presentation/build/outputs
       - persist_to_workspace:
           root: presentation/build/outputs
           paths: .
@@ -60,7 +59,7 @@ jobs:
           at: presentation/build/outputs
       - run:
           name: "Publish Release on GitHub"
-          command: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} -delete ${CIRCLE_TAG} presentation/build/outputs/
+          command: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} presentation/build/outputs/
 
 workflows:
   version: 2
