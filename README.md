@@ -2,7 +2,7 @@
 
 # QKSMS
 
-[![Build Status](https://travis-ci.org/moezbhatti/qksms.svg?branch=master)](https://travis-ci.org/moezbhatti/qksms)
+[![Build Status](https://circleci.com/gh/moezbhatti/qksms/tree/master.svg?style=svg)](https://circleci.com/gh/moezbhatti/qksms/tree/master)
 [![Liberapay donation](https://img.shields.io/badge/donate-liberapay-yellow.svg)](https://liberapay.com/moezbhatti/)
 [![Bitcoin donation](https://img.shields.io/badge/donate-bitcoin-yellow.svg)](https://qklabs.com/donate-btc/)
 [![PayPal donation](https://img.shields.io/badge/donate-paypal-yellow.svg)](https://qklabs.com/donate)
