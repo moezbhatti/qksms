@@ -113,10 +113,12 @@ class MainViewModel @Inject constructor(
         }
 
         // Sync contacts when we detect a change
-        disposables += contactAddedListener.listen()
-                .debounce(1, TimeUnit.SECONDS)
-                .subscribeOn(Schedulers.io())
-                .subscribe { syncContacts.execute(Unit) }
+        if (permissionManager.hasContacts()) {
+            disposables += contactAddedListener.listen()
+                    .debounce(1, TimeUnit.SECONDS)
+                    .subscribeOn(Schedulers.io())
+                    .subscribe { syncContacts.execute(Unit) }
+        }
 
         ratingManager.addSession()
         markAllSeen.execute(Unit)
