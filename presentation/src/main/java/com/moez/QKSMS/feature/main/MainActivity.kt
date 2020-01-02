@@ -34,6 +34,7 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.view.GravityCompat
 import androidx.core.view.isVisible
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
@@ -133,7 +134,9 @@ class MainActivity : QkThemedActivity(), MainView {
         onNewIntentIntent.onNext(intent)
 
         (snackbar as? ViewStub)?.setOnInflateListener { _, _ ->
-            snackbarButton.clicks().autoDisposable(scope()).subscribe(snackbarButtonIntent)
+            snackbarButton.clicks()
+                    .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+                    .subscribe(snackbarButtonIntent)
         }
 
         (syncing as? ViewStub)?.setOnInflateListener { _, _ ->
