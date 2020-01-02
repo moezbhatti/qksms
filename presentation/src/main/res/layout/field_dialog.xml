@@ -25,7 +25,7 @@
     android:layout_height="wrap_content"
     android:background="@null"
     android:lines="1"
-    android:maxLength="30"
+    android:maxLength="64"
     android:padding="24dp"
     android:singleLine="true"
     android:textStyle="bold"
