@@ -39,7 +39,10 @@ class DateFormatter @Inject constructor(val context: Context) {
         var formattedPattern = DateFormat.getBestDateTimePattern(Locale.getDefault(), pattern)
 
         if (DateFormat.is24HourFormat(context)) {
-            formattedPattern = formattedPattern.replace("h", "HH").replace(" a".toRegex(), "")
+            formattedPattern = formattedPattern
+                    .replace("h", "HH")
+                    .replace("K", "HH")
+                    .replace(" a".toRegex(), "")
         }
 
         return SimpleDateFormat(formattedPattern, Locale.getDefault())
