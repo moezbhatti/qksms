@@ -24,6 +24,7 @@ import android.content.ContentUris
 import android.content.ContentValues
 import android.content.Context
 import android.content.Intent
+import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
 import android.os.Build
 import android.os.Environment
@@ -40,6 +41,7 @@ import com.google.android.mms.pdu_alt.PduPersister
 import com.klinker.android.send_message.SmsManagerFactory
 import com.klinker.android.send_message.StripAccents
 import com.klinker.android.send_message.Transaction
+import com.moez.QKSMS.common.util.extensions.now
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.manager.ActiveConversationManager
@@ -66,12 +68,12 @@ import java.io.FileOutputStream
 import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.math.sqrt
 
 @Singleton
 class MessageRepositoryImpl @Inject constructor(
     private val activeConversationManager: ActiveConversationManager,
     private val context: Context,
-    private val imageRepository: ImageRepository,
     private val messageIds: KeyManager,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
@@ -329,49 +331,98 @@ class MessageRepositoryImpl @Inject constructor(
                     alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
                 }
             } else { // No delay
-                val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, System.currentTimeMillis())
+                val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, now())
                 sendSms(message)
             }
         } else { // MMS
             val parts = arrayListOf<MMSPart>()
 
-            if (signedBody.isNotBlank()) {
-                parts += MMSPart("text", ContentType.TEXT_PLAIN, signedBody.toByteArray())
+            val maxWidth = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_WIDTH)
+                    .takeIf { prefs.mmsSize.get() == -1 } ?: Int.MAX_VALUE
+
+            val maxHeight = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
+                    .takeIf { prefs.mmsSize.get() == -1 } ?: Int.MAX_VALUE
+
+            var remainingBytes = when (prefs.mmsSize.get()) {
+                -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+                0 -> Int.MAX_VALUE
+                else -> prefs.mmsSize.get() * 1024
+            } * 0.9 // Ugly, but buys us a bit of wiggle room
+
+            signedBody.takeIf { it.isNotEmpty() }?.toByteArray()?.let { bytes ->
+                remainingBytes -= bytes.size
+                parts += MMSPart("text", ContentType.TEXT_PLAIN, bytes)
             }
 
-            val smsManager = subId.takeIf { it != -1 }
-                    ?.let(SmsManagerFactory::createSmsManager)
-                    ?: SmsManager.getDefault()
-            val width = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_WIDTH)
-            val height = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
-
-            // Add the GIFs as attachments
-            parts += attachments
-                    .mapNotNull { attachment -> attachment as? Attachment.Image }
-                    .filter { attachment -> attachment.isGif(context) }
-                    .mapNotNull { attachment -> attachment.getUri() }
-                    .map { uri -> ImageUtils.compressGif(context, uri, prefs.mmsSize.get() * 1024) }
-                    .map { bitmap -> MMSPart("image", ContentType.IMAGE_GIF, bitmap) }
-
-            // Compress the images and add them as attachments
-            var totalImageBytes = 0
-            parts += attachments
-                    .mapNotNull { attachment -> attachment as? Attachment.Image }
-                    .filter { attachment -> !attachment.isGif(context) }
-                    .mapNotNull { attachment -> attachment.getUri() }
-                    .mapNotNull { uri -> tryOrNull { imageRepository.loadImage(uri, width, height) } }
-                    .also { totalImageBytes = it.sumBy { it.allocationByteCount } }
-                    .map { bitmap ->
-                        val byteRatio = bitmap.allocationByteCount / totalImageBytes.toFloat()
-                        ImageUtils.compressBitmap(bitmap, (prefs.mmsSize.get() * 1024 * byteRatio).toInt())
-                    }
-                    .map { bitmap -> MMSPart("image", ContentType.IMAGE_JPEG, bitmap) }
-
-            // Send contacts
+            // Attach contacts
             parts += attachments
                     .mapNotNull { attachment -> attachment as? Attachment.Contact }
                     .map { attachment -> attachment.vCard.toByteArray() }
-                    .map { vCard -> MMSPart("contact", ContentType.TEXT_VCARD, vCard) }
+                    .map { vCard ->
+                        remainingBytes -= vCard.size
+                        MMSPart("contact", ContentType.TEXT_VCARD, vCard)
+                    }
+
+            val imageBytesByAttachment = attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.Image }
+                    .associateWith { attachment ->
+                        val uri = attachment.getUri() ?: return@associateWith byteArrayOf()
+                        when (attachment.isGif(context)) {
+                            true -> ImageUtils.getScaledGif(context, uri, maxWidth, maxHeight)
+                            false -> ImageUtils.getScaledImage(context, uri, maxWidth, maxHeight)
+                        }
+                    }
+                    .toMutableMap()
+
+            val imageByteCount = imageBytesByAttachment.values.sumBy { byteArray -> byteArray.size }
+            if (imageByteCount > remainingBytes) {
+                imageBytesByAttachment.forEach { (attachment, originalBytes) ->
+                    val uri = attachment.getUri() ?: return@forEach
+                    val maxBytes = originalBytes.size / imageByteCount.toFloat() * remainingBytes
+
+                    // Get the image dimensions
+                    val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
+                    BitmapFactory.decodeStream(context.contentResolver.openInputStream(uri), null, options)
+                    val width = options.outWidth
+                    val height = options.outHeight
+                    val aspectRatio = width.toFloat() / height.toFloat()
+
+                    var attempts = 0
+                    var scaledBytes = originalBytes
+
+                    while (scaledBytes.size > maxBytes) {
+                        // Estimate how much we need to scale the image down by. If it's still too big, we'll need to
+                        // try smaller and smaller values
+                        val scale = maxBytes / originalBytes.size * (0.9 - attempts * 0.2)
+                        if (scale <= 0) {
+                            Timber.w("Failed to compress ${originalBytes.size / 1024}Kb to ${maxBytes.toInt() / 1024}Kb")
+                            return@forEach
+                        }
+
+                        val newArea = scale * width * height
+                        val newWidth = sqrt(newArea * aspectRatio).toInt()
+                        val newHeight = (newWidth / aspectRatio).toInt()
+
+                        attempts++
+                        scaledBytes = when (attachment.isGif(context)) {
+                            true -> ImageUtils.getScaledGif(context, uri, newWidth, newHeight, 80)
+                            false -> ImageUtils.getScaledImage(context, uri, newWidth, newHeight, 80)
+                        }
+
+                        Timber.d("Compression attempt $attempts: ${scaledBytes.size / 1024}/${maxBytes.toInt() / 1024}Kb ($width*$height -> $newWidth*$newHeight)")
+                    }
+
+                    Timber.v("Compressed ${originalBytes.size / 1024}Kb to ${scaledBytes.size / 1024}Kb with a target size of ${maxBytes.toInt() / 1024}Kb in $attempts attempts")
+                    imageBytesByAttachment[attachment] = scaledBytes
+                }
+            }
+
+            imageBytesByAttachment.forEach { (attachment, bytes) ->
+                parts += when (attachment.isGif(context)) {
+                    true -> MMSPart("image", ContentType.IMAGE_GIF, bytes)
+                    false -> MMSPart("image", ContentType.IMAGE_JPEG, bytes)
+                }
+            }
 
             // We need to strip the separators from outgoing MMS, or else they'll appear to have sent and not go through
             val transaction = Transaction(context)

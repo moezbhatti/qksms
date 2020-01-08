@@ -434,9 +434,10 @@
     </string-array>
 
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
@@ -444,6 +445,7 @@
     </string-array>
 
     <integer-array name="mms_sizes_ids">
+        <item>-1</item>
         <item>100</item>
         <item>200</item>
         <item>300</item>
