@@ -134,11 +134,7 @@ class Colors @Inject constructor(
     }
 
     private fun generateColor(recipient: Recipient): Int {
-        val first = recipient.contact?.name?.firstOrNull()
-                ?: phoneNumberUtils.normalizeNumber(recipient.address).firstOrNull()
-                ?: '#'
-
-        val index = first.hashCode().absoluteValue % randomColors.size
+        val index = recipient.address.hashCode().absoluteValue % randomColors.size
         return randomColors[index]
     }
 }
