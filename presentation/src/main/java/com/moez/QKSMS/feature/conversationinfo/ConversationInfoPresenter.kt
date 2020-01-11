@@ -27,6 +27,8 @@ import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoItem.ConversationInfoMedia
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoItem.ConversationInfoRecipient
 import com.moez.QKSMS.interactor.DeleteConversations
 import com.moez.QKSMS.interactor.MarkArchived
 import com.moez.QKSMS.interactor.MarkUnarchived
@@ -37,6 +39,7 @@ import com.moez.QKSMS.repository.MessageRepository
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.subjects.BehaviorSubject
@@ -55,7 +58,7 @@ class ConversationInfoPresenter @Inject constructor(
     private val navigator: Navigator,
     private val permissionManager: PermissionManager
 ) : QkPresenter<ConversationInfoView, ConversationInfoState>(
-        ConversationInfoState(threadId = threadId, media = messageRepo.getPartsForConversation(threadId))
+        ConversationInfoState(threadId = threadId)
 ) {
 
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
@@ -77,29 +80,25 @@ class ConversationInfoPresenter @Inject constructor(
         disposables += markUnarchived
         disposables += deleteConversations
 
-        // Update the recipients whenever they change
-        disposables += conversation
-                .map { conversation -> conversation.recipients }
-                .distinctUntilChanged()
-                .subscribe { recipients -> newState { copy(recipients = recipients) } }
+        val partsObservable = messageRepo.getPartsForConversation(threadId)
+                .asObservable()
+                .filter { parts -> parts.isLoaded && parts.isValid}
 
-        // Update conversation title whenever it changes
-        disposables += conversation
-                .map { conversation -> conversation.name }
-                .distinctUntilChanged()
-                .subscribe { name -> newState { copy(name = name) } }
+        disposables += Observables
+                .combineLatest(conversation, partsObservable) { conversation, parts ->
+                    val data = mutableListOf<ConversationInfoItem>()
 
-        // Update the view's archived state whenever it changes
-        disposables += conversation
-                .map { conversation -> conversation.archived }
-                .distinctUntilChanged()
-                .subscribe { archived -> newState { copy(archived = archived) } }
+                    data += conversation.recipients.map(::ConversationInfoRecipient)
+                    data += ConversationInfoItem.ConversationInfoSettings(
+                            name = conversation.name,
+                            recipients = conversation.recipients,
+                            archived = conversation.archived,
+                            blocked = conversation.blocked)
+                    data += parts.map(::ConversationInfoMedia)
 
-        // Update the view's blocked state whenever it changes
-        disposables += conversation
-                .map { conversation -> conversation.blocked }
-                .distinctUntilChanged()
-                .subscribe { blocked -> newState { copy(blocked = blocked) } }
+                    newState { copy(data = data) }
+                }
+                .subscribe()
     }
 
     override fun bindIntents(view: ConversationInfoView) {
@@ -180,6 +179,11 @@ class ConversationInfoPresenter @Inject constructor(
                 .withLatestFrom(conversation) { _, conversation -> conversation }
                 .autoDisposable(view.scope())
                 .subscribe { conversation -> deleteConversations.execute(listOf(conversation.id)) }
+
+        // Media
+        view.mediaClicks()
+                .autoDisposable(view.scope())
+                .subscribe(navigator::showMedia)
     }
 
 }

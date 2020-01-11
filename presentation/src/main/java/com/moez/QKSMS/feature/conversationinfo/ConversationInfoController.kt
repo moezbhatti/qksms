@@ -20,15 +20,13 @@ package com.moez.QKSMS.feature.conversationinfo
 
 import android.view.View
 import androidx.appcompat.app.AlertDialog
+import androidx.recyclerview.widget.GridLayoutManager
 import com.bluelinelabs.conductor.RouterTransaction
-import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.FieldDialog
 import com.moez.QKSMS.feature.blocking.BlockingDialog
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
@@ -49,9 +47,7 @@ class ConversationInfoController(
     @Inject override lateinit var presenter: ConversationInfoPresenter
     @Inject lateinit var blockingDialog: BlockingDialog
     @Inject lateinit var navigator: Navigator
-    @Inject lateinit var recipientAdapter: ConversationRecipientAdapter
-    @Inject lateinit var mediaAdapter: ConversationMediaAdapter
-    @Inject lateinit var itemDecoration: GridSpacingItemDecoration
+    @Inject lateinit var adapter: ConversationInfoAdapter
 
     private val nameDialog: FieldDialog by lazy {
         FieldDialog(activity!!, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
@@ -71,16 +67,17 @@ class ConversationInfoController(
     }
 
     override fun onViewCreated() {
-        items.postDelayed({ items?.animateLayoutChanges = true }, 100)
-
-        recipients.adapter = recipientAdapter
-
-        media.adapter = mediaAdapter
-        media.addItemDecoration(itemDecoration)
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(adapter, activity!!))
+        recyclerView.layoutManager = GridLayoutManager(activity, 3).apply {
+            spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
+                override fun getSpanSize(position: Int): Int = if (adapter.getItemViewType(position) == 2) 1 else 3
+            }
+        }
 
         themedActivity?.theme
                 ?.autoDisposable(scope())
-                ?.subscribe { recipients.scrapViews() }
+                ?.subscribe { recyclerView.scrapViews() }
     }
 
     override fun onAttach(view: View) {
@@ -90,52 +87,26 @@ class ConversationInfoController(
         showBackButton(true)
     }
 
-    override fun recipientClicks(): Observable<Long> = recipientAdapter.recipientClicks
-
-    override fun recipientLongClicks(): Observable<Long> = recipientAdapter.recipientLongClicks
-
-    override fun themeClicks(): Observable<Long> = recipientAdapter.themeClicks
-
-    override fun nameClicks(): Observable<*> = name.clicks()
-
-    override fun nameChanges(): Observable<String> = nameChangeSubject
-
-    override fun notificationClicks(): Observable<*> = notifications.clicks()
-
-    override fun archiveClicks(): Observable<*> = archive.clicks()
-
-    override fun blockClicks(): Observable<*> = block.clicks()
-
-    override fun deleteClicks(): Observable<*> = delete.clicks()
-
-    override fun confirmDelete(): Observable<*> = confirmDeleteSubject
-
     override fun render(state: ConversationInfoState) {
         if (state.hasError) {
             activity?.finish()
             return
         }
 
-        recipientAdapter.updateData(state.recipients)
-
-        name.setVisible(state.recipients?.size ?: 0 >= 2)
-        name.summary = state.name
-
-        notifications.isEnabled = !state.blocked
-
-        archive.isEnabled = !state.blocked
-        archive.title = activity?.getString(when (state.archived) {
-            true -> R.string.info_unarchive
-            false -> R.string.info_archive
-        })
-
-        block.title = activity?.getString(when (state.blocked) {
-            true -> R.string.info_unblock
-            false -> R.string.info_block
-        })
-
-        mediaAdapter.updateData(state.media)
+        adapter.data = state.data
     }
+
+    override fun recipientClicks(): Observable<Long> = adapter.recipientClicks
+    override fun recipientLongClicks(): Observable<Long> = adapter.recipientLongClicks
+    override fun themeClicks(): Observable<Long> = adapter.themeClicks
+    override fun nameClicks(): Observable<*> = adapter.nameClicks
+    override fun nameChanges(): Observable<String> = nameChangeSubject
+    override fun notificationClicks(): Observable<*> = adapter.notificationClicks
+    override fun archiveClicks(): Observable<*> = adapter.archiveClicks
+    override fun blockClicks(): Observable<*> = adapter.blockClicks
+    override fun deleteClicks(): Observable<*> = adapter.deleteClicks
+    override fun confirmDelete(): Observable<*> = confirmDeleteSubject
+    override fun mediaClicks(): Observable<Long> = adapter.mediaClicks
 
     override fun showNameDialog(name: String) = nameDialog.setText(name).show()
 

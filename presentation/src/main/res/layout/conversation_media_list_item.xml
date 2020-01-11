@@ -22,11 +22,10 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.moez.QKSMS.common.widget.SquareImageView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:tools="http://schemas.android.com/tools"
+    <com.moez.QKSMS.common.widget.SquareImageView
         android:id="@+id/thumbnail"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="?android:attr/divider"
         android:scaleType="centerCrop"
         tools:src="@tools:sample/backgrounds/scenic" />
