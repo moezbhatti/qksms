@@ -36,7 +36,6 @@ import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.extensions.mapNotNull
-import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.interactor.AddScheduledMessage
 import com.moez.QKSMS.interactor.CancelDelayedMessage
 import com.moez.QKSMS.interactor.DeleteMessages
@@ -49,6 +48,7 @@ import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Attachments
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
@@ -104,10 +104,10 @@ class ComposeViewModel @Inject constructor(
 ) {
 
     private val attachments: Subject<List<Attachment>> = BehaviorSubject.createDefault(sharedAttachments)
-    private val chipsReducer: Subject<(List<Chip>) -> List<Chip>> = PublishSubject.create()
+    private val chipsReducer: Subject<(List<Recipient>) -> List<Recipient>> = PublishSubject.create()
     private val conversation: Subject<Conversation> = BehaviorSubject.create()
     private val messages: Subject<List<Message>> = BehaviorSubject.create()
-    private val selectedChips: Subject<List<Chip>> = BehaviorSubject.createDefault(listOf())
+    private val selectedChips: Subject<List<Recipient>> = BehaviorSubject.createDefault(listOf())
     private val searchResults: Subject<List<Message>> = BehaviorSubject.create()
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
 
@@ -163,11 +163,11 @@ class ComposeViewModel @Inject constructor(
                 .subscribe(conversation::onNext)
 
         if (addresses.isNotEmpty()) {
-            selectedChips.onNext(addresses.map { address -> Chip(address) })
+            selectedChips.onNext(addresses.map { address -> Recipient(address = address) })
         }
 
         disposables += chipsReducer
-                .scan(listOf<Chip>()) { previousState, reducer -> reducer(previousState) }
+                .scan(listOf<Recipient>()) { previousState, reducer -> reducer(previousState) }
                 .doOnNext { chips -> newState { copy(selectedChips = chips) } }
                 .skipUntil(state.filter { state -> state.editingMode })
                 .takeUntil(state.filter { state -> !state.editingMode })
@@ -241,13 +241,19 @@ class ComposeViewModel @Inject constructor(
                     }
                     // Filter out any numbers that are already selected
                     hashmap.filter { (address) ->
-                        chips.none { chip -> phoneNumberUtils.compare(address, chip.address) }
+                        chips.none { recipient -> phoneNumberUtils.compare(address, recipient.address) }
                     }
                 }
                 .filter { hashmap -> hashmap.isNotEmpty() }
                 .map { hashmap ->
                     hashmap.map { (address, lookupKey) ->
-                        Chip(address, lookupKey?.let(contactRepo::getUnmanagedContact))
+                        conversationRepo.getRecipients()
+                                .asSequence()
+                                .filter { recipient -> recipient.contact?.lookupKey == lookupKey }
+                                .first { recipient -> phoneNumberUtils.compare(recipient.address, address) }
+                                ?: Recipient(
+                                        address = address,
+                                        contact = lookupKey?.let(contactRepo::getUnmanagedContact))
                     }
                 }
                 .autoDisposable(view.scope())

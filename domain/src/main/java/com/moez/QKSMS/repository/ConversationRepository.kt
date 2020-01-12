@@ -54,6 +54,8 @@ interface ConversationRepository {
 
     fun getUnmanagedConversations(): Observable<List<Conversation>>
 
+    fun getRecipients(): RealmResults<Recipient>
+
     fun getUnmanagedRecipients(): Observable<List<Recipient>>
 
     fun getRecipient(recipientId: Long): Recipient?

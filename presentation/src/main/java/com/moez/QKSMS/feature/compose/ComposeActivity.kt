@@ -54,10 +54,10 @@ import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.showKeyboard
-import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ChipsAdapter
 import com.moez.QKSMS.feature.contacts.ContactsActivity
 import com.moez.QKSMS.model.Attachment
+import com.moez.QKSMS.model.Recipient
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
@@ -90,7 +90,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
     override val activityVisibleIntent: Subject<Boolean> = PublishSubject.create()
     override val chipsSelectedIntent: Subject<HashMap<String, String?>> = PublishSubject.create()
-    override val chipDeletedIntent: Subject<Chip> by lazy { chipsAdapter.chipDeleted }
+    override val chipDeletedIntent: Subject<Recipient> by lazy { chipsAdapter.chipDeleted }
     override val menuReadyIntent: Observable<Unit> = menu.map { Unit }
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
     override val sendAsGroupIntent by lazy { sendAsGroupBackground.clicks() }
@@ -286,7 +286,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), AttachContactRequestCode)
     }
 
-    override fun showContacts(sharing: Boolean, chips: List<Chip>) {
+    override fun showContacts(sharing: Boolean, chips: List<Recipient>) {
         message.hideKeyboard()
         val serialized = HashMap(chips.associate { chip -> chip.address to chip.contact?.lookupKey })
         val intent = Intent(this, ContactsActivity::class.java)

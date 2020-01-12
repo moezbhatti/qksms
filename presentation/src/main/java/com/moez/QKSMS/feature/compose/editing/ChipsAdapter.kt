@@ -35,10 +35,10 @@ import io.reactivex.subjects.PublishSubject
 import kotlinx.android.synthetic.main.contact_chip.*
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
+class ChipsAdapter @Inject constructor() : QkAdapter<Recipient>() {
 
     var view: RecyclerView? = null
-    val chipDeleted: PublishSubject<Chip> = PublishSubject.create<Chip>()
+    val chipDeleted: PublishSubject<Recipient> = PublishSubject.create<Recipient>()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val inflater = LayoutInflater.from(parent.context)
@@ -57,18 +57,18 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
     }
 
     override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
-        val chip = getItem(position)
+        val recipient = getItem(position)
 
-        holder.avatar.setRecipient(Recipient(id = -1, contact = chip.contact))
-        holder.name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
+        holder.avatar.setRecipient(recipient)
+        holder.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
     }
 
     /**
      * The [context] has to come from a view, because we're inflating a view that used themed attrs
      */
-    private fun showDetailedChip(context: Context, chip: Chip) {
+    private fun showDetailedChip(context: Context, recipient: Recipient) {
         val detailedChipView = DetailedChipView(context)
-        detailedChipView.setChip(chip)
+        detailedChipView.setRecipient(recipient)
 
         val rootView = view?.rootView as ViewGroup
 
@@ -83,7 +83,7 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Chip>() {
         detailedChipView.show()
 
         detailedChipView.setOnDeleteListener {
-            chipDeleted.onNext(chip)
+            chipDeleted.onNext(recipient)
             detailedChipView.hide()
         }
     }

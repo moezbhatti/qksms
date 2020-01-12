@@ -220,6 +220,12 @@ class ConversationRepositoryImpl @Inject constructor(
                 .observeOn(Schedulers.io())
     }
 
+    override fun getRecipients(): RealmResults<Recipient> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Recipient::class.java)
+                .findAll()
+    }
+
     override fun getUnmanagedRecipients(): Observable<List<Recipient>> {
         val realm = Realm.getDefaultInstance()
         return realm.where(Recipient::class.java)

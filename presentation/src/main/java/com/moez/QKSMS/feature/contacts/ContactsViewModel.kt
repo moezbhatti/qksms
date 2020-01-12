@@ -22,7 +22,6 @@ import android.view.inputmethod.EditorInfo
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
-import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
 import com.moez.QKSMS.filter.ContactFilter
@@ -32,6 +31,7 @@ import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.ContactGroup
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.PhoneNumber
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.repository.ContactRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.PhoneNumberUtils
@@ -68,7 +68,7 @@ class ContactsViewModel @Inject constructor(
             .observeOn(Schedulers.io())
             .map { hashmap ->
                 hashmap.map { (address, lookupKey) ->
-                    Chip(address, lookupKey?.let(contactsRepo::getUnmanagedContact))
+                    Recipient(address = address, contact = lookupKey?.let(contactsRepo::getUnmanagedContact))
                 }
             }
 
@@ -181,11 +181,10 @@ class ContactsViewModel @Inject constructor(
                 .observeOn(Schedulers.io())
                 .autoDisposable(view.scope())
                 .subscribe { (composeItem, force) ->
-                    val contacts = composeItem.getContacts()
-                    val newChips = contacts.map { contact ->
+                    view.finish(HashMap(composeItem.getContacts().associate { contact ->
                         if (contact.numbers.size == 1 || contact.getDefaultNumber() != null && !force) {
-                            val number = contact.getDefaultNumber() ?: contact.numbers[0]!!
-                            Chip(number.address, contact)
+                            val address = contact.getDefaultNumber()?.address ?: contact.numbers[0]!!.address
+                            address to contact.lookupKey
                         } else {
                             runBlocking {
                                 newState { copy(selectedContact = contact) }
@@ -203,12 +202,10 @@ class ContactsViewModel @Inject constructor(
                                     setDefaultPhoneNumber.execute(params)
                                 }
 
-                                Chip(number.address, contact)
+                                number.address to contact.lookupKey
                             } ?: return@subscribe
                         }
-                    }
-
-                    view.finish(HashMap(newChips.associate { chip -> chip.address to chip.contact?.lookupKey }))
+                    }))
                 }
     }
 

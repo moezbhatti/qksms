@@ -45,19 +45,19 @@ class DetailedChipView(context: Context) : RelativeLayout(context) {
 
         isFocusable = true
         isFocusableInTouchMode = true
+    }
 
-        colors.theme().let { theme ->
+    fun setRecipient(recipient: Recipient) {
+        avatar.setRecipient(recipient)
+        name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
+        info.text = recipient.address
+
+        colors.theme(recipient).let { theme ->
             card.setBackgroundTint(theme.theme)
             name.setTextColor(theme.textPrimary)
             info.setTextColor(theme.textTertiary)
             delete.setTint(theme.textPrimary)
         }
-    }
-
-    fun setChip(chip: Chip) {
-        avatar.setRecipient(Recipient(id = -1, contact = chip.contact))
-        name.text = chip.contact?.name?.takeIf { it.isNotBlank() } ?: chip.address
-        info.text = chip.address
     }
 
     fun show() {

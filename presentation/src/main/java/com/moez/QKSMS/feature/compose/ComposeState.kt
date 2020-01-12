@@ -19,17 +19,17 @@
 package com.moez.QKSMS.feature.compose
 
 import com.moez.QKSMS.compat.SubscriptionInfoCompat
-import com.moez.QKSMS.feature.compose.editing.Chip
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.model.Recipient
 import io.realm.RealmResults
 
 data class ComposeState(
     val hasError: Boolean = false,
     val editingMode: Boolean = false,
     val threadId: Long = 0,
-    val selectedChips: List<Chip> = ArrayList(),
+    val selectedChips: List<Recipient> = ArrayList(),
     val sendAsGroup: Boolean = true,
     val conversationtitle: String = "",
     val loading: Boolean = false,
