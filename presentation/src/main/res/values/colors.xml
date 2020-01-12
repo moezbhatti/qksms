@@ -66,15 +66,13 @@
     <color name="tools_theme">#00838F</color>
 
     <array name="random_colors">
-        <item>#e57373</item>
-        <item>#7986CB</item>
-        <item>#00BFA5</item>
-        <item>#81C784</item>
-        <item>#FFAB40</item>
-        <item>#FF8A65</item>
-        <item>#8d6e63</item>
-        <item>#448AFF</item>
-        <item>#78909c</item>
+        <item>#06C9AF</item>
+        <item>#6DC966</item>
+        <item>#F1AF28</item>
+        <item>#FF8963</item>
+        <item>#FF6969</item>
+        <item>#5D99FF</item>
+        <item>#8899EC</item>
     </array>
 
     <array name="material_red">
