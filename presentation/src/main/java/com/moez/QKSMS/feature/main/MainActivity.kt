@@ -38,7 +38,6 @@ import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.ItemTouchHelper
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.snackbar.Snackbar
 import com.jakewharton.rxbinding2.view.clicks
 import com.jakewharton.rxbinding2.widget.textChanges
@@ -150,8 +149,8 @@ class MainActivity : QkThemedActivity(), MainView {
             homeIntent.onNext(Unit)
         }
 
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this)
+        itemTouchCallback.adapter = conversationsAdapter
+        conversationsAdapter.autoScrollToStart(recyclerView)
 
         // Don't allow clicks to pass through the drawer layout
         drawer.clicks().autoDisposable(scope()).subscribe()
@@ -161,8 +160,10 @@ class MainActivity : QkThemedActivity(), MainView {
                 .autoDisposable(scope())
                 .subscribe { theme ->
                     // Set the color for the drawer icons
-                    val states = arrayOf(intArrayOf(android.R.attr.state_activated),
+                    val states = arrayOf(
+                            intArrayOf(android.R.attr.state_activated),
                             intArrayOf(-android.R.attr.state_activated))
+
                     resolveThemeColor(android.R.attr.textColorSecondary)
                             .let { textSecondary -> ColorStateList(states, intArrayOf(theme.theme, textSecondary)) }
                             .let { tintList ->
@@ -184,9 +185,6 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
                 }
-
-        itemTouchCallback.adapter = conversationsAdapter
-        conversationsAdapter.autoScrollToStart(recyclerView)
 
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {
@@ -286,10 +284,11 @@ class MainActivity : QkThemedActivity(), MainView {
         inbox.isActivated = state.page is Inbox
         archived.isActivated = state.page is Archived
 
-        if (drawerLayout.isDrawerOpen(GravityCompat.START) && !state.drawerOpen) drawerLayout.closeDrawer(
-                GravityCompat.START)
-        else if (!drawerLayout.isDrawerVisible(GravityCompat.START) && state.drawerOpen) drawerLayout.openDrawer(
-                GravityCompat.START)
+        if (drawerLayout.isDrawerOpen(GravityCompat.START) && !state.drawerOpen) {
+            drawerLayout.closeDrawer(GravityCompat.START)
+        } else if (!drawerLayout.isDrawerVisible(GravityCompat.START) && state.drawerOpen) {
+            drawerLayout.openDrawer(GravityCompat.START)
+        }
 
         when (state.syncing) {
             is SyncRepository.SyncProgress.Idle -> {

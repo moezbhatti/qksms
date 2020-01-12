@@ -84,6 +84,7 @@
             android:clipToPadding="false"
             android:paddingTop="8dp"
             android:paddingBottom="8dp"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             app:layout_constraintBottom_toTopOf="@id/bottom"
             app:layout_constraintTop_toBottomOf="@id/toolbar"
             tools:listitem="@layout/conversation_list_item" />

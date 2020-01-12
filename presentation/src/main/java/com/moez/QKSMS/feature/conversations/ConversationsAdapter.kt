@@ -45,10 +45,6 @@ class ConversationsAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils
 ) : QkRealmAdapter<Conversation>() {
 
-    init {
-        setHasStableIds(true)
-    }
-
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
@@ -111,10 +107,6 @@ class ConversationsAdapter @Inject constructor(
         }
 
         holder.unread.setTint(colors.theme(recipient).theme)
-    }
-
-    override fun getItemId(index: Int): Long {
-        return getItem(index)!!.id
     }
 
     override fun getItemViewType(position: Int): Int {

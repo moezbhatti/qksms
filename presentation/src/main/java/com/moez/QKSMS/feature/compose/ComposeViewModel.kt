@@ -27,7 +27,6 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.ClipboardUtils
-import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.MessageDetailsFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
@@ -78,7 +77,6 @@ class ComposeViewModel @Inject constructor(
     @Named("addresses") private val addresses: List<String>,
     @Named("text") private val sharedText: String,
     @Named("attachments") private val sharedAttachments: Attachments,
-    private val colors: Colors,
     private val contactRepo: ContactRepository,
     private val context: Context,
     private val activeConversationManager: ActiveConversationManager,
@@ -449,21 +447,22 @@ class ComposeViewModel @Inject constructor(
                 .subscribe { message -> cancelMessage.execute(message.id) }
 
         // Set the current conversation
-        Observables.combineLatest(
-                view.activityVisibleIntent.distinctUntilChanged(),
-                conversation.mapNotNull { conversation ->
-                    conversation.takeIf { it.isValid }?.id
-                }.distinctUntilChanged())
-        { visible, threadId ->
-            when (visible) {
-                true -> {
-                    activeConversationManager.setActiveConversation(threadId)
-                    markRead.execute(listOf(threadId))
-                }
+        Observables
+                .combineLatest(
+                        view.activityVisibleIntent.distinctUntilChanged(),
+                        conversation.mapNotNull { conversation ->
+                            conversation.takeIf { it.isValid }?.id
+                        }.distinctUntilChanged())
+                { visible, threadId ->
+                    when (visible) {
+                        true -> {
+                            activeConversationManager.setActiveConversation(threadId)
+                            markRead.execute(listOf(threadId))
+                        }
 
-                false -> activeConversationManager.setActiveConversation(null)
-            }
-        }
+                        false -> activeConversationManager.setActiveConversation(null)
+                    }
+                }
                 .autoDisposable(view.scope())
                 .subscribe()
 
