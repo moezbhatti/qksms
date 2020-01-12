@@ -18,8 +18,9 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <shape xmlns:android="http://schemas.android.com/apk/res/android"
-    android:shape="oval">
+    android:shape="rectangle">
 
+    <corners android:radius="1000dp" />
     <solid android:color="@android:color/white" />
 
 </shape>

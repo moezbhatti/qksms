@@ -23,7 +23,6 @@
     android:id="@+id/avatar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/tools_theme"
     tools:parentTag="com.moez.QKSMS.common.widget.AvatarView">
 
     <com.moez.QKSMS.common.widget.QkTextView
@@ -49,6 +48,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
+        tools:background="@color/tools_theme"
         tools:src="@tools:sample/avatars" />
 
 </merge>
