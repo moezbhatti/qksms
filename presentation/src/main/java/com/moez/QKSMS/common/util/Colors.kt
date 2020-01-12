@@ -89,7 +89,8 @@ class Colors @Inject constructor(
 
     fun themeObservable(recipient: Recipient? = null): Observable<Theme> {
         val pref = when {
-            recipient == null || !prefs.autoColor.get() -> prefs.theme()
+            recipient == null -> prefs.theme()
+            prefs.autoColor.get() -> prefs.theme(recipient.id, prefs.theme().get())
             else -> prefs.theme(recipient.id, generateColor(recipient))
         }
         return pref.asObservable()
