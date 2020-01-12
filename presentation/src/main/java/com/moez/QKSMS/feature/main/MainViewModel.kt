@@ -212,7 +212,7 @@ class MainViewModel @Inject constructor(
                     prefs.keyChanges
                             .filter { key -> key.contains("theme") }
                             .map { true }
-                            .mergeWith(prefs.autoColor.asObservable())
+                            .mergeWith(prefs.autoColor.asObservable().skip(1))
                             .doOnNext { view.themeChanged() }
                             .takeUntil(view.activityResumedIntent.filter { resumed -> resumed })
                 }

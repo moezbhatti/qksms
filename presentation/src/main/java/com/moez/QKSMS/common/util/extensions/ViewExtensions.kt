@@ -120,14 +120,6 @@ fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
 }
 
 fun RecyclerView.scrapViews() {
-    val adapter = adapter
-    val layoutManager = layoutManager
-
-    this.adapter = null
-    this.layoutManager = null
-
-    this.adapter = adapter
-    this.layoutManager = layoutManager
-
+    recycledViewPool.clear()
     adapter?.notifyDataSetChanged()
 }
