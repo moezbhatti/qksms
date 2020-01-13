@@ -27,6 +27,7 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
@@ -42,6 +43,7 @@ import javax.inject.Inject
 class SettingsPresenter @Inject constructor(
     colors: Colors,
     syncRepo: SyncRepository,
+    private val analytics: AnalyticsManager,
     private val context: Context,
     private val billingManager: BillingManager,
     private val dateFormatter: DateFormatter,
@@ -170,7 +172,10 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.textSize -> view.showTextSizePicker()
 
-                        R.id.autoColor -> prefs.autoColor.set(!prefs.autoColor.get())
+                        R.id.autoColor -> {
+                            analytics.setUserProperty("Preference: Auto Color", !prefs.autoColor.get())
+                            prefs.autoColor.set(!prefs.autoColor.get())
+                        }
 
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
 
