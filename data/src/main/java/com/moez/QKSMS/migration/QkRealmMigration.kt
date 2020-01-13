@@ -178,7 +178,7 @@ class QkRealmMigration @Inject constructor(
             realm.where("Conversation").findAll().forEach { conversation ->
                 val pref = prefs.theme(conversation.getLong("id"))
                 if (pref.isSet) {
-                    conversation.getList("Recipient").forEach { recipient ->
+                    conversation.getList("recipients").forEach { recipient ->
                         recipients[recipient.getLong("id")] = pref.get()
                     }
 
