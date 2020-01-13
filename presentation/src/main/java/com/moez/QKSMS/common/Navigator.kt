@@ -286,8 +286,8 @@ class Navigator @Inject constructor(
 
             val channelId = notificationManager.buildNotificationChannelId(threadId)
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
-            intent.putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
-            intent.putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+                    .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
+                    .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
             startActivity(intent)
         }
     }
