@@ -248,7 +248,7 @@ class ComposeViewModel @Inject constructor(
                         conversationRepo.getRecipients()
                                 .asSequence()
                                 .filter { recipient -> recipient.contact?.lookupKey == lookupKey }
-                                .first { recipient -> phoneNumberUtils.compare(recipient.address, address) }
+                                .firstOrNull { recipient -> phoneNumberUtils.compare(recipient.address, address) }
                                 ?: Recipient(
                                         address = address,
                                         contact = lookupKey?.let(contactRepo::getUnmanagedContact))
