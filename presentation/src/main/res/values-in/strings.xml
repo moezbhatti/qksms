@@ -30,9 +30,11 @@
     <string name="title_compose">Ketik nama atau nomor</string>
     <string name="setup_skip">Lewati</string>
     <string name="setup_next">Lanjut</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Panggil</string>
     <string name="menu_info">Detail</string>
     <string name="menu_save">Simpan ke galeri</string>
+    <string name="menu_share">Berbagi</string>
     <string name="main_drawer_open_cd">Buka laci navigasi</string>
     <string name="main_title_selected">%d dipilih</string>
     <string name="main_menu_clear">Bersihkan</string>
@@ -83,6 +85,10 @@
         <item>Teruskan</item>
         <item>Hapus</item>
     </string-array>
+    <string name="compose_number_picker_title">Pilih nomor telepon</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Hanya sekali</string>
+    <string name="compose_number_picker_always">Selalu</string>
     <string name="compose_title_selected">%d dipilih</string>
     <string name="compose_subtitle_results">%1$d dari %2$d hasil</string>
     <string name="compose_send_group_title">Kirim sebagai pesan grup</string>
@@ -123,6 +129,7 @@
     <string name="message_status_delivered">%s terkirim</string>
     <string name="message_status_failed">Gagal mengirim. Ketuk untuk mencoba lagi</string>
     <string name="info_title">Detail</string>
+    <string name="info_copied_address">Alamat disalin</string>
     <string name="info_name">Judul percakapan</string>
     <string name="info_notifications">Notifikasi</string>
     <string name="info_theme">Tema</string>
@@ -183,6 +190,7 @@
     <string name="settings_black_title">Mode malam hitam pekat</string>
     <string name="settings_night_start_title">Waktu mulai</string>
     <string name="settings_night_end_title">Waktu berakhir</string>
+    <string name="settings_automatic_colors_title">Warna kontak otomatis</string>
     <string name="settings_text_size_title">Ukuran fon</string>
     <string name="settings_system_font_title">Gunakan fon sistem</string>
     <string name="settings_auto_emoji_title">Emoji otomatis</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">Tombol 2</string>
     <string name="settings_notification_action_3">Tombol 3</string>
     <string name="settings_notification_previews_title">Pratinjau notifikasi</string>
+    <string name="settings_notification_wake_title">Layar ambien</string>
     <string name="settings_vibration_title">Getar</string>
     <string name="settings_ringtone_title">Suara</string>
     <string name="settings_ringtone_none">Tidak ada</string>
@@ -217,11 +226,13 @@
     <string name="settings_delivery_title">Konfirmasi pengiriman</string>
     <string name="settings_delivery_summary">Mengonfirmasi bahwa pesan telah berhasil dikirim</string>
     <string name="settings_signature_title">Tanda tangan</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Tambahkan tanda tangan di akhir pesan anda</string>
     <string name="settings_unicode_title">Hapus aksen</string>
     <string name="settings_unicode_summary">Membuang aksen dari karakter di dalam pesan SMS keluar</string>
     <string name="settings_mobile_title">Hanya nomor seluler</string>
     <string name="settings_mobile_summary">Saat menulis pesan, hanya tampilkan nomor seluler</string>
+    <string name="settings_long_as_mms_title">Kirim pesan panjang sebagai MMS</string>
+    <string name="settings_long_as_mms_summary">Jika pesan teks panjang anda gagal dikirim, atau dikirim dalam urutan yang salah, anda bisa mengirimkannya sebagai pesan MMS. Mungkin akan dikenai tagihan tambahan</string>
     <string name="settings_mms_size_title">Otomatis kompres lampiran MMS</string>
     <string name="settings_sync_title">Sinkronisasi pesan</string>
     <string name="settings_sync_summary">Sinkronisasi ulang pesan anda dengan basis data aplikasi SMS Android bawaan</string>
@@ -355,13 +366,14 @@
         <item>Lama</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Direkomendasikan)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Tanpa kompresi</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Oke</item>

@@ -30,9 +30,11 @@
     <string name="title_compose">Kirjoita nimi tai numero</string>
     <string name="setup_skip">Ohita</string>
     <string name="setup_next">Jatka</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Soita</string>
     <string name="menu_info">Lisätiedot</string>
     <string name="menu_save">Tallenna galleriaan</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Avaa navigointilaatikko</string>
     <string name="main_title_selected">%d valittu</string>
     <string name="main_menu_clear">Tyhjennä</string>
@@ -84,6 +86,10 @@
         <item>Edelleenlähetä</item>
         <item>Poista</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d valittu</string>
     <string name="compose_subtitle_results">%1$d / %2$d tuloksesta</string>
     <string name="compose_send_group_title">Lähetä ryhmäviestinä</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Toimitettu: %s</string>
     <string name="message_status_failed">Lähettäminen epäonnistui. Yritä uudelleen napauttamalla</string>
     <string name="info_title">Lisätiedot</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Keskustelun otsikko</string>
     <string name="info_notifications">Ilmoitukset</string>
     <string name="info_theme">Teema</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Musta yötilä</string>
     <string name="settings_night_start_title">Aloitusaika</string>
     <string name="settings_night_end_title">Lopetusaika</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Fonttikoko</string>
     <string name="settings_system_font_title">Käytä järjestelmäfonttia</string>
     <string name="settings_auto_emoji_title">Automaattinen emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Nappi 2</string>
     <string name="settings_notification_action_3">Nappi 3</string>
     <string name="settings_notification_previews_title">Esikatselut ilmoituksessa</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Värinä</string>
     <string name="settings_ringtone_title">Ääni</string>
     <string name="settings_ringtone_none">Ei mitään</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Käytä yksinkertaisia merkkejä lähtevissä SMS-viesteissä</string>
     <string name="settings_mobile_title">Vain matkapuhelinnumerot</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Pakkaa MMS-liitteet automaattisesti</string>
     <string name="settings_sync_title">Synkronoi viestit</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
@@ -360,13 +371,14 @@
         <item>Pitkä</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Suositeltu)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Ei pakkausta</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Kyllä</item>

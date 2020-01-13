@@ -30,9 +30,11 @@
     <string name="title_compose">Bir isme veya numaraya yazın</string>
     <string name="setup_skip">Atla</string>
     <string name="setup_next">Devam</string>
+    <string name="menu_add_person">Kişi ekle</string>
     <string name="menu_call">Ara</string>
     <string name="menu_info">Ayrıntılar</string>
     <string name="menu_save">Galeriye Kaydet</string>
+    <string name="menu_share">Paylaş</string>
     <string name="main_drawer_open_cd">Gezinti çubuğunu aç</string>
     <string name="main_title_selected">%d Seçili</string>
     <string name="main_menu_clear">Temizle</string>
@@ -84,6 +86,10 @@
         <item>Yönlendir</item>
         <item>Sil</item>
     </string-array>
+    <string name="compose_number_picker_title">Bir telefon numarası seçin</string>
+    <string name="compose_number_picker_default">%s ∙ Varsayılan</string>
+    <string name="compose_number_picker_once">Sadece bir kez</string>
+    <string name="compose_number_picker_always">Her zaman</string>
     <string name="compose_title_selected">%d Seçili</string>
     <string name="compose_subtitle_results">%1$d / %2$d sonuçlar</string>
     <string name="compose_send_group_title">Grup mesajı gönder</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Teslim Edildi %s</string>
     <string name="message_status_failed">Gönderilemedi. Yeniden denemek için dokunun</string>
     <string name="info_title">Ayrıntılar</string>
+    <string name="info_copied_address">Adres kopyalandı</string>
     <string name="info_name">Konuşma başlığı</string>
     <string name="info_notifications">Bildirimler</string>
     <string name="info_theme">Tema</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Saf siyah gece modu</string>
     <string name="settings_night_start_title">Başlama zamanı</string>
     <string name="settings_night_end_title">Bitiş Zamanı</string>
+    <string name="settings_automatic_colors_title">Otomatik kişi renkleri</string>
     <string name="settings_text_size_title">Yazı tipi boyutu</string>
     <string name="settings_system_font_title">Sistem yazı tipini kullan</string>
     <string name="settings_auto_emoji_title">Otomatik emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Buton 2</string>
     <string name="settings_notification_action_3">Buton 3</string>
     <string name="settings_notification_previews_title">Bildirim ön izleme</string>
+    <string name="settings_notification_wake_title">Uyandırma ekranı</string>
     <string name="settings_vibration_title">Titreşim</string>
     <string name="settings_ringtone_title">Ses</string>
     <string name="settings_ringtone_none">Hiçbiri</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Giden SMS mesajlarından aksanlı karakterleri kaldırın</string>
     <string name="settings_mobile_title">Sadece cep telefonu numaraları</string>
     <string name="settings_mobile_summary">Bir mesaj oluştururken, yalnızca cep telefonu numaralarını göster</string>
+    <string name="settings_long_as_mms_title">Uzun mesajları MMS olarak gönder</string>
+    <string name="settings_long_as_mms_summary">Uzun metin mesajlarınız gönderilemiyorsa veya yanlış sırada gönderiliyorsa, onları MMS mesajları olarak gönderebilirsiniz. Ek ücretler uygulanabilir</string>
     <string name="settings_mms_size_title">Otomatik-MMS ekleri sıkıştır</string>
     <string name="settings_sync_title"> İletileri eşitle</string>
     <string name="settings_sync_summary">İletilerinizi  Android SMS veritabanı ile yeniden senkronize edin</string>
@@ -362,12 +373,13 @@ BAĞLAM İSTEĞİ</string>
         <item>Uzun</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 kilobayt</item>
-        <item>200 kilobayt</item>
-        <item>300KB (önerilen)</item>
-        <item>600 kilobayt</item>
-        <item>1000 kilobayt</item>
-        <item>2000 kilobayt</item>
+        <item>Otomatik</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
         <item>Sıkıştırma yok</item>
     </string-array>
     <string-array name="qk_responses">

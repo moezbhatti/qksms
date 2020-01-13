@@ -30,9 +30,11 @@
     <string name="title_compose">Nhập tên hoặc số điện thoại</string>
     <string name="setup_skip">Bỏ qua</string>
     <string name="setup_next">Tiếp tục</string>
+    <string name="menu_add_person">Thêm người</string>
     <string name="menu_call">Cuộc gọi</string>
     <string name="menu_info">Chi tiết</string>
     <string name="menu_save">Lưu vào bộ sưu tập</string>
+    <string name="menu_share">Chia sẻ</string>
     <string name="main_drawer_open_cd">Mở menu điều hướng</string>
     <string name="main_title_selected">%d đã chọn</string>
     <string name="main_menu_clear">Dọn sạch</string>
@@ -83,6 +85,10 @@
         <item>Chuyển tiếp</item>
         <item>Xóa</item>
     </string-array>
+    <string name="compose_number_picker_title">Chọn một số điện thoại</string>
+    <string name="compose_number_picker_default">%s ∙ Mặc định</string>
+    <string name="compose_number_picker_once">Chỉ lần này</string>
+    <string name="compose_number_picker_always">Luôn luôn</string>
     <string name="compose_title_selected">%d đã chọn</string>
     <string name="compose_subtitle_results">%1$d trên %2$d kết quả</string>
     <string name="compose_send_group_title">Gửi theo nhóm tin nhắn</string>
@@ -123,6 +129,7 @@
     <string name="message_status_delivered">Đã chuyển %s</string>
     <string name="message_status_failed">Gửi thất bại. Bấm để thử lại lần nữa</string>
     <string name="info_title">Chi tiết</string>
+    <string name="info_copied_address">Địa chỉ đã được sao chép</string>
     <string name="info_name">Tiêu đề cuộc trò chuyện</string>
     <string name="info_notifications">Thông báo</string>
     <string name="info_theme">Chủ đề</string>
@@ -163,7 +170,7 @@
     <string name="backup_notification_channel_name">Sao lưu và khôi phục</string>
     <string name="scheduled_title">Hẹn giờ tin nhắn</string>
     <string name="scheduled_empty_description">Tự động gửi tin nhắn vào lúc mà bạn muốn</string>
-    <string name="scheduled_empty_message_1">Này, khi nào thì tới sinh nhật bạn ?</string>
+    <string name="scheduled_empty_message_1">Này, khi nào thì đến sinh nhật bạn?</string>
     <string name="scheduled_empty_message_2">Vào ngày 23 tháng 12 đó</string>
     <string name="scheduled_empty_message_3">Chúc mừng sinh nhật! Nhìn xem, tôi đúng là một người bạn tuyệt vời, nhớ ngày sinh nhật của bạn đấy</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
@@ -183,6 +190,7 @@
     <string name="settings_black_title">Chế độ ban đêm tinh khiết</string>
     <string name="settings_night_start_title">Thời gian bắt đầu</string>
     <string name="settings_night_end_title">Thời gian kết thúc</string>
+    <string name="settings_automatic_colors_title">Tự động hiện màu sắc của liên hệ</string>
     <string name="settings_text_size_title">Cỡ chữ</string>
     <string name="settings_system_font_title">Sử dụng font chữ hệ thống</string>
     <string name="settings_auto_emoji_title">Emoji tự động</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">Nút 2</string>
     <string name="settings_notification_action_3">Nút 3</string>
     <string name="settings_notification_previews_title">Xem trước các thông báo</string>
+    <string name="settings_notification_wake_title">Đánh thức màn hình</string>
     <string name="settings_vibration_title">Rung</string>
     <string name="settings_ringtone_title">Âm thanh</string>
     <string name="settings_ringtone_none">Không dùng</string>
@@ -222,6 +231,8 @@
     <string name="settings_unicode_summary">Bỏ dấu ký tự khi gửi SMS</string>
     <string name="settings_mobile_title">Lọc số di động</string>
     <string name="settings_mobile_summary">Khi soạn tin mới, chỉ hiển thị liên hệ có số di động</string>
+    <string name="settings_long_as_mms_title">Gửi đoạn tin nhắn dài như MMS</string>
+    <string name="settings_long_as_mms_summary">Nếu đoạn tin nhắn dài bị lỗi khi gửi, hoặc gửi sai thứ tự, bạn có thể gửi chúng như tin nhắn MMS thay thế. Cước phí bổ sung có thể bị áp dụng</string>
     <string name="settings_mms_size_title">Tự động nén các tệp đính kèm MMS</string>
     <string name="settings_sync_title">Đồng bộ tin nhắn</string>
     <string name="settings_sync_summary">Đồng bộ lại tin nhắn với thiết bị</string>
@@ -355,12 +366,13 @@
         <item>Dài</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Tự động</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (khuyến nghị)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
-        <item>2M</item>
+        <item>2000KB</item>
         <item>Không nén</item>
     </string-array>
     <string-array name="qk_responses">

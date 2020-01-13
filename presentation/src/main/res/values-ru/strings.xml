@@ -30,9 +30,11 @@
     <string name="title_compose">Написать</string>
     <string name="setup_skip">Пропустить</string>
     <string name="setup_next">Продолжить</string>
+    <string name="menu_add_person">Добавить контакт</string>
     <string name="menu_call">Позвонить</string>
     <string name="menu_info">Подробности</string>
     <string name="menu_save">Сохранить в галерее</string>
+    <string name="menu_share">Поделиться</string>
     <string name="main_drawer_open_cd">Открыть боковое меню</string>
     <string name="main_title_selected">%d выбрано</string>
     <string name="main_menu_clear">Очистить</string>
@@ -86,6 +88,10 @@
         <item>Переслать</item>
         <item>Удалить</item>
     </string-array>
+    <string name="compose_number_picker_title">Выбор номера телефона</string>
+    <string name="compose_number_picker_default">%s ∙ по умолчанию</string>
+    <string name="compose_number_picker_once">Один раз</string>
+    <string name="compose_number_picker_always">Всегда</string>
     <string name="compose_title_selected">%d выбран(о)</string>
     <string name="compose_subtitle_results">%1$d из %2$d результатов</string>
     <string name="compose_send_group_title">Отправить как групповое сообщение</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">Доставлено %s</string>
     <string name="message_status_failed">Не удалось отправить. Нажмите, чтобы попробовать ещё раз.</string>
     <string name="info_title">Подробности</string>
+    <string name="info_copied_address">Адрес скопирован</string>
     <string name="info_name">Название разговора</string>
     <string name="info_notifications">Уведомления</string>
     <string name="info_theme">Тема</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">Полностью чёрный ночной режим</string>
     <string name="settings_night_start_title">Время начала</string>
     <string name="settings_night_end_title">Время окончания</string>
+    <string name="settings_automatic_colors_title">Автоматические цвета контактов</string>
     <string name="settings_text_size_title">Размер шрифта</string>
     <string name="settings_system_font_title">Использовать системный шрифт</string>
     <string name="settings_auto_emoji_title">Автоматические emoji</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">Кнопка 2</string>
     <string name="settings_notification_action_3">Кнопка 3</string>
     <string name="settings_notification_previews_title">Предпросмотр уведомлений</string>
+    <string name="settings_notification_wake_title">Экран блокировки</string>
     <string name="settings_vibration_title">Вибросигнал</string>
     <string name="settings_ringtone_title">Звук</string>
     <string name="settings_ringtone_none">Нет</string>
@@ -228,6 +237,8 @@
     <string name="settings_unicode_summary">Удаление акцентов с символов в исходящих SMS-сообщениях</string>
     <string name="settings_mobile_title">Только мобильные номера</string>
     <string name="settings_mobile_summary">При составлении сообщения показывать только мобильные номера</string>
+    <string name="settings_long_as_mms_title">Отправлять длинные сообщения как MMS</string>
+    <string name="settings_long_as_mms_summary">Если не удаётся отправить длинные текстовые сообщения или они отправляются в неправильном порядке, вы можете отправить их в виде MMS. Может взиматься дополнительная плата.</string>
     <string name="settings_mms_size_title">Автоматически сжимать вложения MMS</string>
     <string name="settings_sync_title">Синхронизация сообщений</string>
     <string name="settings_sync_summary">Принудительная синхронизация сообщений с собственной базой данных SMS Android</string>
@@ -370,12 +381,13 @@
         <item>Длинная</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 КБ</item>
-        <item>200 КБ</item>
-        <item>300 КБ (рекомендуется)</item>
-        <item>600 КБ</item>
-        <item>1000 КБ</item>
-        <item>2000 КБ</item>
+        <item>Автоматически</item>
+        <item>100 Кб</item>
+        <item>200 Кб</item>
+        <item>300 Кб</item>
+        <item>600 Кб</item>
+        <item>1000 Кб</item>
+        <item>2000 Кб</item>
         <item>Без сжатия</item>
     </string-array>
     <string-array name="qk_responses">

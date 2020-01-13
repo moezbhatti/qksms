@@ -30,9 +30,11 @@
     <string name="title_compose">Nová zpráva</string>
     <string name="setup_skip">Přeskočit</string>
     <string name="setup_next">Pokračovat</string>
+    <string name="menu_add_person">Přidat osobu</string>
     <string name="menu_call">Volat</string>
     <string name="menu_info">Podrobnosti</string>
     <string name="menu_save">Uložit do galerie</string>
+    <string name="menu_share">Sdílet</string>
     <string name="main_drawer_open_cd">Otevřít menu</string>
     <string name="main_title_selected">Vybráno: %d</string>
     <string name="main_menu_clear">Vymazat</string>
@@ -86,6 +88,10 @@
         <item>Přeposlat</item>
         <item>Smazat</item>
     </string-array>
+    <string name="compose_number_picker_title">Vybrat telefonní číslo</string>
+    <string name="compose_number_picker_default">%s ∙ Výchozí</string>
+    <string name="compose_number_picker_once">Pouze jednou</string>
+    <string name="compose_number_picker_always">Vždy</string>
     <string name="compose_title_selected">Vybráno: %d</string>
     <string name="compose_subtitle_results">%1$d z %2$d výsledků</string>
     <string name="compose_send_group_title">Odeslat jako skupinovou zprávu</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">Doručeno %s</string>
     <string name="message_status_failed">Odeslání se nezdařilo. Klepnutím zkusíte znovu odeslat</string>
     <string name="info_title">Podrobnosti</string>
+    <string name="info_copied_address">Adresa zkopírována</string>
     <string name="info_name">Název konverzace</string>
     <string name="info_notifications">Oznámení</string>
     <string name="info_theme">Motiv vzhledu</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">Čistá černá, noční režim</string>
     <string name="settings_night_start_title">Čas zahájení</string>
     <string name="settings_night_end_title">Čas ukončení</string>
+    <string name="settings_automatic_colors_title">Automatické barvy kontaktu</string>
     <string name="settings_text_size_title">Velikost písma</string>
     <string name="settings_system_font_title">Použít systémové písmo</string>
     <string name="settings_auto_emoji_title">Automatické emoji</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">Tlačítko 2</string>
     <string name="settings_notification_action_3">Tlačítko 3</string>
     <string name="settings_notification_previews_title">Nastavení oznámení</string>
+    <string name="settings_notification_wake_title">Rozsvítit displej</string>
     <string name="settings_vibration_title">Vibrace</string>
     <string name="settings_ringtone_title">Vyzvánění</string>
     <string name="settings_ringtone_none">Žádný</string>
@@ -228,6 +237,8 @@
     <string name="settings_unicode_summary">Odstranit diakritiku v odesílaných SMS zprávách</string>
     <string name="settings_mobile_title">Pouze mobilní čísla</string>
     <string name="settings_mobile_summary">Při psaní zprávy zobrazit pouze mobilní telefonní čísla</string>
+    <string name="settings_long_as_mms_title">Odesílat dlouhé zprávy jako MMS</string>
+    <string name="settings_long_as_mms_summary">Nedaří-li se odeslat vaše dlouhé zprávy, nebo jsou-li poslány v nesprávném pořadí, lze je odeslat jako MMS. Mohou být účtovány další poplatky.</string>
     <string name="settings_mms_size_title">Automaticky komprimovat MMS přílohy</string>
     <string name="settings_sync_title">Synchronizovat zprávy</string>
     <string name="settings_sync_summary">Opětovná synchronizace zpráv s nativní Android SMS databází</string>
@@ -370,13 +381,14 @@
         <item>Dlouhá</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 kB</item>
-        <item>200 kB</item>
-        <item>300 kB (doporučeno)</item>
-        <item>600 kB</item>
-        <item>1 000 kB</item>
-        <item>2 000 kB</item>
-        <item>Bez komprese</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

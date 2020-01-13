@@ -30,9 +30,11 @@
     <string name="title_compose">یک نام یا شماره را وارد کنید</string>
     <string name="setup_skip">بیخیال</string>
     <string name="setup_next">ادامه</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">تماس</string>
     <string name="menu_info">جزئیات</string>
     <string name="menu_save">ذخیره در گالری</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">بازکردن کشو ناوبری</string>
     <string name="main_title_selected">%d انتخاب شده</string>
     <string name="main_menu_clear">پاکسازی</string>
@@ -84,6 +86,10 @@
         <item>فوروارد</item>
         <item>حذف</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d انتخاب شده</string>
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
     <string name="compose_send_group_title">ارسال پیام به گروه</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">رسیده %s</string>
     <string name="message_status_failed">در ارسال خطایی رخ داد. برای ارسال دوباره، ضربه بزنید</string>
     <string name="info_title">جزئیات</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">عنوان گفتگو</string>
     <string name="info_notifications">اعلانها</string>
     <string name="info_theme">پوسته</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">حالت شب کامل</string>
     <string name="settings_night_start_title">زمان شروع</string>
     <string name="settings_night_end_title">زمان پایان</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">اندازه قلم</string>
     <string name="settings_system_font_title">از فونت سیستم استفاده کن</string>
     <string name="settings_auto_emoji_title">ایموجی خودکار</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">بازبینی اعلان</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">لرزش</string>
     <string name="settings_ringtone_title">صدای</string>
     <string name="settings_ringtone_none">هیچی</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
     <string name="settings_mobile_title">فقط شماره های تلفن</string>
     <string name="settings_mobile_summary">وقتی در حال ارسال پیام هستید فقط می توانید شماره تلفن را ببنید</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">فشرده سازی خودکار پیوست ها</string>
     <string name="settings_sync_title">همگام سازی پیام ها</string>
     <string name="settings_sync_summary">همگام سازی پیام ها با پایگاه داده</string>
@@ -360,13 +371,14 @@
         <item>طولانی</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>۱۰۰KB</item>
-        <item>۲۰۰KB</item>
-        <item>300 کیلوبایت(توصیه شده)</item>
-        <item>۶۰۰KB</item>
-        <item>۱۰۰۰KB</item>
-        <item>۲۰۰۰KB</item>
-        <item>بدون فشردگی</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>باشه</item>

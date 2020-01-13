@@ -30,9 +30,11 @@
     <string name="title_compose">Verfassen</string>
     <string name="setup_skip">Überspringen</string>
     <string name="setup_next">Weiter</string>
+    <string name="menu_add_person">Person hinzufügen</string>
     <string name="menu_call">Anrufen</string>
     <string name="menu_info">Details</string>
     <string name="menu_save">In Galerie speichern</string>
+    <string name="menu_share">Teilen</string>
     <string name="main_drawer_open_cd">Öffne den Navigation Drawer</string>
     <string name="main_title_selected">%d ausgewählt</string>
     <string name="main_menu_clear">Zurücksetzen</string>
@@ -84,6 +86,10 @@
         <item>Weiterleiten</item>
         <item>Löschen</item>
     </string-array>
+    <string name="compose_number_picker_title">Wählen Sie eine Telefonnummer</string>
+    <string name="compose_number_picker_default">%s - Standard</string>
+    <string name="compose_number_picker_once">Nur einmal</string>
+    <string name="compose_number_picker_always">Immer</string>
     <string name="compose_title_selected">%d ausgewählt</string>
     <string name="compose_subtitle_results">%1$d von %2$d Ergebnissen</string>
     <string name="compose_send_group_title">Als Gruppennachricht senden</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Zugestellt %s</string>
     <string name="message_status_failed">Fehler beim Senden. Tippen, um es erneut zu versuchen</string>
     <string name="info_title">Details</string>
+    <string name="info_copied_address">Adresse kopiert</string>
     <string name="info_name">Unterhaltungstitel</string>
     <string name="info_notifications">Benachrichtigungen</string>
     <string name="info_theme">Erscheinungsbild</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Rein schwarzer Nachtmodus</string>
     <string name="settings_night_start_title">Anfang</string>
     <string name="settings_night_end_title">Ende</string>
+    <string name="settings_automatic_colors_title">Automatische Kontaktfarben</string>
     <string name="settings_text_size_title">Schriftgröße</string>
     <string name="settings_system_font_title">Systemschriftart verwenden</string>
     <string name="settings_auto_emoji_title">Automatische Emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Taste 2</string>
     <string name="settings_notification_action_3">Taste 3</string>
     <string name="settings_notification_previews_title">Benachrichtigungsvorschau</string>
+    <string name="settings_notification_wake_title">Bildschirm aufwecken</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Ton</string>
     <string name="settings_ringtone_none">Keine</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Akzente aus Zeichen in ausgehenden SMS-Nachrichten entfernen</string>
     <string name="settings_mobile_title">Nur Mobilfunknummern</string>
     <string name="settings_mobile_summary">Beim Verfassen einer Nachricht nur Mobilfunknummern anzeigen</string>
+    <string name="settings_long_as_mms_title">Lange Nachrichten als MMS senden</string>
+    <string name="settings_long_as_mms_summary">Wenn Ihre längeren Textnachrichten nicht gesendet oder in der falsche Reihenfolge gesendet werden, können Sie sie stattdessen als MMS-Nachrichten senden. Dafür können zusätzliche Gebühren anfallen.</string>
     <string name="settings_mms_size_title">MMS-Anhänge automatisch komprimieren</string>
     <string name="settings_sync_title">Nachrichten synchronisieren</string>
     <string name="settings_sync_summary">Nachrichten mit der Android SMS-Datenbank abgleichen</string>
@@ -360,9 +371,10 @@
         <item>Lang</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatisch</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (empfohlen)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>

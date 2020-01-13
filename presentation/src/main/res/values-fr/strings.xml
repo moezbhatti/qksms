@@ -30,9 +30,11 @@
     <string name="title_compose">Entrer un nom ou un numéro</string>
     <string name="setup_skip">Ignorer</string>
     <string name="setup_next">Continuer</string>
+    <string name="menu_add_person">Ajouter une personne</string>
     <string name="menu_call">Appeler</string>
     <string name="menu_info">Détails</string>
     <string name="menu_save">Enregistrer dans la galerie</string>
+    <string name="menu_share">Partager</string>
     <string name="main_drawer_open_cd">Ouvrir le tiroir de navigation</string>
     <string name="main_title_selected">%d sélectionnée</string>
     <string name="main_menu_clear">Effacer</string>
@@ -84,6 +86,10 @@
         <item>Transférer</item>
         <item>Supprimer</item>
     </string-array>
+    <string name="compose_number_picker_title">Choisir un numéro de téléphone</string>
+    <string name="compose_number_picker_default">%s • Défaut</string>
+    <string name="compose_number_picker_once">Une seule fois</string>
+    <string name="compose_number_picker_always">Toujours</string>
     <string name="compose_title_selected">%d sélectionnée</string>
     <string name="compose_subtitle_results">%1$d sur %2$d résultats</string>
     <string name="compose_send_group_title">Envoyer en tant que message groupé</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Délivré %s</string>
     <string name="message_status_failed">Échec de l\'envoi. Appuyer pour réessayer</string>
     <string name="info_title">Détails</string>
+    <string name="info_copied_address">Adresse copiée</string>
     <string name="info_name">Titre de la conversation</string>
     <string name="info_notifications">Notifications</string>
     <string name="info_theme">Thème</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Mode noir pur</string>
     <string name="settings_night_start_title">Heure de début</string>
     <string name="settings_night_end_title">Heure de fin</string>
+    <string name="settings_automatic_colors_title">Couleurs de contact automatiques</string>
     <string name="settings_text_size_title">Taille de la police</string>
     <string name="settings_system_font_title">Utiliser la police du système</string>
     <string name="settings_auto_emoji_title">Émoticône automatique</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Bouton 2</string>
     <string name="settings_notification_action_3">Bouton 3</string>
     <string name="settings_notification_previews_title">Aperçus de notification</string>
+    <string name="settings_notification_wake_title">Réveiller l\'écran</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Son</string>
     <string name="settings_ringtone_none">Aucun</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
     <string name="settings_mobile_title">Numéros de mobile</string>
     <string name="settings_mobile_summary">Lorsque vous composez un message, afficher uniquement les numéros de mobile</string>
+    <string name="settings_long_as_mms_title">Envoyer les messages longs en MMS</string>
+    <string name="settings_long_as_mms_summary">Si vos messages texte plus longs ne parviennent pas à être envoyés, ou s\'ils sont envoyés dans le désordre, vous pouvez les envoyer sous forme de messages MMS à la place. Des frais supplémentaires peuvent s\'appliquer</string>
     <string name="settings_mms_size_title">Compresser automatiquement les pièces jointes des MMS</string>
     <string name="settings_sync_title">Synchroniser les messages</string>
     <string name="settings_sync_summary">Resynchroniser les messages avec la base de données Android native</string>
@@ -360,13 +371,14 @@
         <item>Long</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 Ko</item>
-        <item>200 Ko</item>
-        <item>300 Ko (recommandé)</item>
-        <item>600 Ko</item>
-        <item>1 000 Ko</item>
-        <item>2 000 Ko</item>
-        <item>Aucune compression</item>
+        <item>Automatique</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>1000KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>Pas de compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

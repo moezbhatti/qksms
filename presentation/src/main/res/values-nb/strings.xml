@@ -30,9 +30,11 @@
     <string name="title_compose">Skriv navn eller nummer</string>
     <string name="setup_skip">Hopp over</string>
     <string name="setup_next">Fortsett</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Ring</string>
     <string name="menu_info">Detaljer</string>
     <string name="menu_save">Lagre til galleri</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Åpne navigasjonsskuff</string>
     <string name="main_title_selected">%d valgt</string>
     <string name="main_menu_clear">Tøm</string>
@@ -84,6 +86,10 @@
         <item>Videresend</item>
         <item>Slett</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d valgt</string>
     <string name="compose_subtitle_results">%1$d av %2$d funn</string>
     <string name="compose_send_group_title">Send som gruppemelding</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Levert %s</string>
     <string name="message_status_failed">Feil ved sending. Trykk for å prøve igjen</string>
     <string name="info_title">Detaljer</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Tittel på samtalen</string>
     <string name="info_notifications">Varsler</string>
     <string name="info_theme">Drakt</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Ren svart nattmodus</string>
     <string name="settings_night_start_title">Starttid</string>
     <string name="settings_night_end_title">Sluttidspunkt</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Skriftstørrelse</string>
     <string name="settings_system_font_title">Bruk systemskrift</string>
     <string name="settings_auto_emoji_title">Automatisk emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Knapp 2</string>
     <string name="settings_notification_action_3">Knapp 3</string>
     <string name="settings_notification_previews_title">Forhåndsvisninger av varsler</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Vibrasjon</string>
     <string name="settings_ringtone_title">Lyd</string>
     <string name="settings_ringtone_none">Ingen</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Ta bort akutt-tegn fra utgående meldinger</string>
     <string name="settings_mobile_title">Kun mobilnummre</string>
     <string name="settings_mobile_summary">Vis kun mobilnummre når du skriver ny melding</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Komprimer MMS-vedlegg</string>
     <string name="settings_sync_title">Synkroniser meldinger</string>
     <string name="settings_sync_summary">Resynkroniser meldinger med Androids interne meldingslager</string>
@@ -360,13 +371,14 @@
         <item>Lang</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 KB</item>
-        <item>200 KB</item>
-        <item>300 KB (anbefalt)</item>
-        <item>600 KB</item>
-        <item>1000 KB</item>
-        <item>2000 KB</item>
-        <item>Ingen komprimering</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Ok</item>

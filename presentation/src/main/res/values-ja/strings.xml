@@ -30,9 +30,11 @@
     <string name="title_compose">作成</string>
     <string name="setup_skip">スキップ</string>
     <string name="setup_next">続行</string>
+    <string name="menu_add_person">人を追加</string>
     <string name="menu_call">通話</string>
     <string name="menu_info">詳細</string>
     <string name="menu_save">ギャラリーに保存</string>
+    <string name="menu_share">共有</string>
     <string name="main_drawer_open_cd">ナビゲーション引き出しを開く</string>
     <string name="main_title_selected">%d 選択された</string>
     <string name="main_menu_clear">消去しました</string>
@@ -83,6 +85,10 @@
         <item>転送</item>
         <item>削除</item>
     </string-array>
+    <string name="compose_number_picker_title">電話番号を選択</string>
+    <string name="compose_number_picker_default">%s ∙ デフォルト</string>
+    <string name="compose_number_picker_once">一回だけ</string>
+    <string name="compose_number_picker_always">常に</string>
     <string name="compose_title_selected">%d件を選択中</string>
     <string name="compose_subtitle_results">%2$d 結果の %1$d</string>
     <string name="compose_send_group_title">グループ メッセージとして送信します。</string>
@@ -123,6 +129,7 @@
     <string name="message_status_delivered">%s を配信しました</string>
     <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
     <string name="info_title">詳細</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">会話のタイトル</string>
     <string name="info_notifications">通知</string>
     <string name="info_theme">テーマ</string>
@@ -183,6 +190,7 @@
     <string name="settings_black_title">ピュアブラック夜間モード</string>
     <string name="settings_night_start_title">開始時刻</string>
     <string name="settings_night_end_title">終了時刻</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">フォントサイズ</string>
     <string name="settings_system_font_title">システムフォントを使用する</string>
     <string name="settings_auto_emoji_title">自動絵文字</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">ボタン 2</string>
     <string name="settings_notification_action_3">ボタン 3</string>
     <string name="settings_notification_previews_title">通知プレビュー</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">振動</string>
     <string name="settings_ringtone_title">サウンド</string>
     <string name="settings_ringtone_none">無し</string>
@@ -222,6 +231,8 @@
     <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
     <string name="settings_mobile_title">携帯電話番号のみ</string>
     <string name="settings_mobile_summary">メッセージを作成するときは、携帯電話番号のみを表示します</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">MMS添付ファイルの自動圧縮</string>
     <string name="settings_sync_title">メッセージを同期</string>
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
@@ -355,13 +366,14 @@
         <item>長い</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB 【推奨】</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>圧縮なし</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

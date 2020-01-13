@@ -30,9 +30,11 @@
     <string name="title_compose">編輯</string>
     <string name="setup_skip">跳过</string>
     <string name="setup_next">繼續</string>
+    <string name="menu_add_person">增加傳送人</string>
     <string name="menu_call">致電</string>
     <string name="menu_info">詳細資訊</string>
     <string name="menu_save">保存到圖庫</string>
+    <string name="menu_share">分享</string>
     <string name="main_drawer_open_cd">打開導航抽屜</string>
     <string name="main_title_selected">已選擇%d項</string>
     <string name="main_menu_clear">清除</string>
@@ -83,6 +85,10 @@
         <item>轉寄</item>
         <item>刪除</item>
     </string-array>
+    <string name="compose_number_picker_title">選一個號碼</string>
+    <string name="compose_number_picker_default">%s ∙ 預設</string>
+    <string name="compose_number_picker_once">就這一次</string>
+    <string name="compose_number_picker_always">總是如此</string>
     <string name="compose_title_selected">已選取 %d 個項目</string>
     <string name="compose_subtitle_results">已顯示 %2$d 條中的 %1$d 條結果</string>
     <string name="compose_send_group_title">群發訊息</string>
@@ -123,7 +129,8 @@
     <string name="message_status_delivered">已傳遞 %s</string>
     <string name="message_status_failed">發送失敗，點擊重試</string>
     <string name="info_title">詳細資訊</string>
-    <string name="info_name">會話標題</string>
+    <string name="info_copied_address">Address copied</string>
+    <string name="info_name">對話標題</string>
     <string name="info_notifications">通知</string>
     <string name="info_theme">主題</string>
     <string name="info_archive">存檔</string>
@@ -183,6 +190,7 @@
     <string name="settings_black_title">純黑色夜間模式</string>
     <string name="settings_night_start_title">開始時間</string>
     <string name="settings_night_end_title">結束時間</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">字體大小</string>
     <string name="settings_system_font_title">使用系統字體</string>
     <string name="settings_auto_emoji_title">自動 emoji 表情</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">按鈕2</string>
     <string name="settings_notification_action_3">按鈕3</string>
     <string name="settings_notification_previews_title">通知預覽</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">震動</string>
     <string name="settings_ringtone_title">音效</string>
     <string name="settings_ringtone_none">無</string>
@@ -222,6 +231,8 @@
     <string name="settings_unicode_summary">刪除訊息中字母上的讀音符號</string>
     <string name="settings_mobile_title">僅限手機號碼</string>
     <string name="settings_mobile_summary">撰寫訊息時，只顯示手機號碼</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">自動壓縮MMS附件</string>
     <string name="settings_sync_title">同步消息</string>
     <string name="settings_sync_summary">重新與安卓原生訊息數據庫進行同步</string>
@@ -324,7 +335,7 @@
     <string name="button_set">設置</string>
     <string name="button_undo">復原</string>
     <string name="toast_copied">已複製</string>
-    <string name="toast_archived">存檔的會話</string>
+    <string name="toast_archived">存檔的對話</string>
     <string name="toast_qksms_plus">您必須解鎖QKSMS+才能使用此功能</string>
     <plurals name="notification_new_messages">
         <item quantity="other">%s條新訊息</item>
@@ -355,13 +366,14 @@
         <item>长</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (推荐)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>不压缩</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>好的</item>

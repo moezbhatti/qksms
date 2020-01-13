@@ -30,9 +30,11 @@
     <string name="title_compose">Digita un nome o un numero</string>
     <string name="setup_skip">Salta</string>
     <string name="setup_next">Continua</string>
+    <string name="menu_add_person">Aggiungi persona</string>
     <string name="menu_call">Chiama</string>
     <string name="menu_info">Dettagli</string>
     <string name="menu_save">Salva nella galleria</string>
+    <string name="menu_share">Condividi</string>
     <string name="main_drawer_open_cd">Apri il pannello di navigazione</string>
     <string name="main_title_selected">%d selezionato</string>
     <string name="main_menu_clear">Azzera</string>
@@ -84,6 +86,10 @@
         <item>Inoltra</item>
         <item>Elimina</item>
     </string-array>
+    <string name="compose_number_picker_title">Scegli un numero di telefono</string>
+    <string name="compose_number_picker_default">%s ∙ Predefinito</string>
+    <string name="compose_number_picker_once">Solo una volta</string>
+    <string name="compose_number_picker_always">Sempre</string>
     <string name="compose_title_selected">%d selezionato</string>
     <string name="compose_subtitle_results">%1$d di %2$d risultati</string>
     <string name="compose_send_group_title">Invia come messaggio di gruppo</string>
@@ -121,9 +127,10 @@
     <string name="compose_sim_cd">%s selezionato, cambiare SIM</string>
     <string name="compose_send_cd">Invia messaggio</string>
     <string name="message_status_sending">Invio in corso&#8230;</string>
-    <string name="message_status_delivered">%s consegnati</string>
+    <string name="message_status_delivered">Consegnato %s</string>
     <string name="message_status_failed">Impossibile inviare. Tocca per riprovare</string>
     <string name="info_title">Dettagli</string>
+    <string name="info_copied_address">Indirizzo copiato</string>
     <string name="info_name">Titolo della conversazione</string>
     <string name="info_notifications">Notifiche</string>
     <string name="info_theme">Tema</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Modalità notte nero puro</string>
     <string name="settings_night_start_title">Ora di inizio</string>
     <string name="settings_night_end_title">Ora di fine</string>
+    <string name="settings_automatic_colors_title">Colori dei contatti automatici</string>
     <string name="settings_text_size_title">Dimensione carattere</string>
     <string name="settings_system_font_title">Usa il carattere di sistema</string>
     <string name="settings_auto_emoji_title">Emoji automatico</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Pulsante 2</string>
     <string name="settings_notification_action_3">Pulsante 3</string>
     <string name="settings_notification_previews_title">Anteprima delle notifiche</string>
+    <string name="settings_notification_wake_title">Schermata iniziale</string>
     <string name="settings_vibration_title">Vibrazione</string>
     <string name="settings_ringtone_title">Suono</string>
     <string name="settings_ringtone_none">Nessuno</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Rimuovi gli accenti dai caratteri negli SMS in uscita</string>
     <string name="settings_mobile_title">Solo numeri mobili</string>
     <string name="settings_mobile_summary">Durante la composizione di un messaggio, visualizza solo i numeri di cellulare</string>
+    <string name="settings_long_as_mms_title">Invia messaggi lunghi come MMS</string>
+    <string name="settings_long_as_mms_summary">Se i tuoi messaggi di testo più lunghi non vengono inviati o vengono inviati nell\'ordine sbagliato, puoi invece inviarli come messaggi MMS. Potrebbero essere applicati costi aggiuntivi</string>
     <string name="settings_mms_size_title">Compressione automatica degli allegati MMS</string>
     <string name="settings_sync_title">Sincronizza i messaggi</string>
     <string name="settings_sync_summary">Risincronizza i tuoi messaggi con il database SMS Android nativo</string>
@@ -360,13 +371,14 @@
         <item>Lungo</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (consigliato)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Nessuna compressione</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Okay</item>

@@ -30,9 +30,11 @@
     <string name="title_compose">พิมพ์ชื่อหรือหมายเลข</string>
     <string name="setup_skip">ข้าม</string>
     <string name="setup_next">ทำต่อ</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">โทร</string>
     <string name="menu_info">รายละเอียด</string>
     <string name="menu_save">บันทึกรูปภาพ</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">เปิดเมนูลัด</string>
     <string name="main_title_selected">%d ถูกเลือก</string>
     <string name="main_menu_clear">ลบออก</string>
@@ -83,6 +85,10 @@
         <item>ส่งต่อ</item>
         <item>ลบ</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d ถูกเลือก</string>
     <string name="compose_subtitle_results">%1$d ใน %2$d ของผลลัพท์</string>
     <string name="compose_send_group_title">ส่งเป็นข้อความกลุ่ม</string>
@@ -123,6 +129,7 @@
     <string name="message_status_delivered">%s ถูกส่งแล้ว</string>
     <string name="message_status_failed">การส่งล้มเหลว ลองแตะเพื่อส่งอีกครั้ง</string>
     <string name="info_title">รายละเอียด</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">หัวข้อสนทนา</string>
     <string name="info_notifications">การแจ้งเตือน</string>
     <string name="info_theme">รูปแบบการแสดงผล</string>
@@ -183,6 +190,7 @@
     <string name="settings_black_title">โหมดกลางคืนแบบมืดสนิท</string>
     <string name="settings_night_start_title">เวลาเริ่มต้น</string>
     <string name="settings_night_end_title">เวลาสิ้นสุด</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">ขนาดแบบอักษร</string>
     <string name="settings_system_font_title">ใช้แบบอักษรของระบบ</string>
     <string name="settings_auto_emoji_title">อีโมจิอัตโนมัติ</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">ตัวอย่างการแจ้งเตือน</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">การสั่น</string>
     <string name="settings_ringtone_title">เสียง</string>
     <string name="settings_ringtone_none">ไม่มี</string>
@@ -222,6 +231,8 @@
     <string name="settings_unicode_summary">ลบอักษรพิเศษ accents ออกจากข้อความ SMS ที่กำลังจะส่งออก</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">บีบอัดสิ่งที่แนบมาใน MMS อัตโนมัติ</string>
     <string name="settings_sync_title">ซิงค์ข้อความ</string>
     <string name="settings_sync_summary">ซิงค์ข้อความของคุณกับฐานข้อมูลของ Android SMS</string>
@@ -355,13 +366,14 @@
         <item>ยาว</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (แนะนำ)</item>
+        <item>300KB</item>
         <item>600KB</item>
-        <item>1000 กิโลไบต์</item>
-        <item>2000 กิโลไบต์</item>
-        <item>ไม่มีการบีบอัด</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>ตกลง</item>

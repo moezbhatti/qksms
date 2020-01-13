@@ -30,9 +30,11 @@
     <string name="title_compose">रचना</string>
     <string name="setup_skip">छोड़</string>
     <string name="setup_next">जारी रखें</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">कॉल</string>
     <string name="menu_info">विवरण</string>
     <string name="menu_save">गैलरी में सहेजें</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">खुला नेविगेशन दराज</string>
     <string name="main_title_selected">%d चयनित</string>
     <string name="main_menu_clear">साफ करें</string>
@@ -84,6 +86,10 @@
         <item>अग्रेषित करें</item>
         <item>मिटाएँ</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d चयनित</string>
     <string name="compose_subtitle_results">%1$d के %2$d परिणाम</string>
     <string name="compose_send_group_title">समूह संदेश के रूप में भेजें</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">%s वितरित</string>
     <string name="message_status_failed">भेजने में असफल। पुनः प्रयास करें</string>
     <string name="info_title">विवरण</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">अधिसूचनाएँ</string>
     <string name="info_theme">थीम</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">शुद्ध काली रात अंदाज़</string>
     <string name="settings_night_start_title">शुरुआत समय</string>
     <string name="settings_night_end_title">अंत समय</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">लिखाई का आकर</string>
     <string name="settings_system_font_title">यंत्र ध्वनियां उपयोग करें</string>
     <string name="settings_auto_emoji_title">Automatic emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">बटन दो</string>
     <string name="settings_notification_action_3">बटन तीन</string>
     <string name="settings_notification_previews_title">अधिसूचना सेटिंग्स</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">कंपन</string>
     <string name="settings_ringtone_title">ध्वनियाँ</string>
     <string name="settings_ringtone_none">कुछ नहीं</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
@@ -360,12 +371,13 @@
         <item>बड़ा</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 किलो बाइट</item>
-        <item>200 किलो बाइट</item>
-        <item>300 किलो बाइट(सुझाव)</item>
-        <item>600 किलो बाइट</item>
-        <item>1000 किलो बाइट</item>
-        <item>2000 किलो बाइट</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
         <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">

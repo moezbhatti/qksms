@@ -30,9 +30,11 @@
     <string name="title_compose">أكتب اسماً أو رقماً</string>
     <string name="setup_skip">تخطي</string>
     <string name="setup_next">متابعة</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">اتصال</string>
     <string name="menu_info">تفاصيل</string>
     <string name="menu_save">حفظ إلى المعرض</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">فتح درج التنقل</string>
     <string name="main_title_selected">%d محددة</string>
     <string name="main_menu_clear">مسح</string>
@@ -88,6 +90,10 @@
         <item>إعادة توجيه</item>
         <item>حذف</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d مختارة</string>
     <string name="compose_subtitle_results">%1$d من %2$d النتائج</string>
     <string name="compose_send_group_title">إرسال رسالة جماعية</string>
@@ -128,6 +134,7 @@
     <string name="message_status_delivered">تم إرسال %s</string>
     <string name="message_status_failed">فشل الإرسال. إلمس لإعادة المحاولة</string>
     <string name="info_title">التفاصيل</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">عنوان المحادثة</string>
     <string name="info_notifications">الإشعارات</string>
     <string name="info_theme">السمة</string>
@@ -193,6 +200,7 @@
     <string name="settings_black_title">وضع ليلي بسوادٍ حالك</string>
     <string name="settings_night_start_title">وقت البدء</string>
     <string name="settings_night_end_title">وقت الانتهاء</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">حجم الخط</string>
     <string name="settings_system_font_title">استخدم خط النظام</string>
     <string name="settings_auto_emoji_title">إيموجي تلقائية</string>
@@ -203,6 +211,7 @@
     <string name="settings_notification_action_2">الزر 2</string>
     <string name="settings_notification_action_3">الزر 3</string>
     <string name="settings_notification_previews_title">معاينات الإشعارات</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">الاهتزاز</string>
     <string name="settings_ringtone_title">الصوت</string>
     <string name="settings_ringtone_none">بدون نغمة </string>
@@ -232,6 +241,8 @@
     <string name="settings_unicode_summary">حذف حركات التشكيل من المحارف في الرسائل النصية الصادرة</string>
     <string name="settings_mobile_title">أرقام الهواتف النقالة فقط</string>
     <string name="settings_mobile_summary">عند إنشاء رسالة، أظهر فقط أرقام الهواتف النقالة</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">الضغط التلقائي لمرفقات رسائل الوسائط</string>
     <string name="settings_sync_title">مزامنة الرسائل</string>
     <string name="settings_sync_summary">إعادة مزامنة رسائلك مع قاعدة البيانات الأصلية للرسائل في النظام</string>
@@ -381,13 +392,14 @@
         <item>طويل</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>١٠٠ ك.ب.</item>
-        <item>٢٠٠ ك.ب.</item>
-        <item>٣٠٠ ك.ب. (مستحسن)</item>
-        <item>٦٠٠ ك.ب.</item>
-        <item>١٠٠٠ ك.ب.</item>
-        <item>٢٠٠٠ ك.ب.</item>
-        <item>دون ضغط</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>حسنًا</item>

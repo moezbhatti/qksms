@@ -30,9 +30,11 @@
     <string name="title_compose">Nowa wiadomość</string>
     <string name="setup_skip">Pomiń</string>
     <string name="setup_next">Kontynuuj</string>
+    <string name="menu_add_person">Dodaj osobę</string>
     <string name="menu_call">Zadzwoń</string>
     <string name="menu_info">Szczegóły</string>
     <string name="menu_save">Zapisz w galerii</string>
+    <string name="menu_share">Udostepnij</string>
     <string name="main_drawer_open_cd">Otwórz panel nawigacyjny</string>
     <string name="main_title_selected">%d wybrano</string>
     <string name="main_menu_clear">Wyczyść</string>
@@ -86,6 +88,10 @@
         <item>Przekaż dalej</item>
         <item>Usuń</item>
     </string-array>
+    <string name="compose_number_picker_title">Wybierz numer telefonu</string>
+    <string name="compose_number_picker_default">%s ∙ Domyślny</string>
+    <string name="compose_number_picker_once">Tylko raz</string>
+    <string name="compose_number_picker_always">Zawsze</string>
     <string name="compose_title_selected">Wybrano %d</string>
     <string name="compose_subtitle_results">Wyniki: %1$d z %2$d</string>
     <string name="compose_send_group_title">Wyślij jako wiadomość grupową</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">Dostarczono %s</string>
     <string name="message_status_failed">Nie udało się wysłać wiadomości. Dotknij, aby spróbować ponownie</string>
     <string name="info_title">Szczegóły</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Tytuł rozmowy</string>
     <string name="info_notifications">Powiadomienia</string>
     <string name="info_theme">Motyw</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">Czarne tło w trybie nocnym</string>
     <string name="settings_night_start_title">Czas rozpoczęcia</string>
     <string name="settings_night_end_title">Czas zakończenia</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Rozmiar czcionki</string>
     <string name="settings_system_font_title">Używaj czcionki systemowej</string>
     <string name="settings_auto_emoji_title">Automatyczne emoji</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">Przycisk 2</string>
     <string name="settings_notification_action_3">Przycisk 3</string>
     <string name="settings_notification_previews_title">Zawartość powiadomień</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Wibracje</string>
     <string name="settings_ringtone_title">Dźwięki</string>
     <string name="settings_ringtone_none">Brak</string>
@@ -223,11 +232,13 @@
     <string name="settings_delivery_title">Potwierdzenie dostarczenia</string>
     <string name="settings_delivery_summary">Potwierdzaj dostarczenie każdej wysłanej wiadomości</string>
     <string name="settings_signature_title">Podpis</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Dodawaj podpis na końcu wiadomości</string>
     <string name="settings_unicode_title">Usuwaj ogonki</string>
     <string name="settings_unicode_summary">Usuwaj ogonki ze znaków w wiadomościach</string>
     <string name="settings_mobile_title">Tylko numery komórkowe</string>
     <string name="settings_mobile_summary">Pokazuj kontakty tylko z numerami komórkowymi</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Automatyczna kompresja załączników MMSów</string>
     <string name="settings_sync_title">Synchronizuj wiadomości</string>
     <string name="settings_sync_summary">Zsynchronizuj wiadomości z systemową bazą danych</string>
@@ -246,7 +257,7 @@
     <string name="blocking_manager_call_control_summary">Automatycznie filtruj twoje rozmowy i wiadomości tekstowe w jednym wygodnym miejscu! Community IQ™ pozwala zapobiegać niechcianym wiadomościom od znanych spamerów</string>
     <string name="blocking_manager_sia_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Should I Answer?\"</string>
     <string name="blocking_manager_copy_title">Skopiuj zablokowane numery</string>
-    <string name="blocking_manager_copy_summary">Kontynuuj do %s kopiowanie twoich blokowanych numerów</string>
+    <string name="blocking_manager_copy_summary">Kontynuuj do %s i skopiuj twoje obecnie blokowane numery</string>
     <string name="blocked_numbers_title">Zablokowane numery</string>
     <string name="blocked_numbers_empty">Twoje blokowane numery się tu pojawią</string>
     <string name="blocked_numbers_add_cd">Zablokuj nowy numer</string>
@@ -370,13 +381,14 @@
         <item>Długi</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (zalecane)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Bez kompresji</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

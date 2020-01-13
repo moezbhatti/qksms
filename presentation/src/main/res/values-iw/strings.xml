@@ -30,9 +30,11 @@
     <string name="title_compose">כתוב הודעה</string>
     <string name="setup_skip">דילוג</string>
     <string name="setup_next">המשך</string>
+    <string name="menu_add_person">להוסיף מישהו</string>
     <string name="menu_call">התקשר</string>
     <string name="menu_info">פרטים</string>
     <string name="menu_save">שמירה לגלריה</string>
+    <string name="menu_share">שיתוף</string>
     <string name="main_drawer_open_cd">פתיחת מגירת ניווט</string>
     <string name="main_title_selected">%d נבחרו</string>
     <string name="main_menu_clear">פינוי</string>
@@ -86,6 +88,10 @@
         <item>העברה</item>
         <item>מחיקה</item>
     </string-array>
+    <string name="compose_number_picker_title">נא לבחור מספר טלפון</string>
+    <string name="compose_number_picker_default">%s ∙ בררת מחדל</string>
+    <string name="compose_number_picker_once">פעם אחד בלבד</string>
+    <string name="compose_number_picker_always">תמיד</string>
     <string name="compose_title_selected">%d נבחרו</string>
     <string name="compose_subtitle_results">%1$d מתוך %2$d תוצאות</string>
     <string name="compose_send_group_title">שליחה כהודעה קבוצתית</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">%s נמסרה</string>
     <string name="message_status_failed">השליחה נכשלה. נא לגעת כדי לנסות שוב</string>
     <string name="info_title">פרטים</string>
+    <string name="info_copied_address">הכתובת הועתקה</string>
     <string name="info_name">כותרת התכתבות</string>
     <string name="info_notifications">התראות</string>
     <string name="info_theme">ערכת עיצוב</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">מצב לילה שחור טהור</string>
     <string name="settings_night_start_title">זמן התחלה</string>
     <string name="settings_night_end_title">זמן סיום</string>
+    <string name="settings_automatic_colors_title">צבעים אוטומטיים לאנשי קשר</string>
     <string name="settings_text_size_title">גודל גופן</string>
     <string name="settings_system_font_title">שימוש בגופן המערכת</string>
     <string name="settings_auto_emoji_title">אימוג׳י אוטומטי</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">כפתור 2</string>
     <string name="settings_notification_action_3">כפתור 3</string>
     <string name="settings_notification_previews_title">תצוגות מקדימות של התראות</string>
+    <string name="settings_notification_wake_title">הפעלת המסך</string>
     <string name="settings_vibration_title">רטט</string>
     <string name="settings_ringtone_title">צליל</string>
     <string name="settings_ringtone_none">ללא</string>
@@ -228,6 +237,8 @@
     <string name="settings_unicode_summary">הסרת סימנים דיאקריטיים מתווים במסרונים יוצאים</string>
     <string name="settings_mobile_title">מספרי ניידים בלבד</string>
     <string name="settings_mobile_summary">בעת כתיבת הודעה, להציג רק מספרי טלפון של ניידים</string>
+    <string name="settings_long_as_mms_title">לשלוח הודעות ארוכות כ־MMS</string>
+    <string name="settings_long_as_mms_summary">אם יש לך בעיה בשליחת הודעות טקסט ארוכות יותר או בעיה ברצף שליחת ההודעה, ניתן לשלוח כהודעת MMS במקום. עלול לגרור עלויות נוספות</string>
     <string name="settings_mms_size_title">דחיסה אוטומטית של קבצים מצורפים להודעות MMS</string>
     <string name="settings_sync_title">סנכרון הודעות</string>
     <string name="settings_sync_summary">סנכרון ההודעות שלך מחדש עם מסד הנתונים המובנה של Android</string>
@@ -370,9 +381,10 @@
         <item>ארוכה</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>אוטומטי</item>
         <item>100 ק״ב</item>
         <item>200 ק״ב</item>
-        <item>300 ק״ב (מומלץ)</item>
+        <item>300 ק״ב</item>
         <item>600 ק״ב</item>
         <item>1000 ק״ב</item>
         <item>2000 ק״ב</item>

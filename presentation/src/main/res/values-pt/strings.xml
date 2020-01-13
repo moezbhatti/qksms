@@ -30,9 +30,11 @@
     <string name="title_compose">Digite um nome ou um número</string>
     <string name="setup_skip">Ignorar</string>
     <string name="setup_next">Continuar</string>
+    <string name="menu_add_person">Adicionar pessoa</string>
     <string name="menu_call">Ligar</string>
     <string name="menu_info">Detalhes</string>
     <string name="menu_save">Guardar na galeria</string>
+    <string name="menu_share">Partilhar</string>
     <string name="main_drawer_open_cd">Abrir menu de navegação</string>
     <string name="main_title_selected">%d selecionada(s)</string>
     <string name="main_menu_clear">Limpar</string>
@@ -84,6 +86,10 @@
         <item>Reencaminhar</item>
         <item>Apagar</item>
     </string-array>
+    <string name="compose_number_picker_title">Escolha um número de telefone</string>
+    <string name="compose_number_picker_default">%s ∙ Padrão</string>
+    <string name="compose_number_picker_once">Uma vez</string>
+    <string name="compose_number_picker_always">Sempre</string>
     <string name="compose_title_selected">%d selecionada(s)</string>
     <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
     <string name="compose_send_group_title">Enviar como mensagem de grupo</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">%s entregue</string>
     <string name="message_status_failed">Falha ao enviar. Toque para tentar novamente</string>
     <string name="info_title">Detalhes</string>
+    <string name="info_copied_address">Endereço copiado</string>
     <string name="info_name">Título da conversa</string>
     <string name="info_notifications">Notificações</string>
     <string name="info_theme">Tema</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Modo escuro puro</string>
     <string name="settings_night_start_title">Hora de início</string>
     <string name="settings_night_end_title">Hora de fim</string>
+    <string name="settings_automatic_colors_title">Cores automáticas para os contactos</string>
     <string name="settings_text_size_title">Tamanho do texto</string>
     <string name="settings_system_font_title">Usar tipo de letra do sistema</string>
     <string name="settings_auto_emoji_title">Emoji automático</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Botão 2</string>
     <string name="settings_notification_action_3">Botão 3</string>
     <string name="settings_notification_previews_title">Pré-visualização de notificações</string>
+    <string name="settings_notification_wake_title">Ligar ecrã</string>
     <string name="settings_vibration_title">Vibração</string>
     <string name="settings_ringtone_title">Som</string>
     <string name="settings_ringtone_none">Nenhum</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Remover acentos dos caracteres nas mensagens enviadas</string>
     <string name="settings_mobile_title">Apenas números de telemóvel</string>
     <string name="settings_mobile_summary">Ao escrever uma mensagem, mostrar apenas os números móveis</string>
+    <string name="settings_long_as_mms_title">Enviar mensagens longas como MMS</string>
+    <string name="settings_long_as_mms_summary">Se as mensagens longas não estiverem a ser enviadas ou estão a ser enviadas pela ordem errada, pode tentar enviar como MMS. Podem ser aplicados custos adicionais.</string>
     <string name="settings_mms_size_title">Comprimir anexos MMS automaticamente</string>
     <string name="settings_sync_title">Sincronizar mensagens</string>
     <string name="settings_sync_summary">Sincronizar as mensagens com a base de dados nativa do Android</string>
@@ -360,13 +371,14 @@
         <item>Longo</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (recomendado)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Não comprimir</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Ok</item>

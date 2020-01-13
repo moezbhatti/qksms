@@ -30,9 +30,11 @@
     <string name="title_compose">Πληκτρολογήστε ένα όνομα ή αριθμό</string>
     <string name="setup_skip">Παράλειψη</string>
     <string name="setup_next">Συνέχεια</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Κλήση</string>
     <string name="menu_info">Λεπτομέρειες</string>
     <string name="menu_save">Αποθήκευση στη συλλογή</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Άνοιγμα πλαισίου πλοήγησης</string>
     <string name="main_title_selected">Επιλεγμένα: %d</string>
     <string name="main_menu_clear">Εκκαθάριση</string>
@@ -84,6 +86,10 @@
         <item>Προώθηση</item>
         <item>Διαγραφή</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">Επιλέχθηκαν: %d</string>
     <string name="compose_subtitle_results">%1$d από %2$d αποτελέσματα</string>
     <string name="compose_send_group_title">Αποστολή ως ομαδικό μήνυμα</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Παραδόθηκε: %s</string>
     <string name="message_status_failed">Αποτυχία αποστολής. Πατήστε για νέα προσπάθεια</string>
     <string name="info_title">Λεπτομέρειες</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Τίτλος συζήτησης</string>
     <string name="info_notifications">Ειδοποιήσεις</string>
     <string name="info_theme">Θέμα εμφάνισης</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Νυχτερινή λειτουργία καθαρού μαύρου</string>
     <string name="settings_night_start_title">Ώρα έναρξης</string>
     <string name="settings_night_end_title">Ώρα λήξης</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Μέγεθος γραμματοσειράς</string>
     <string name="settings_system_font_title">Χρήση γραμματοσειράς συστήματος</string>
     <string name="settings_auto_emoji_title">Αυτόματα emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Κουμπί 2</string>
     <string name="settings_notification_action_3">Κουμπί 3</string>
     <string name="settings_notification_previews_title">Προεπισκοπήσεις ειδοποιήσεων</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Δόνηση</string>
     <string name="settings_ringtone_title">Ήχος</string>
     <string name="settings_ringtone_none">Κανένα</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
@@ -360,9 +371,10 @@
         <item>Long</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>

@@ -30,9 +30,11 @@
     <string name="title_compose">Angiv et navn eller nummer</string>
     <string name="setup_skip">Overspring</string>
     <string name="setup_next">Fortsæt</string>
+    <string name="menu_add_person">Tilføj person</string>
     <string name="menu_call">Opkald</string>
     <string name="menu_info">Oplysninger</string>
     <string name="menu_save">Gem i Galleri</string>
+    <string name="menu_share">Del</string>
     <string name="main_drawer_open_cd">Åbn navigeringsskuffe</string>
     <string name="main_title_selected">%d valgt</string>
     <string name="main_menu_clear">Ryd</string>
@@ -84,6 +86,10 @@
         <item>Videresend</item>
         <item>Slet</item>
     </string-array>
+    <string name="compose_number_picker_title">Vælg et telefonnr.</string>
+    <string name="compose_number_picker_default">%s ∙ Standard</string>
+    <string name="compose_number_picker_once">Kun én gang</string>
+    <string name="compose_number_picker_always">Altid</string>
     <string name="compose_title_selected">%d valgt</string>
     <string name="compose_subtitle_results">%1$d af %2$d resultater</string>
     <string name="compose_send_group_title">Send som gruppe besked</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Leveret %s</string>
     <string name="message_status_failed">Mislykkedes at afsende. Tryk for at forsøge igen</string>
     <string name="info_title">Oplysninger</string>
+    <string name="info_copied_address">Adresse kopieret</string>
     <string name="info_name">Samtaletitel</string>
     <string name="info_notifications">Notifikationer</string>
     <string name="info_theme">Tema</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Ren sort nattilstand</string>
     <string name="settings_night_start_title">Starttidspunkt</string>
     <string name="settings_night_end_title">Sluttidspunkt</string>
+    <string name="settings_automatic_colors_title">Automatiske kontaktfarver</string>
     <string name="settings_text_size_title">Skriftstørrelse</string>
     <string name="settings_system_font_title">Brug systemets skrifttype</string>
     <string name="settings_auto_emoji_title">Automatisk emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Knap 2</string>
     <string name="settings_notification_action_3">Knap 3</string>
     <string name="settings_notification_previews_title">Notifikationseksempler</string>
+    <string name="settings_notification_wake_title">Væk skærm</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Lyd</string>
     <string name="settings_ringtone_none">Ingen</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Fjern betoninger fra tegn i udgående SMS\'er</string>
     <string name="settings_mobile_title">Kun mobilnumre</string>
     <string name="settings_mobile_summary">Vis kun mobilnumre ved SMS-skrivning,</string>
+    <string name="settings_long_as_mms_title">Send lang SMS som MMS</string>
+    <string name="settings_long_as_mms_summary">Hvis dine længere SMS\'er ikke afsendes eller afsendes i forkert rækkefølge, kan du i stedet sende dem som MMS\'er. Ekstragebyrer kan påløbe</string>
     <string name="settings_mms_size_title">Auto-komprimér MMS-vedhæftninger</string>
     <string name="settings_sync_title">Beskedsynkronisering</string>
     <string name="settings_sync_summary">Gen-synkroniéer beskeder med den indbyggede Android SMS-database</string>
@@ -360,13 +371,14 @@
         <item>Lang</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>100 KB</item>
-        <item>200 KB</item>
-        <item>300 KB (anbefales)</item>
-        <item>600 KB</item>
-        <item>1.000 KB</item>
-        <item>2.000 KB</item>
-        <item>Ingen komprimering</item>
+        <item>Automatisk</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1MB</item>
+        <item>2MB</item>
+        <item>Ingen kompression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

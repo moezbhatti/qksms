@@ -30,9 +30,11 @@
     <string name="title_compose">Rašyti</string>
     <string name="setup_skip">Praleisti</string>
     <string name="setup_next">Tęsti</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Skambinti</string>
     <string name="menu_info">Dėtalės</string>
     <string name="menu_save">Save to gallery</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Open navigation drawer</string>
     <string name="main_title_selected">%d pasirinkta(s)</string>
     <string name="main_menu_clear">Ištrinti</string>
@@ -86,6 +88,10 @@
         <item>Persiųsti</item>
         <item>Ištrinti</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d parinktas</string>
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
     <string name="compose_send_group_title">Send as group message</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">Nusiųsta %s</string>
     <string name="message_status_failed">Nepavyko nusiųsti. Spausk dar kartą norint persiųsti</string>
     <string name="info_title">Dėtalės</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Pranešimai</string>
     <string name="info_theme">Tema</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">Visiškai juoda nakties tema</string>
     <string name="settings_night_start_title">Pradžios laikas</string>
     <string name="settings_night_end_title">Pabaigos laikas</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Šrifto dydis</string>
     <string name="settings_system_font_title">Naudoti sistemos šriftą</string>
     <string name="settings_auto_emoji_title">Automatinis emoji</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">Button 2</string>
     <string name="settings_notification_action_3">Button 3</string>
     <string name="settings_notification_previews_title">Pranešimų peržiūra</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Vibracija</string>
     <string name="settings_ringtone_title">Garas</string>
     <string name="settings_ringtone_none">None</string>
@@ -228,6 +237,8 @@
     <string name="settings_unicode_summary">Ištrinti jūsų SMS žinučių simbolių akcentus</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sinchronizuoti pranešimus</string>
     <string name="settings_sync_summary">Iš naujo sinchronizuoti Android pranešimų duomenų bazę</string>
@@ -370,9 +381,10 @@
         <item>Ilgas</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Recommended)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>

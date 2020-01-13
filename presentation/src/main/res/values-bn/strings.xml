@@ -30,9 +30,11 @@
     <string name="title_compose">নাম বা নম্বর টাইপ করুন</string>
     <string name="setup_skip">এড়িয়ে যান</string>
     <string name="setup_next">চালিয়ে যান</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">কল করুন</string>
     <string name="menu_info">বিস্তারিত</string>
     <string name="menu_save">গ্যালারীতে সেভ করুন</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">নেভিগেশন ড্রয়ার খুলুন </string>
     <string name="main_title_selected">নির্বাচিত %d</string>
     <string name="main_menu_clear">ক্লিয়ার</string>
@@ -84,6 +86,10 @@
         <item>সামনে পাঠান</item>
         <item>মুছে ফেলুন</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">নির্বাচিত %d</string>
     <string name="compose_subtitle_results">%2$d এর %1$d ফলাফল </string>
     <string name="compose_send_group_title">গ্রুপ বার্তা হিসেবে প্রেরণ করুন</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">প্রেরিত হয়েছে: %s</string>
     <string name="message_status_failed">পাঠাতে ব্যর্থ. আবার চেষ্টা করতে ট্যাপ করুন</string>
     <string name="info_title">বিস্তারিত</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">কথোপকথনের শিরোনাম</string>
     <string name="info_notifications">নোটিফিকেশন</string>
     <string name="info_theme">থিম</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">সম্পূর্ণ কালো রাত্রি মোড</string>
     <string name="settings_night_start_title">শুরুর সময়</string>
     <string name="settings_night_end_title">শেষের সময়</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">ফন্টের আকার</string>
     <string name="settings_system_font_title">সিস্টেম ফন্ট ব্যবহার করুন</string>
     <string name="settings_auto_emoji_title">স্বয়ংক্রিয় ইমোজি</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">বাটন ২</string>
     <string name="settings_notification_action_3">বাটন ৩</string>
     <string name="settings_notification_previews_title">নোটিফিকেশন প্রিভিউ</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">কম্পন</string>
     <string name="settings_ringtone_title">শব্দ</string>
     <string name="settings_ringtone_none">কোনোটা না</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">বহির্গামী এসএমএস বার্তার অক্ষর থেকে কথার টান সরিয়ে দিন</string>
     <string name="settings_mobile_title">শুধু মোবাইল নম্বর</string>
     <string name="settings_mobile_summary">বার্তা লিখার করার সময়, শুধুমাত্র মোবাইল নম্বর দেখান</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">এমএমএসের সংযুক্তি সক্রিয়ভাবে সংকোচন করুন</string>
     <string name="settings_sync_title">বার্তাগুলি সিঙ্ক করুন</string>
     <string name="settings_sync_summary">আপনার বার্তাগুলি অ্যান্ড্রয়েডের নিজস্ব এসএমএস এর ডাটাবেস সাতে পুনরায় সিঙ্ক করুন</string>
@@ -360,13 +371,14 @@
         <item>দীর্ঘ</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>১০০KB</item>
-        <item>২০০KB</item>
-        <item>৩০০KB (সুপারিশ করা)</item>
-        <item>৬০০KB</item>
-        <item>১০০০KB</item>
-        <item>২০০০KB</item>
-        <item>সংকোচনহীন</item>
+        <item>Automatic</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>ঠিক আছে</item>

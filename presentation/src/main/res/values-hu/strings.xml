@@ -30,16 +30,18 @@
     <string name="title_compose">Adj meg egy nevet vagy telefonszámot</string>
     <string name="setup_skip">Kihagy</string>
     <string name="setup_next">Tovább</string>
+    <string name="menu_add_person">Személy hozzáadása</string>
     <string name="menu_call">Hívás</string>
     <string name="menu_info">Részletek</string>
     <string name="menu_save">Mentés a galériába</string>
+    <string name="menu_share">Megosztás</string>
     <string name="main_drawer_open_cd">Navigációs kiválasztása</string>
     <string name="main_title_selected">%d kijelölve</string>
     <string name="main_menu_clear">Törlés</string>
     <string name="main_menu_archive">Archiválás</string>
     <string name="main_menu_unarchive">Archiválás visszavonása</string>
     <string name="main_menu_delete">Törlés</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">Hozzáadás az ismerősökhöz</string>
     <string name="main_menu_pin">Rögzítés a tetejére</string>
     <string name="main_menu_unpin">Rögzítés törlése</string>
     <string name="main_menu_read">Megjelölés olvasottként</string>
@@ -47,7 +49,7 @@
     <string name="main_menu_block">Tiltás</string>
     <string name="main_syncing">Üzenetek szinkronizálása&#8230;</string>
     <string name="main_sender_you">Te: %s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">Vázlat: %s</string>
     <string name="main_message_results_title">Eredmények az üzenetek szövegében</string>
     <string name="main_message_results">%d üzenet</string>
     <string name="inbox_empty_text">A beszélgetéseid itt jelennek meg</string>
@@ -84,6 +86,10 @@
         <item>Továbbítás</item>
         <item>Törlés</item>
     </string-array>
+    <string name="compose_number_picker_title">Válassz egy telefonszámot</string>
+    <string name="compose_number_picker_default">%s · Alapértelmezett</string>
+    <string name="compose_number_picker_once">Csak egyszer</string>
+    <string name="compose_number_picker_always">Mindig</string>
     <string name="compose_title_selected">%d kijelölve</string>
     <string name="compose_subtitle_results">%1$d. a %2$d találatból</string>
     <string name="compose_send_group_title">Küldés csoportos üzenetként</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Kézbesítve %s</string>
     <string name="message_status_failed">Sikertelen küldés. Érintsd meg az újraküldéshez</string>
     <string name="info_title">Részletek</string>
+    <string name="info_copied_address">Cím átmásolva</string>
     <string name="info_name">A beszélgetés témája</string>
     <string name="info_notifications">Értesítések</string>
     <string name="info_theme">Téma</string>
@@ -174,8 +181,8 @@
     <string name="scheduled_options_title">Időzített üzenet</string>
     <string-array name="scheduled_options">
         <item>Küldés most</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>Szöveg másolása</item>
+        <item>Törlés</item>
     </string-array>
     <string name="settings_category_appearance">Megjelenés</string>
     <string name="settings_category_general">Általános</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Éjfekete mód</string>
     <string name="settings_night_start_title">Kezdés ideje</string>
     <string name="settings_night_end_title">Befejezés ideje</string>
+    <string name="settings_automatic_colors_title">Ismerősök automatikus színezése</string>
     <string name="settings_text_size_title">Betűméret</string>
     <string name="settings_system_font_title">Rendszer betűtípus visszaállítása</string>
     <string name="settings_auto_emoji_title">Automatikus emoji</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Gomb 2</string>
     <string name="settings_notification_action_3">Gomb 3</string>
     <string name="settings_notification_previews_title">Értesítés előnézet</string>
+    <string name="settings_notification_wake_title">Képernyő felébresztése</string>
     <string name="settings_vibration_title">Rezgés</string>
     <string name="settings_ringtone_title">Hang</string>
     <string name="settings_ringtone_none">Nincs</string>
@@ -219,11 +228,13 @@
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>
     <string name="settings_signature_title">Aláírás</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">Aláírás az üzenet végére</string>
     <string name="settings_unicode_title">Ékezetek törlése</string>
     <string name="settings_unicode_summary">A kimenő SMS-üzenetek ékezetes karaktereinek átalakítása</string>
     <string name="settings_mobile_title">Csak mobilszámok</string>
     <string name="settings_mobile_summary">Üzenet írásánál csak a mobilszámokat mutassa</string>
+    <string name="settings_long_as_mms_title">A hosszú üzenetek MMS-ként küldése</string>
+    <string name="settings_long_as_mms_summary">Ha a hosszabb üzenetek küldése sikertelen, vagy rossz sorrendben érkeznek akkor lehet őket MMS-ként küldeni, de ez díjköteles lehet</string>
     <string name="settings_mms_size_title">MMS-mellékletek automatikus tömörítése</string>
     <string name="settings_sync_title">Üzenetek szinkronizálása</string>
     <string name="settings_sync_summary">Üzenetek újra-szinkronizálása a natív Android SMS-adatbázissal</string>
@@ -232,7 +243,7 @@
     <string name="settings_logging_enabled">Hibanaplózás engedélyezve</string>
     <string name="settings_logging_disabled">Hibanaplózás tiltva</string>
     <string name="settings_delay_duration_hint">Nyomva tartás ideje (másodpercben)</string>
-    <string name="blocking_title">Blocking</string>
+    <string name="blocking_title">Blokkolás</string>
     <string name="blocking_drop_title">Üzenetek eldobása</string>
     <string name="blocking_drop_summary">Üzenetek eldobása a blokkolt küldőktől az elrejtésük helyett</string>
     <string name="blocking_conversations">Tiltott társalgások</string>
@@ -248,11 +259,11 @@
     <string name="blocked_numbers_add_cd">Új szám tiltása</string>
     <string name="blocked_numbers_dialog_title">Üzenetek tiltása:</string>
     <string name="blocked_numbers_dialog_hint">Telefonszám</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
+    <string name="blocked_numbers_dialog_block">Blokkolás</string>
     <string name="blocked_messages_title">Tiltott üzenetek</string>
     <string name="blocked_messages_empty">A tiltott üzenetek itt fognak megjelenni</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_block_title">Blokkolás</string>
+    <string name="blocking_unblock_title">Visszaengedélyezés</string>
     <plurals name="blocking_block_external">
         <item quantity="one">%s és ennek a számnak a blokkolása</item>
         <item quantity="other">%s és ezeknek a számoknak a tiltása</item>
@@ -319,7 +330,7 @@
         <item>Törlés</item>
     </string-array>
     <string name="button_yes">Igen</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_continue">Folytatás</string>
     <string name="button_cancel">Mégsem</string>
     <string name="button_delete">Törlés</string>
     <string name="button_save">Mentés</string>
@@ -360,13 +371,14 @@
         <item>Hosszú</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (Javsolt)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Nincs tömörítés</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Oké</item>

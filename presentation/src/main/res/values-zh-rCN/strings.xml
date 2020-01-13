@@ -30,16 +30,18 @@
     <string name="title_compose">撰写</string>
     <string name="setup_skip">跳过</string>
     <string name="setup_next">继续</string>
+    <string name="menu_add_person">添加人物</string>
     <string name="menu_call">致电</string>
     <string name="menu_info">详情</string>
     <string name="menu_save">保存到图库</string>
+    <string name="menu_share">分享</string>
     <string name="main_drawer_open_cd">打开导航栏</string>
     <string name="main_title_selected">已选择 %d 项</string>
     <string name="main_menu_clear">清除</string>
     <string name="main_menu_archive">存档</string>
     <string name="main_menu_unarchive">取消存档</string>
     <string name="main_menu_delete">删除</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">添加到通讯录</string>
     <string name="main_menu_pin">固定到顶部</string>
     <string name="main_menu_unpin">取消固定</string>
     <string name="main_menu_read">标记为已读</string>
@@ -47,7 +49,7 @@
     <string name="main_menu_block">拦截</string>
     <string name="main_syncing">正在同步信息&#8230;</string>
     <string name="main_sender_you">你：%s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">草稿: %s</string>
     <string name="main_message_results_title">信息中的结果</string>
     <string name="main_message_results">%d 条信息</string>
     <string name="inbox_empty_text">对话会在这里显示</string>
@@ -83,6 +85,10 @@
         <item>转发</item>
         <item>删除</item>
     </string-array>
+    <string name="compose_number_picker_title">选择电话号码</string>
+    <string name="compose_number_picker_default">%s ∙ 默认</string>
+    <string name="compose_number_picker_once">仅一次</string>
+    <string name="compose_number_picker_always">始终</string>
     <string name="compose_title_selected">已选择%d个项目</string>
     <string name="compose_subtitle_results">已显示%2$d中的%1$d条结果</string>
     <string name="compose_send_group_title">群发消息</string>
@@ -123,6 +129,7 @@
     <string name="message_status_delivered">已送达 %s</string>
     <string name="message_status_failed">发送失败。点击再试一次</string>
     <string name="info_title">详情</string>
+    <string name="info_copied_address">地址已复制</string>
     <string name="info_name">对话标题</string>
     <string name="info_notifications">通知</string>
     <string name="info_theme">主题</string>
@@ -172,8 +179,8 @@
     <string name="scheduled_options_title">预约短信</string>
     <string-array name="scheduled_options">
         <item>现在发送</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>复制文本</item>
+        <item>删除</item>
     </string-array>
     <string name="settings_category_appearance">外观</string>
     <string name="settings_category_general">通用</string>
@@ -183,6 +190,7 @@
     <string name="settings_black_title">纯黑夜间模式</string>
     <string name="settings_night_start_title">开始时间</string>
     <string name="settings_night_end_title">结束时间</string>
+    <string name="settings_automatic_colors_title">自动化联系人颜色</string>
     <string name="settings_text_size_title">字体大小</string>
     <string name="settings_system_font_title">使用系统字体</string>
     <string name="settings_auto_emoji_title">自动颜文字</string>
@@ -193,6 +201,7 @@
     <string name="settings_notification_action_2">按钮2</string>
     <string name="settings_notification_action_3">按钮3</string>
     <string name="settings_notification_previews_title">通知预览</string>
+    <string name="settings_notification_wake_title">唤醒屏幕</string>
     <string name="settings_vibration_title">振动</string>
     <string name="settings_ringtone_title">铃声</string>
     <string name="settings_ringtone_none">无</string>
@@ -217,11 +226,13 @@
     <string name="settings_delivery_title">送达确认</string>
     <string name="settings_delivery_summary">确认短信已成功送达</string>
     <string name="settings_signature_title">签名</string>
-    <string name="settings_signature_summary">Add a signature to the end of your messages</string>
+    <string name="settings_signature_summary">在您的信息结尾添加签名</string>
     <string name="settings_unicode_title">删除读音符号</string>
     <string name="settings_unicode_summary">删除短信中字母上的读音符号</string>
     <string name="settings_mobile_title">仅限手机号码</string>
     <string name="settings_mobile_summary">撰写邮件时, 只显示手机号码</string>
+    <string name="settings_long_as_mms_title">将长信息作为彩信发送</string>
+    <string name="settings_long_as_mms_summary">如果您无法发送较长的信息，或者是以错误的顺序发送，您可以将其作为彩信发送。可能会收取额外的费用</string>
     <string name="settings_mms_size_title">自动压缩彩信附件</string>
     <string name="settings_sync_title">同步消息</string>
     <string name="settings_sync_summary">重新与安卓原生短信数据库进行同步</string>
@@ -230,32 +241,32 @@
     <string name="settings_logging_enabled">启用了调试日志记录</string>
     <string name="settings_logging_disabled">调试日志记录已禁用</string>
     <string name="settings_delay_duration_hint">输入时长 (秒)</string>
-    <string name="blocking_title">Blocking</string>
-    <string name="blocking_drop_title">Drop messages</string>
-    <string name="blocking_drop_summary">Drop incoming messages from blocked senders instead of hiding them</string>
-    <string name="blocking_conversations">Blocked conversations</string>
-    <string name="blocking_manager_title">Blocking Manager</string>
+    <string name="blocking_title">屏蔽</string>
+    <string name="blocking_drop_title">丢弃信息</string>
+    <string name="blocking_drop_summary">丢弃屏蔽的发件人所发送的信息</string>
+    <string name="blocking_conversations">已屏蔽的会话</string>
+    <string name="blocking_manager_title">屏蔽管理器</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
-    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
-    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_qksms_summary">QKSMS中内建的屏蔽功能</string>
+    <string name="blocking_manager_call_control_summary">自动在适当的位置过滤您的来电和信息！Community IQ™允许您阻止社区中已知的垃圾发件人所发送的垃圾信息</string>
     <string name="blocking_manager_sia_summary">使用\"Should I Answer\"应用过滤未知号码的消息</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
-    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
-    <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
-    <string name="blocked_numbers_add_cd">Block a new number</string>
-    <string name="blocked_numbers_dialog_title">Block texts from</string>
-    <string name="blocked_numbers_dialog_hint">Phone number</string>
-    <string name="blocked_numbers_dialog_block">Block</string>
-    <string name="blocked_messages_title">Blocked messages</string>
-    <string name="blocked_messages_empty">Your blocked messages will appear here</string>
-    <string name="blocking_block_title">Block</string>
-    <string name="blocking_unblock_title">Unblock</string>
+    <string name="blocking_manager_copy_title">复制屏蔽的号码</string>
+    <string name="blocking_manager_copy_summary">继续前往%s并复制到您现有的已屏蔽号码</string>
+    <string name="blocked_numbers_title">已屏蔽的号码</string>
+    <string name="blocked_numbers_empty">您所屏蔽的号码将会在这里显示</string>
+    <string name="blocked_numbers_add_cd">屏蔽新的号码</string>
+    <string name="blocked_numbers_dialog_title">屏蔽文本自</string>
+    <string name="blocked_numbers_dialog_hint">电话号码</string>
+    <string name="blocked_numbers_dialog_block">屏蔽</string>
+    <string name="blocked_messages_title">已屏蔽的信息</string>
+    <string name="blocked_messages_empty">您所屏蔽的号码将会在这里显示</string>
+    <string name="blocking_block_title">屏蔽</string>
+    <string name="blocking_unblock_title">取消屏蔽</string>
     <plurals name="blocking_block_external">
-        <item quantity="other">Continue to %s and block these numbers</item>
+        <item quantity="other">继续前往%s并屏蔽这个（些）号码</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="other">Continue to %s and allow these numbers</item>
+        <item quantity="other">继续前往%s并允许这个（些）号码</item>
     </plurals>
     <string name="about_title">关于</string>
     <string name="about_version_title">版本</string>
@@ -314,8 +325,8 @@
         <item>呼叫</item>
         <item>删除</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">是</string>
+    <string name="button_continue">继续</string>
     <string name="button_cancel">取消</string>
     <string name="button_delete">删除</string>
     <string name="button_save">保存</string>
@@ -332,10 +343,10 @@
     <string name="notification_message_failed_title">消息未发送</string>
     <string name="notification_message_failed_text">给%s的短信发送失败</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>系统</item>
+        <item>已禁用</item>
+        <item>始终打开</item>
+        <item>自动</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>显示姓名和消息</item>
@@ -355,13 +366,14 @@
         <item>长</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (推荐)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>不压缩</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>好的</item>

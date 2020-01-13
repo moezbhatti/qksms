@@ -30,9 +30,11 @@
     <string name="title_compose">Nová správa</string>
     <string name="setup_skip">Preskočiť</string>
     <string name="setup_next">Pokračovať</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Volať</string>
     <string name="menu_info">Podrobnosti</string>
     <string name="menu_save">Uložiť do galérie</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Otvoriť navigačné menu</string>
     <string name="main_title_selected">%d vybraných</string>
     <string name="main_menu_clear">Vymazať</string>
@@ -86,6 +88,10 @@
         <item>Preposlať</item>
         <item>Odstrániť</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Always</string>
     <string name="compose_title_selected">%d selected</string>
     <string name="compose_subtitle_results">%1$d of %2$d results</string>
     <string name="compose_send_group_title">Poslať ako skupinovú správu</string>
@@ -126,6 +132,7 @@
     <string name="message_status_delivered">Doručené %s</string>
     <string name="message_status_failed">Failed to send. Tap to try again</string>
     <string name="info_title">Detaily</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Conversation title</string>
     <string name="info_notifications">Upozornenia</string>
     <string name="info_theme">Motív</string>
@@ -189,6 +196,7 @@
     <string name="settings_black_title">Pure black night mode</string>
     <string name="settings_night_start_title">Čas spustenia</string>
     <string name="settings_night_end_title">Čas ukončenia</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Veľkosť písma</string>
     <string name="settings_system_font_title">Použiť systémové písmo</string>
     <string name="settings_auto_emoji_title">Automatické emoji</string>
@@ -199,6 +207,7 @@
     <string name="settings_notification_action_2">Tlačidlo 2</string>
     <string name="settings_notification_action_3">Tlačidlo 3</string>
     <string name="settings_notification_previews_title">Obsah upozornení</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
@@ -228,6 +237,8 @@
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
     <string name="settings_sync_title">Sync messages</string>
     <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
@@ -370,13 +381,14 @@
         <item>Long</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (odporúča sa)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Bez kompresie</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>V poriadku</item>

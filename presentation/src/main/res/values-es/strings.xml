@@ -30,9 +30,11 @@
     <string name="title_compose">Escriba un nombre o número</string>
     <string name="setup_skip">Omitir</string>
     <string name="setup_next">Continuar</string>
+    <string name="menu_add_person">Add person</string>
     <string name="menu_call">Llamar</string>
     <string name="menu_info">Detalles</string>
     <string name="menu_save">Guardar en la galería</string>
+    <string name="menu_share">Share</string>
     <string name="main_drawer_open_cd">Abrir cajón de navegación</string>
     <string name="main_title_selected">%d Seleccionados</string>
     <string name="main_menu_clear">Limpiar</string>
@@ -84,6 +86,10 @@
         <item>Reenviar</item>
         <item>Borrar</item>
     </string-array>
+    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_default">%s ∙ Default</string>
+    <string name="compose_number_picker_once">Just once</string>
+    <string name="compose_number_picker_always">Siempre</string>
     <string name="compose_title_selected">%d seleccionados</string>
     <string name="compose_subtitle_results">%1$d de %2$d resultados</string>
     <string name="compose_send_group_title">Enviar como mensaje de grupo</string>
@@ -124,6 +130,7 @@
     <string name="message_status_delivered">Entregado %s</string>
     <string name="message_status_failed">No se envió. Pulse para volver a intentarlo</string>
     <string name="info_title">Detalles</string>
+    <string name="info_copied_address">Address copied</string>
     <string name="info_name">Título de la conversación</string>
     <string name="info_notifications">Notificaciones</string>
     <string name="info_theme">Tema</string>
@@ -175,7 +182,7 @@
     <string-array name="scheduled_options">
         <item>Enviar ahora</item>
         <item>Copy text</item>
-        <item>Delete</item>
+        <item>Borrar</item>
     </string-array>
     <string name="settings_category_appearance">Apariencia</string>
     <string name="settings_category_general">General</string>
@@ -185,6 +192,7 @@
     <string name="settings_black_title">Modo noche negro puro</string>
     <string name="settings_night_start_title">Hora de inicio</string>
     <string name="settings_night_end_title">Hora de finalización</string>
+    <string name="settings_automatic_colors_title">Automatic contact colors</string>
     <string name="settings_text_size_title">Tamaño de la fuente</string>
     <string name="settings_system_font_title">Usar fuente del sistema</string>
     <string name="settings_auto_emoji_title">Emojis automáticos</string>
@@ -195,6 +203,7 @@
     <string name="settings_notification_action_2">Botón 2</string>
     <string name="settings_notification_action_3">Botón 3</string>
     <string name="settings_notification_previews_title">Previsualización de notificaciones</string>
+    <string name="settings_notification_wake_title">Wake screen</string>
     <string name="settings_vibration_title">Vibración</string>
     <string name="settings_ringtone_title">Sonido</string>
     <string name="settings_ringtone_none">Ninguno</string>
@@ -224,6 +233,8 @@
     <string name="settings_unicode_summary">Quitar acentos de caracteres en los mensajes SMS salientes</string>
     <string name="settings_mobile_title">Sólo números móviles</string>
     <string name="settings_mobile_summary">Al componer un mensaje, sólo mostrar números móviles</string>
+    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Autocomprimir archivos adjuntos MMS</string>
     <string name="settings_sync_title">Sincronizar mensajes</string>
     <string name="settings_sync_summary">Vuelve a sincronizar tus mensajes con la base de datos nativa de Android SMS</string>
@@ -318,8 +329,8 @@
         <item>Llamar</item>
         <item>Eliminar</item>
     </string-array>
-    <string name="button_yes">Yes</string>
-    <string name="button_continue">Continue</string>
+    <string name="button_yes">Sí</string>
+    <string name="button_continue">Continuar</string>
     <string name="button_cancel">Cancelar</string>
     <string name="button_delete">Eliminar</string>
     <string name="button_save">Guardar</string>
@@ -337,10 +348,10 @@
     <string name="notification_message_failed_title">Mensaje no enviado</string>
     <string name="notification_message_failed_text">El mensaje a %s no se pudo enviar</string>
     <string-array name="night_modes">
-        <item>System</item>
-        <item>Disabled</item>
-        <item>Always on</item>
-        <item>Automatic</item>
+        <item>Sistema</item>
+        <item>Desactivado</item>
+        <item>Siempre activado</item>
+        <item>Automático</item>
     </string-array>
     <string-array name="notification_preview_options">
         <item>Mostrar nombre y el mensaje</item>
@@ -360,13 +371,14 @@
         <item>Largo</item>
     </string-array>
     <string-array name="mms_sizes">
+        <item>Automatic</item>
         <item>100KB</item>
         <item>200KB</item>
-        <item>300KB (recomendado)</item>
+        <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>Sin compresión</item>
+        <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Ok</item>
