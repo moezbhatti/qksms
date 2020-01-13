@@ -190,9 +190,6 @@ class QkRealmMigration @Inject constructor(
                 prefs.theme(recipientId).set(theme)
             }
 
-            // This is enabled for new users, but the behaviour shouldn't change automatically for old users
-            prefs.autoColor.set(false)
-
             version++
         }
 
