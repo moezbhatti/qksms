@@ -45,6 +45,11 @@ class ConversationsAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils
 ) : QkRealmAdapter<Conversation>() {
 
+    init {
+        // This is how we access the threadId for the swipe actions
+        setHasStableIds(true)
+    }
+
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
         val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
@@ -107,6 +112,10 @@ class ConversationsAdapter @Inject constructor(
         }
 
         holder.unread.setTint(colors.theme(recipient).theme)
+    }
+
+    override fun getItemId(position: Int): Long {
+        return getItem(position)?.id ?: -1
     }
 
     override fun getItemViewType(position: Int): Int {
