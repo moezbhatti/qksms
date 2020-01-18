@@ -371,14 +371,14 @@
         <item>Lång</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Automatisk</item>
         <item>100KB</item>
-        <item>200KB</item>
+        <item>200kB</item>
         <item>300KB</item>
-        <item>600KB</item>
+        <item>600kB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Ingen komprimering</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Okej</item>

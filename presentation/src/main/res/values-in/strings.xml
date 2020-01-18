@@ -366,14 +366,14 @@
         <item>Lama</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>Otomatis</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Tanpa kompresi</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Oke</item>
