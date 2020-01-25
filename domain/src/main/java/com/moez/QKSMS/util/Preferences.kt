@@ -110,7 +110,7 @@ class Preferences @Inject constructor(
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)
     val longAsMms = rxPrefs.getBoolean("longAsMms", false)
-    val mmsSize = rxPrefs.getInteger("mmsSize", -1)
+    val mmsSize = rxPrefs.getInteger("mmsSize", 300)
     val logging = rxPrefs.getBoolean("logging", false)
 
     init {
