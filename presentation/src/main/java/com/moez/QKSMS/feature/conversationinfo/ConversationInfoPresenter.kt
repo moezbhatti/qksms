@@ -80,13 +80,17 @@ class ConversationInfoPresenter @Inject constructor(
         disposables += markUnarchived
         disposables += deleteConversations
 
-        val partsObservable = messageRepo.getPartsForConversation(threadId)
-                .asObservable()
-                .filter { parts -> parts.isLoaded && parts.isValid}
-
         disposables += Observables
-                .combineLatest(conversation, partsObservable) { conversation, parts ->
+                .combineLatest(
+                        conversation,
+                        messageRepo.getPartsForConversation(threadId).asObservable()
+                ) { conversation, parts ->
                     val data = mutableListOf<ConversationInfoItem>()
+
+                    // If some data was deleted, this isn't the place to handle it
+                    if (!conversation.isLoaded || !conversation.isValid || !parts.isLoaded || !parts.isValid) {
+                        return@combineLatest
+                    }
 
                     data += conversation.recipients.map(::ConversationInfoRecipient)
                     data += ConversationInfoItem.ConversationInfoSettings(
