@@ -35,7 +35,8 @@ class CursorToContactGroupImpl @Inject constructor(
                 ContactsContract.Groups.TITLE)
         private const val SELECTION = "${ContactsContract.Groups.AUTO_ADD}=0 " +
                 "AND ${ContactsContract.Groups.DELETED}=0 " +
-                "AND ${ContactsContract.Groups.FAVORITES}=0"
+                "AND ${ContactsContract.Groups.FAVORITES}=0 " +
+                "AND ${ContactsContract.Groups.TITLE} IS NOT NULL"
 
         private const val ID = 0
         private const val TITLE = 1
