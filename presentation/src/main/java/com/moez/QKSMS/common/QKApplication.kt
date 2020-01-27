@@ -81,6 +81,8 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
                 .schemaVersion(QkRealmMigration.SchemaVersion)
                 .build())
 
+        qkMigration.performMigration()
+
         GlobalScope.launch(Dispatchers.IO) {
             referralManager.trackReferrer()
         }

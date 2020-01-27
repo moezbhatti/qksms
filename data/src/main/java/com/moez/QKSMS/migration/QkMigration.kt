@@ -28,13 +28,13 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 class QkMigration @Inject constructor(
-    context: Context,
+    private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val prefs: Preferences,
     private val qksmsBlockingClient: QksmsBlockingClient
 ) {
 
-    init {
+    fun performMigration() {
         GlobalScope.launch {
             val oldVersion = prefs.version.get()
 
