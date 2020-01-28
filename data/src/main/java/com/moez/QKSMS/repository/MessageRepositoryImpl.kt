@@ -475,7 +475,7 @@ class MessageRepositoryImpl @Inject constructor(
 
         val addresses = pdu.to.map { it.string }.filter { it.isNotBlank() }
         val parts = message.parts.mapNotNull { part ->
-            val bytes = tryOrNull {
+            val bytes = tryOrNull(false) {
                 context.contentResolver.openInputStream(part.getUri())?.use { inputStream -> inputStream.readBytes() }
             } ?: return@mapNotNull null
 
