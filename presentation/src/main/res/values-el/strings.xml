@@ -30,11 +30,11 @@
     <string name="title_compose">Πληκτρολογήστε ένα όνομα ή αριθμό</string>
     <string name="setup_skip">Παράλειψη</string>
     <string name="setup_next">Συνέχεια</string>
-    <string name="menu_add_person">Add person</string>
+    <string name="menu_add_person">Προσθήκη ατόμου</string>
     <string name="menu_call">Κλήση</string>
     <string name="menu_info">Λεπτομέρειες</string>
     <string name="menu_save">Αποθήκευση στη συλλογή</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_share">Κοινή χρήση</string>
     <string name="main_drawer_open_cd">Άνοιγμα πλαισίου πλοήγησης</string>
     <string name="main_title_selected">Επιλεγμένα: %d</string>
     <string name="main_menu_clear">Εκκαθάριση</string>
@@ -71,7 +71,7 @@
     <string name="drawer_settings">Ρυθμίσεις</string>
     <string name="drawer_help">Βοήθεια &amp; αποστολή σχολίων</string>
     <string name="drawer_invite">Πρόσκληση φίλων</string>
-    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="drawer_plus_banner_summary">Ξεκλειδώστε φανταστικές νέες λειτουργίες και συμβάλετε στην ανάπτυξη</string>
     <string name="rate_title">Σας αρέσει το QKSMS;</string>
     <string name="rate_summary">Δείξτε μας την αγάπη σας και βαθμολογήστε μας στο Google Play!</string>
     <string name="rate_okay">ΕΝΤΑΞΕΙ!</string>
@@ -86,10 +86,10 @@
         <item>Προώθηση</item>
         <item>Διαγραφή</item>
     </string-array>
-    <string name="compose_number_picker_title">Choose a phone number</string>
-    <string name="compose_number_picker_default">%s ∙ Default</string>
-    <string name="compose_number_picker_once">Just once</string>
-    <string name="compose_number_picker_always">Always</string>
+    <string name="compose_number_picker_title">Επιλέξτε έναν αριθμό τηλεφώνου</string>
+    <string name="compose_number_picker_default">%s ∙ Προεπιλεγμένος</string>
+    <string name="compose_number_picker_once">Μόνο μια φορά</string>
+    <string name="compose_number_picker_always">Πάντα</string>
     <string name="compose_title_selected">Επιλέχθηκαν: %d</string>
     <string name="compose_subtitle_results">%1$d από %2$d αποτελέσματα</string>
     <string name="compose_send_group_title">Αποστολή ως ομαδικό μήνυμα</string>
@@ -130,7 +130,7 @@
     <string name="message_status_delivered">Παραδόθηκε: %s</string>
     <string name="message_status_failed">Αποτυχία αποστολής. Πατήστε για νέα προσπάθεια</string>
     <string name="info_title">Λεπτομέρειες</string>
-    <string name="info_copied_address">Address copied</string>
+    <string name="info_copied_address">Η διεύθυνση αντεγράφη</string>
     <string name="info_name">Τίτλος συζήτησης</string>
     <string name="info_notifications">Ειδοποιήσεις</string>
     <string name="info_theme">Θέμα εμφάνισης</string>
@@ -192,7 +192,7 @@
     <string name="settings_black_title">Νυχτερινή λειτουργία καθαρού μαύρου</string>
     <string name="settings_night_start_title">Ώρα έναρξης</string>
     <string name="settings_night_end_title">Ώρα λήξης</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Αυτόματος χρωματισμός επαφών</string>
     <string name="settings_text_size_title">Μέγεθος γραμματοσειράς</string>
     <string name="settings_system_font_title">Χρήση γραμματοσειράς συστήματος</string>
     <string name="settings_auto_emoji_title">Αυτόματα emoji</string>
@@ -203,7 +203,7 @@
     <string name="settings_notification_action_2">Κουμπί 2</string>
     <string name="settings_notification_action_3">Κουμπί 3</string>
     <string name="settings_notification_previews_title">Προεπισκοπήσεις ειδοποιήσεων</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">Ενεργοποίηση οθόνης</string>
     <string name="settings_vibration_title">Δόνηση</string>
     <string name="settings_ringtone_title">Ήχος</string>
     <string name="settings_ringtone_none">Κανένα</string>
@@ -227,7 +227,7 @@
     </string-array>
     <string name="settings_delivery_title">Επιβεβαιώσεις παράδοσης</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
-    <string name="settings_signature_title">Signature</string>
+    <string name="settings_signature_title">Υπογραφή</string>
     <string name="settings_signature_summary">Add a signature to the end of your messages</string>
     <string name="settings_unicode_title">Strip accents</string>
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
@@ -236,9 +236,9 @@
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
-    <string name="settings_sync_title">Sync messages</string>
-    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
-    <string name="settings_about_title">About QKSMS</string>
+    <string name="settings_sync_title">Συγχρονισμός μηνυμάτων</string>
+    <string name="settings_sync_summary">Επανασυγχρονισμός μηνυμάτων με τη βάση δεδομένων SMS του Android</string>
+    <string name="settings_about_title">Σχετικά με το QKSMS</string>
     <string name="settings_version">Έκδοση %s</string>
     <string name="settings_logging_enabled">Η καταγραφή σφαλμάτων ενεργοποιήθηκε</string>
     <string name="settings_logging_disabled">Η καταγραφή σφαλμάτων απενεργοποιήθηκε</string>
@@ -252,9 +252,9 @@
     <string name="blocking_manager_qksms_summary">Ενσωματωμένη λειτουργία φραγής του QKSMS</string>
     <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
     <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
-    <string name="blocking_manager_copy_title">Copy blocked numbers</string>
+    <string name="blocking_manager_copy_title">Αντιγραφή αριθμών με φραγή</string>
     <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
-    <string name="blocked_numbers_title">Blocked numbers</string>
+    <string name="blocked_numbers_title">Αριθμοί με φραγή</string>
     <string name="blocked_numbers_empty">Your blocked numbers will appear here</string>
     <string name="blocked_numbers_add_cd">Block a new number</string>
     <string name="blocked_numbers_dialog_title">Block texts from</string>

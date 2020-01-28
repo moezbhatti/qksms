@@ -129,7 +129,7 @@
     <string name="message_status_delivered">%s を配信しました</string>
     <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
     <string name="info_title">詳細</string>
-    <string name="info_copied_address">Address copied</string>
+    <string name="info_copied_address">アドレスをコピーしました</string>
     <string name="info_name">会話のタイトル</string>
     <string name="info_notifications">通知</string>
     <string name="info_theme">テーマ</string>
@@ -190,7 +190,7 @@
     <string name="settings_black_title">ピュアブラック夜間モード</string>
     <string name="settings_night_start_title">開始時刻</string>
     <string name="settings_night_end_title">終了時刻</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">自動的に連絡先に色をつける</string>
     <string name="settings_text_size_title">フォントサイズ</string>
     <string name="settings_system_font_title">システムフォントを使用する</string>
     <string name="settings_auto_emoji_title">自動絵文字</string>
@@ -201,7 +201,7 @@
     <string name="settings_notification_action_2">ボタン 2</string>
     <string name="settings_notification_action_3">ボタン 3</string>
     <string name="settings_notification_previews_title">通知プレビュー</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">ウェイクスクリーン</string>
     <string name="settings_vibration_title">振動</string>
     <string name="settings_ringtone_title">サウンド</string>
     <string name="settings_ringtone_none">無し</string>
@@ -231,8 +231,8 @@
     <string name="settings_unicode_summary">送信する SMS メッセージの文字からアクセントを削除します</string>
     <string name="settings_mobile_title">携帯電話番号のみ</string>
     <string name="settings_mobile_summary">メッセージを作成するときは、携帯電話番号のみを表示します</string>
-    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
+    <string name="settings_long_as_mms_title">長いメッセージをMMSとして送信する</string>
+    <string name="settings_long_as_mms_summary">長いテキストメッセージの送信が失敗する場合、または間違った順序で送信される場合は、代わりにMMSメッセージとして送信できます。 追加料金が適用される場合があります</string>
     <string name="settings_mms_size_title">MMS添付ファイルの自動圧縮</string>
     <string name="settings_sync_title">メッセージを同期</string>
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
@@ -366,14 +366,14 @@
         <item>長い</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
+        <item>自動</item>
         <item>100KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>圧縮なし</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

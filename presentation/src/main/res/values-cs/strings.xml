@@ -381,14 +381,14 @@
         <item>Dlouhá</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
-        <item>100KB</item>
-        <item>200KB</item>
-        <item>300KB</item>
-        <item>600KB</item>
-        <item>1000KB</item>
-        <item>2000KB</item>
-        <item>No compression</item>
+        <item>Automaticky</item>
+        <item>100 kB</item>
+        <item>200 kB</item>
+        <item>300 kB</item>
+        <item>600 kB</item>
+        <item>1 000 kB</item>
+        <item>2 000 kB</item>
+        <item>Bez komprese</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

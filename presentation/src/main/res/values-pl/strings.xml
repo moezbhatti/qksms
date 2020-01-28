@@ -132,7 +132,7 @@
     <string name="message_status_delivered">Dostarczono %s</string>
     <string name="message_status_failed">Nie udało się wysłać wiadomości. Dotknij, aby spróbować ponownie</string>
     <string name="info_title">Szczegóły</string>
-    <string name="info_copied_address">Address copied</string>
+    <string name="info_copied_address">Adres został skopiowany</string>
     <string name="info_name">Tytuł rozmowy</string>
     <string name="info_notifications">Powiadomienia</string>
     <string name="info_theme">Motyw</string>
@@ -196,7 +196,7 @@
     <string name="settings_black_title">Czarne tło w trybie nocnym</string>
     <string name="settings_night_start_title">Czas rozpoczęcia</string>
     <string name="settings_night_end_title">Czas zakończenia</string>
-    <string name="settings_automatic_colors_title">Automatic contact colors</string>
+    <string name="settings_automatic_colors_title">Automatyczne kolory kontaktów</string>
     <string name="settings_text_size_title">Rozmiar czcionki</string>
     <string name="settings_system_font_title">Używaj czcionki systemowej</string>
     <string name="settings_auto_emoji_title">Automatyczne emoji</string>
@@ -207,7 +207,7 @@
     <string name="settings_notification_action_2">Przycisk 2</string>
     <string name="settings_notification_action_3">Przycisk 3</string>
     <string name="settings_notification_previews_title">Zawartość powiadomień</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">Wybudzaj ekran</string>
     <string name="settings_vibration_title">Wibracje</string>
     <string name="settings_ringtone_title">Dźwięki</string>
     <string name="settings_ringtone_none">Brak</string>
@@ -237,9 +237,9 @@
     <string name="settings_unicode_summary">Usuwaj ogonki ze znaków w wiadomościach</string>
     <string name="settings_mobile_title">Tylko numery komórkowe</string>
     <string name="settings_mobile_summary">Pokazuj kontakty tylko z numerami komórkowymi</string>
-    <string name="settings_long_as_mms_title">Send long messages as MMS</string>
-    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
-    <string name="settings_mms_size_title">Automatyczna kompresja załączników MMSów</string>
+    <string name="settings_long_as_mms_title">Wysyłaj długie wiadomości jako MMS</string>
+    <string name="settings_long_as_mms_summary">Jeśli dłuższe wiadomości tekstowe nie są wysyłane lub wysyłane są w złej kolejności, możesz wysyłać je jako wiadomości MMS. Mogą zostać naliczone dodatkowe opłaty</string>
+    <string name="settings_mms_size_title">Kompresja załączników MMSów</string>
     <string name="settings_sync_title">Synchronizuj wiadomości</string>
     <string name="settings_sync_summary">Zsynchronizuj wiadomości z systemową bazą danych</string>
     <string name="settings_about_title">O aplikacji</string>
@@ -271,13 +271,13 @@
     <plurals name="blocking_block_external">
         <item quantity="one">Kontynuuj do %s i blokuj ten numer</item>
         <item quantity="few">Kontynuuj do %s i blokuj te numery</item>
-        <item quantity="many">Continue to %s and block these numbers</item>
+        <item quantity="many">Kontynuuj do %s i blokuj te numery</item>
         <item quantity="other">Kontynuuj do %s i blokuj te numery</item>
     </plurals>
     <plurals name="blocking_unblock_external">
         <item quantity="one">Kontynuuj do %s i odblokuj ten numer</item>
         <item quantity="few">Kontynuuj do %s i odblokuj te numery</item>
-        <item quantity="many">Continue to %s and allow these numbers</item>
+        <item quantity="many">Kontynuuj do %s i odblokuj te numery</item>
         <item quantity="other">Kontynuuj do %s i odblokuj te numery</item>
     </plurals>
     <string name="about_title">O aplikacji</string>
@@ -381,14 +381,14 @@
         <item>Długi</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
-        <item>100KB</item>
-        <item>200KB</item>
-        <item>300KB</item>
-        <item>600KB</item>
-        <item>1000KB</item>
-        <item>2000KB</item>
-        <item>No compression</item>
+        <item>Automatyczna</item>
+        <item>100 KB</item>
+        <item>200 KB</item>
+        <item>300 KB</item>
+        <item>600 KB</item>
+        <item>1000 KB</item>
+        <item>2000 KB</item>
+        <item>Bez kompresji</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

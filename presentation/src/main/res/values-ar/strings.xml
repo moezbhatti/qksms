@@ -30,18 +30,18 @@
     <string name="title_compose">أكتب اسماً أو رقماً</string>
     <string name="setup_skip">تخطي</string>
     <string name="setup_next">متابعة</string>
-    <string name="menu_add_person">Add person</string>
+    <string name="menu_add_person">اضافة شخص</string>
     <string name="menu_call">اتصال</string>
     <string name="menu_info">تفاصيل</string>
     <string name="menu_save">حفظ إلى المعرض</string>
-    <string name="menu_share">Share</string>
+    <string name="menu_share">مشاركة</string>
     <string name="main_drawer_open_cd">فتح درج التنقل</string>
     <string name="main_title_selected">%d محددة</string>
     <string name="main_menu_clear">مسح</string>
     <string name="main_menu_archive">أرشفة</string>
     <string name="main_menu_unarchive">إلغاء الأرشفة</string>
     <string name="main_menu_delete">حذف</string>
-    <string name="main_menu_add_contact">Add to contacts</string>
+    <string name="main_menu_add_contact">اضافة الى القائمة</string>
     <string name="main_menu_pin">التثبيت فوق</string>
     <string name="main_menu_unpin">إلغاء التثبيت</string>
     <string name="main_menu_read">علّمه مقروء</string>
@@ -90,10 +90,10 @@
         <item>إعادة توجيه</item>
         <item>حذف</item>
     </string-array>
-    <string name="compose_number_picker_title">Choose a phone number</string>
+    <string name="compose_number_picker_title">اختر رقم الهاتف</string>
     <string name="compose_number_picker_default">%s ∙ Default</string>
-    <string name="compose_number_picker_once">Just once</string>
-    <string name="compose_number_picker_always">Always</string>
+    <string name="compose_number_picker_once">فقط واحد</string>
+    <string name="compose_number_picker_always">دائما</string>
     <string name="compose_title_selected">%d مختارة</string>
     <string name="compose_subtitle_results">%1$d من %2$d النتائج</string>
     <string name="compose_send_group_title">إرسال رسالة جماعية</string>
@@ -134,7 +134,7 @@
     <string name="message_status_delivered">تم إرسال %s</string>
     <string name="message_status_failed">فشل الإرسال. إلمس لإعادة المحاولة</string>
     <string name="info_title">التفاصيل</string>
-    <string name="info_copied_address">Address copied</string>
+    <string name="info_copied_address">تم نسخ العنوان</string>
     <string name="info_name">عنوان المحادثة</string>
     <string name="info_notifications">الإشعارات</string>
     <string name="info_theme">السمة</string>
@@ -189,8 +189,8 @@
     <string name="scheduled_options_title">الرسالة المجدولة</string>
     <string-array name="scheduled_options">
         <item>أرسل الآن</item>
-        <item>Copy text</item>
-        <item>Delete</item>
+        <item>نسخ النص</item>
+        <item>حذف</item>
     </string-array>
     <string name="settings_category_appearance">المظهر</string>
     <string name="settings_category_general">عام</string>
@@ -211,7 +211,7 @@
     <string name="settings_notification_action_2">الزر 2</string>
     <string name="settings_notification_action_3">الزر 3</string>
     <string name="settings_notification_previews_title">معاينات الإشعارات</string>
-    <string name="settings_notification_wake_title">Wake screen</string>
+    <string name="settings_notification_wake_title">فتح الشاشة</string>
     <string name="settings_vibration_title">الاهتزاز</string>
     <string name="settings_ringtone_title">الصوت</string>
     <string name="settings_ringtone_none">بدون نغمة </string>
@@ -392,13 +392,13 @@
         <item>طويل</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
-        <item>100KB</item>
-        <item>200KB</item>
-        <item>300KB</item>
-        <item>600KB</item>
-        <item>1000KB</item>
-        <item>2000KB</item>
+        <item>تلقائي</item>
+        <item>100كيلوبايت</item>
+        <item>200كيلوبايت</item>
+        <item>300كيلوبايت</item>
+        <item>600كيلوبايت</item>
+        <item>1000كيلوبايت</item>
+        <item>2000كيلوبايت</item>
         <item>No compression</item>
     </string-array>
     <string-array name="qk_responses">
