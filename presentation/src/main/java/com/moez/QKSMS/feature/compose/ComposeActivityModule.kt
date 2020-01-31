@@ -55,14 +55,19 @@ class ComposeActivityModule {
     @Provides
     @Named("text")
     fun provideSharedText(activity: ComposeActivity): String {
-        return activity.intent.extras?.getString(Intent.EXTRA_TEXT)
+        var subject = activity.intent.getStringExtra(Intent.EXTRA_SUBJECT) ?: "";
+        if (subject != "") {
+            subject += "\n"
+        }
+
+        return subject + (activity.intent.extras?.getString(Intent.EXTRA_TEXT)
                 ?: activity.intent.extras?.getString("sms_body")
                 ?: activity.intent?.decodedDataString()
                         ?.substringAfter('?') // Query string
                         ?.split(',')
                         ?.firstOrNull { param -> param.startsWith("body") }
                         ?.substringAfter('=')
-                ?: ""
+                ?: "")
     }
 
     @Provides
