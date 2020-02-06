@@ -85,9 +85,11 @@ class AvatarView @JvmOverloads constructor(
         icon.setTint(theme.textPrimary)
 
         if (name?.isNotEmpty() == true) {
-            val initials = name?.split(" ").orEmpty()
-                    .filter { name -> name.isNotEmpty() }
-                    .map { name -> name[0].toString() }
+            val initials = name
+                    ?.substringBefore(',')
+                    ?.split(" ").orEmpty()
+                    .filter { subname -> subname.isNotEmpty() }
+                    .map { subname -> subname[0].toString() }
 
             initial.text = if (initials.size > 1) initials.first() + initials.last() else initials.first()
             icon.visibility = GONE
