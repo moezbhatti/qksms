@@ -276,16 +276,16 @@ class SyncRepositoryImpl @Inject constructor(
                     val uniqueNumbers = mutableListOf<PhoneNumber>()
                     contacts.value
                             .flatMap { it.numbers }
-                            .sortedBy { it.accountType }
                             .forEach { number ->
                                 number.isDefault = defaultNumberIds.any { id -> id == number.id }
-                                val duplicate = uniqueNumbers.any { other ->
-                                    number.accountType != other.accountType
-                                            && phoneNumberUtils.compare(number.address, other.address)
+                                val duplicate = uniqueNumbers.find { other ->
+                                    phoneNumberUtils.compare(number.address, other.address)
                                 }
 
-                                if (!duplicate) {
+                                if (duplicate == null) {
                                     uniqueNumbers += number
+                                } else if (!duplicate.isDefault && number.isDefault) {
+                                    duplicate.isDefault = true
                                 }
                             }
 
