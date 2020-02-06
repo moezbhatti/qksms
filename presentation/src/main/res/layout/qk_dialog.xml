@@ -22,8 +22,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="?android:attr/windowBackground"
-    android:orientation="vertical">
+    android:background="?android:attr/windowBackground">
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/title"
@@ -35,6 +34,7 @@
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/subtitle"
         app:layout_constraintTop_toTopOf="parent"
         app:textSize="dialog"
         tools:text="Choose a phone number"
@@ -49,6 +49,7 @@
         android:layout_marginRight="24dp"
         android:textColor="?android:attr/textColorPrimary"
         android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/list"
         app:layout_constraintTop_toBottomOf="@id/title"
         app:textSize="primary"
         tools:text="Moez Bhatti"
@@ -62,8 +63,10 @@
         android:paddingBottom="8dp"
         android:visibility="gone"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        app:layout_constrainedHeight="true"
+        app:layout_constraintBottom_toTopOf="@id/positiveButton"
         app:layout_constraintTop_toBottomOf="@id/subtitle"
-        tools:itemCount="2"
+        tools:itemCount="20"
         tools:listitem="@layout/phone_number_list_item"
         tools:visibility="visible" />
 
@@ -78,6 +81,7 @@
         android:textColor="?android:attr/textColorSecondary"
         android:textStyle="bold"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/list"
         app:layout_goneMarginRight="8dp"
@@ -95,6 +99,7 @@
         android:textColor="?android:attr/textColorSecondary"
         android:textStyle="bold"
         android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toStartOf="@id/positiveButton"
         app:layout_constraintTop_toBottomOf="@id/list"
         app:textSize="secondary"
