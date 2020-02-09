@@ -264,7 +264,7 @@
         android:tint="?android:attr/textColorSecondary"
         android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toStartOf="@id/send" />
+        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
