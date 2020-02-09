@@ -226,7 +226,12 @@ class MessagesAdapter @Inject constructor(
         val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId } ?: -1
 
         holder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        holder.simIndex.text = "${simIndex + 1}"
+        if (simIndex != -1){
+            holder.simIndex.text = "${subs[simIndex].simSlotIndex + 1} - " + subs[simIndex].displayName
+        } else {
+            holder.simIndex.text = "${simIndex + 1}"
+        }
+
 
         holder.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
                 || message.subId != previous?.subId && simIndex != -1)
