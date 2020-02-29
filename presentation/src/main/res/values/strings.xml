@@ -50,8 +50,8 @@
     <string name="main_menu_add_contact">Add to contacts</string>
     <string name="main_menu_pin">Pin to top</string>
     <string name="main_menu_unpin">Unpin</string>
-    <string name="main_menu_read">Mark as read</string>
-    <string name="main_menu_unread">Mark as unread</string>
+    <string name="main_menu_read">Mark read</string>
+    <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">Block</string>
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">You: %s</string>
@@ -244,8 +244,8 @@
         <item>Archive</item>
         <item>Delete</item>
         <item>Call</item>
-        <item>Mark as read</item>
-        <item>Mark as unread</item>
+        <item>Mark read</item>
+        <item>Mark unread</item>
     </string-array>
     <string name="settings_delivery_title">Delivery confirmations</string>
     <string name="settings_delivery_summary">Confirm that messages were sent successfully</string>
@@ -350,7 +350,7 @@
     <string name="widget_loading">Loading…</string>
     <string name="widget_more">View more conversations</string>
 
-    <string name="qkreply_menu_read">Mark as read</string>
+    <string name="qkreply_menu_read">Mark read</string>
     <string name="qkreply_menu_call">Call</string>
     <string name="qkreply_menu_delete">Delete</string>
     <string name="qkreply_menu_expand">Show more</string>
@@ -379,7 +379,7 @@
 
     <string-array name="notification_actions">
         <item>None</item>
-        <item>Mark as read</item>
+        <item>Mark read</item>
         <item>Reply</item>
         <item>Call</item>
         <item>Delete</item>
