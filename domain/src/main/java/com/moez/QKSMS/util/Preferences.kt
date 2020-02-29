@@ -84,6 +84,7 @@ class Preferences @Inject constructor(
     val sia = rxPrefs.getBoolean("sia", false)
 
     // User configurable
+    val sendAsGroup = rxPrefs.getBoolean("sendAsGroup", true)
     val nightMode = rxPrefs.getInteger("nightMode", when (Build.VERSION.SDK_INT >= 29) {
         true -> NIGHT_MODE_SYSTEM
         false -> NIGHT_MODE_OFF
