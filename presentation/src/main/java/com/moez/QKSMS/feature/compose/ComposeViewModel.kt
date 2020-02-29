@@ -640,6 +640,7 @@ class ComposeViewModel @Inject constructor(
                         Preferences.SEND_DELAY_LONG -> 10000
                         else -> 0
                     }
+                    val sendAsGroup = !state.editingMode || state.sendAsGroup
 
                     when {
                         // Scheduling a message
@@ -650,13 +651,13 @@ class ComposeViewModel @Inject constructor(
                                     .map { it.getUri() }
                                     .map { it.toString() }
                             val params = AddScheduledMessage
-                                    .Params(state.scheduled, subId, addresses, state.sendAsGroup, body, uris)
+                                    .Params(state.scheduled, subId, addresses, sendAsGroup, body, uris)
                             addScheduledMessage.execute(params)
                             context.makeToast(R.string.compose_scheduled_toast)
                         }
 
                         // Sending a group message
-                        state.sendAsGroup -> {
+                        sendAsGroup -> {
                             sendMessage.execute(SendMessage
                                     .Params(subId, conversation.id, addresses, body, attachments, delay))
                         }
@@ -691,7 +692,7 @@ class ComposeViewModel @Inject constructor(
                     this.attachments.onNext(ArrayList())
 
                     if (state.editingMode) {
-                        newState { copy(editingMode = false, sendAsGroup = true, hasError = !state.sendAsGroup) }
+                        newState { copy(editingMode = false, hasError = !sendAsGroup) }
                     }
                 }
                 .autoDisposable(view.scope())
