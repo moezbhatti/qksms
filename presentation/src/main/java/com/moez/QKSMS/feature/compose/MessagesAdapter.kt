@@ -223,20 +223,15 @@ class MessagesAdapter @Inject constructor(
 
         // Bind the timestamp
         val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
-        val simIndex = subs.takeIf { it.size > 1 }?.indexOfFirst { it.subscriptionId == message.subId } ?: -1
+        val subscription = subs.find { sub -> sub.subscriptionId == message.subId }
 
         holder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        if (simIndex != -1){
-            holder.simIndex.text = "${subs[simIndex].simSlotIndex + 1} - " + subs[simIndex].displayName
-        } else {
-            holder.simIndex.text = "${simIndex + 1}"
-        }
-
+        holder.simIndex.text = subscription?.let { sub -> sub.simSlotIndex + 1 }?.toString()
 
         holder.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
-                || message.subId != previous?.subId && simIndex != -1)
-        holder.sim.setVisible(message.subId != previous?.subId && simIndex != -1)
-        holder.simIndex.setVisible(message.subId != previous?.subId && simIndex != -1)
+                || message.subId != previous?.subId && subscription != null)
+        holder.sim.setVisible(message.subId != previous?.subId && subscription != null)
+        holder.simIndex.setVisible(message.subId != previous?.subId && subscription != null)
 
         // Bind the grouping
         val media = message.parts.filter { !it.isSmil() && !it.isText() }
