@@ -22,7 +22,7 @@
 
     <item
         android:id="@+id/archive"
-        android:icon="@drawable/ic_archive_black_24dp"
+        android:icon="@drawable/ic_archive_white_24dp"
         android:title="@string/main_menu_archive"
         android:visible="false"
         app:showAsAction="ifRoom" />
@@ -78,7 +78,7 @@
 
     <item
         android:id="@+id/block"
-        android:icon="@drawable/ic_block_black_24dp"
+        android:icon="@drawable/ic_block_white_24dp"
         android:title="@string/main_menu_block"
         android:visible="false"
         app:showAsAction="ifRoom" />

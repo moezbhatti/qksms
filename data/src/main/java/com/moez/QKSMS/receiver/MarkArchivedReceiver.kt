@@ -16,15 +16,25 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.settings.swipe
+package com.moez.QKSMS.receiver
 
-import androidx.annotation.DrawableRes
-import com.moez.QKSMS.R
+import android.content.BroadcastReceiver
+import android.content.Context
+import android.content.Intent
+import com.moez.QKSMS.interactor.MarkArchived
+import dagger.android.AndroidInjection
+import javax.inject.Inject
 
-data class SwipeActionsState(
-    @DrawableRes val rightIcon: Int = R.drawable.ic_archive_white_24dp,
-    val rightLabel: String = "",
+class MarkArchivedReceiver : BroadcastReceiver() {
 
-    @DrawableRes val leftIcon: Int = R.drawable.ic_archive_white_24dp,
-    val leftLabel: String = ""
-)
+    @Inject lateinit var markArchived: MarkArchived
+
+    override fun onReceive(context: Context, intent: Intent) {
+        AndroidInjection.inject(this, context)
+
+        val pendingResult = goAsync()
+        val threadId = intent.getLongExtra("threadId", 0)
+        markArchived.execute(listOf(threadId)) { pendingResult.finish() }
+    }
+
+}

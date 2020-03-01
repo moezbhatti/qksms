@@ -29,7 +29,7 @@
 
     <item
         android:id="@+id/block"
-        android:icon="@drawable/ic_block_black_24dp"
+        android:icon="@drawable/ic_block_white_24dp"
         android:title="@string/main_menu_block"
         android:visible="false"
         app:showAsAction="ifRoom" />

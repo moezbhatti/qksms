@@ -36,7 +36,7 @@ class QkRealmMigration @Inject constructor(
 ) : RealmMigration {
 
     companion object {
-        const val SchemaVersion: Long = 9
+        const val SchemaVersion: Long = 10
     }
 
     @SuppressLint("ApplySharedPref")
@@ -189,6 +189,36 @@ class QkRealmMigration @Inject constructor(
             recipients.forEach { (recipientId, theme) ->
                 prefs.theme(recipientId).set(theme)
             }
+
+            version++
+        }
+
+        if (version == 9L) {
+            val migrateNotificationAction = { pref: Int ->
+                when (pref) {
+                    1 -> Preferences.NOTIFICATION_ACTION_READ
+                    2 -> Preferences.NOTIFICATION_ACTION_REPLY
+                    3 -> Preferences.NOTIFICATION_ACTION_CALL
+                    4 -> Preferences.NOTIFICATION_ACTION_DELETE
+                    else -> pref
+                }
+            }
+
+            val migrateSwipeAction = { pref: Int ->
+                when (pref) {
+                    2 -> Preferences.SWIPE_ACTION_DELETE
+                    3 -> Preferences.SWIPE_ACTION_CALL
+                    4 -> Preferences.SWIPE_ACTION_READ
+                    5 -> Preferences.SWIPE_ACTION_UNREAD
+                    else -> pref
+                }
+            }
+
+            if (prefs.notifAction1.isSet) prefs.notifAction1.set(migrateNotificationAction(prefs.notifAction1.get()))
+            if (prefs.notifAction2.isSet) prefs.notifAction2.set(migrateNotificationAction(prefs.notifAction2.get()))
+            if (prefs.notifAction3.isSet) prefs.notifAction3.set(migrateNotificationAction(prefs.notifAction3.get()))
+            if (prefs.swipeLeft.isSet) prefs.swipeLeft.set(migrateSwipeAction(prefs.swipeLeft.get()))
+            if (prefs.swipeRight.isSet) prefs.swipeRight.set(migrateSwipeAction(prefs.swipeRight.get()))
 
             version++
         }

@@ -104,7 +104,7 @@
                 app:layout_constraintStart_toStartOf="@id/rightBackground"
                 app:layout_constraintTop_toTopOf="@id/rightBackground"
                 tools:backgroundTint="@color/tools_theme"
-                tools:src="@drawable/ic_archive_black_24dp"
+                tools:src="@drawable/ic_archive_white_24dp"
                 tools:tint="@color/textPrimaryDark" />
 
             <ImageView
@@ -225,7 +225,7 @@
                 app:layout_constraintEnd_toEndOf="@id/leftBackground"
                 app:layout_constraintTop_toTopOf="@id/leftBackground"
                 tools:backgroundTint="@color/tools_theme"
-                tools:src="@drawable/ic_archive_black_24dp"
+                tools:src="@drawable/ic_archive_white_24dp"
                 tools:tint="@color/textPrimaryDark" />
 
             <ImageView

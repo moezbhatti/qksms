@@ -52,10 +52,12 @@ class Preferences @Inject constructor(
         const val NOTIFICATION_PREVIEWS_NONE = 2
 
         const val NOTIFICATION_ACTION_NONE = 0
-        const val NOTIFICATION_ACTION_READ = 1
-        const val NOTIFICATION_ACTION_REPLY = 2
-        const val NOTIFICATION_ACTION_CALL = 3
-        const val NOTIFICATION_ACTION_DELETE = 4
+        const val NOTIFICATION_ACTION_ARCHIVE = 1
+        const val NOTIFICATION_ACTION_DELETE = 2
+        const val NOTIFICATION_ACTION_BLOCK = 3
+        const val NOTIFICATION_ACTION_CALL = 4
+        const val NOTIFICATION_ACTION_READ = 5
+        const val NOTIFICATION_ACTION_REPLY = 6
 
         const val SEND_DELAY_NONE = 0
         const val SEND_DELAY_SHORT = 1
@@ -65,9 +67,10 @@ class Preferences @Inject constructor(
         const val SWIPE_ACTION_NONE = 0
         const val SWIPE_ACTION_ARCHIVE = 1
         const val SWIPE_ACTION_DELETE = 2
-        const val SWIPE_ACTION_CALL = 3
-        const val SWIPE_ACTION_READ = 4
-        const val SWIPE_ACTION_UNREAD = 5
+        const val SWIPE_ACTION_BLOCK = 3
+        const val SWIPE_ACTION_CALL = 4
+        const val SWIPE_ACTION_READ = 5
+        const val SWIPE_ACTION_UNREAD = 6
 
         const val BLOCKING_MANAGER_QKSMS = 0
         const val BLOCKING_MANAGER_CC = 1

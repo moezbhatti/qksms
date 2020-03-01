@@ -48,14 +48,14 @@
         android:id="@+id/archive"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_archive_black_24dp"
+        app:icon="@drawable/ic_archive_white_24dp"
         app:title="@string/info_archive" />
 
     <com.moez.QKSMS.common.widget.PreferenceView
         android:id="@+id/block"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:icon="@drawable/ic_block_black_24dp"
+        app:icon="@drawable/ic_block_white_24dp"
         app:title="@string/info_block" />
 
     <com.moez.QKSMS.common.widget.PreferenceView

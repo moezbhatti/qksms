@@ -54,7 +54,7 @@
             <ImageView
                 android:id="@+id/archivedIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_archive_black_24dp"
+                android:src="@drawable/ic_archive_white_24dp"
                 tools:tint="?android:attr/textColorSecondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
@@ -130,7 +130,7 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_block_black_24dp"
+                android:src="@drawable/ic_block_white_24dp"
                 android:tint="?android:attr/textColorSecondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView

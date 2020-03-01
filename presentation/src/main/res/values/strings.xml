@@ -243,6 +243,7 @@
         <item>None</item>
         <item>Archive</item>
         <item>Delete</item>
+        <item>Block</item>
         <item>Call</item>
         <item>Mark read</item>
         <item>Mark unread</item>
@@ -379,10 +380,12 @@
 
     <string-array name="notification_actions">
         <item>None</item>
+        <item>Archive</item>
+        <item>Delete</item>
+        <item>Block</item>
+        <item>Call</item>
         <item>Mark read</item>
         <item>Reply</item>
-        <item>Call</item>
-        <item>Delete</item>
     </string-array>
 
     <string name="button_yes">Yes</string>
