@@ -255,9 +255,9 @@
 
     <ImageView
         android:id="@+id/sim"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="?attr/selectableItemBackground"
+        android:layout_width="44dp"
+        android:layout_height="44dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/compose_sim_cd"
         android:padding="8dp"
         android:src="@drawable/ic_sim_card_black_24dp"
