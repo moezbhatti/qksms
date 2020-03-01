@@ -20,8 +20,10 @@ package com.moez.QKSMS.feature.compose
 
 import android.content.Context
 import android.net.Uri
+import android.os.Vibrator
 import android.provider.ContactsContract
 import android.telephony.SmsMessage
+import androidx.core.content.getSystemService
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
@@ -616,6 +618,13 @@ class ComposeViewModel @Inject constructor(
                         subIndex < subs.size - 1 -> subs[subIndex + 1]
                         else -> subs[0]
                     }
+
+                    if (subscription != null) {
+                        context.getSystemService<Vibrator>()?.vibrate(40)
+                        context.makeToast(context.getString(R.string.compose_sim_changed_toast,
+                                subscription.simSlotIndex + 1, subscription.displayName))
+                    }
+
                     newState { copy(subscription = subscription) }
                 }
                 .autoDisposable(view.scope())

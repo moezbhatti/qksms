@@ -226,7 +226,7 @@ class MessagesAdapter @Inject constructor(
         val subscription = subs.find { sub -> sub.subscriptionId == message.subId }
 
         holder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        holder.simIndex.text = subscription?.let { sub -> sub.simSlotIndex + 1 }?.toString()
+        holder.simIndex.text = subscription?.simSlotIndex?.plus(1)?.toString()
 
         holder.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
                 || message.subId != previous?.subId && subscription != null)

@@ -234,7 +234,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
 
         sim.setVisible(state.subscription != null)
         sim.contentDescription = getString(R.string.compose_sim_cd, state.subscription?.displayName)
-        simIndex.text = "${state.subscription?.simSlotIndex?.plus(1)}"
+        simIndex.text = state.subscription?.simSlotIndex?.plus(1)?.toString()
 
         send.isEnabled = state.canSend
         send.imageAlpha = if (state.canSend) 255 else 128
