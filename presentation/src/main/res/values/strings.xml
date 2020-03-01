@@ -431,9 +431,9 @@
 
     <string-array name="delayed_sending_labels">
         <item>No delay</item>
-        <item>Short</item>
-        <item>Medium</item>
-        <item>Long</item>
+        <item>3 seconds</item>
+        <item>5 seconds</item>
+        <item>10 seconds</item>
     </string-array>
 
     <string-array name="mms_sizes">
