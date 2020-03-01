@@ -123,6 +123,7 @@ class ComposeItemAdapter @Inject constructor(
         holder.subtitle.text = conversation.recipients.joinToString(", ") { recipient ->
             recipient.contact?.name ?: recipient.address
         }
+        holder.subtitle.collapseEnabled = conversation.recipients.size > 1
 
         holder.numbers.isVisible = conversation.recipients.size == 1
         (holder.numbers.adapter as PhoneNumberAdapter).data = conversation.recipients
@@ -158,6 +159,7 @@ class ComposeItemAdapter @Inject constructor(
 
         holder.subtitle.isVisible = true
         holder.subtitle.text = group.contacts.joinToString(", ") { it.name }
+        holder.subtitle.collapseEnabled = group.contacts.size > 1
 
         holder.numbers.isVisible = false
     }
