@@ -99,6 +99,7 @@ class NotificationManagerImpl @Inject constructor(
         // If there are no messages to be displayed, make sure that the notification is dismissed
         if (messages.isEmpty()) {
             notificationManager.cancel(threadId.toInt())
+            notificationManager.cancel(threadId.toInt() + 100000)
             return
         }
 
@@ -336,7 +337,7 @@ class NotificationManagerImpl @Inject constructor(
         val taskStackBuilder = TaskStackBuilder.create(context)
         taskStackBuilder.addParentStack(ComposeActivity::class.java)
         taskStackBuilder.addNextIntent(contentIntent)
-        val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 40000, PendingIntent.FLAG_UPDATE_CURRENT)
+        val contentPI = taskStackBuilder.getPendingIntent(threadId.toInt() + 90000, PendingIntent.FLAG_UPDATE_CURRENT)
 
         val notification = NotificationCompat.Builder(context, getChannelIdForNotification(threadId))
                 .setContentTitle(context.getString(R.string.notification_message_failed_title))
@@ -350,12 +351,12 @@ class NotificationManagerImpl @Inject constructor(
                 .setLights(Color.WHITE, 500, 2000)
                 .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
 
-        notificationManager.notify(threadId.toInt() + 50000, notification.build())
+        notificationManager.notify(threadId.toInt() + 100000, notification.build())
     }
 
     private fun getReplyAction(threadId: Long): NotificationCompat.Action {
         val replyIntent = Intent(context, RemoteMessagingReceiver::class.java).putExtra("threadId", threadId)
-        val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 40000, replyIntent,
+        val replyPI = PendingIntent.getBroadcast(context, threadId.toInt() + 70000, replyIntent,
                 PendingIntent.FLAG_UPDATE_CURRENT)
 
         val title = context.resources.getStringArray(R.array.notification_actions)[
