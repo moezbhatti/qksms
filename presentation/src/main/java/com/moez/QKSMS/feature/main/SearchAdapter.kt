@@ -31,10 +31,9 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.setVisible
+import com.moez.QKSMS.databinding.SearchListItemBinding
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.model.SearchResult
-import kotlinx.android.synthetic.main.search_list_item.*
-import kotlinx.android.synthetic.main.search_list_item.view.*
 import javax.inject.Inject
 
 class SearchAdapter @Inject constructor(
@@ -42,26 +41,24 @@ class SearchAdapter @Inject constructor(
     private val context: Context,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator
-) : QkAdapter<SearchResult>() {
+) : QkAdapter<SearchResult, SearchListItemBinding>() {
 
     private val highlightColor: Int by lazy { colors.theme().highlight }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val layoutInflater = LayoutInflater.from(parent.context)
-        val view = layoutInflater.inflate(R.layout.search_list_item, parent, false)
-        return QkViewHolder(view).apply {
-            view.setOnClickListener {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<SearchListItemBinding> {
+        return QkViewHolder(parent, SearchListItemBinding::inflate).apply {
+            binding.root.setOnClickListener {
                 val result = getItem(adapterPosition)
                 navigator.showConversation(result.conversation.id, result.query.takeIf { result.messages > 0 })
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder<SearchListItemBinding>, position: Int) {
         val previous = data.getOrNull(position - 1)
         val result = getItem(position)
 
-        holder.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
+        holder.binding.resultsHeader.setVisible(result.messages > 0 && previous?.messages == 0)
 
         val query = result.query
         val title = SpannableString(result.conversation.getTitle())
@@ -71,23 +68,23 @@ class SearchAdapter @Inject constructor(
             title.setSpan(BackgroundColorSpan(highlightColor), index, index + query.length, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
             index = title.indexOf(query, index + query.length, true)
         }
-        holder.title.text = title
+        holder.binding.title.text = title
 
-        holder.avatars.recipients = result.conversation.recipients
+        holder.binding.avatars.recipients = result.conversation.recipients
 
         when (result.messages == 0) {
             true -> {
-                holder.date.setVisible(true)
-                holder.date.text = dateFormatter.getConversationTimestamp(result.conversation.date)
-                holder.snippet.text = when (result.conversation.me) {
+                holder.binding.date.setVisible(true)
+                holder.binding.date.text = dateFormatter.getConversationTimestamp(result.conversation.date)
+                holder.binding.snippet.text = when (result.conversation.me) {
                     true -> context.getString(R.string.main_sender_you, result.conversation.snippet)
                     false -> result.conversation.snippet
                 }
             }
 
             false -> {
-                holder.date.setVisible(false)
-                holder.snippet.text = context.getString(R.string.main_message_results, result.messages)
+                holder.binding.date.setVisible(false)
+                holder.binding.snippet.text = context.getString(R.string.main_message_results, result.messages)
             }
         }
     }

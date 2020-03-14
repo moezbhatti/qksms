@@ -20,17 +20,17 @@ package com.moez.QKSMS.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
-import android.view.View
 import android.widget.FrameLayout
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.common.util.extensions.viewBinding
+import com.moez.QKSMS.databinding.AvatarViewBinding
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.util.GlideApp
-import kotlinx.android.synthetic.main.avatar_view.view.*
 import javax.inject.Inject
 
 class AvatarView @JvmOverloads constructor(
@@ -39,21 +39,21 @@ class AvatarView @JvmOverloads constructor(
 
     @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
+    private lateinit var theme: Colors.Theme
+
+    private val binding = viewBinding(AvatarViewBinding::inflate)
 
     private var lookupKey: String? = null
     private var name: String? = null
     private var photoUri: String? = null
     private var lastUpdated: Long? = null
-    private var theme: Colors.Theme
 
     init {
         if (!isInEditMode) {
             appComponent.inject(this)
+            theme = colors.theme()
         }
 
-        theme = colors.theme()
-
-        View.inflate(context, R.layout.avatar_view, this)
         setBackgroundResource(R.drawable.circle)
         clipToOutline = true
     }
@@ -81,8 +81,8 @@ class AvatarView @JvmOverloads constructor(
     private fun updateView() {
         // Apply theme
         setBackgroundTint(theme.theme)
-        initial.setTextColor(theme.textPrimary)
-        icon.setTint(theme.textPrimary)
+        binding.initial.setTextColor(theme.textPrimary)
+        binding.icon.setTint(theme.textPrimary)
 
         if (name?.isNotEmpty() == true) {
             val initials = name
@@ -91,18 +91,18 @@ class AvatarView @JvmOverloads constructor(
                     .filter { subname -> subname.isNotEmpty() }
                     .map { subname -> subname[0].toString() }
 
-            initial.text = if (initials.size > 1) initials.first() + initials.last() else initials.first()
-            icon.visibility = GONE
+            binding.initial.text = if (initials.size > 1) initials.first() + initials.last() else initials.first()
+            binding.icon.visibility = GONE
         } else {
-            initial.text = null
-            icon.visibility = VISIBLE
+            binding.initial.text = null
+            binding.icon.visibility = VISIBLE
         }
 
-        photo.setImageDrawable(null)
+        binding.photo.setImageDrawable(null)
         photoUri?.let { photoUri ->
-            GlideApp.with(photo)
+            GlideApp.with(binding.photo)
                     .load(photoUri)
-                    .into(photo)
+                    .into(binding.photo)
         }
     }
 }
