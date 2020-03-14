@@ -224,8 +224,8 @@ class MessagesAdapter @Inject constructor(
 
         holder.binding.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
                 || message.subId != previous?.subId && subscription != null)
-        holder.binding.sim.setVisible(message.subId != previous?.subId && subscription != null)
-        holder.binding.simIndex.setVisible(message.subId != previous?.subId && subscription != null)
+        holder.binding.sim.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
+        holder.binding.simIndex.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
 
         // Bind the grouping
         val media = message.parts.filter { !it.isSmil() && !it.isText() }
