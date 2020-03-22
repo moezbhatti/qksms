@@ -69,7 +69,7 @@
                 android:imeOptions="flagNoExtractUi"
                 android:inputType="textFilter|textNoSuggestions"
                 android:paddingStart="16dp"
-                android:paddingEnd="16dp"
+                android:paddingEnd="40dp"
                 android:privateImeOptions="nm"
                 android:textColor="?android:attr/textColorPrimary"
                 android:textColorHint="?android:attr/textColorTertiary"
