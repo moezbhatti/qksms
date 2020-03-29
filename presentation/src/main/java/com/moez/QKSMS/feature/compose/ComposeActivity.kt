@@ -218,7 +218,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.sendAsGroup.setVisible(state.editingMode && state.selectedChips.size >= 2)
         binding.sendAsGroupSwitch.isChecked = state.sendAsGroup
 
-        binding.messageList.setVisible(!state.editingMode || state.sendAsGroup)
+        binding.messageList.setVisible(!state.editingMode || state.sendAsGroup || state.selectedChips.size == 1)
         messageAdapter.data = state.messages
         messageAdapter.highlight = state.searchSelectionId
 
