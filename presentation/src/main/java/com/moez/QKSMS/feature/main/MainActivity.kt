@@ -235,6 +235,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
         binding.compose.setVisible(state.page is Inbox || state.page is Archived)
         conversationsAdapter.emptyView = binding.empty.takeIf { state.page is Inbox || state.page is Archived }
+        searchAdapter.emptyView = binding.empty.takeIf { state.page is Searching }
 
         when (state.page) {
             is Inbox -> {
