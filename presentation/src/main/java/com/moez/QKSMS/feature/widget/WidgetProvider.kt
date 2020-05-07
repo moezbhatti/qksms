@@ -120,8 +120,8 @@ class WidgetProvider : AppWidgetProvider() {
 
         remoteViews.setInt(R.id.toolbar, "setColorFilter", context.getColorCompat(when {
             night && black -> R.color.black
-            night && !black -> R.color.toolbarDark
-            else -> R.color.toolbarLight
+            night && !black -> R.color.backgroundDark
+            else -> R.color.backgroundLight
         }))
 
         remoteViews.setTextColor(R.id.title, context.getColorCompat(when (night) {

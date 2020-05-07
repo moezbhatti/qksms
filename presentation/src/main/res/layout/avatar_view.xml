@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,12 +17,12 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<merge android:id="@+id/avatar"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<merge xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/avatar"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:background="@color/tools_theme"
     tools:parentTag="com.moez.QKSMS.common.widget.AvatarView">
 
     <com.moez.QKSMS.common.widget.QkTextView
@@ -30,9 +30,10 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:gravity="center"
+        android:padding="6dp"
         android:textAllCaps="true"
-        android:textSize="20sp"
-        tools:text="M" />
+        app:autoSizeMaxTextSize="22sp"
+        app:autoSizeTextType="uniform" />
 
     <ImageView
         android:id="@+id/icon"
@@ -46,7 +47,8 @@
         android:id="@+id/photo"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:src="@tools:sample/avatars"
-        android:scaleType="centerCrop" />
+        android:scaleType="centerCrop"
+        tools:background="@color/tools_theme"
+        tools:src="@tools:sample/avatars" />
 
 </merge>

@@ -25,7 +25,6 @@ import android.content.pm.ShortcutInfo
 import android.content.pm.ShortcutManager
 import android.graphics.drawable.Icon
 import android.os.Build
-import android.telephony.PhoneNumberUtils
 import com.moez.QKSMS.R
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.model.Conversation
@@ -66,7 +65,7 @@ class ShortcutManagerImpl @Inject constructor(
                 val request = GlideApp.with(context)
                         .asBitmap()
                         .circleCrop()
-                        .load(PhoneNumberUtils.stripSeparators(address))
+                        .load("tel:$address")
                         .submit(shortcutManager.iconMaxWidth, shortcutManager.iconMaxHeight)
                 val bitmap = tryOrNull(false) { request.get() }
 

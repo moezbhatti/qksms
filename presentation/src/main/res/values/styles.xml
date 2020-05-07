@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -19,17 +19,17 @@
 <resources>
 
     <style name="TextPrimary">
-        <item name="textColor">primary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="textSize">primary</item>
     </style>
 
     <style name="TextSecondary">
-        <item name="textColor">tertiary</item>
+        <item name="android:textColor">?android:attr/textColorSecondary</item>
         <item name="textSize">secondary</item>
     </style>
 
     <style name="TextTertiary">
-        <item name="textColor">tertiary</item>
+        <item name="android:textColor">?android:attr/textColorTertiary</item>
         <item name="textSize">tertiary</item>
     </style>
 
@@ -58,9 +58,10 @@
         <item name="android:layout_width">match_parent</item>
         <item name="android:layout_height">match_parent</item>
         <item name="android:background">@null</item>
+        <item name="android:ellipsize">end</item>
         <item name="android:gravity">start|center_vertical</item>
         <item name="android:maxLines">1</item>
-        <item name="textColor">primary</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="textSize">toolbar</item>
     </style>
 
@@ -115,8 +116,8 @@
         <item name="android:layout_width">0dp</item>
         <item name="android:layout_weight">1</item>
         <item name="android:lines">1</item>
+        <item name="android:textColor">?android:attr/textColorPrimary</item>
         <item name="android:textStyle">bold</item>
-        <item name="textColor">primary</item>
         <item name="textSize">secondary</item>
     </style>
 

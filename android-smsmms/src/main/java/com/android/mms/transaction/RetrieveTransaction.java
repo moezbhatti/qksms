@@ -24,8 +24,8 @@ import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
 import android.text.TextUtils;
+
 import com.android.mms.MmsConfig;
-import com.android.mms.logs.LogTag;
 import com.android.mms.util.DownloadManager;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.AcknowledgeInd;
@@ -35,10 +35,11 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.RetrieveConf;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Utils;
 
 import java.io.IOException;
+
+import timber.log.Timber;
 
 /**
  * The RetrieveTransaction is responsible for retrieving multimedia
@@ -54,8 +55,6 @@ import java.io.IOException;
  * </ul>
  */
 public class RetrieveTransaction extends Transaction implements Runnable {
-    private static final String TAG = LogTag.TAG;
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     private final Uri mUri;
@@ -80,7 +79,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
             mUri = Uri.parse(uri); // The Uri of the M-Notification.ind
             mId = mContentLocation = getContentLocation(context, mUri);
             if (LOCAL_LOGV) {
-                Log.v(TAG, "X-Mms-Content-Location: " + mContentLocation);
+                Timber.v("X-Mms-Content-Location: " + mContentLocation);
             }
         } else {
             throw new IllegalArgumentException(
@@ -154,12 +153,16 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 } else {
                     // Store M-Retrieve.conf into Inbox
                     PduPersister persister = PduPersister.getPduPersister(mContext);
-                    msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI, true,
-                            true, null);
+                    msgUri = persister.persist(retrieveConf, Inbox.CONTENT_URI,
+                            PduPersister.DUMMY_THREAD_ID, true, true, null);
 
                     // Use local time instead of PDU time
-                    ContentValues values = new ContentValues(2);
+                    ContentValues values = new ContentValues(3);
                     values.put(Mms.DATE, System.currentTimeMillis() / 1000L);
+                    try {
+                        values.put(Mms.DATE_SENT, retrieveConf.getDate());
+                    } catch (Exception ignored) {
+                    }
                     values.put(Mms.MESSAGE_SIZE, resp.length);
                     SqliteWrapper.update(mContext, mContext.getContentResolver(),
                             msgUri, values, null, null);
@@ -183,7 +186,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 // Don't mark the transaction as failed if we failed to send it.
                 sendAcknowledgeInd(retrieveConf);
             } catch (Throwable t) {
-                Log.e(TAG, "error", t);
+                Timber.e(t, "error");
                 if ("HTTP error: Not Found".equals(t.getMessage())) {
                     // Delete the expired M-Notification.ind.
                     SqliteWrapper.delete(mContext, mContext.getContentResolver(),
@@ -193,7 +196,7 @@ public class RetrieveTransaction extends Transaction implements Runnable {
                 if (mTransactionState.getState() != TransactionState.SUCCESS) {
                     mTransactionState.setState(TransactionState.FAILED);
                     mTransactionState.setContentUri(mUri);
-                    Log.e(TAG, "Retrieval failed.");
+                    Timber.e("Retrieval failed.");
                 }
                 notifyObservers();
             }

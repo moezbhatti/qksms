@@ -19,7 +19,9 @@
 package com.moez.QKSMS.common.util
 
 import android.graphics.Typeface
+import android.os.Build
 import android.util.AttributeSet
+import android.widget.EditText
 import android.widget.TextView
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_PRIMARY
@@ -27,11 +29,12 @@ import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_SECONDARY
 import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_TERTIARY
 import com.moez.QKSMS.common.util.TextViewStyler.Companion.SIZE_TOOLBAR
 import com.moez.QKSMS.common.util.extensions.getColorCompat
-import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.widget.QkEditText
 import com.moez.QKSMS.common.widget.QkTextView
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
+
+
 
 class TextViewStyler @Inject constructor(
     private val prefs: Preferences,
@@ -40,18 +43,17 @@ class TextViewStyler @Inject constructor(
 ) {
 
     companion object {
-        const val COLOR_PRIMARY = 0
-        const val COLOR_SECONDARY = 1
-        const val COLOR_TERTIARY = 2
-        const val COLOR_PRIMARY_ON_THEME = 3
-        const val COLOR_SECONDARY_ON_THEME = 4
-        const val COLOR_TERTIARY_ON_THEME = 5
-        const val COLOR_THEME = 6
+        const val COLOR_THEME = 0
+        const val COLOR_PRIMARY_ON_THEME = 1
+        const val COLOR_SECONDARY_ON_THEME = 2
+        const val COLOR_TERTIARY_ON_THEME = 3
 
         const val SIZE_PRIMARY = 0
         const val SIZE_SECONDARY = 1
         const val SIZE_TERTIARY = 2
         const val SIZE_TOOLBAR = 3
+        const val SIZE_DIALOG = 4
+        const val SIZE_EMOJI = 5
 
         fun applyEditModeAttributes(textView: TextView, attrs: AttributeSet?) {
             textView.run {
@@ -74,9 +76,6 @@ class TextViewStyler @Inject constructor(
                     else -> return
                 }
                 setTextColor(when (colorAttr) {
-                    COLOR_PRIMARY -> context.getColorCompat(R.color.textPrimary)
-                    COLOR_SECONDARY -> context.getColorCompat(R.color.textSecondary)
-                    COLOR_TERTIARY -> context.getColorCompat(R.color.textTertiary)
                     COLOR_PRIMARY_ON_THEME -> context.getColorCompat(R.color.textPrimaryDark)
                     COLOR_SECONDARY_ON_THEME -> context.getColorCompat(R.color.textSecondaryDark)
                     COLOR_TERTIARY_ON_THEME -> context.getColorCompat(R.color.textTertiaryDark)
@@ -89,6 +88,8 @@ class TextViewStyler @Inject constructor(
                     SIZE_SECONDARY -> 14f
                     SIZE_TERTIARY -> 12f
                     SIZE_TOOLBAR -> 20f
+                    SIZE_DIALOG -> 18f
+                    SIZE_EMOJI -> 32f
                     else -> textSize / paint.density
                 }
             }
@@ -96,44 +97,45 @@ class TextViewStyler @Inject constructor(
     }
 
     fun applyAttributes(textView: TextView, attrs: AttributeSet?) {
-        textView.run {
-            var colorAttr = 0
-            var textSizeAttr = 0
+        var colorAttr = 0
+        var textSizeAttr = 0
 
-            if (!prefs.systemFont.get()) {
-                fontProvider.getLato { lato ->
-                    setTypeface(lato, typeface?.style ?: Typeface.NORMAL)
-                }
+        if (!prefs.systemFont.get()) {
+            fontProvider.getLato { lato ->
+                textView.setTypeface(lato, textView.typeface?.style ?: Typeface.NORMAL)
+            }
+        }
+
+        when (textView) {
+            is QkTextView -> textView.context.obtainStyledAttributes(attrs, R.styleable.QkTextView).run {
+                colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
+                textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
+                recycle()
             }
 
-            when (this) {
-                is QkTextView -> context.obtainStyledAttributes(attrs, R.styleable.QkTextView)?.run {
-                    colorAttr = getInt(R.styleable.QkTextView_textColor, -1)
-                    textSizeAttr = getInt(R.styleable.QkTextView_textSize, -1)
-                    recycle()
-                }
-
-                is QkEditText -> context.obtainStyledAttributes(attrs, R.styleable.QkEditText)?.run {
-                    colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
-                    textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
-                    recycle()
-                }
-
-                else -> return
+            is QkEditText -> textView.context.obtainStyledAttributes(attrs, R.styleable.QkEditText).run {
+                colorAttr = getInt(R.styleable.QkEditText_textColor, -1)
+                textSizeAttr = getInt(R.styleable.QkEditText_textSize, -1)
+                recycle()
             }
 
-            setTextColor(when (colorAttr) {
-                COLOR_PRIMARY -> context.resolveThemeColor(android.R.attr.textColorPrimary)
-                COLOR_SECONDARY -> context.resolveThemeColor(android.R.attr.textColorSecondary)
-                COLOR_TERTIARY -> context.resolveThemeColor(android.R.attr.textColorTertiary)
-                COLOR_PRIMARY_ON_THEME -> colors.theme().textPrimary
-                COLOR_SECONDARY_ON_THEME -> colors.theme().textSecondary
-                COLOR_TERTIARY_ON_THEME -> colors.theme().textTertiary
-                COLOR_THEME -> colors.theme().theme
-                else -> currentTextColor
-            })
+            else -> return
+        }
 
-            setTextSize(textView, textSizeAttr)
+        when (colorAttr) {
+            COLOR_THEME -> textView.setTextColor(colors.theme().theme)
+            COLOR_PRIMARY_ON_THEME -> textView.setTextColor(colors.theme().textPrimary)
+            COLOR_SECONDARY_ON_THEME -> textView.setTextColor(colors.theme().textSecondary)
+            COLOR_TERTIARY_ON_THEME -> textView.setTextColor(colors.theme().textTertiary)
+        }
+
+        setTextSize(textView, textSizeAttr)
+
+        if (textView is EditText) {
+            val drawable = textView.resources.getDrawable(R.drawable.cursor).apply { setTint(colors.theme().theme) }
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                textView.textCursorDrawable = drawable
+            }
         }
     }
 
@@ -176,6 +178,22 @@ class TextViewStyler @Inject constructor(
                 Preferences.TEXT_SIZE_LARGE -> 22f
                 Preferences.TEXT_SIZE_LARGER -> 26f
                 else -> 20f
+            }
+
+            SIZE_DIALOG -> textView.textSize = when (textSizePref) {
+                Preferences.TEXT_SIZE_SMALL -> 16f
+                Preferences.TEXT_SIZE_NORMAL -> 18f
+                Preferences.TEXT_SIZE_LARGE -> 20f
+                Preferences.TEXT_SIZE_LARGER -> 24f
+                else -> 18f
+            }
+
+            SIZE_EMOJI -> textView.textSize = when (textSizePref) {
+                Preferences.TEXT_SIZE_SMALL -> 28f
+                Preferences.TEXT_SIZE_NORMAL -> 32f
+                Preferences.TEXT_SIZE_LARGE -> 36f
+                Preferences.TEXT_SIZE_LARGER -> 40f
+                else -> 32f
             }
         }
     }

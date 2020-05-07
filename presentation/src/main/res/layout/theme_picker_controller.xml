@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,8 +17,8 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<LinearLayout android:id="@+id/contentView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:animateLayoutChanges="true"
@@ -32,8 +32,8 @@
         android:background="?attr/colorPrimary"
         android:elevation="8dp"
         android:orientation="horizontal"
-        android:paddingEnd="12dp"
-        android:paddingStart="12dp" />
+        android:paddingStart="12dp"
+        android:paddingEnd="12dp" />
 
     <androidx.viewpager.widget.ViewPager
         android:id="@+id/pager"

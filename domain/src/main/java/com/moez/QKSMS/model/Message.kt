@@ -105,6 +105,7 @@ open class Message : RealmObject() {
             isSms() -> body
 
             else -> parts
+                    .filter { it.type == "text/plain" }
                     .mapNotNull { it.text }
                     .joinToString("\n") { text -> text }
         }

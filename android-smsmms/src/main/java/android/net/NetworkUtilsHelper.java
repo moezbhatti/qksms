@@ -16,7 +16,7 @@
 
 package android.net;
 
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -30,8 +30,6 @@ import java.util.Collection;
  * {@hide}
  */
 public class NetworkUtilsHelper {
-
-    private static final String TAG = "NetworkUtils";
 
     /**
      * Bring the named network interface up.
@@ -255,7 +253,7 @@ public class NetworkUtilsHelper {
                     addrHexString.substring(16, 20), addrHexString.substring(20, 24),
                     addrHexString.substring(24, 28), addrHexString.substring(28, 32)));
         } catch (Exception e) {
-            Log.e("NetworkUtils", "error in hexToInet6Address(" + addrHexString + "): " + e);
+            Timber.e("error in hexToInet6Address(" + addrHexString + "): " + e);
             throw new IllegalArgumentException(e);
         }
     }

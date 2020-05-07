@@ -18,14 +18,12 @@ package com.android.mms.transaction;
 
 import android.content.Context;
 import android.util.Config;
-import com.android.mms.logs.LogTag;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 /**
  * Default retry scheme, based on specs.
  */
 public class DefaultRetryScheme extends AbstractRetryScheme {
-    private static final String TAG = LogTag.TAG;
     private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = DEBUG ? Config.LOGD : Config.LOGV;
 
@@ -50,7 +48,7 @@ public class DefaultRetryScheme extends AbstractRetryScheme {
     @Override
     public long getWaitingInterval() {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "Next int: " + sDefaultRetryScheme[mRetriedTimes]);
+            Timber.v("Next int: " + sDefaultRetryScheme[mRetriedTimes]);
         }
         return sDefaultRetryScheme[mRetriedTimes];
     }

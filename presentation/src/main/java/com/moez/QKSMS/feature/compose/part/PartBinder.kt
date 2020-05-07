@@ -18,16 +18,50 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
-import android.view.View
+import android.view.LayoutInflater
+import android.view.ViewGroup
+import androidx.viewbinding.ViewBinding
+import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import io.reactivex.subjects.PublishSubject
+import io.reactivex.subjects.Subject
 
-interface PartBinder {
+abstract class PartBinder<Binding : ViewBinding>(
+    val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> Binding
+) {
 
-    val partLayout: Int
+    val clicks: Subject<Long> = PublishSubject.create()
 
-    fun canBindPart(part: MmsPart): Boolean
+    abstract var theme: Colors.Theme
 
-    fun bindPart(view: View, part: MmsPart, message: Message, canGroupWithPrevious: Boolean, canGroupWithNext: Boolean)
+    fun <T: ViewBinding> bindPart(
+        holder: QkViewHolder<T>,
+        part: MmsPart,
+        message: Message,
+        canGroupWithPrevious: Boolean,
+        canGroupWithNext: Boolean
+    ): Boolean {
+        val castHolder = holder as? QkViewHolder<Binding>
+
+        if (!canBindPart(part) || castHolder == null) {
+            return false
+        }
+
+        bindPartInternal(castHolder, part, message, canGroupWithPrevious, canGroupWithNext)
+
+        return true
+    }
+
+    abstract fun canBindPart(part: MmsPart): Boolean
+
+    protected abstract fun bindPartInternal(
+        holder: QkViewHolder<Binding>,
+        part: MmsPart,
+        message: Message,
+        canGroupWithPrevious: Boolean,
+        canGroupWithNext: Boolean
+    )
 
 }

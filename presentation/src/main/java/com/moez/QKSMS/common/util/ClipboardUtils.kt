@@ -27,7 +27,7 @@ object ClipboardUtils {
     fun copy(context: Context, string: String) {
         val clipboard = context.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
         val clip = ClipData.newPlainText("SMS", string)
-        clipboard.primaryClip = clip
+        clipboard.setPrimaryClip(clip)
     }
 
 }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -25,15 +25,15 @@
     android:background="?attr/selectableItemBackground"
     android:gravity="center_vertical"
     android:orientation="horizontal"
-    android:paddingBottom="12dp"
+    android:paddingStart="12dp"
+    android:paddingTop="8dp"
     android:paddingEnd="16dp"
-    android:paddingStart="16dp"
-    android:paddingTop="12dp">
+    android:paddingBottom="8dp">
 
     <com.moez.QKSMS.common.widget.GroupAvatarView
         android:id="@+id/avatars"
-        android:layout_width="48dp"
-        android:layout_height="48dp"
+        android:layout_width="56dp"
+        android:layout_height="56dp"
         android:layout_gravity="top"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent"
@@ -45,8 +45,10 @@
         style="@style/TextPrimary"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="16dp"
-        android:layout_marginStart="16dp"
+        android:ellipsize="end"
+        android:lines="1"
         app:layout_constraintBottom_toTopOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/date"
         app:layout_constraintStart_toEndOf="@id/avatars"
@@ -70,14 +72,29 @@
 
     <ImageView
         android:id="@+id/pinned"
-        android:layout_width="16dp"
+        android:layout_width="20dp"
         android:layout_height="16dp"
-        android:layout_marginTop="4dp"
+        android:layout_marginTop="2dp"
+        android:paddingStart="4dp"
         android:src="@drawable/ic_pin_black_24dp"
-        android:tint="?android:attr/textColorSecondary"
+        android:tint="?android:attr/textColorTertiary"
+        android:visibility="gone"
+        app:layout_constraintEnd_toStartOf="@id/unread"
+        app:layout_constraintTop_toTopOf="@id/snippet"
+        tools:visibility="visible" />
+
+    <ImageView
+        android:id="@+id/unread"
+        android:layout_width="20dp"
+        android:layout_height="16sp"
+        android:paddingStart="8dp"
+        android:paddingTop="2dp"
+        android:paddingBottom="2dp"
+        android:src="@drawable/circle"
         android:visibility="gone"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@id/snippet"
+        tools:tint="@color/tools_theme"
         tools:visibility="visible" />
 
     <com.moez.QKSMS.common.widget.QkTextView

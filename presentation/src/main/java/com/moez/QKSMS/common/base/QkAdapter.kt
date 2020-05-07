@@ -22,6 +22,7 @@ import android.view.View
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import com.moez.QKSMS.common.util.extensions.setVisible
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
@@ -30,7 +31,7 @@ import io.reactivex.subjects.Subject
  * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
  * data list handing and item animations
  */
-abstract class QkAdapter<T> : RecyclerView.Adapter<QkViewHolder>() {
+abstract class QkAdapter<T, Binding: ViewBinding> : RecyclerView.Adapter<QkViewHolder<Binding>>() {
 
     var data: List<T> = ArrayList()
         set(value) {

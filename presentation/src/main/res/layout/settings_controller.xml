@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,10 +17,10 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<ScrollView android:id="@+id/contentView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="?android:attr/windowBackground">
@@ -30,8 +30,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <com.moez.QKSMS.common.widget.QkTextView
             style="@style/PreferenceCategory"
@@ -85,6 +85,14 @@
             app:title="@string/settings_text_size_title" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/autoColor"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_person_black_24dp"
+            app:title="@string/settings_automatic_colors_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/systemFont"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -95,8 +103,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="?android:attr/divider" />
 
         <com.moez.QKSMS.common.widget.QkTextView
@@ -145,6 +153,13 @@
             app:widget="@layout/settings_switch_widget" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/signature"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_short_text_black_24dp"
+            app:title="@string/settings_signature_title" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/unicode"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -163,6 +178,15 @@
             app:widget="@layout/settings_switch_widget" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/longAsMms"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_message_black_24dp"
+            app:summary="@string/settings_long_as_mms_summary"
+            app:title="@string/settings_long_as_mms_title"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/mmsSize"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -174,8 +198,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="?android:attr/divider" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
@@ -191,9 +215,9 @@
             style="@style/Widget.AppCompat.ProgressBar.Horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="16dp"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="72dp"
+            android:layout_marginEnd="16dp"
+            android:layout_marginBottom="16dp"
             android:indeterminate="true"
             app:layout_constraintBottom_toBottomOf="parent" />
 

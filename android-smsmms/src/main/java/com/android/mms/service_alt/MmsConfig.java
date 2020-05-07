@@ -24,8 +24,8 @@ import android.telephony.SubscriptionManager;
 import android.telephony.TelephonyManager;
 import android.text.TextUtils;
 import android.util.Base64;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.R;
+import timber.log.Timber;
 
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Method;
@@ -44,7 +44,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * 4. Add key/value for relevant mms_config.xml of a specific carrier (mcc/mnc)
  */
 public class MmsConfig {
-    private static final String TAG = "MmsConfig";
 
     private static final String DEFAULT_HTTP_KEY_X_WAP_PROFILE = "x-wap-profile";
 
@@ -198,10 +197,10 @@ public class MmsConfig {
         mKeyValues.putAll(DEFAULTS);
         // Load User-Agent and UA profile URL settings
         loadDeviceUaSettings(context);
-        Log.v(TAG, "MmsConfig: mUserAgent=" + mUserAgent + ", mUaProfUrl=" + mUaProfUrl);
+        Timber.v("MmsConfig: mUserAgent=" + mUserAgent + ", mUaProfUrl=" + mUaProfUrl);
         // Load mms_config.xml resource overlays
         loadFromResources(context);
-        Log.v(TAG, "MmsConfig: all settings -- " + mKeyValues);
+        Timber.v("MmsConfig: all settings -- " + mKeyValues);
     }
 
     /**
@@ -218,10 +217,10 @@ public class MmsConfig {
         mKeyValues.putAll(DEFAULTS);
         // Load User-Agent and UA profile URL settings
         loadDeviceUaSettings(context);
-        Log.v(TAG, "MmsConfig: mUserAgent=" + mUserAgent + ", mUaProfUrl=" + mUaProfUrl);
+        Timber.v("MmsConfig: mUserAgent=" + mUserAgent + ", mUaProfUrl=" + mUaProfUrl);
         // Load mms_config.xml resource overlays
         loadFromResources(context);
-        Log.v(TAG, "MmsConfig: all settings -- " + mKeyValues);
+        Timber.v("MmsConfig: all settings -- " + mKeyValues);
     }
 
     /**
@@ -328,7 +327,7 @@ public class MmsConfig {
                 mKeyValues.put(key, value);
             }
         } catch (NumberFormatException e) {
-            Log.e(TAG, "MmsConfig.update: invalid " + key + "," + value + "," + type);
+            Timber.e("MmsConfig.update: invalid " + key + "," + value + "," + type);
         }
     }
 
@@ -345,7 +344,7 @@ public class MmsConfig {
     }
 
     private void loadFromResources(Context context) {
-        Log.d(TAG, "MmsConfig.loadFromResources");
+        Timber.d("MmsConfig.loadFromResources");
         final XmlResourceParser parser = context.getResources().getXml(R.xml.mms_config);
         final MmsConfigXmlProcessor processor = MmsConfigXmlProcessor.get(parser);
         processor.setMmsConfigHandler(new MmsConfigXmlProcessor.MmsConfigHandler() {
@@ -594,9 +593,7 @@ public class MmsConfig {
                 }
             }
 
-            if (Log.isLoggable(TAG, Log.VERBOSE)) {
-                Log.v(TAG, "MmsConfig.getNai: nai=" + nai);
-            }
+            Timber.v("MmsConfig.getNai: nai=" + nai);
 
             if (!TextUtils.isEmpty(nai)) {
                 String naiSuffix = getNaiSuffix();

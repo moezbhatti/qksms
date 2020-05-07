@@ -27,10 +27,12 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import timber.log.Timber
@@ -39,19 +41,23 @@ import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SettingsPresenter @Inject constructor(
+    colors: Colors,
+    syncRepo: SyncRepository,
+    private val analytics: AnalyticsManager,
     private val context: Context,
     private val billingManager: BillingManager,
-    private val colors: Colors,
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
-    private val syncMessages: SyncMessages,
-    private val syncRepo: SyncRepository
-) : QkPresenter<SettingsView, SettingsState>(SettingsState(theme = colors.theme().theme)) {
+    private val syncMessages: SyncMessages
+) : QkPresenter<SettingsView, SettingsState>(SettingsState(
+        nightModeId = prefs.nightMode.get()
+)) {
 
     init {
-        newState { copy(theme = colors.theme().theme) }
+        disposables += colors.themeObservable()
+                .subscribe { theme -> newState { copy(theme = theme.theme) } }
 
         val nightModeLabels = context.resources.getStringArray(R.array.night_modes)
         disposables += prefs.nightMode.asObservable()
@@ -87,11 +93,17 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
+        disposables += prefs.signature.asObservable()
+                .subscribe { signature -> newState { copy(signature = signature) } }
+
         val textSizeLabels = context.resources.getStringArray(R.array.text_sizes)
         disposables += prefs.textSize.asObservable()
                 .subscribe { textSize ->
                     newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
                 }
+
+        disposables += prefs.autoColor.asObservable()
+                .subscribe { autoColor -> newState { copy(autoColor = autoColor) } }
 
         disposables += prefs.systemFont.asObservable()
                 .subscribe { enabled -> newState { copy(systemFontEnabled = enabled) } }
@@ -101,6 +113,9 @@ class SettingsPresenter @Inject constructor(
 
         disposables += prefs.mobileOnly.asObservable()
                 .subscribe { enabled -> newState { copy(mobileOnly = enabled) } }
+
+        disposables += prefs.longAsMms.asObservable()
+                .subscribe { enabled -> newState { copy(longAsMms = enabled) } }
 
         val mmsSizeLabels = context.resources.getStringArray(R.array.mms_sizes)
         val mmsSizeIds = context.resources.getIntArray(R.array.mms_sizes_ids)
@@ -153,13 +168,22 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
 
+                        R.id.signature -> view.showSignatureDialog(prefs.signature.get())
+
                         R.id.textSize -> view.showTextSizePicker()
+
+                        R.id.autoColor -> {
+                            analytics.setUserProperty("Preference: Auto Color", !prefs.autoColor.get())
+                            prefs.autoColor.set(!prefs.autoColor.get())
+                        }
 
                         R.id.systemFont -> prefs.systemFont.set(!prefs.systemFont.get())
 
                         R.id.unicode -> prefs.unicode.set(!prefs.unicode.get())
 
                         R.id.mobileOnly -> prefs.mobileOnly.set(!prefs.mobileOnly.get())
+
+                        R.id.longAsMms -> prefs.longAsMms.set(!prefs.longAsMms.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
 
@@ -205,7 +229,7 @@ class SettingsPresenter @Inject constructor(
 
         view.textSizeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { prefs.textSize.set(it) }
+                .subscribe(prefs.textSize::set)
 
         view.sendDelaySelected()
                 .withLatestFrom(billingManager.upgradeStatus) { duration, upgraded ->
@@ -218,9 +242,14 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        view.signatureSet()
+                .doOnNext(prefs.signature::set)
+                .autoDisposable(view.scope())
+                .subscribe()
+
         view.mmsSizeSelected()
                 .autoDisposable(view.scope())
-                .subscribe { prefs.mmsSize.set(it) }
+                .subscribe(prefs.mmsSize::set)
     }
 
 }

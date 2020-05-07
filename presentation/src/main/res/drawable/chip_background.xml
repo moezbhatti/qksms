@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -20,10 +20,9 @@
 <ripple xmlns:android="http://schemas.android.com/apk/res/android"
     android:color="?android:attr/colorControlHighlight">
     <item>
-        <shape
-            android:shape="rectangle">
-            <solid android:color="@color/bubbleLight"/>
-            <corners android:radius="18dp"/>
+        <shape android:shape="rectangle">
+            <solid android:color="@color/bubbleLight" />
+            <corners android:radius="18dp" />
         </shape>
     </item>
 </ripple>

@@ -29,16 +29,19 @@ open class Conversation(
     @Index var blocked: Boolean = false,
     @Index var pinned: Boolean = false,
     var recipients: RealmList<Recipient> = RealmList(),
-    var count: Int = 0,
-    var date: Long = 0,
-    var snippet: String = "",
-    var read: Boolean = true,
-    var me: Boolean = false,
+    var lastMessage: Message? = null,
     var draft: String = "",
 
-    // For group chats, the user is allowed to set a custom title for the conversation
-    var name: String = ""
+    var blockingClient: Int? = null,
+    var blockReason: String? = null,
+
+    var name: String = "" // For group chats, the user is allowed to set a custom title for the conversation
 ) : RealmObject() {
+
+    val date: Long get() = lastMessage?.date ?: 0
+    val snippet: String? get() = lastMessage?.getSummary()
+    val unread: Boolean get() = lastMessage?.read == false
+    val me: Boolean get() = lastMessage?.isMe() == true
 
     fun getTitle(): String {
         return name.takeIf { it.isNotBlank() } ?: recipients.joinToString { recipient -> recipient.getDisplayName() }

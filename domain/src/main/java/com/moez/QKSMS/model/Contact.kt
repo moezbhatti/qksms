@@ -26,5 +26,11 @@ open class Contact(
     @PrimaryKey var lookupKey: String = "",
     var numbers: RealmList<PhoneNumber> = RealmList(),
     var name: String = "",
+    var photoUri: String? = null,
+    var starred: Boolean = false,
     var lastUpdate: Long = 0
-) : RealmObject()
+) : RealmObject() {
+
+    fun getDefaultNumber(): PhoneNumber? = numbers.find { number -> number.isDefault }
+
+}

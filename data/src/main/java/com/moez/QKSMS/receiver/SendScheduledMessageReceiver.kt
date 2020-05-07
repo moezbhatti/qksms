@@ -35,7 +35,8 @@ class SendScheduledMessageReceiver : BroadcastReceiver() {
         AndroidInjection.inject(this, context)
 
         intent.getLongExtra("id", -1L).takeIf { it >= 0 }?.let { id ->
-            sendScheduledMessage.buildObservable(id).blockingSubscribe()
+            val result = goAsync()
+            sendScheduledMessage.execute(id) { result.finish() }
         }
     }
 

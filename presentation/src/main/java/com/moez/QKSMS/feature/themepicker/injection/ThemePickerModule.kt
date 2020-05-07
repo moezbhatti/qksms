@@ -29,7 +29,7 @@ class ThemePickerModule(private val controller: ThemePickerController) {
 
     @Provides
     @ControllerScope
-    @Named("threadId")
-    fun provideThreadId(): Long = controller.threadId
+    @Named("recipientId")
+    fun provideThreadId(): Long = controller.recipientId
 
 }

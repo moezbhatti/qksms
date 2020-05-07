@@ -22,9 +22,9 @@ import androidx.annotation.DrawableRes
 import com.moez.QKSMS.R
 
 data class SwipeActionsState(
-    @DrawableRes val rightIcon: Int = R.drawable.ic_archive_black_24dp,
+    @DrawableRes val rightIcon: Int = R.drawable.ic_archive_white_24dp,
     val rightLabel: String = "",
 
-    @DrawableRes val leftIcon: Int = R.drawable.ic_archive_black_24dp,
+    @DrawableRes val leftIcon: Int = R.drawable.ic_archive_white_24dp,
     val leftLabel: String = ""
 )

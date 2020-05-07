@@ -18,7 +18,7 @@ package android.net;
 
 import android.os.Parcel;
 import android.os.Parcelable;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.net.Inet4Address;
 import java.net.Inet6Address;
@@ -32,7 +32,6 @@ import java.util.Collection;
  * @hide
  */
 public class RouteInfo implements Parcelable {
-    private static final String TAG = "RouteInfo";
     /**
      * The IP destination address for this route.
      */
@@ -54,14 +53,14 @@ public class RouteInfo implements Parcelable {
                         destination = new LinkAddress(Inet4Address.getLocalHost(), 0);
                     } catch (UnknownHostException e) {
                         // TODO Auto-generated catch block
-                        Log.e(TAG, "exception thrown", e);
+                        Timber.e(e, "exception thrown");
                     }
                 } else {
                     try {
                         destination = new LinkAddress(Inet6Address.getLocalHost(), 0);
                     } catch (UnknownHostException e) {
                         // TODO Auto-generated catch block
-                        Log.e(TAG, "exception thrown", e);
+                        Timber.e(e, "exception thrown");
                     }
                 }
             } else {
@@ -75,14 +74,14 @@ public class RouteInfo implements Parcelable {
                     gateway = Inet4Address.getLocalHost();
                 } catch (UnknownHostException e) {
                     // TODO Auto-generated catch block
-                    Log.e(TAG, "exception thrown", e);
+                    Timber.e(e, "exception thrown");
                 }
             } else {
                 try {
                     gateway = Inet6Address.getLocalHost();
                 } catch (UnknownHostException e) {
                     // TODO Auto-generated catch block
-                    Log.e(TAG, "exception thrown", e);
+                    Timber.e(e, "exception thrown");
                 }
             }
         }

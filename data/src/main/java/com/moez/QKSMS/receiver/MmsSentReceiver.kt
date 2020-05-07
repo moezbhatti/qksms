@@ -68,9 +68,11 @@ class MmsSentReceiver : BroadcastReceiver() {
                     // Need to figure out why the message isn't appearing in the PendingMessages Uri,
                     // so that we can properly assign the error type
                     val errorTypeValues = ContentValues(1)
-                    errorTypeValues.put(Telephony.MmsSms.PendingMessages.ERROR_TYPE, Telephony.MmsSms.ERR_TYPE_GENERIC_PERMANENT)
+                    errorTypeValues.put(Telephony.MmsSms.PendingMessages.ERROR_TYPE,
+                            Telephony.MmsSms.ERR_TYPE_GENERIC_PERMANENT)
                     SqliteWrapper.update(context, context.contentResolver, Telephony.MmsSms.PendingMessages.CONTENT_URI,
-                            errorTypeValues, "${Telephony.MmsSms.PendingMessages.MSG_ID} = ?", arrayOf(messageId.toString()))
+                            errorTypeValues, "${Telephony.MmsSms.PendingMessages.MSG_ID} = ?",
+                            arrayOf(messageId.toString()))
 
                 } catch (e: MmsException) {
                     e.printStackTrace()

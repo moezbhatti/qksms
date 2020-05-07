@@ -21,10 +21,9 @@ import android.net.NetworkUtilsHelper;
 import android.provider.Telephony;
 import android.text.TextUtils;
 import com.android.mms.MmsConfig;
-import com.android.mms.logs.LogTag;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.Transaction;
 import com.klinker.android.send_message.Utils;
+import timber.log.Timber;
 
 /**
  * Container of transaction settings. Instances of this class are contained
@@ -32,10 +31,6 @@ import com.klinker.android.send_message.Utils;
  * settings or of the MMS Client.
  */
 public class TransactionSettings {
-    private static final String TAG = LogTag.TAG;
-    private static final boolean DEBUG = true;
-    private static final boolean LOCAL_LOGV = false;
-
     private String mServiceCenter;
     private String mProxyAddress;
     private int mProxyPort = -1;
@@ -57,7 +52,7 @@ public class TransactionSettings {
      * @param context The context of the MMS Client
      */
     public TransactionSettings(Context context, String apnName) {
-        Log.v(TAG, "TransactionSettings: apnName: " + apnName);
+        Timber.v("TransactionSettings: apnName: " + apnName);
 //        String selection = "current" + " IS NOT NULL";
 //        String[] selectionArgs = null;
 //        if (!TextUtils.isEmpty(apnName)) {
@@ -72,15 +67,15 @@ public class TransactionSettings {
 //                                Telephony.Carriers.CONTENT_URI,
 //                                APN_PROJECTION, selection, selectionArgs, null);
 //
-//                Log.v(TAG, "TransactionSettings looking for apn: " + selection + " returned: " +
+//                Timber.v("TransactionSettings looking for apn: " + selection + " returned: " +
 //                        (cursor == null ? "null cursor" : (cursor.getCount() + " hits")));
 //        } catch (SecurityException e) {
-//            Log.e(TAG, "exception thrown", e);
+//            Timber.e(e, "exception thrown");
 //            cursor = null;
 //        }
 //
 //        if (cursor == null) {
-//            Log.e(TAG, "Apn is not found in Database!");
+//            Timber.e("Apn is not found in Database!");
         if (Transaction.Companion.getSettings() == null) {
             Transaction.Companion.setSettings(Utils.getDefaultSendSettings(context));
         }
@@ -92,26 +87,26 @@ public class TransactionSettings {
         String agent = Transaction.Companion.getSettings().getAgent();
         if (agent != null && !agent.trim().equals("")) {
             MmsConfig.setUserAgent(agent);
-            Log.v(TAG, "set user agent");
+            Timber.v("set user agent");
         }
 
         String uaProfUrl = Transaction.Companion.getSettings().getUserProfileUrl();
         if (uaProfUrl != null && !uaProfUrl.trim().equals("")) {
             MmsConfig.setUaProfUrl(uaProfUrl);
-            Log.v(TAG, "set user agent profile url");
+            Timber.v("set user agent profile url");
         }
 
         String uaProfTagName = Transaction.Companion.getSettings().getUaProfTagName();
         if (uaProfTagName != null && !uaProfTagName.trim().equals("")) {
             MmsConfig.setUaProfTagName(uaProfTagName);
-            Log.v(TAG, "set user agent profile tag name");
+            Timber.v("set user agent profile tag name");
         }
 
         if (isProxySet()) {
             try {
                 mProxyPort = Integer.parseInt(Transaction.Companion.getSettings().getPort());
             } catch (NumberFormatException e) {
-                Log.e(TAG, "could not get proxy: " + Transaction.Companion.getSettings().getPort(), e);
+                Timber.e(e, "could not get proxy: " + Transaction.Companion.getSettings().getPort());
             }
         }
 //        }
@@ -137,9 +132,9 @@ public class TransactionSettings {
 //                            mProxyPort = Integer.parseInt(portString);
 //                        } catch (NumberFormatException e) {
 //                            if (TextUtils.isEmpty(portString)) {
-//                                Log.w(TAG, "mms port not set!");
+//                                Timber.w("mms port not set!");
 //                            } else {
-//                                Log.e(TAG, "Bad port number format: " + portString, e);
+//                                Timber.e(e, "Bad port number format: " + portString);
 //                            }
 //                        }
 //                    }
@@ -149,10 +144,10 @@ public class TransactionSettings {
 //            cursor.close();
 //        }
 //
-//        Log.v(TAG, "APN setting: MMSC: " + mServiceCenter + " looked for: " + selection);
+//        Timber.v("APN setting: MMSC: " + mServiceCenter + " looked for: " + selection);
 //
 //        if (sawValidApn && TextUtils.isEmpty(mServiceCenter)) {
-//            Log.e(TAG, "Invalid APN setting: MMSC is empty");
+//            Timber.e("Invalid APN setting: MMSC is empty");
 //        }
     }
 
@@ -170,11 +165,9 @@ public class TransactionSettings {
         mProxyAddress = proxyAddr;
         mProxyPort = proxyPort;
 
-        if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-            Log.v(TAG, "TransactionSettings: " + mServiceCenter +
-                    " proxyAddress: " + mProxyAddress +
-                    " proxyPort: " + mProxyPort);
-        }
+            Timber.v("TransactionSettings: " + mServiceCenter
+                    + " proxyAddress: " + mProxyAddress
+                    + " proxyPort: " + mProxyPort);
    }
 
     public String getMmscUrl() {

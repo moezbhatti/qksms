@@ -24,6 +24,7 @@ import android.provider.Telephony
 import androidx.core.content.contentValuesOf
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
+import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.QkFileObserver
 import com.moez.QKSMS.util.tryOrNull
 import com.squareup.moshi.Moshi
@@ -32,7 +33,8 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
-import okio.Okio
+import okio.buffer
+import okio.source
 import timber.log.Timber
 import java.io.File
 import java.io.FileOutputStream
@@ -42,11 +44,11 @@ import javax.inject.Inject
 import javax.inject.Singleton
 import kotlin.concurrent.schedule
 
-
 @Singleton
 class BackupRepositoryImpl @Inject constructor(
     private val context: Context,
     private val moshi: Moshi,
+    private val prefs: Preferences,
     private val syncRepo: SyncRepository
 ) : BackupRepository {
 
@@ -78,11 +80,14 @@ class BackupRepositoryImpl @Inject constructor(
         val protocol: Int,
         val serviceCenter: String?,
         val locked: Boolean,
-        val subId: Int)
+        val subId: Int
+    )
 
     // Subjects to emit our progress events to
-    private val backupProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
-    private val restoreProgress: Subject<BackupRepository.Progress> = BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
+    private val backupProgress: Subject<BackupRepository.Progress> =
+            BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
+    private val restoreProgress: Subject<BackupRepository.Progress> =
+            BehaviorSubject.createDefault(BackupRepository.Progress.Idle())
 
     @Volatile private var stopFlag: Boolean = false
 
@@ -116,7 +121,8 @@ class BackupRepositoryImpl @Inject constructor(
         try {
             // Create the directory and file
             val dir = File(BACKUP_DIRECTORY).apply { mkdirs() }
-            val file = File(dir, "backup-${SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(System.currentTimeMillis())}.json")
+            val timestamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(System.currentTimeMillis())
+            val file = File(dir, "backup-$timestamp.json")
 
             // Write the log to the file
             FileOutputStream(file, true).use { fileOutputStream -> fileOutputStream.write(json) }
@@ -140,7 +146,8 @@ class BackupRepositoryImpl @Inject constructor(
             protocol = 0,
             serviceCenter = null,
             locked = message.locked,
-            subId = message.subId)
+            subId = message.subId
+    )
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
@@ -152,7 +159,7 @@ class BackupRepositoryImpl @Inject constructor(
                 files.mapNotNull { file ->
                     val adapter = moshi.adapter(BackupMetadata::class.java)
                     val backup = tryOrNull(false) {
-                        Okio.buffer(Okio.source(file)).use(adapter::fromJson)
+                        file.source().buffer().use(adapter::fromJson)
                     } ?: return@mapNotNull null
 
                     val path = file.path
@@ -171,7 +178,7 @@ class BackupRepositoryImpl @Inject constructor(
         restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
         val file = File(filePath)
-        val backup = Okio.buffer(Okio.source(file)).use { source ->
+        val backup = file.source().buffer().use { source ->
             moshi.adapter(Backup::class.java).fromJson(source)
         }
 
@@ -189,19 +196,25 @@ class BackupRepositoryImpl @Inject constructor(
             restoreProgress.onNext(BackupRepository.Progress.Running(messageCount, index))
 
             try {
-                context.contentResolver.insert(Telephony.Sms.CONTENT_URI, contentValuesOf(
-                    Telephony.Sms.TYPE to message.type,
-                    Telephony.Sms.ADDRESS to message.address,
-                    Telephony.Sms.DATE to message.date,
-                    Telephony.Sms.DATE_SENT to message.dateSent,
-                    Telephony.Sms.READ to message.read,
-                    Telephony.Sms.SEEN to 1,
-                    Telephony.Sms.STATUS to message.status,
-                    Telephony.Sms.BODY to message.body,
-                    Telephony.Sms.PROTOCOL to message.protocol,
-                    Telephony.Sms.SERVICE_CENTER to message.serviceCenter,
-                    Telephony.Sms.LOCKED to message.locked,
-                    Telephony.Sms.SUBSCRIPTION_ID to message.subId))
+                val values = contentValuesOf(
+                        Telephony.Sms.TYPE to message.type,
+                        Telephony.Sms.ADDRESS to message.address,
+                        Telephony.Sms.DATE to message.date,
+                        Telephony.Sms.DATE_SENT to message.dateSent,
+                        Telephony.Sms.READ to message.read,
+                        Telephony.Sms.SEEN to 1,
+                        Telephony.Sms.STATUS to message.status,
+                        Telephony.Sms.BODY to message.body,
+                        Telephony.Sms.PROTOCOL to message.protocol,
+                        Telephony.Sms.SERVICE_CENTER to message.serviceCenter,
+                        Telephony.Sms.LOCKED to message.locked
+                )
+
+                if (prefs.canUseSubId.get()) {
+                    values.put(Telephony.Sms.SUBSCRIPTION_ID, message.subId)
+                }
+
+                context.contentResolver.insert(Telephony.Sms.CONTENT_URI, values)
             } catch (e: Exception) {
                 Timber.w(e)
                 errorCount++

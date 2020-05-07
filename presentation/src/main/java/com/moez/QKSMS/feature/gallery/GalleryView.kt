@@ -28,4 +28,6 @@ interface GalleryView : QkView<GalleryState> {
     fun screenTouched(): Observable<*>
     fun pageChanged(): Observable<MmsPart>
 
+    fun requestStoragePermission()
+
 }

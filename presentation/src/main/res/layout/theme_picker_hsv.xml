@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -39,8 +39,8 @@
         android:layout_height="wrap_content"
         android:layout_marginStart="24dp"
         android:gravity="center"
-        android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:text="@string/theme_hex"
         android:textStyle="bold"
         android:visibility="gone"
@@ -64,11 +64,11 @@
         android:layout_marginStart="16dp"
         android:gravity="center"
         android:text="#"
+        android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/hexLabel"
         app:layout_constraintStart_toEndOf="@id/hexSeparator"
         app:layout_constraintTop_toTopOf="@id/hexLabel"
-        app:textColor="primary"
         app:textSize="secondary"
         tools:ignore="HardcodedText" />
 
@@ -80,11 +80,11 @@
         android:gravity="center"
         android:paddingEnd="16dp"
         android:textAllCaps="true"
+        android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@id/hexLabel"
         app:layout_constraintStart_toEndOf="@id/hexSign"
         app:layout_constraintTop_toTopOf="@id/hexLabel"
-        app:textColor="primary"
         app:textSize="secondary"
         tools:text="1B8AE8" />
 

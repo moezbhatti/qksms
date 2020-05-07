@@ -26,8 +26,14 @@ interface ScheduledMessageRepository {
     /**
      * Saves a scheduled message
      */
-    fun saveScheduledMessage(date: Long, subId: Int, recipients: List<String>, sendAsGroup: Boolean, body: String,
-                             attachments: List<String>)
+    fun saveScheduledMessage(
+        date: Long,
+        subId: Int,
+        recipients: List<String>,
+        sendAsGroup: Boolean,
+        body: String,
+        attachments: List<String>
+    )
 
     /**
      * Returns all of the scheduled messages, sorted chronologically

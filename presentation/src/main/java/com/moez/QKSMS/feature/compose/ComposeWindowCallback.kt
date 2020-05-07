@@ -32,8 +32,12 @@ import android.view.Window
 import android.view.WindowManager
 import android.view.accessibility.AccessibilityEvent
 import androidx.annotation.RequiresApi
+import com.moez.QKSMS.feature.compose.editing.DetailedChipView
 
-class ComposeWindowCallback(private val localCallback: Window.Callback, private val activity: Activity) : Window.Callback {
+class ComposeWindowCallback(
+    private val localCallback: Window.Callback,
+    private val activity: Activity
+) : Window.Callback {
 
     override fun dispatchKeyEvent(keyEvent: KeyEvent): Boolean {
         return localCallback.dispatchKeyEvent(keyEvent)

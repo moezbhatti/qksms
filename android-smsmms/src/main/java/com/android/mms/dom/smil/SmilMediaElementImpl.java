@@ -17,23 +17,19 @@
 package com.android.mms.dom.smil;
 
 import com.android.mms.dom.events.EventImpl;
-import com.android.mms.logs.LogTag;
-import com.klinker.android.logger.Log;
 import org.w3c.dom.DOMException;
 import org.w3c.dom.events.DocumentEvent;
 import org.w3c.dom.events.Event;
 import org.w3c.dom.smil.ElementTime;
 import org.w3c.dom.smil.SMILMediaElement;
 import org.w3c.dom.smil.TimeList;
+import timber.log.Timber;
 
-public class SmilMediaElementImpl extends SmilElementImpl implements
-        SMILMediaElement {
+public class SmilMediaElementImpl extends SmilElementImpl implements SMILMediaElement {
     public final static String SMIL_MEDIA_START_EVENT = "SmilMediaStart";
     public final static String SMIL_MEDIA_END_EVENT = "SmilMediaEnd";
     public final static String SMIL_MEDIA_PAUSE_EVENT = "SmilMediaPause";
     public final static String SMIL_MEDIA_SEEK_EVENT = "SmilMediaSeek";
-    private final static String TAG = LogTag.TAG;
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
     ElementTime mElementTime = new ElementTimeImpl(this) {
@@ -43,7 +39,7 @@ public class SmilMediaElementImpl extends SmilElementImpl implements
                 Event event = doc.createEvent("Event");
                 event.initEvent(eventType, false, false);
                 if (LOCAL_LOGV) {
-                    Log.v(TAG, "Dispatching 'begin' event to "
+                    Timber.v("Dispatching 'begin' event to "
                             + SmilMediaElementImpl.this.getTagName() + " "
                             + SmilMediaElementImpl.this.getSrc() + " at "
                             + System.currentTimeMillis());
@@ -57,7 +53,7 @@ public class SmilMediaElementImpl extends SmilElementImpl implements
                 EventImpl event = (EventImpl) doc.createEvent("Event");
                 event.initEvent(eventType, false, false, seekTo);
                 if (LOCAL_LOGV) {
-                    Log.v(TAG, "Dispatching 'begin' event to "
+                    Timber.v("Dispatching 'begin' event to "
                             + SmilMediaElementImpl.this.getTagName() + " "
                             + SmilMediaElementImpl.this.getSrc() + " at "
                             + System.currentTimeMillis());
@@ -106,7 +102,7 @@ public class SmilMediaElementImpl extends SmilElementImpl implements
                         // Discrete media
                         dur = 0;
                     } else {
-                        Log.w(TAG, "Unknown media type");
+                        Timber.w("Unknown media type");
                     }
                 }
                 return dur;

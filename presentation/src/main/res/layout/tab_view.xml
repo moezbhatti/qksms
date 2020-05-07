@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,16 +17,16 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<com.moez.QKSMS.common.widget.QkTextView android:id="@+id/label"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<com.moez.QKSMS.common.widget.QkTextView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/label"
     android:layout_width="wrap_content"
     android:layout_height="match_parent"
     android:background="?attr/selectableItemBackground"
     android:backgroundTint="@android:color/transparent"
     android:gravity="center"
-    android:paddingEnd="12dp"
     android:paddingStart="12dp"
+    android:paddingEnd="12dp"
     android:textAllCaps="true"
     android:textStyle="bold"
     app:textSize="secondary" />

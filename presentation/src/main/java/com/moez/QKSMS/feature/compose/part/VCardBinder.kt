@@ -18,72 +18,68 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
-import android.content.ContentUris
 import android.content.Context
 import android.view.Gravity
-import android.view.View
 import android.widget.FrameLayout
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.Navigator
+import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
+import com.moez.QKSMS.databinding.MmsVcardListItemBinding
 import com.moez.QKSMS.extensions.isVCard
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.feature.compose.BubbleUtils
-import com.moez.QKSMS.mapper.CursorToPartImpl
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
 import ezvcard.Ezvcard
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
-import kotlinx.android.synthetic.main.mms_vcard_list_item.view.*
+import javax.inject.Inject
 
-class VCardBinder(
-    private val context: Context,
-    private val navigator: Navigator,
-    private val theme: Colors.Theme
-) : PartBinder {
+class VCardBinder @Inject constructor(
+    colors: Colors,
+    private val context: Context
+) : PartBinder<MmsVcardListItemBinding>(MmsVcardListItemBinding::inflate) {
 
-    override val partLayout = R.layout.mms_vcard_list_item
+    override var theme = colors.theme()
 
     override fun canBindPart(part: MmsPart) = part.isVCard()
 
-    override fun bindPart(
-        view: View,
+    override fun bindPartInternal(
+        holder: QkViewHolder<MmsVcardListItemBinding>,
         part: MmsPart,
         message: Message,
         canGroupWithPrevious: Boolean,
         canGroupWithNext: Boolean
     ) {
-        val uri = ContentUris.withAppendedId(CursorToPartImpl.CONTENT_URI, part.id)
-        val bubble = BubbleUtils.getBubble(canGroupWithPrevious, canGroupWithNext, message.isMe())
+        BubbleUtils.getBubble(false, canGroupWithPrevious, canGroupWithNext, message.isMe())
+                .let(holder.binding.vCardBackground::setBackgroundResource)
 
-        view.setOnClickListener { navigator.saveVcard(uri) }
-        view.vCardBackground.setBackgroundResource(bubble)
+        holder.binding.root.setOnClickListener { clicks.onNext(part.id) }
 
-        Observable.just(uri)
+        Observable.just(part.getUri())
                 .map(context.contentResolver::openInputStream)
                 .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { vcard -> view.name?.text = vcard.formattedName.value }
+                .subscribe { vcard -> holder.binding.name?.text = vcard.formattedName.value }
 
-        val params = view.vCardBackground.layoutParams as FrameLayout.LayoutParams
+        val params = holder.binding.vCardBackground.layoutParams as FrameLayout.LayoutParams
         if (!message.isMe()) {
-            view.vCardBackground.layoutParams = params.apply { gravity = Gravity.START }
-            view.vCardBackground.setBackgroundTint(theme.theme)
-            view.vCardAvatar.setTint(theme.textPrimary)
-            view.name.setTextColor(theme.textPrimary)
-            view.label.setTextColor(theme.textTertiary)
+            holder.binding.vCardBackground.layoutParams = params.apply { gravity = Gravity.START }
+            holder.binding.vCardBackground.setBackgroundTint(theme.theme)
+            holder.binding.vCardAvatar.setTint(theme.textPrimary)
+            holder.binding.name.setTextColor(theme.textPrimary)
+            holder.binding.label.setTextColor(theme.textTertiary)
         } else {
-            view.vCardBackground.layoutParams = params.apply { gravity = Gravity.END }
-            view.vCardBackground.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
-            view.vCardAvatar.setTint(view.context.resolveThemeColor(android.R.attr.textColorSecondary))
-            view.name.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorPrimary))
-            view.label.setTextColor(view.context.resolveThemeColor(android.R.attr.textColorTertiary))
+            holder.binding.vCardBackground.layoutParams = params.apply { gravity = Gravity.END }
+            holder.binding.vCardBackground.setBackgroundTint(holder.binding.root.context.resolveThemeColor(R.attr.bubbleColor))
+            holder.binding.vCardAvatar.setTint(holder.binding.root.context.resolveThemeColor(android.R.attr.textColorSecondary))
+            holder.binding.name.setTextColor(holder.binding.root.context.resolveThemeColor(android.R.attr.textColorPrimary))
+            holder.binding.label.setTextColor(holder.binding.root.context.resolveThemeColor(android.R.attr.textColorTertiary))
         }
     }
 

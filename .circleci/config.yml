@@ -1,0 +1,85 @@
+version: 2
+
+jobs:
+  build:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-29
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}-{{ checksum  "data/build.gradle" }}-{{ checksum  "domain/build.gradle" }}
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}-{{ checksum  "data/build.gradle" }}-{{ checksum  "domain/build.gradle" }}
+      - run:
+          name: Decrypt and unzip secrets
+          command: |
+            openssl aes-256-cbc -d -in secrets.tar.enc -md sha1 -k ${SECRETS_KEY} -iv ${SECRETS_IV} >> secrets.tar
+            tar xvf secrets.tar
+      - run:
+          name: Gradle build
+          command: ./gradlew :presentation:assembleWithAnalyticsRelease :presentation:bundleWithAnalyticsRelease
+      - run:
+          name: Flatten outputs
+          command: find presentation/build/outputs -mindepth 2 -type f -exec mv -i '{}' presentation/build/outputs/ ';'
+      - store_artifacts:
+          path: presentation/build/outputs
+      - persist_to_workspace:
+          root: presentation/build/outputs
+          paths: .
+
+  test:
+    working_directory: ~/code
+    docker:
+      - image: circleci/android:api-29
+    steps:
+      - checkout
+      - restore_cache:
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}-{{ checksum  "data/build.gradle" }}-{{ checksum  "domain/build.gradle" }}
+      - run:
+          name: Download dependencies
+          command: ./gradlew androidDependencies
+      - save_cache:
+          paths:
+            - ~/.gradle
+          key: jars-{{ checksum "build.gradle" }}-{{ checksum  "presentation/build.gradle" }}-{{ checksum  "data/build.gradle" }}-{{ checksum  "domain/build.gradle" }}
+      - store_test_results:
+          path: presentation/build/test-results
+
+  deploy:
+    docker:
+      - image: cibuilds/github:0.10
+    steps:
+      - attach_workspace:
+          at: presentation/build/outputs
+      - run:
+          name: "Publish Release on GitHub"
+          command: ghr -t ${GITHUB_TOKEN} -u ${CIRCLE_PROJECT_USERNAME} -r ${CIRCLE_PROJECT_REPONAME} -c ${CIRCLE_SHA1} ${CIRCLE_TAG} presentation/build/outputs/
+
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build:
+          filters:
+            tags:
+              only: /^v.*/
+      - test:
+          requires:
+            - build
+          filters:
+            tags:
+              only: /^v.*/
+      - deploy:
+          requires:
+            - test
+          filters:
+            branches:
+              ignore: /.*/
+            tags:
+              only: /^v.*/

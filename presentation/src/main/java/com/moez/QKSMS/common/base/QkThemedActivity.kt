@@ -27,16 +27,24 @@ import android.view.View
 import androidx.core.view.iterator
 import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.resolveThemeBoolean
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
+import com.moez.QKSMS.extensions.Optional
+import com.moez.QKSMS.extensions.asObservable
+import com.moez.QKSMS.extensions.mapNotNull
+import com.moez.QKSMS.repository.ConversationRepository
+import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.toolbar.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 /**
@@ -48,6 +56,9 @@ import javax.inject.Inject
 abstract class QkThemedActivity : QkActivity() {
 
     @Inject lateinit var colors: Colors
+    @Inject lateinit var conversationRepo: ConversationRepository
+    @Inject lateinit var messageRepo: MessageRepository
+    @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
     @Inject lateinit var prefs: Preferences
 
     /**
@@ -58,34 +69,51 @@ abstract class QkThemedActivity : QkActivity() {
 
     /**
      * Switch the theme if the threadId changes
+     * Set it based on the latest message in the conversation
      */
-    val theme = threadId
+    val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
-            .switchMap { threadId -> colors.themeObservable(threadId) }
+            .switchMap { threadId ->
+                val conversation = conversationRepo.getConversation(threadId)
+                when {
+                    conversation == null -> Observable.just(Optional(null))
+
+                    conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
+
+                    else -> messageRepo.getLastIncomingMessage(conversation.id)
+                            .asObservable()
+                            .mapNotNull { messages -> messages.firstOrNull() }
+                            .distinctUntilChanged { message -> message.address }
+                            .mapNotNull { message ->
+                                conversation.recipients.find { recipient ->
+                                    phoneNumberUtils.compare(recipient.address, message.address)
+                                }
+                            }
+                            .map { recipient -> Optional(recipient) }
+                            .startWith(Optional(conversation.recipients.firstOrNull()))
+                            .distinctUntilChanged()
+                }
+            }
+            .switchMap { colors.themeObservable(it.value) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
-
-        val night = prefs.night.get()
-        val black = prefs.black.get()
-        setTheme(getActivityThemeRes(night, black))
-
+        setTheme(getActivityThemeRes(prefs.black.get()))
         super.onCreate(savedInstanceState)
 
         // When certain preferences change, we need to recreate the activity
-        Observable.merge(
-                listOf(prefs.night, prefs.black, prefs.textSize, prefs.systemFont).map { it.asObservable().skip(1) })
+        val triggers = listOf(prefs.nightMode, prefs.night, prefs.black, prefs.textSize, prefs.systemFont)
+        Observable.merge(triggers.map { it.asObservable().skip(1) })
+                .debounce(400, TimeUnit.MILLISECONDS)
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(scope())
                 .subscribe { recreate() }
 
-        // Set the color for the status bar icons
-        // If night mode, or no dark icons supported, use light icons
-        // If night mode and only dark status icons supported, use dark status icons
-        // If night mode and all dark icons supported, use all dark icons
-        window.decorView.systemUiVisibility = when {
-            night || Build.VERSION.SDK_INT < Build.VERSION_CODES.M -> 0
-            Build.VERSION.SDK_INT < Build.VERSION_CODES.O -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR
-            else -> View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
+        // We can only set light nav bar on API 27 in attrs, but we can do it in API 26 here
+        if (Build.VERSION.SDK_INT == Build.VERSION_CODES.O) {
+            val night = !resolveThemeBoolean(R.attr.isLightTheme)
+            window.decorView.systemUiVisibility = if (night) 0 else
+                View.SYSTEM_UI_FLAG_LIGHT_STATUS_BAR or View.SYSTEM_UI_FLAG_LIGHT_NAVIGATION_BAR
         }
 
         // Some devices don't let you modify android.R.attr.navigationBarColor
@@ -105,7 +133,7 @@ abstract class QkThemedActivity : QkActivity() {
 
         // Set the color for the overflow and navigation icon
         val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
-        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
+        toolbar.overflowIcon = toolbar.overflowIcon?.apply { setTint(textSecondary) }
 
         // Update the colours of the menu items
         Observables.combineLatest(menu, theme) { menu, theme ->
@@ -127,10 +155,9 @@ abstract class QkThemedActivity : QkActivity() {
     /**
      * This can be overridden in case an activity does not want to use the default themes
      */
-    open fun getActivityThemeRes(night: Boolean, black: Boolean) = when {
-        night && black -> R.style.AppThemeBlack
-        night && !black -> R.style.AppThemeDark
-        else -> R.style.AppThemeLight
+    open fun getActivityThemeRes(black: Boolean) = when {
+        black -> R.style.AppTheme_Black
+        else -> R.style.AppTheme
     }
 
 }

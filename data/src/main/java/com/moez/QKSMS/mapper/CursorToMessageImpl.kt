@@ -67,7 +67,8 @@ class CursorToMessageImpl @Inject constructor(
             Mms.DELIVERY_REPORT,
             Mms.READ_REPORT,
             MmsSms.PendingMessages.ERROR_TYPE,
-            Mms.STATUS)
+            Mms.STATUS
+    )
 
     override fun map(from: Pair<Cursor, CursorToMessage.MessageColumns>): Message {
         val cursor = from.first

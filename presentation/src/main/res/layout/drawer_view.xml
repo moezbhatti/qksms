@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -28,8 +28,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp">
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <LinearLayout
             android:id="@+id/inbox"
@@ -54,7 +54,7 @@
             <ImageView
                 android:id="@+id/archivedIcon"
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_archive_black_24dp"
+                android:src="@drawable/ic_archive_white_24dp"
                 tools:tint="?android:attr/textColorSecondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
@@ -66,8 +66,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="?android:attr/divider" />
 
         <LinearLayout
@@ -130,7 +130,7 @@
 
             <ImageView
                 style="@style/DrawerIcon"
-                android:src="@drawable/ic_block_black_24dp"
+                android:src="@drawable/ic_block_white_24dp"
                 android:tint="?android:attr/textColorSecondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
@@ -142,8 +142,8 @@
         <View
             android:layout_width="match_parent"
             android:layout_height="1dp"
-            android:layout_marginBottom="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
             android:background="?android:attr/divider" />
 
         <LinearLayout
@@ -210,9 +210,9 @@
             android:id="@+id/plusBanner"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/rounded_rectangle_outline_2dp"
             android:backgroundTint="?android:attr/divider"
             android:foreground="?attr/selectableItemBackground"
@@ -232,14 +232,14 @@
                 android:id="@+id/plusTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/drawer_plus_banner_title"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/plusNext"
                 app:layout_constraintStart_toEndOf="@id/plusIcon"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textColor="primary"
                 app:textSize="primary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
@@ -248,10 +248,10 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="2dp"
                 android:text="@string/drawer_plus_banner_summary"
+                android:textColor="?android:attr/textColorSecondary"
                 app:layout_constraintEnd_toEndOf="@id/plusTitle"
                 app:layout_constraintStart_toStartOf="@id/plusTitle"
                 app:layout_constraintTop_toBottomOf="@id/plusTitle"
-                app:textColor="secondary"
                 app:textSize="secondary" />
 
             <ImageView
@@ -270,9 +270,9 @@
             android:id="@+id/rateLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
             android:background="@drawable/rounded_rectangle_outline_2dp"
             android:backgroundTint="?android:attr/divider">
 
@@ -291,28 +291,28 @@
                 android:id="@+id/rateTitle"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="16dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/rate_title"
+                android:textColor="?android:attr/textColorPrimary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@id/rateIcon"
                 app:layout_constraintTop_toTopOf="parent"
-                app:textColor="primary"
                 app:textSize="primary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/rateSummary"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="16dp"
                 android:layout_marginTop="2dp"
+                android:layout_marginEnd="16dp"
                 android:text="@string/rate_summary"
+                android:textColor="?android:attr/textColorSecondary"
                 app:layout_constraintEnd_toEndOf="@id/rateTitle"
                 app:layout_constraintStart_toStartOf="@id/rateTitle"
                 app:layout_constraintTop_toBottomOf="@id/rateTitle"
-                app:textColor="secondary"
                 app:textSize="secondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
@@ -321,29 +321,29 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginTop="8dp"
-                android:paddingBottom="16dp"
                 android:paddingStart="16dp"
                 android:paddingTop="16dp"
+                android:paddingBottom="16dp"
                 android:text="@string/rate_dismiss"
+                android:textColor="?android:attr/textColorTertiary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@id/rateOkay"
                 app:layout_constraintTop_toBottomOf="@id/rateSummary"
-                app:textColor="tertiary"
                 app:textSize="secondary" />
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/rateOkay"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
+                android:layout_marginEnd="8dp"
                 android:background="?attr/selectableItemBackground"
                 android:padding="16dp"
                 android:text="@string/rate_okay"
+                android:textColor="?android:attr/textColorSecondary"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/rateSummary"
-                app:textColor="secondary"
                 app:textSize="secondary" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>

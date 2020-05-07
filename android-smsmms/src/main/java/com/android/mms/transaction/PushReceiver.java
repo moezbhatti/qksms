@@ -28,8 +28,8 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Inbox;
+
 import com.android.mms.MmsConfig;
-import com.android.mms.logs.LogTag;
 import com.google.android.mms.ContentType;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.DeliveryInd;
@@ -39,12 +39,14 @@ import com.google.android.mms.pdu_alt.PduHeaders;
 import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.ReadOrigInd;
-import com.klinker.android.logger.Log;
+import com.klinker.android.send_message.Utils;
 
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
+
+import timber.log.Timber;
 
 import static android.provider.Telephony.Sms.Intents.WAP_PUSH_DELIVER_ACTION;
 import static android.provider.Telephony.Sms.Intents.WAP_PUSH_RECEIVED_ACTION;
@@ -57,7 +59,6 @@ import static com.google.android.mms.pdu_alt.PduHeaders.MESSAGE_TYPE_READ_ORIG_I
  * TransactionService by passing the push-data to it.
  */
 public class PushReceiver extends BroadcastReceiver {
-    private static final String TAG = LogTag.TAG;
 
     static final String[] PROJECTION = new String[]{Mms.CONTENT_LOCATION, Mms.LOCKED};
 
@@ -77,7 +78,7 @@ public class PushReceiver extends BroadcastReceiver {
 
         @Override
         protected Void doInBackground(Intent... intents) {
-            Log.v(TAG, "receiving a new mms message");
+            Timber.v("receiving a new mms message");
             Intent intent = intents[0];
 
             // Get raw PDU push-data from the message and parse it
@@ -86,7 +87,7 @@ public class PushReceiver extends BroadcastReceiver {
             GenericPdu pdu = parser.parse();
 
             if (pdu == null) {
-                Log.e(TAG, "Invalid PUSH data");
+                Timber.e("Invalid PUSH data");
                 return null;
             }
 
@@ -106,8 +107,8 @@ public class PushReceiver extends BroadcastReceiver {
                             break;
                         }
 
-                        Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"), true,
-                                true, null);
+                        Uri uri = p.persist(pdu, Uri.parse("content://mms/inbox"),
+                                PduPersister.DUMMY_THREAD_ID, true, true, null);
                         // Update thread ID for ReadOrigInd & DeliveryInd.
                         ContentValues values = new ContentValues(1);
                         values.put(Mms.THREAD_ID, threadId);
@@ -136,36 +137,33 @@ public class PushReceiver extends BroadcastReceiver {
                             // don't allow persist() to create a thread for the notificationInd
                             // because it causes UI jank.
                             Uri uri = p.persist(pdu, Inbox.CONTENT_URI,
-                                    !NotificationTransaction.allowAutoDownload(mContext),
-                                    true,
-                                    null);
+                                    PduPersister.DUMMY_THREAD_ID, true, true, null);
 
                             String location = getContentLocation(mContext, uri);
                             if (downloadedUrls.contains(location)) {
-                                Log.v(TAG, "already added this download, don't download again");
+                                Timber.v("already added this download, don't download again");
                                 return null;
                             } else {
                                 downloadedUrls.add(location);
                             }
 
-                            Log.v(TAG, "receiving on a lollipop+ device");
-
-                            DownloadManager.getInstance().downloadMultimediaMessage(mContext, location, uri, true);
+                            int subId = intent.getIntExtra("subscription", Utils.getDefaultSubscriptionId());
+                            DownloadManager.getInstance().downloadMultimediaMessage(mContext, location, uri, true, subId);
                         } else {
-                            Log.v(TAG, "Skip downloading duplicate message: " + new String(nInd.getContentLocation()));
+                            Timber.v("Skip downloading duplicate message: " + new String(nInd.getContentLocation()));
                         }
                         break;
                     }
                     default:
-                        Log.e(TAG, "Received unrecognized PDU.");
+                        Timber.e("Received unrecognized PDU.");
                 }
             } catch (MmsException e) {
-                Log.e(TAG, "Failed to save the data from PUSH: type=" + type, e);
+                Timber.e(e, "Failed to save the data from PUSH: type=" + type);
             } catch (RuntimeException e) {
-                Log.e(TAG, "Unexpected RuntimeException.", e);
+                Timber.e(e, "Unexpected RuntimeException.");
             }
 
-            Log.v(TAG, "PUSH Intent processed.");
+            Timber.v("PUSH Intent processed.");
 
             return null;
         }
@@ -178,15 +176,15 @@ public class PushReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
-        Log.v(TAG, intent.getAction() + " " + intent.getType());
+        Timber.v(intent.getAction() + " " + intent.getType());
         if ((intent.getAction().equals(WAP_PUSH_DELIVER_ACTION) || intent.getAction().equals(WAP_PUSH_RECEIVED_ACTION))
                 && ContentType.MMS_MESSAGE.equals(intent.getType())) {
-            Log.v(TAG, "Received PUSH Intent: " + intent);
+            Timber.v("Received PUSH Intent: " + intent);
 
             MmsConfig.init(context);
             new ReceivePushTask(context, goAsync()).executeOnExecutor(PUSH_RECEIVER_EXECUTOR, intent);
 
-            Log.v("mms_receiver", context.getPackageName() + " received and aborted");
+            Timber.v(context.getPackageName() + " received and aborted");
         }
     }
 

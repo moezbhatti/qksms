@@ -19,11 +19,11 @@
 package com.moez.QKSMS.feature.plus
 
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.manager.AnalyticsManager
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
@@ -62,6 +62,26 @@ class PlusViewModel @Inject constructor(
         view.donateIntent
                 .autoDisposable(view.scope())
                 .subscribe { navigator.showDonation() }
+
+        view.themeClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
+
+        view.scheduleClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showScheduled() }
+
+        view.backupClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showBackup() }
+
+        view.delayedClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
+
+        view.nightClicks
+                .autoDisposable(view.scope())
+                .subscribe { navigator.showSettings() }
     }
 
 }

@@ -18,15 +18,14 @@ package com.android.mms;
 
 import android.content.Context;
 import android.content.res.XmlResourceParser;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.R;
 import org.xmlpull.v1.XmlPullParser;
 import org.xmlpull.v1.XmlPullParserException;
+import timber.log.Timber;
 
 import java.io.IOException;
 
 public class MmsConfig {
-    private static final String TAG = "MmsConfig";
     private static final boolean DEBUG = true;
     private static final boolean LOCAL_LOGV = false;
 
@@ -107,7 +106,7 @@ public class MmsConfig {
 
     public static void init(Context context) {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "MmsConfig.init()");
+            Timber.v("MmsConfig.init()");
         }
         // Always put the mnc/mcc in the log so we can tell which mms_config.xml was loaded.
 
@@ -120,7 +119,7 @@ public class MmsConfig {
 
     public static int getMaxMessageSize() {
         if (LOCAL_LOGV) {
-            Log.v(TAG, "MmsConfig.getMaxMessageSize(): " + mMaxMessageSize);
+            Timber.v("MmsConfig.getMaxMessageSize(): " + mMaxMessageSize);
         }
        return mMaxMessageSize;
     }
@@ -209,7 +208,7 @@ public class MmsConfig {
                 }
 
                 if (DEBUG) {
-                    Log.v(TAG, "tag: " + tag + " value: " + value + " - " +
+                    Timber.v("tag: " + tag + " value: " + value + " - " +
                             text);
                 }
                 if ("name".equalsIgnoreCase(name)) {
@@ -297,11 +296,11 @@ public class MmsConfig {
                 }
             }
         } catch (XmlPullParserException e) {
-            Log.e(TAG, "loadMmsSettings caught ", e);
+            Timber.e(e, "loadMmsSettings caught ");
         } catch (NumberFormatException e) {
-            Log.e(TAG, "loadMmsSettings caught ", e);
+            Timber.e(e, "loadMmsSettings caught ");
         } catch (IOException e) {
-            Log.e(TAG, "loadMmsSettings caught ", e);
+            Timber.e(e, "loadMmsSettings caught ");
         } finally {
             parser.close();
         }
@@ -316,7 +315,7 @@ public class MmsConfig {
             String err =
                 String.format("MmsConfig.loadMmsSettings mms_config.xml missing %s setting",
                         errorStr);
-            Log.e(TAG, err);
+            Timber.e(err);
         }
     }
 

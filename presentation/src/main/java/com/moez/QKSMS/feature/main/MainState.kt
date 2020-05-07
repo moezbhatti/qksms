@@ -29,7 +29,7 @@ data class MainState(
     val drawerOpen: Boolean = false,
     val upgraded: Boolean = true,
     val showRating: Boolean = false,
-    val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle(),
+    val syncing: SyncRepository.SyncProgress = SyncRepository.SyncProgress.Idle,
     val defaultSms: Boolean = true,
     val smsPermission: Boolean = true,
     val contactPermission: Boolean = true
@@ -38,6 +38,7 @@ data class MainState(
 sealed class MainPage
 
 data class Inbox(
+    val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
     val data: RealmResults<Conversation>? = null,
@@ -50,6 +51,7 @@ data class Searching(
 ) : MainPage()
 
 data class Archived(
+    val addContact: Boolean = false,
     val markPinned: Boolean = true,
     val markRead: Boolean = false,
     val data: RealmResults<Conversation>? = null,

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -20,9 +20,9 @@
 <resources>
 
     <!-- On Oreo, use the light status and navigation bars -->
-    <style name="AppThemeLight" parent="AppBaseThemeLight">
+    <style name="AppTheme" parent="AppBaseTheme">
         <item name="android:navigationBarColor">@color/white</item>
-        <item name="android:statusBarColor">@color/statusBarLight</item>
+        <item name="android:statusBarColor">@color/backgroundLight</item>
         <item name="android:windowLightNavigationBar">true</item>
         <item name="android:windowLightStatusBar">true</item>
     </style>

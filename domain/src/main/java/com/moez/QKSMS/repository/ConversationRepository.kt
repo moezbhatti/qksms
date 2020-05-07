@@ -19,7 +19,9 @@
 package com.moez.QKSMS.repository
 
 import com.moez.QKSMS.model.Conversation
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.SearchResult
+import io.reactivex.Observable
 import io.realm.RealmResults
 
 interface ConversationRepository {
@@ -35,13 +37,28 @@ interface ConversationRepository {
 
     fun setConversationName(id: Long, name: String)
 
-    fun searchConversations(query: String): List<SearchResult>
+    fun searchConversations(query: CharSequence): List<SearchResult>
 
     fun getBlockedConversations(): RealmResults<Conversation>
+
+    fun getBlockedConversationsAsync(): RealmResults<Conversation>
 
     fun getConversationAsync(threadId: Long): Conversation
 
     fun getConversation(threadId: Long): Conversation?
+
+    /**
+     * Returns all conversations with an id in [threadIds]
+     */
+    fun getConversations(vararg threadIds: Long): RealmResults<Conversation>
+
+    fun getUnmanagedConversations(): Observable<List<Conversation>>
+
+    fun getRecipients(): RealmResults<Recipient>
+
+    fun getUnmanagedRecipients(): Observable<List<Recipient>>
+
+    fun getRecipient(recipientId: Long): Recipient?
 
     fun getThreadId(recipient: String): Long?
 
@@ -68,7 +85,7 @@ interface ConversationRepository {
 
     fun markUnpinned(vararg threadIds: Long)
 
-    fun markBlocked(vararg threadIds: Long)
+    fun markBlocked(threadIds: List<Long>, blockingClient: Int, blockReason: String?)
 
     fun markUnblocked(vararg threadIds: Long)
 

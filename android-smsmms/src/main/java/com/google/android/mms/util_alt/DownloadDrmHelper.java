@@ -18,10 +18,10 @@ package com.google.android.mms.util_alt;
 
 import android.content.Context;
 import android.drm.DrmManagerClient;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 public class DownloadDrmHelper {
-    private static final String TAG = "DownloadDrmHelper";
+
 
     /** The MIME type of special DRM files */
     public static final String MIMETYPE_DRM_MESSAGE = "application/vnd.oma.drm.message";
@@ -46,10 +46,9 @@ public class DownloadDrmHelper {
                     result = drmClient.canHandle("", mimetype);
                 }
             } catch (IllegalArgumentException e) {
-                Log.w(TAG,
-                        "DrmManagerClient instance could not be created, context is Illegal.");
+                Timber.w("DrmManagerClient instance could not be created, context is Illegal.");
             } catch (IllegalStateException e) {
-                Log.w(TAG, "DrmManagerClient didn't initialize properly.");
+                Timber.w("DrmManagerClient didn't initialize properly.");
             }
         }
         return result;
@@ -99,10 +98,9 @@ public class DownloadDrmHelper {
                 result = drmClient.getOriginalMimeType(path);
             }
         } catch (IllegalArgumentException ex) {
-            Log.w(TAG,
-                    "Can't get original mime type since path is null or empty string.");
+            Timber.w("Can't get original mime type since path is null or empty string.");
         } catch (IllegalStateException ex) {
-            Log.w(TAG, "DrmManagerClient didn't initialize properly.");
+            Timber.w("DrmManagerClient didn't initialize properly.");
         }
         return result;
     }

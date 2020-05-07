@@ -24,7 +24,6 @@ import android.graphics.drawable.Icon
 import android.os.Build
 import android.service.chooser.ChooserTarget
 import android.service.chooser.ChooserTargetService
-import android.telephony.PhoneNumberUtils
 import androidx.annotation.RequiresApi
 import androidx.core.os.bundleOf
 import com.moez.QKSMS.R
@@ -53,13 +52,13 @@ class QkChooserTargetService : ChooserTargetService() {
     }
 
     private fun createShortcutForConversation(conversation: Conversation): ChooserTarget {
-        val icon = when {
-            conversation.recipients.size == 1 -> {
-                val address = conversation.recipients.first()!!.address
+        val icon = when (conversation.recipients.size) {
+            1 -> {
+                val photoUri = conversation.recipients.first()?.contact?.photoUri
                 val request = GlideApp.with(this)
                         .asBitmap()
                         .circleCrop()
-                        .load(PhoneNumberUtils.stripSeparators(address))
+                        .load(photoUri)
                         .submit()
                 val bitmap = tryOrNull(false) { request.get() }
 

@@ -36,41 +36,27 @@ class CursorToConversationImpl @Inject constructor(
         val URI: Uri = Uri.parse("content://mms-sms/conversations?simple=true")
         val PROJECTION = arrayOf(
                 Threads._ID,
-                Threads.DATE,
-                Threads.RECIPIENT_IDS,
-                Threads.MESSAGE_COUNT,
-                Threads.READ,
-                Threads.SNIPPET)
+                Threads.RECIPIENT_IDS
+        )
 
         const val ID = 0
-        const val DATE = 1
-        const val RECIPIENT_IDS = 2
-        const val MESSAGE_COUNT = 3
-        const val READ = 4
-        const val SNIPPET = 5
+        const val RECIPIENT_IDS = 1
     }
 
     override fun map(from: Cursor): Conversation {
         return Conversation().apply {
             id = from.getLong(ID)
-            date = from.getLong(DATE)
             recipients.addAll(from.getString(RECIPIENT_IDS)
                     .split(" ")
                     .filter { it.isNotBlank() }
                     .map { recipientId -> recipientId.toLong() }
                     .map { recipientId -> Recipient().apply { id = recipientId } })
-            count = from.getInt(MESSAGE_COUNT)
-            read = from.getInt(READ) == 1
-            snippet = from.getString(SNIPPET) ?: ""
         }
     }
 
-    override fun getConversationsCursor(lastSync: Long): Cursor? {
+    override fun getConversationsCursor(): Cursor? {
         return when (permissionManager.hasReadSms()) {
-            true -> context.contentResolver.query(URI, PROJECTION,
-                    "date > $lastSync", null,
-                    "date desc")
-
+            true -> context.contentResolver.query(URI, PROJECTION, null, null, "date desc")
             false -> null
         }
     }

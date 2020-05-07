@@ -23,12 +23,12 @@ import android.media.RingtoneManager
 import android.net.Uri
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.androidxcompat.scope
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
@@ -46,6 +46,7 @@ class NotificationPrefsViewModel @Inject constructor(
 
     private val notifications = prefs.notifications(threadId)
     private val previews = prefs.notificationPreviews(threadId)
+    private val wake = prefs.wakeScreen(threadId)
     private val vibration = prefs.vibration(threadId)
     private val ringtone = prefs.ringtone(threadId)
 
@@ -74,6 +75,9 @@ class NotificationPrefsViewModel @Inject constructor(
 
         disposables += prefs.notifAction3.asObservable()
                 .subscribe { previewId -> newState { copy(action3Summary = actionLabels[previewId]) } }
+
+        disposables += wake.asObservable()
+                .subscribe { enabled -> newState { copy(wakeEnabled = enabled) } }
 
         disposables += vibration.asObservable()
                 .subscribe { enabled -> newState { copy(vibrationEnabled = enabled) } }
@@ -106,6 +110,8 @@ class NotificationPrefsViewModel @Inject constructor(
                         R.id.notifications -> notifications.set(!notifications.get())
 
                         R.id.previews -> view.showPreviewModeDialog()
+
+                        R.id.wake -> wake.set(!wake.get())
 
                         R.id.vibration -> vibration.set(!vibration.get())
 

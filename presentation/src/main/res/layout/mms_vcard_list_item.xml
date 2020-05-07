@@ -1,5 +1,6 @@
-<?xml version="1.0" encoding="utf-8"?><!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -48,6 +49,7 @@
             android:paddingEnd="12dp"
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintStart_toEndOf="@id/vCardAvatar"
+            app:layout_constraintTop_toTopOf="parent"
             app:textSize="primary"
             tools:text="@tools:sample/full_names" />
 

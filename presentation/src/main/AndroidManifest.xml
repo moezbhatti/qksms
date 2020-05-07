@@ -17,13 +17,14 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<manifest package="com.moez.QKSMS"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.moez.QKSMS">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Used for starting foreground service for backup/restore on Android P+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
@@ -31,6 +32,7 @@
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
     <uses-permission android:name="android.permission.SEND_SMS" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_SMS" />
@@ -40,8 +42,9 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
-        android:theme="@style/AppThemeDark">
+        android:theme="@style/AppLaunchTheme">
 
         <activity
             android:name=".feature.main.MainActivity"
@@ -87,6 +90,11 @@
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="image/*" />
             </intent-filter>
+            <intent-filter>
+                <action android:name="android.intent.action.SEND" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <data android:mimeType="text/x-vcard" />
+            </intent-filter>
 
             <meta-data
                 android:name="android.service.chooser.chooser_target_service"
@@ -96,17 +104,19 @@
         <activity android:name=".feature.plus.PlusActivity" />
         <activity
             android:name=".feature.gallery.GalleryActivity"
-            android:theme="@style/AppThemeBlack" />
+            android:theme="@style/AppTheme.Black" />
         <activity android:name=".feature.conversationinfo.ConversationInfoActivity" />
         <activity android:name=".feature.notificationprefs.NotificationPrefsActivity" />
-        <activity android:name=".feature.blocked.BlockedActivity" />
+        <activity android:name=".feature.blocking.BlockingActivity" />
         <activity
             android:name=".feature.qkreply.QkReplyActivity"
             android:excludeFromRecents="true"
             android:taskAffinity=""
-            android:theme="@style/AppThemeLightDialog" />
+            android:theme="@style/AppThemeDialog"
+            android:windowSoftInputMode="adjustResize" />
         <activity android:name=".feature.scheduled.ScheduledActivity" />
         <activity android:name=".feature.backup.BackupActivity" />
+        <activity android:name=".feature.contacts.ContactsActivity" />
 
         <receiver android:name=".receiver.BootReceiver">
             <intent-filter>
@@ -134,6 +144,8 @@
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".receiver.SmsSentReceiver" />
+        <receiver android:name=".receiver.SmsDeliveredReceiver" />
         <receiver
             android:name=".receiver.MmsSentReceiver"
             android:taskAffinity="com.moez.QKSMS.MMS_SENT" />
@@ -143,6 +155,8 @@
         <receiver
             android:name=".receiver.MmsReceivedReceiver"
             android:taskAffinity="com.klinker.android.messaging.MMS_RECEIVED" />
+        <receiver android:name=".receiver.MarkArchivedReceiver" />
+        <receiver android:name=".receiver.BlockThreadReceiver" />
         <receiver android:name=".receiver.MarkSeenReceiver" />
         <receiver android:name=".receiver.MarkReadReceiver" />
         <receiver android:name=".receiver.RemoteMessagingReceiver" />
@@ -163,6 +177,7 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/widget_info" />
         </receiver>
+        <receiver android:name=".receiver.SendSmsReceiver" />
 
         <service android:name="com.android.mms.transaction.TransactionService" />
         <service android:name=".feature.backup.RestoreBackupService" />
@@ -191,11 +206,23 @@
                 <action android:name="android.service.chooser.ChooserTargetService" />
             </intent-filter>
         </service>
-        <service android:name=".service.SendSmsService" />
 
+        <meta-data
+            android:name="com.callcontrol.datashare.messaging"
+            android:value="true" />
         <meta-data
             android:name="preloaded_fonts"
             android:resource="@array/preloaded_fonts" />
+
+        <provider
+            android:name="androidx.core.content.FileProvider"
+            android:authorities="${applicationId}.fileprovider"
+            android:exported="false"
+            android:grantUriPermissions="true">
+            <meta-data
+                android:name="android.support.FILE_PROVIDER_PATHS"
+                android:resource="@xml/provider_paths" />
+        </provider>
 
     </application>
 

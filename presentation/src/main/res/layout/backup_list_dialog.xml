@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -27,9 +27,9 @@
     <com.moez.QKSMS.common.widget.QkTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/backup_restore_dialog_title"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
@@ -38,9 +38,9 @@
     <com.moez.QKSMS.common.widget.QkTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
         android:layout_marginTop="2dp"
+        android:layout_marginEnd="24dp"
         android:text="@string/backup_restore_dialog_summary"
         android:textColor="?android:attr/textColorTertiary"
         app:textSize="primary" />
@@ -57,8 +57,8 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingBottom="8dp"
         android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         tools:itemCount="3"
         tools:listitem="@layout/backup_list_item" />
@@ -67,9 +67,9 @@
         android:id="@+id/empty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="16dp"
-        android:layout_marginEnd="24dp"
         android:layout_marginStart="24dp"
+        android:layout_marginEnd="24dp"
+        android:layout_marginBottom="16dp"
         android:gravity="center"
         android:text="@string/backup_restore_dialog_empty"
         android:textColor="?android:attr/textColorSecondary"

@@ -25,18 +25,18 @@ import android.content.BroadcastReceiver
 import androidx.core.provider.FontRequest
 import androidx.emoji.text.EmojiCompat
 import androidx.emoji.text.FontRequestEmojiCompatConfig
-import com.akaita.java.rxjava2debug.RxJava2Debug
-import com.bugsnag.android.Bugsnag
-import com.bugsnag.android.Configuration
-import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.BugsnagTree
+import com.moez.QKSMS.common.util.CrashlyticsTree
 import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.ReferralManager
+import com.moez.QKSMS.migration.QkMigration
 import com.moez.QKSMS.migration.QkRealmMigration
 import com.moez.QKSMS.util.NightModeManager
+import com.uber.rxdogtag.RxDogTag
+import com.uber.rxdogtag.autodispose.AutoDisposeConfigurer
 import dagger.android.AndroidInjector
 import dagger.android.DispatchingAndroidInjector
 import dagger.android.HasActivityInjector
@@ -44,47 +44,47 @@ import dagger.android.HasBroadcastReceiverInjector
 import dagger.android.HasServiceInjector
 import io.realm.Realm
 import io.realm.RealmConfiguration
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import timber.log.Timber
 import javax.inject.Inject
 
 class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverInjector, HasServiceInjector {
 
     /**
-     * Inject this so that it is forced to initialize
+     * Inject these so that they are forced to initialize
      */
     @Suppress("unused")
     @Inject lateinit var analyticsManager: AnalyticsManager
+    @Suppress("unused")
+    @Inject lateinit var qkMigration: QkMigration
 
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
     @Inject lateinit var fileLoggingTree: FileLoggingTree
     @Inject lateinit var nightModeManager: NightModeManager
-
-    private val packages = arrayOf("com.moez.QKSMS")
+    @Inject lateinit var realmMigration: QkRealmMigration
+    @Inject lateinit var referralManager: ReferralManager
 
     override fun onCreate() {
         super.onCreate()
 
-        Bugsnag.init(this, Configuration(BuildConfig.BUGSNAG_API_KEY).apply {
-            appVersion = BuildConfig.VERSION_NAME
-            projectPackages = packages
-        })
-
-        RxJava2Debug.enableRxJava2AssemblyTracking()
+        AppComponentManager.init(this)
+        appComponent.inject(this)
 
         Realm.init(this)
         Realm.setDefaultConfiguration(RealmConfiguration.Builder()
                 .compactOnLaunch()
-                .migration(QkRealmMigration())
-                .schemaVersion(QkRealmMigration.SCHEMA_VERSION)
+                .migration(realmMigration)
+                .schemaVersion(QkRealmMigration.SchemaVersion)
                 .build())
 
-        AppComponentManager.init(this)
-        appComponent.inject(this)
+        qkMigration.performMigration()
 
-        packageManager.getInstallerPackageName(packageName)?.let { installer ->
-            analyticsManager.setUserProperty("Installer", installer)
+        GlobalScope.launch(Dispatchers.IO) {
+            referralManager.trackReferrer()
         }
 
         nightModeManager.updateCurrentTheme()
@@ -97,7 +97,11 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         EmojiCompat.init(FontRequestEmojiCompatConfig(this, fontRequest))
 
-        Timber.plant(Timber.DebugTree(), BugsnagTree(), fileLoggingTree)
+        Timber.plant(Timber.DebugTree(), CrashlyticsTree(), fileLoggingTree)
+
+        RxDogTag.builder()
+                .configureWith(AutoDisposeConfigurer::configure)
+                .install()
     }
 
     override fun activityInjector(): AndroidInjector<Activity> {

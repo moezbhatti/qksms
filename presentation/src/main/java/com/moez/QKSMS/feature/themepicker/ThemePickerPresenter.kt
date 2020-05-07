@@ -25,7 +25,8 @@ import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.util.Preferences
-import com.uber.autodispose.kotlin.autoDisposable
+import com.uber.autodispose.android.lifecycle.scope
+import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
@@ -33,14 +34,14 @@ import javax.inject.Named
 
 class ThemePickerPresenter @Inject constructor(
     prefs: Preferences,
-    @Named("threadId") private val threadId: Long,
+    @Named("recipientId") private val recipientId: Long,
     private val billingManager: BillingManager,
     private val colors: Colors,
     private val navigator: Navigator,
     private val widgetManager: WidgetManager
-) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(threadId = threadId)) {
+) : QkPresenter<ThemePickerView, ThemePickerState>(ThemePickerState(recipientId = recipientId)) {
 
-    private val theme: Preference<Int> = prefs.theme(threadId)
+    private val theme: Preference<Int> = prefs.theme(recipientId)
 
     override fun bindIntents(view: ThemePickerView) {
         super.bindIntents(view)
@@ -54,7 +55,7 @@ class ThemePickerPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { color ->
                     theme.set(color)
-                    if (threadId == 0L) {
+                    if (recipientId == 0L) {
                         widgetManager.updateTheme()
                     }
                 }
@@ -80,7 +81,7 @@ class ThemePickerPresenter @Inject constructor(
                         view.showQksmsPlusSnackbar()
                     } else {
                         theme.set(color)
-                        if (threadId == 0L) {
+                        if (recipientId == 0L) {
                             widgetManager.updateTheme()
                         }
                     }

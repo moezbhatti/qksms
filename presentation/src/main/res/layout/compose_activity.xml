@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -17,14 +17,13 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<androidx.constraintlayout.widget.ConstraintLayout android:id="@+id/contentView"
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/contentView"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:animateLayoutChanges="true"
-    android:background="?attr/composeBackground"
+    android:background="?android:attr/windowBackground"
     android:orientation="vertical"
     tools:context="com.moez.QKSMS.feature.compose.ComposeActivity">
 
@@ -32,15 +31,15 @@
         android:id="@+id/messageList"
         android:layout_width="0dp"
         android:layout_height="0dp"
+        android:layout_marginBottom="12dp"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:paddingBottom="16dp"
         android:paddingTop="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="@id/composeBackground"
+        app:layout_constraintBottom_toTopOf="@id/messageBackground"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
         app:stackFromEnd="true"
         tools:listitem="@layout/message_list_item_in" />
 
@@ -48,14 +47,14 @@
         android:id="@+id/messagesEmpty"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="56dp"
         android:layout_marginStart="56dp"
-        android:layout_marginTop="16dp"
+        android:layout_marginTop="32dp"
+        android:layout_marginEnd="56dp"
         android:gravity="center"
         android:text="@string/compose_messages_empty"
+        android:textColor="?android:attr/textColorTertiary"
         android:visibility="gone"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        app:textColor="tertiary"
+        app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground"
         app:textSize="secondary" />
 
     <ProgressBar
@@ -76,7 +75,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="sendAsGroupBackground, sendAsGroupTitle, sendAsGroupSummary, sendAsGroupSwitch, sendAsGroupShadow"
+        app:constraint_referenced_ids="sendAsGroupBackground,sendAsGroupTitle,sendAsGroupSummary,sendAsGroupSwitch,sendAsGroupShadow"
         tools:visibility="visible" />
 
     <View
@@ -91,9 +90,9 @@
         android:id="@+id/sendAsGroupTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="16dp"
         android:layout_marginStart="16dp"
         android:layout_marginTop="16dp"
+        android:layout_marginEnd="16dp"
         android:text="@string/compose_send_group_title"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
@@ -132,52 +131,33 @@
         android:background="@drawable/ab_shadow"
         app:layout_constraintTop_toBottomOf="@id/sendAsGroupBackground" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/contacts"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:background="?android:attr/windowBackground"
-        android:clipChildren="false"
-        android:clipToPadding="false"
-        android:paddingBottom="8dp"
-        android:paddingTop="8dp"
-        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/toolbar"
-        tools:listitem="@layout/contact_list_item"
-        tools:visibility="gone" />
-
     <androidx.constraintlayout.widget.Group
         android:id="@+id/composeBar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:constraint_referenced_ids="composeBackground, messageBackground, attachments, attach, message, counter, send" />
+        app:constraint_referenced_ids="messageBackground,attachments,attach,message,counter,send" />
 
     <View
-        android:id="@+id/composeBackground"
-        android:layout_width="0dp"
-        android:layout_height="8dp"
-        android:layout_marginTop="8dp"
-        android:background="@drawable/compose_bar_background"
-        android:backgroundTint="?attr/composeBackground"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@id/messageBackground" />
+        android:id="@+id/composeDivider"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginBottom="12dp"
+        android:background="?android:attr/divider"
+        android:visibility="gone"
+        app:layout_constraintBottom_toTopOf="@id/messageBackground"
+        app:layout_goneMarginBottom="12dp" />
 
     <View
         android:id="@+id/messageBackground"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginBottom="8dp"
+        android:layout_marginStart="12dp"
         android:layout_marginEnd="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginBottom="12dp"
         android:background="@drawable/rounded_rectangle_22dp"
         android:backgroundTint="?attr/bubbleColor"
-        android:elevation="4dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintEnd_toStartOf="@id/send"
         app:layout_constraintStart_toEndOf="@id/attach"
         app:layout_constraintTop_toTopOf="@id/scheduledCancel" />
 
@@ -186,15 +166,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="scheduledTitle, scheduledTime, scheduledCancel, scheduledSeparator" />
+        app:constraint_referenced_ids="scheduledTitle,scheduledTime,scheduledCancel,scheduledSeparator" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/scheduledTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:text="@string/compose_scheduled_for"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
@@ -209,9 +188,8 @@
         android:id="@+id/scheduledTime"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:elevation="4dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
+        android:paddingEnd="16dp"
         android:textColor="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/scheduledCancel"
         app:layout_constraintEnd_toStartOf="@id/scheduledCancel"
@@ -224,7 +202,6 @@
         android:id="@+id/scheduledCancel"
         android:layout_width="44dp"
         android:layout_height="56dp"
-        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_cancel_black_24dp"
         android:tint="?android:attr/textColorSecondary"
@@ -236,7 +213,6 @@
         android:layout_width="0dp"
         android:layout_height="1dp"
         android:background="?android:attr/divider"
-        android:elevation="4dp"
         app:layout_constraintBottom_toTopOf="@id/attachments"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
         app:layout_constraintStart_toStartOf="@id/messageBackground" />
@@ -247,10 +223,9 @@
         android:layout_height="wrap_content"
         android:clipChildren="false"
         android:clipToPadding="false"
-        android:elevation="4dp"
         android:orientation="horizontal"
-        android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
         app:layout_constraintBottom_toTopOf="@id/message"
         app:layout_constraintEnd_toEndOf="@id/messageBackground"
@@ -264,16 +239,15 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"
         android:background="@null"
-        android:elevation="4dp"
         android:gravity="center_vertical"
         android:hint="@string/compose_hint"
         android:inputType="textLongMessage|textCapSentences|textMultiLine"
         android:maxLines="6"
         android:minHeight="44dp"
-        android:paddingBottom="12dp"
-        android:paddingEnd="16dp"
         android:paddingStart="16dp"
         android:paddingTop="12dp"
+        android:paddingEnd="16dp"
+        android:paddingBottom="12dp"
         android:textColorHint="?android:attr/textColorTertiary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
         app:layout_constraintEnd_toStartOf="@id/sim"
@@ -283,20 +257,19 @@
         android:id="@+id/sim"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:background="?attr/selectableItemBackground"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/compose_sim_cd"
-        android:elevation="4dp"
-        android:padding="10dp"
+        android:padding="8dp"
         android:src="@drawable/ic_sim_card_black_24dp"
         android:tint="?android:attr/textColorSecondary"
+        android:visibility="gone"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toStartOf="@id/send" />
+        app:layout_constraintEnd_toEndOf="@id/messageBackground" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/simIndex"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:elevation="4dp"
         android:gravity="center"
         android:textColor="?android:attr/textColorPrimaryInverse"
         android:textSize="14dp"
@@ -313,12 +286,11 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginBottom="4dp"
-        android:elevation="4dp"
         android:gravity="center"
+        android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toTopOf="@id/send"
         app:layout_constraintEnd_toEndOf="@id/send"
         app:layout_constraintStart_toStartOf="@id/send"
-        app:textColor="secondary"
         app:textSize="tertiary"
         tools:text="108 / 2" />
 
@@ -326,25 +298,23 @@
         android:id="@+id/send"
         android:layout_width="44dp"
         android:layout_height="44dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackgroundBorderless"
         android:contentDescription="@string/compose_send_cd"
-        android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_send_black_24dp"
         android:tint="?android:textColorSecondary"
         app:layout_constraintBottom_toBottomOf="@id/messageBackground"
-        app:layout_constraintEnd_toEndOf="@id/messageBackground"
-        tools:backgroundTint="@color/tools_theme" />
+        app:layout_constraintEnd_toEndOf="parent" />
 
     <androidx.appcompat.widget.Toolbar
         android:id="@+id/toolbar"
         style="@style/Toolbar"
-        android:layout_width="0dp"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center_vertical"
         app:layout_constrainedHeight="true"
-        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHeight_max="140dp"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
         <LinearLayout
@@ -362,8 +332,8 @@
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
                 style="@style/ToolbarText"
+                android:textColor="?android:attr/textColorTertiary"
                 android:visibility="gone"
-                app:textColor="tertiary"
                 app:textSize="secondary"
                 tools:text="3 of 9 results" />
 
@@ -371,8 +341,8 @@
                 android:id="@+id/chips"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginBottom="4dp"
                 android:layout_marginTop="4dp"
+                android:layout_marginBottom="4dp"
                 android:scrollbars="vertical"
                 tools:visibility="gone" />
 
@@ -397,8 +367,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="contact, contactLabel, schedule, scheduleLabel, gallery, galleryLabel, camera,
-         cameraLabel, attachingBackground" />
+        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,gallery,galleryLabel,camera,cameraLabel,attachingBackground" />
 
     <View
         android:id="@+id/attachingBackground"
@@ -437,8 +406,8 @@
         android:backgroundTint="?attr/bubbleColor"
         android:elevation="4dp"
         android:gravity="center_vertical"
-        android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/compose_contact_cd"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/contact"
@@ -471,8 +440,8 @@
         android:backgroundTint="?attr/bubbleColor"
         android:elevation="4dp"
         android:gravity="center_vertical"
-        android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/compose_schedule_cd"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/schedule"
@@ -505,8 +474,8 @@
         android:backgroundTint="?attr/bubbleColor"
         android:elevation="4dp"
         android:gravity="center_vertical"
-        android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/compose_gallery_cd"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/gallery"
@@ -539,8 +508,8 @@
         android:backgroundTint="?attr/bubbleColor"
         android:elevation="4dp"
         android:gravity="center_vertical"
-        android:paddingEnd="8dp"
         android:paddingStart="8dp"
+        android:paddingEnd="8dp"
         android:text="@string/compose_camera_cd"
         android:textColor="?android:attr/textColorPrimary"
         app:layout_constraintBottom_toBottomOf="@id/camera"
@@ -551,14 +520,13 @@
         android:id="@+id/attach"
         android:layout_width="44dp"
         android:layout_height="44dp"
-        android:layout_marginBottom="8dp"
-        android:layout_marginStart="8dp"
+        android:layout_marginStart="12dp"
         android:background="@drawable/circle"
         android:contentDescription="@string/compose_attach_cd"
         android:elevation="4dp"
         android:padding="10dp"
         android:src="@drawable/ic_add_black_24dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toBottomOf="@id/messageBackground"
         app:layout_constraintStart_toStartOf="parent"
         tools:backgroundTint="@color/tools_theme"
         tools:tint="@color/textPrimaryDark" />

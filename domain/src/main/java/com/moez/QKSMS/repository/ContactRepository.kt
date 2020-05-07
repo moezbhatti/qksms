@@ -20,7 +20,8 @@ package com.moez.QKSMS.repository
 
 import android.net.Uri
 import com.moez.QKSMS.model.Contact
-import io.reactivex.Flowable
+import com.moez.QKSMS.model.ContactGroup
+import io.reactivex.Observable
 import io.reactivex.Single
 import io.realm.RealmResults
 
@@ -30,6 +31,12 @@ interface ContactRepository {
 
     fun getContacts(): RealmResults<Contact>
 
-    fun getUnmanagedContacts(): Flowable<List<Contact>>
+    fun getUnmanagedContact(lookupKey: String): Contact?
+
+    fun getUnmanagedContacts(starred: Boolean = false): Observable<List<Contact>>
+
+    fun getUnmanagedContactGroups(): Observable<List<ContactGroup>>
+
+    fun setDefaultPhoneNumber(lookupKey: String, phoneNumberId: Long)
 
 }

@@ -23,9 +23,13 @@ import android.graphics.Rect
 import android.view.View
 import androidx.recyclerview.widget.RecyclerView
 import com.moez.QKSMS.common.util.extensions.dpToPx
-import javax.inject.Inject
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoItem.ConversationInfoMedia
+import com.moez.QKSMS.feature.conversationinfo.ConversationInfoItem.ConversationInfoRecipient
 
-class GridSpacingItemDecoration @Inject constructor(context: Context) : RecyclerView.ItemDecoration() {
+class GridSpacingItemDecoration(
+    private val adapter: ConversationInfoAdapter,
+    private val context: Context
+) : RecyclerView.ItemDecoration() {
 
     private val spanCount = 3
     private val spacing = 2.dpToPx(context)
@@ -34,13 +38,19 @@ class GridSpacingItemDecoration @Inject constructor(context: Context) : Recycler
         super.getItemOffsets(outRect, view, parent, state)
 
         val position = parent.getChildAdapterPosition(view)
-        val column = position % spanCount
+        val item = adapter.getItem(position)
 
-        outRect.left = column * spacing / spanCount
-        outRect.right = spacing - (column + 1) * spacing / spanCount
+        if (item is ConversationInfoRecipient && adapter.getItem(position + 1) !is ConversationInfoRecipient) {
+            outRect.bottom = 8.dpToPx(context)
+        } else if (item is ConversationInfoMedia) {
+            val firstPartIndex = adapter.data.indexOfFirst { it is ConversationInfoMedia }
+            val localPartIndex = position - firstPartIndex
 
-        if (position >= spanCount) {
+            val column = localPartIndex % spanCount
+
             outRect.top = spacing
+            outRect.left = column * spacing / spanCount
+            outRect.right = spacing - (column + 1) * spacing / spanCount
         }
     }
 

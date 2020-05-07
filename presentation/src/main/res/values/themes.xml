@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -20,107 +20,61 @@
 <resources>
 
     <attr name="bubbleColor" format="reference" />
-    <attr name="composeBackground" format="reference" />
+    <attr name="switchThumbEnabled" format="color" />
+    <attr name="switchThumbDisabled" format="color" />
+    <attr name="switchTrackEnabled" format="color" />
+    <attr name="switchTrackDisabled" format="color" />
 
-    <style name="AppThemeLight" parent="AppBaseThemeLight" />
+    <style name="AppLaunchTheme" parent="Theme.AppCompat.NoActionBar">
+        <item name="android:navigationBarColor">@color/backgroundDark</item>
+        <item name="android:statusBarColor">@color/backgroundDark</item>
+        <item name="android:windowBackground">@color/backgroundDark</item>
+    </style>
 
-    <!-- Light theme -->
-    <style name="AppBaseThemeLight" parent="Theme.AppCompat.Light.NoActionBar">item>
+    <style name="AppTheme" parent="AppBaseTheme" />
+
+    <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>
-        <item name="android:queryBackground">@color/toolbarSearchBackgroundLight</item>
+        <item name="android:queryBackground">@color/bubbleLight</item>
         <item name="android:statusBarColor">@color/black</item>
-        <item name="android:textColorPrimary">@color/textPrimary</item>
-        <item name="android:textColorSecondary">@color/textSecondary</item>
-        <item name="android:textColorTertiary">@color/textTertiary</item>
-        <item name="android:windowBackground">@color/white</item>
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorTertiary">@color/text_tertiary</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
         <item name="android:windowContentTransitions">true</item>
-        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
+        <item name="actionBarPopupTheme">@style/PopupTheme</item>
         <item name="bubbleColor">@color/bubbleLight</item>
-        <item name="colorPrimary">@color/toolbarLight</item>
-        <item name="colorPrimaryDark">@color/statusBarLight</item>
-        <item name="composeBackground">@color/backgroundLight</item>
+        <item name="colorPrimary">@color/backgroundLight</item>
+        <item name="colorPrimaryDark">@color/backgroundLight</item>
+        <item name="selectableItemBackground">@drawable/ripple</item>
+        <item name="switchThumbEnabled">@color/switchThumbEnabledLight</item>
+        <item name="switchThumbDisabled">@color/switchThumbDisabledLight</item>
+        <item name="switchTrackEnabled">@color/switchTrackEnabledLight</item>
+        <item name="switchTrackDisabled">@color/switchTrackDisabledLight</item>
+        <item name="windowActionBar">false</item>
+    </style>
+
+    <style name="AppThemeDialog" parent="Theme.AppCompat.Light.Dialog">
+        <item name="android:textColorPrimary">@color/text_primary</item>
+        <item name="android:textColorSecondary">@color/text_secondary</item>
+        <item name="android:textColorTertiary">@color/text_tertiary</item>
+        <item name="android:windowBackground">@color/backgroundLight</item>
+        <item name="actionBarPopupTheme">@style/PopupTheme</item>
+        <item name="bubbleColor">@color/bubbleLight</item>
+        <item name="colorPrimary">@color/backgroundLight</item>
+        <item name="colorPrimaryDark">@color/backgroundLight</item>
         <item name="selectableItemBackground">@drawable/ripple</item>
         <item name="windowActionBar">false</item>
     </style>
 
-    <style name="AppThemeLightDialog" parent="Theme.AppCompat.Light.Dialog">
-        <item name="android:textColorPrimary">@color/textPrimary</item>
-        <item name="android:textColorSecondary">@color/textSecondary</item>
-        <item name="android:textColorTertiary">@color/textTertiary</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="actionBarPopupTheme">@style/PopupThemeLight</item>
-        <item name="bubbleColor">@color/bubbleLight</item>
-        <item name="colorPrimary">@color/toolbarLight</item>
-        <item name="colorPrimaryDark">@color/statusBarLight</item>
-        <item name="composeBackground">@color/backgroundLight</item>
-        <item name="selectableItemBackground">@drawable/ripple</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="PopupThemeLight" parent="ThemeOverlay.AppCompat.Light">
-        <item name="android:colorBackground">@color/white</item>
+    <style name="PopupTheme" parent="ThemeOverlay.AppCompat.Light">
+        <item name="android:colorBackground">@color/backgroundLight</item>
         <item name="android:textColor">@color/textPrimary</item>
     </style>
 
-    <!-- Dark theme -->
-    <style name="AppThemeDark" parent="Theme.AppCompat.NoActionBar">
-        <item name="android:divider">@color/separatorDark</item>
-        <item name="android:navigationBarColor">@color/backgroundDark</item>
-        <item name="android:queryBackground">@color/toolbarSearchBackgroundDark</item>
-        <item name="android:statusBarColor">@color/statusBarDark</item>
-        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
-        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
-        <item name="android:textColorTertiary">@color/textTertiaryDark</item>
-        <item name="android:windowBackground">@color/backgroundDark</item>
-        <item name="android:windowContentTransitions">true</item>
-        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
-        <item name="bubbleColor">@color/bubbleDark</item>
-        <item name="colorPrimary">@color/toolbarDark</item>
-        <item name="colorPrimaryDark">@color/statusBarDark</item>
-        <item name="composeBackground">@color/backgroundDark</item>
-        <item name="selectableItemBackground">@drawable/ripple_dark</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="AppThemeDarkDialog" parent="Theme.AppCompat.Dialog">
-        <item name="android:textColorPrimary">@color/textPrimaryDark</item>
-        <item name="android:textColorSecondary">@color/textSecondaryDark</item>
-        <item name="android:textColorTertiary">@color/textTertiaryDark</item>
-        <item name="android:windowBackground">@android:color/transparent</item>
-        <item name="actionBarPopupTheme">@style/PopupThemeDark</item>
-        <item name="bubbleColor">@color/bubbleDark</item>
-        <item name="colorPrimary">@color/toolbarDark</item>
-        <item name="colorPrimaryDark">@color/statusBarDark</item>
-        <item name="composeBackground">@color/backgroundDark</item>
-        <item name="selectableItemBackground">@drawable/ripple_dark</item>
-        <item name="windowActionBar">false</item>
-    </style>
-
-    <style name="PopupThemeDark" parent="ThemeOverlay.AppCompat">
-        <item name="android:colorBackground">@color/backgroundDark</item>
-        <item name="android:textColor">@color/textPrimaryDark</item>
-    </style>
-
-    <!-- Black theme -->
-    <style name="AppThemeBlack" parent="AppThemeDark">
-        <item name="android:navigationBarColor">@color/black</item>
-        <item name="android:statusBarColor">@color/black</item>
-        <item name="android:windowBackground">@color/black</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="composeBackground">@color/black</item>
-    </style>
-
-    <style name="AppThemeBlackDialog" parent="AppThemeDarkDialog">
-        <item name="actionBarPopupTheme">@style/PopupThemeBlack</item>
-        <item name="colorPrimary">@color/black</item>
-        <item name="colorPrimaryDark">@color/black</item>
-        <item name="composeBackground">@color/black</item>
-    </style>
-
-    <style name="PopupThemeBlack" parent="@style/PopupThemeDark">
-        <item name="android:colorBackground">@color/black</item>
-        <item name="android:textColor">@color/textPrimaryDark</item>
-    </style>
+    <!-- Black mode. No changes needed when not in night theme -->
+    <style name="AppTheme.Black" />
+    <style name="AppThemeDialog.Black" />
+    <style name="PopupTheme.Black" />
 
 </resources>

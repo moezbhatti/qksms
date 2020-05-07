@@ -27,6 +27,7 @@ data class NotificationPrefsState(
     val notificationsEnabled: Boolean = true,
     val previewSummary: String = "",
     val previewId: Int = Preferences.NOTIFICATION_PREVIEWS_ALL,
+    val wakeEnabled: Boolean = false,
     val action1Summary: String = "",
     val action2Summary: String = "",
     val action3Summary: String = "",

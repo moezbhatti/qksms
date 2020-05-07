@@ -46,7 +46,7 @@ import com.google.android.mms.util_alt.DrmConvertSession;
 import com.google.android.mms.util_alt.PduCache;
 import com.google.android.mms.util_alt.PduCacheEntry;
 import com.google.android.mms.util_alt.SqliteWrapper;
-import com.klinker.android.logger.Log;
+import timber.log.Timber;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
@@ -65,11 +65,9 @@ import java.util.Set;
  * This class is the high-level manager of PDU storage.
  */
 public class PduPersister {
-    private static final String TAG = "PduPersister";
-    private static final boolean DEBUG = false;
     private static final boolean LOCAL_LOGV = false;
 
-    private static final long DUMMY_THREAD_ID = Long.MAX_VALUE;
+    public static final long DUMMY_THREAD_ID = Long.MAX_VALUE;
     private static final int DEFAULT_SUBSCRIPTION = 0;
     private static final int MAX_TEXT_BODY_SIZE = 300 * 1024;
 
@@ -367,7 +365,7 @@ public class PduPersister {
         try {
             if ((c == null) || (c.getCount() == 0)) {
                 if (LOCAL_LOGV) {
-                    Log.v(TAG, "loadParts(" + msgId + "): no part to load.");
+                    Timber.v("loadParts(" + msgId + "): no part to load.");
                 }
                 return null;
             }
@@ -456,7 +454,7 @@ public class PduPersister {
                                 len = is.read(buffer);
                             }
                         } catch (IOException e) {
-                            Log.e(TAG, "Failed to load part data", e);
+                            Timber.e(e, "Failed to load part data");
                             c.close();
                             throw new MmsException(e);
                         } finally {
@@ -464,7 +462,7 @@ public class PduPersister {
                                 try {
                                     is.close();
                                 } catch (IOException e) {
-                                    Log.e(TAG, "Failed to close stream", e);
+                                    Timber.e(e, "Failed to close stream");
                                 } // Ignore
                             }
                         }
@@ -508,7 +506,7 @@ public class PduPersister {
                                         addrType);
                                 break;
                             default:
-                                Log.e(TAG, "Unknown address type: " + addrType);
+                                Timber.e("Unknown address type: " + addrType);
                                 break;
                         }
                     }
@@ -535,12 +533,12 @@ public class PduPersister {
             synchronized (PDU_CACHE_INSTANCE) {
                 if (PDU_CACHE_INSTANCE.isUpdating(uri)) {
                     if (LOCAL_LOGV) {
-                        Log.v(TAG, "load: " + uri + " blocked by isUpdating()");
+                        Timber.v("load: " + uri + " blocked by isUpdating()");
                     }
                     try {
                         PDU_CACHE_INSTANCE.wait();
                     } catch (InterruptedException e) {
-                        Log.e(TAG, "load: ", e);
+                        Timber.e(e, "load: ");
                     }
                     cacheEntry = PDU_CACHE_INSTANCE.get(uri);
                     if (cacheEntry != null) {
@@ -845,12 +843,12 @@ public class PduPersister {
                         try {
                             path = convertUriToPath(mContext, uri);
                             if (LOCAL_LOGV) {
-                                Log.v(TAG, "drm uri: " + uri + " path: " + path);
+                                Timber.v("drm uri: " + uri + " path: " + path);
                             }
                             File f = new File(path);
                             long len = f.length();
                             if (LOCAL_LOGV) {
-                                Log.v(TAG, "drm path: " + path + " len: " + len);
+                                Timber.v("drm path: " + path + " len: " + len);
                             }
                             if (len > 0) {
                                 // we're not going to re-persist and re-encrypt an already
@@ -858,7 +856,7 @@ public class PduPersister {
                                 return;
                             }
                         } catch (Exception e) {
-                            Log.e(TAG, "Can't get file info for: " + part.getDataUri(), e);
+                            Timber.e(e, "Can't get file info for: " + part.getDataUri());
                         }
                     }
                     // We haven't converted the file yet, start the conversion
@@ -874,7 +872,7 @@ public class PduPersister {
                 if (data == null) {
                     dataUri = part.getDataUri();
                     if ((dataUri == null) || (dataUri == uri)) {
-                        Log.w(TAG, "Can't find data for this part.");
+                        Timber.w("Can't find data for this part.");
                         return;
                     }
                     // dataUri can look like:
@@ -887,7 +885,7 @@ public class PduPersister {
                     }
 
                     if (LOCAL_LOGV) {
-                        Log.v(TAG, "Saving data to: " + uri);
+                        Timber.v("Saving data to: " + uri);
                     }
 
                     byte[] buffer = new byte[8192];
@@ -905,7 +903,7 @@ public class PduPersister {
                     }
                 } else {
                     if (LOCAL_LOGV) {
-                        Log.v(TAG, "Saving data to: " + uri);
+                        Timber.v("Saving data to: " + uri);
                     }
                     if (!isDrm) {
                         os.write(data);
@@ -921,24 +919,24 @@ public class PduPersister {
                 }
             }
         } catch (FileNotFoundException e) {
-            Log.e(TAG, "Failed to open Input/Output stream.", e);
+            Timber.e(e, "Failed to open Input/Output stream.");
             throw new MmsException(e);
         } catch (IOException e) {
-            Log.e(TAG, "Failed to read/write data.", e);
+            Timber.e(e, "Failed to read/write data.");
             throw new MmsException(e);
         } finally {
             if (os != null) {
                 try {
                     os.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "IOException while closing: " + os, e);
+                    Timber.e(e, "IOException while closing: " + os);
                 } // Ignore
             }
             if (is != null) {
                 try {
                     is.close();
                 } catch (IOException e) {
-                    Log.e(TAG, "IOException while closing: " + is, e);
+                    Timber.e(e, "IOException while closing: " + is);
                 } // Ignore
             }
             if (drmConvertSession != null) {
@@ -1025,12 +1023,12 @@ public class PduPersister {
             // purging it.
             if (PDU_CACHE_INSTANCE.isUpdating(uri)) {
                 if (LOCAL_LOGV) {
-                    Log.v(TAG, "updateHeaders: " + uri + " blocked by isUpdating()");
+                    Timber.v("updateHeaders: " + uri + " blocked by isUpdating()");
                 }
                 try {
                     PDU_CACHE_INSTANCE.wait();
                 } catch (InterruptedException e) {
-                    Log.e(TAG, "updateHeaders: ", e);
+                    Timber.e(e, "updateHeaders: ");
                 }
             }
         }
@@ -1193,12 +1191,12 @@ public class PduPersister {
             synchronized (PDU_CACHE_INSTANCE) {
                 if (PDU_CACHE_INSTANCE.isUpdating(uri)) {
                     if (LOCAL_LOGV) {
-                        Log.v(TAG, "updateParts: " + uri + " blocked by isUpdating()");
+                        Timber.v("updateParts: " + uri + " blocked by isUpdating()");
                     }
                     try {
                         PDU_CACHE_INSTANCE.wait();
                     } catch (InterruptedException e) {
-                        Log.e(TAG, "updateParts: ", e);
+                        Timber.e(e, "updateParts: ");
                     }
                     cacheEntry = PDU_CACHE_INSTANCE.get(uri);
                     if (cacheEntry != null) {
@@ -1265,6 +1263,7 @@ public class PduPersister {
      *
      * @param pdu             The PDU object to be stored.
      * @param uri             Where to store the given PDU object.
+     * @param threadId
      * @param createThreadId  if true, this function may create a thread id for the recipients
      * @param groupMmsEnabled if true, all of the recipients addressed in the PDU will be used
      *                        to create the associated thread. When false, only the sender will be used in finding or
@@ -1273,7 +1272,7 @@ public class PduPersister {
      * @return A Uri which can be used to access the stored PDU.
      */
 
-    public Uri persist(GenericPdu pdu, Uri uri, boolean createThreadId, boolean groupMmsEnabled,
+    public Uri persist(GenericPdu pdu, Uri uri, long threadId, boolean createThreadId, boolean groupMmsEnabled,
                        HashMap<Uri, InputStream> preOpenedFiles) throws MmsException {
 
         if (uri == null) {
@@ -1301,12 +1300,12 @@ public class PduPersister {
             // purging it.
             if (PDU_CACHE_INSTANCE.isUpdating(uri)) {
                 if (LOCAL_LOGV) {
-                    Log.v(TAG, "persist: " + uri + " blocked by isUpdating()");
+                    Timber.v("persist: " + uri + " blocked by isUpdating()");
                 }
                 try {
                     PDU_CACHE_INSTANCE.wait();
                 } catch (InterruptedException e) {
-                    Log.e(TAG, "persist1: ", e);
+                    Timber.e(e, "persist1: ");
                 }
             }
         }
@@ -1402,8 +1401,7 @@ public class PduPersister {
                     loadRecipients(PduHeaders.TO, recipients, addressMap, false);
                     break;
             }
-            long threadId = DUMMY_THREAD_ID;
-            if (createThreadId && !recipients.isEmpty()) {
+            if (threadId == DUMMY_THREAD_ID && createThreadId && !recipients.isEmpty()) {
                 // Given all the recipients associated with this message, find (or create) the
                 // correct thread.
                 threadId = Threads.getOrCreateThreadId(mContext, recipients);
@@ -1552,7 +1550,7 @@ public class PduPersister {
             return new String(bytes, CharacterSets.MIMENAME_ISO_8859_1);
         } catch (UnsupportedEncodingException e) {
             // Impossible to reach here!
-            Log.e(TAG, "ISO_8859_1 must be supported!", e);
+            Timber.e(e, "ISO_8859_1 must be supported!");
             return "";
         }
     }
@@ -1565,7 +1563,7 @@ public class PduPersister {
             return data.getBytes(CharacterSets.MIMENAME_ISO_8859_1);
         } catch (UnsupportedEncodingException e) {
             // Impossible to reach here!
-            Log.e(TAG, "ISO_8859_1 must be supported!", e);
+            Timber.e(e, "ISO_8859_1 must be supported!");
             return new byte[0];
         }
     }
@@ -1583,7 +1581,7 @@ public class PduPersister {
      */
     public Cursor getPendingMessages(long dueTime) {
         if (!checkReadSmsPermissions()) {
-            Log.w(TAG, "No read sms permissions have been granted");
+            Timber.w("No read sms permissions have been granted");
             return null;
         }
         Uri.Builder uriBuilder = PendingMessages.CONTENT_URI.buildUpon();

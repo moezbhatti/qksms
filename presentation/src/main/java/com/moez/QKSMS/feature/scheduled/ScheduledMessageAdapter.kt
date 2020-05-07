@@ -18,29 +18,30 @@
  */
 package com.moez.QKSMS.feature.scheduled
 
+import android.content.Context
 import android.net.Uri
-import android.telephony.PhoneNumberUtils
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
-import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.databinding.ScheduledMessageListItemBinding
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.model.ScheduledMessage
 import com.moez.QKSMS.repository.ContactRepository
+import com.moez.QKSMS.util.PhoneNumberUtils
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.scheduled_message_list_item.view.*
 import javax.inject.Inject
 
 class ScheduledMessageAdapter @Inject constructor(
+    private val context: Context,
     private val contactRepo: ContactRepository,
-    private val dateFormatter: DateFormatter
-) : QkRealmAdapter<ScheduledMessage>() {
+    private val dateFormatter: DateFormatter,
+    private val phoneNumberUtils: PhoneNumberUtils
+) : QkRealmAdapter<ScheduledMessage, ScheduledMessageListItemBinding>() {
 
     private val contacts by lazy { contactRepo.getContacts() }
     private val contactCache = ContactCache()
@@ -48,37 +49,34 @@ class ScheduledMessageAdapter @Inject constructor(
 
     val clicks: Subject<Long> = PublishSubject.create()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.scheduled_message_list_item, parent, false)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ScheduledMessageListItemBinding> {
+        return QkViewHolder(parent, ScheduledMessageListItemBinding::inflate).apply {
+            binding.attachments.adapter = ScheduledMessageAttachmentAdapter(context)
+            binding.attachments.setRecycledViewPool(imagesViewPool)
 
-        view.attachments.adapter = ScheduledMessageAttachmentAdapter()
-        view.attachments.setRecycledViewPool(imagesViewPool)
-
-        return QkViewHolder(view).apply {
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 val message = getItem(adapterPosition) ?: return@setOnClickListener
                 clicks.onNext(message.id)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder<ScheduledMessageListItemBinding>, position: Int) {
         val message = getItem(position) ?: return
-        val view = holder.containerView
 
         // GroupAvatarView only accepts recipients, so map the phone numbers to recipients
-        view.avatars.contacts = message.recipients.map { address -> Recipient(address = address) }
+        holder.binding.avatars.recipients = message.recipients.map { address -> Recipient(address = address) }
 
-        view.recipients.text = message.recipients.joinToString(",") { address ->
+        holder.binding.recipients.text = message.recipients.joinToString(",") { address ->
             contactCache[address]?.name?.takeIf { it.isNotBlank() } ?: address
         }
 
-        view.date.text = dateFormatter.getScheduledTimestamp(message.date)
-        view.body.text = message.body
+        holder.binding.date.text = dateFormatter.getScheduledTimestamp(message.date)
+        holder.binding.body.text = message.body
 
-        val adapter = view.attachments.adapter as ScheduledMessageAttachmentAdapter
+        val adapter = holder.binding.attachments.adapter as ScheduledMessageAttachmentAdapter
         adapter.data = message.attachments.map(Uri::parse)
-        view.attachments.isVisible = message.attachments.isNotEmpty()
+        holder.binding.attachments.isVisible = message.attachments.isNotEmpty()
     }
 
     /**
@@ -91,7 +89,7 @@ class ScheduledMessageAdapter @Inject constructor(
             if (super.get(key)?.isValid != true) {
                 set(key, contacts.firstOrNull { contact ->
                     contact.numbers.any {
-                        PhoneNumberUtils.compare(it.address, key)
+                        phoneNumberUtils.compare(it.address, key)
                     }
                 })
             }

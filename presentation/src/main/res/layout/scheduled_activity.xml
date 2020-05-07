@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
   ~
   ~ This file is part of QKSMS.
   ~
@@ -39,8 +39,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="vertical"
-                android:paddingEnd="24dp"
-                android:paddingStart="24dp">
+                android:paddingStart="24dp"
+                android:paddingEnd="24dp">
 
                 <com.moez.QKSMS.common.widget.QkTextView
                     style="@style/TextPrimary"
@@ -48,7 +48,7 @@
                     android:layout_height="wrap_content"
                     android:layout_marginTop="8dp"
                     android:text="@string/scheduled_empty_description"
-                    app:textColor="secondary" />
+                    android:textColor="?android:attr/textColorSecondary" />
 
                 <Space
                     android:layout_width="match_parent"
@@ -78,8 +78,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="end"
-                    android:layout_marginEnd="16dp"
                     android:layout_marginTop="8dp"
+                    android:layout_marginEnd="16dp"
                     android:gravity="end"
                     android:text="@string/scheduled_empty_message_3_timestamp"
                     android:textColor="?android:attr/textColorSecondary"
@@ -96,8 +96,8 @@
                 android:id="@+id/messages"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingBottom="8dp"
                 android:paddingTop="8dp"
+                android:paddingBottom="8dp"
                 app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
                 tools:listitem="@layout/scheduled_message_list_item" />
 
@@ -142,8 +142,8 @@
             android:id="@+id/upgradeLabel"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginEnd="16dp"
             android:layout_marginStart="16dp"
+            android:layout_marginEnd="16dp"
             android:text="@string/title_qksms_plus"
             android:textColor="@color/textPrimaryDark"
             android:textStyle="bold"
@@ -151,7 +151,9 @@
 
     </LinearLayout>
 
-    <include layout="@layout/collapsing_toolbar" />
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/collapsing_toolbar" />
 
     <View
         android:layout_width="match_parent"

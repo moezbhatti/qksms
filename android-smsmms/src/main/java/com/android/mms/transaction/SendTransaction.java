@@ -25,7 +25,6 @@ import android.net.Uri;
 import android.provider.Telephony.Mms;
 import android.provider.Telephony.Mms.Sent;
 import android.text.TextUtils;
-import com.android.mms.logs.LogTag;
 import com.android.mms.util.RateController;
 import com.android.mms.util.SendingProgressTokenManager;
 import com.google.android.mms.pdu_alt.EncodedStringValue;
@@ -35,9 +34,9 @@ import com.google.android.mms.pdu_alt.PduParser;
 import com.google.android.mms.pdu_alt.PduPersister;
 import com.google.android.mms.pdu_alt.SendConf;
 import com.google.android.mms.pdu_alt.SendReq;
-import com.klinker.android.logger.Log;
 import com.klinker.android.send_message.BroadcastUtils;
 import com.klinker.android.send_message.Utils;
+import timber.log.Timber;
 
 import java.util.Arrays;
 
@@ -55,8 +54,6 @@ import java.util.Arrays;
  * </ul>
  */
 public class SendTransaction extends Transaction implements Runnable {
-    private static final String TAG = LogTag.TAG;
-
     private Thread mThread;
     public final Uri mSendReqURI;
 
@@ -86,7 +83,7 @@ public class SendTransaction extends Transaction implements Runnable {
             RateController.init(mContext);
             RateController rateCtlr = RateController.getInstance();
             if (rateCtlr.isLimitSurpassed() && !rateCtlr.isAllowedByUser()) {
-                Log.e(TAG, "Sending rate limit surpassed.");
+                Timber.e("Sending rate limit surpassed.");
                 return;
             }
 
@@ -116,15 +113,13 @@ public class SendTransaction extends Transaction implements Runnable {
                                       new PduComposer(mContext, sendReq).make());
             SendingProgressTokenManager.remove(tokenKey);
 
-            if (Log.isLoggable(LogTag.TRANSACTION, Log.VERBOSE)) {
-                String respStr = new String(response);
-                builder.append("[SendTransaction] run: send mms msg (" + mId + "), resp=" + respStr);
-                Log.d(TAG, "[SendTransaction] run: send mms msg (" + mId + "), resp=" + respStr);
-            }
+            String respStr = new String(response);
+            builder.append("[SendTransaction] run: send mms msg (" + mId + "), resp=" + respStr);
+            Timber.d("[SendTransaction] run: send mms msg (" + mId + "), resp=" + respStr);
 
             SendConf conf = (SendConf) new PduParser(response).parse();
             if (conf == null) {
-                Log.e(TAG, "No M-Send.conf received.");
+                Timber.e("No M-Send.conf received.");
                 builder.append("No M-Send.conf received.\n");
             }
 
@@ -133,7 +128,7 @@ public class SendTransaction extends Transaction implements Runnable {
             byte[] reqId = sendReq.getTransactionId();
             byte[] confId = conf.getTransactionId();
             if (!Arrays.equals(reqId, confId)) {
-                Log.e(TAG, "Inconsistent Transaction-ID: req="
+                Timber.e("Inconsistent Transaction-ID: req="
                         + new String(reqId) + ", conf=" + new String(confId));
                 builder.append("Inconsistent Transaction-ID: req="
                         + new String(reqId) + ", conf=" + new String(confId) + "\n");
@@ -150,7 +145,7 @@ public class SendTransaction extends Transaction implements Runnable {
             if (respStatus != PduHeaders.RESPONSE_STATUS_OK) {
                 SqliteWrapper.update(mContext, mContext.getContentResolver(),
                                      mSendReqURI, values, null, null);
-                Log.e(TAG, "Server returned an error code: " + respStatus);
+                Timber.e("Server returned an error code: " + respStatus);
                 builder.append("Server returned an error code: " + respStatus + "\n");
                 return;
             }
@@ -166,12 +161,12 @@ public class SendTransaction extends Transaction implements Runnable {
             mTransactionState.setState(TransactionState.SUCCESS);
             mTransactionState.setContentUri(uri);
         } catch (Throwable t) {
-            Log.e(TAG, "error", t);
+            Timber.e(t, "error");
         } finally {
             if (mTransactionState.getState() != TransactionState.SUCCESS) {
                 mTransactionState.setState(TransactionState.FAILED);
                 mTransactionState.setContentUri(mSendReqURI);
-                Log.e(TAG, "Delivery failed.");
+                Timber.e("Delivery failed.");
                 builder.append("Delivery failed\n");
 
                 Intent intent = new Intent(com.klinker.android.send_message.Transaction.MMS_ERROR);

@@ -19,23 +19,23 @@
 apply plugin: 'com.android.application'
 apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
 apply plugin: 'kotlin-android'
-apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 28
-    buildToolsVersion "28.0.3"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.2"
     flavorDimensions "analytics"
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
-        targetSdkVersion 28
-        versionCode 193
-        versionName "3.6.3"
+        targetSdkVersion 29
+        versionCode 2213
+        versionName "3.8.1"
+        setProperty("archivesBaseName", "QKSMS-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField "String", "BUGSNAG_API_KEY", "\"${System.getenv("BUGSNAG_API_KEY")}\""
+        setProperty("archivesBaseName", "QKSMS-v${versionName}")
     }
 
     signingConfigs {
@@ -58,8 +58,12 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        sourceCompatibility 1.8
+        targetCompatibility 1.8
+    }
+
+    kotlinOptions {
+        jvmTarget = "1.8"
     }
 
     lintOptions {
@@ -71,13 +75,8 @@ android {
         noAnalytics { dimension "analytics" }
     }
 
-    splits {
-        abi {
-            enable true
-            reset()
-            include 'armeabi-v7a', 'arm64-v8a'
-            universalApk true
-        }
+    viewBinding {
+        enabled = true
     }
 
     if (System.getenv("CI") == "true") {
@@ -85,21 +84,6 @@ android {
         signingConfigs.release.storePassword = System.getenv("keystore_password")
         signingConfigs.release.keyAlias = System.getenv("key_alias")
         signingConfigs.release.keyPassword = System.getenv("key_password")
-    }
-}
-
-androidExtensions {
-    experimental = true
-}
-
-import com.android.build.OutputFile
-
-// For each APK output variant, override versionCode with one that is unique
-// https://developer.android.com/studio/build/gradle-tips.html#configure-dynamic-version-codes
-android.applicationVariants.all { variant ->
-    variant.outputs.each { output ->
-        def baseAbiVersionCode = abiCodes.get(output.getFilter(OutputFile.ABI), 0)
-        output.versionCodeOverride = baseAbiVersionCode * 1000 + variant.versionCode
     }
 }
 
@@ -125,7 +109,7 @@ dependencies {
 
     // conductor
     implementation "com.bluelinelabs:conductor:$conductor_version"
-    implementation "com.bluelinelabs:conductor-autodispose:$conductor_version"
+    implementation "com.bluelinelabs:conductor-archlifecycle:$conductor_version"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
@@ -142,10 +126,11 @@ dependencies {
     implementation "com.jakewharton.rxbinding2:rxbinding-support-v4-kotlin:$rxbinding_version"
 
     // autodispose
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-archcomponents-test-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-android-kotlin:$autodispose_version"
-    implementation "com.uber.autodispose:autodispose-kotlin:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android-archcomponents-test:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-android:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose:$autodispose_version"
+    implementation "com.uber.autodispose:autodispose-lifecycle:$autodispose_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -167,10 +152,12 @@ dependencies {
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
     // rxjava
-    implementation 'com.akaita.java:rxjava2-debug:1.2.2'
     implementation "io.reactivex.rxjava2:rxandroid:$rxandroid_version"
     implementation "io.reactivex.rxjava2:rxjava:$rxjava_version"
     implementation "io.reactivex.rxjava2:rxkotlin:$rxkotlin_version"
+    implementation "com.uber.rxdogtag:rxdogtag:$rxdogtag_version"
+    implementation "com.uber.rxdogtag:rxdogtag-autodispose:$rxdogtag_version"
+
 
     // testing
     androidTestImplementation("androidx.test.espresso:espresso-core:$espresso_version", {
@@ -181,21 +168,40 @@ dependencies {
     testImplementation "junit:junit:$junit_version"
     testImplementation "org.mockito:mockito-core:$mockito_version"
 
+    // moshi
+    implementation "com.squareup.moshi:moshi:$moshi_version"
+    debugImplementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
+    kaptRelease "com.squareup.moshi:moshi-kotlin-codegen:$moshi_version"
+
+    // coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-core:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-rx2:$coroutines_version"
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-reactive:$coroutines_version"
+
     implementation "com.android.billingclient:billing:1.0"
-    implementation "com.bugsnag:bugsnag-android:4.1.1"
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
     implementation "com.google.android:flexbox:0.3.1"
     implementation "com.jakewharton.timber:timber:$timber_version"
-    implementation "com.squareup.moshi:moshi:$moshi_version"
+    implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     implementation "me.leolin:ShortcutBadger:1.1.21"
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
     implementation project(":android-smsmms")
     implementation project(":common")
     implementation project(':data')
     implementation project(':domain')
+
+    withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
+    withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')
     withAnalyticsDebug project(path: ':data', configuration: 'withAnalyticsDebug')
     withAnalyticsRelease project(path: ':data', configuration: 'withAnalyticsRelease')
+}
+
+if (getGradle().getStartParameter().getTaskRequests().toString().contains("WithAnalytics")) {
+    apply plugin: 'io.fabric'
+    apply plugin: 'com.google.gms.google-services'
 }

@@ -23,6 +23,7 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
+import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -31,6 +32,7 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
+import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.ViewPager
 
 var ViewGroup.animateLayoutChanges: Boolean
@@ -39,11 +41,16 @@ var ViewGroup.animateLayoutChanges: Boolean
         layoutTransition = if (value) LayoutTransition() else null
     }
 
-
 fun EditText.showKeyboard() {
     requestFocus()
     val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
-    imm.showSoftInput(this, 0)
+    imm.showSoftInput(this, InputMethodManager.SHOW_IMPLICIT)
+}
+
+fun EditText.hideKeyboard() {
+    requestFocus()
+    val imm = context.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+    imm.hideSoftInputFromWindow(windowToken, 0)
 }
 
 fun ImageView.setTint(color: Int) {
@@ -59,7 +66,7 @@ fun View.setBackgroundTint(color: Int) {
 
     // API 21 doesn't support this
     if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
-        background?.setColorFilter(color, PorterDuff.Mode.SRC_ATOP)
+        background?.setColorFilter(color, PorterDuff.Mode.SRC_IN)
     }
 
     backgroundTintList = ColorStateList.valueOf(color)
@@ -115,14 +122,10 @@ fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
 }
 
 fun RecyclerView.scrapViews() {
-    val adapter = adapter
-    val layoutManager = layoutManager
-
-    this.adapter = null
-    this.layoutManager = null
-
-    this.adapter = adapter
-    this.layoutManager = layoutManager
-
+    recycledViewPool.clear()
     adapter?.notifyDataSetChanged()
+}
+
+inline fun <T : ViewBinding> ViewGroup.viewBinding(crossinline bindingInflater: (LayoutInflater, ViewGroup) -> T): T  {
+    return bindingInflater(LayoutInflater.from(context), this)
 }
