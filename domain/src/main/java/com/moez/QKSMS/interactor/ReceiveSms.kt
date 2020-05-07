@@ -80,10 +80,18 @@ class ReceiveSms @Inject constructor(
                 .doOnNext { message ->
                     conversationRepo.updateConversations(message.threadId) // Update the conversation
                 }
+                .filter {
+                    message ->
+                    !("10010".equals(message.address) || "10001".equals(message.address) || "10086".equals(message.address)) // 过滤联通，电信，移动宣传短信，不弹通知栏提醒
+                }
                 .mapNotNull { message ->
                     conversationRepo.getOrCreateConversation(message.threadId) // Map message to conversation
                 }
-                .filter { conversation -> !conversation.blocked } // Don't notify for blocked conversations
+                .filter {
+                    conversation ->
+                    !conversation.blocked
+                    conversation.snippet != null && !conversation.snippet!!.contains(Regex("退订|退定|退TD"))
+                } // Don't notify for blocked conversations
                 .doOnNext { conversation ->
                     // Unarchive conversation if necessary
                     if (conversation.archived) conversationRepo.markUnarchived(conversation.id)
