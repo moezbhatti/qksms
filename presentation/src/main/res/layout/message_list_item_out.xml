@@ -82,6 +82,8 @@
     <com.moez.QKSMS.common.widget.AvatarView
         android:id="@+id/avatar"
         android:layout_width="0dp"
+        app:layout_constraintBottom_toBottomOf="@id/body"
+        app:layout_constraintStart_toEndOf="@id/body"
         android:layout_height="0dp" />
 
     <com.moez.QKSMS.common.widget.TightTextView
@@ -97,6 +99,7 @@
         android:backgroundTint="?attr/bubbleColor"
         android:gravity="start|center_vertical"
         android:minHeight="36dp"
+        android:textIsSelectable="true"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="1"

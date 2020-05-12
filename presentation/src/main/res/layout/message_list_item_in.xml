@@ -98,6 +98,7 @@
         android:background="@drawable/message_only"
         android:gravity="start|center_vertical"
         android:minHeight="36dp"
+        android:textIsSelectable="true"
         app:layout_constrainedWidth="true"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0"
@@ -105,7 +106,7 @@
         app:layout_constraintTop_toBottomOf="@id/attachments"
         app:layout_constraintWidth_max="384dp"
         tools:backgroundTint="@color/tools_theme"
-        tools:text="@tools:sample/lorem/random" />
+        tools:text="@tools:sample/lorem" />
 
     <ProgressBar
         android:id="@+id/cancel"

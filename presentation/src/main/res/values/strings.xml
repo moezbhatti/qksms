@@ -114,7 +114,7 @@
     <string name="compose_scheduled_plus">You must unlock QKSMS+ to use scheduled messaging</string>
     <string name="compose_scheduled_toast">Added to scheduled messages</string>
     <string name="compose_hint">Write a message…</string>
-    <string name="compose_menu_copy">Copy text</string>
+    <string name="compose_menu_copy">Copy</string>
     <string name="compose_menu_forward">Forward</string>
     <string name="compose_menu_delete">Delete</string>
     <string name="compose_menu_previous">Previous</string>

@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@drawable/rounded_rectangle_4dp"
+    android:backgroundTint="?android:attr/windowBackground"
+    android:orientation="horizontal">
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/timestamp"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:gravity="center_vertical"
+        android:paddingStart="16dp"
+        android:paddingEnd="16dp"
+        android:textColor="?android:attr/textColorPrimary"
+        android:textStyle="bold"
+        tools:text="4:54 PM" />
+
+    <View
+        android:layout_width="1dp"
+        android:layout_height="match_parent"
+        android:layout_marginTop="8dp"
+        android:layout_marginBottom="8dp"
+        android:background="?android:attr/divider" />
+
+    <ImageView
+        android:id="@+id/copy"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginStart="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="12dp"
+        android:src="@drawable/ic_content_copy_black_24dp"
+        android:tint="?android:attr/textColorSecondary" />
+
+    <ImageView
+        android:id="@+id/delete"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="12dp"
+        android:src="@drawable/ic_delete_white_24dp"
+        android:tint="?android:attr/textColorSecondary" />
+
+    <ImageView
+        android:id="@+id/forward"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="12dp"
+        android:src="@drawable/ic_forward_black_24dp"
+        android:tint="?android:attr/textColorSecondary" />
+
+    <ImageView
+        android:id="@+id/select"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:layout_marginEnd="8dp"
+        android:background="?android:attr/selectableItemBackground"
+        android:padding="12dp"
+        android:src="@drawable/ic_done_all_black_24dp"
+        android:tint="?android:attr/textColorSecondary" />
+
+</LinearLayout>

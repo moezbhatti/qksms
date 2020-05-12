@@ -23,19 +23,26 @@ import android.content.Context
 import android.graphics.Typeface
 import android.os.Build
 import android.text.Layout
+import android.text.Selection
 import android.text.Spannable
 import android.text.SpannableString
 import android.text.style.StyleSpan
+import android.view.ActionMode
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.ImageView
+import android.widget.PopupWindow
 import android.widget.ProgressBar
+import android.widget.TextView
+import androidx.annotation.RequiresApi
 import androidx.recyclerview.widget.RecyclerView
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.TextViewStyler
@@ -47,6 +54,7 @@ import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
 import com.moez.QKSMS.databinding.MessageListItemInBinding
+import com.moez.QKSMS.databinding.MessageListItemOptionsBinding
 import com.moez.QKSMS.extensions.isSmil
 import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
@@ -118,8 +126,9 @@ class MessagesAdapter @Inject constructor(
             notifyDataSetChanged()
         }
 
+    @RequiresApi(Build.VERSION_CODES.M)
+    private val actionModeCallback = ActionModeCallback()
     private val contactCache = ContactCache()
-    private val expanded = HashMap<Long, Boolean>()
     private val partsViewPool = RecyclerView.RecycledViewPool()
     private val subs = subscriptionManager.activeSubscriptionInfoList
 
@@ -156,15 +165,46 @@ class MessagesAdapter @Inject constructor(
         binding.attachments.setRecycledViewPool(partsViewPool)
         binding.body.forwardTouches(view)
 
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            binding.body.setTextIsSelectable(true)
+            binding.body.customSelectionActionModeCallback = actionModeCallback
+        }
+
         return QkViewHolder(binding).apply {
             view.setOnClickListener {
                 val message = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(message.id, false)) {
                     true -> view.isActivated = isSelected(message.id)
                     false -> {
-                        clicks.onNext(message.id)
-                        expanded[message.id] = binding.status.visibility != View.VISIBLE
-                        notifyItemChanged(adapterPosition)
+                        val view = LayoutInflater.from(parent.context).inflate(R.layout.message_list_item_options, null)
+
+                        val popup = PopupWindow(view, 1000, 1000, false)
+                        popup.isOutsideTouchable = true
+                        popup.elevation = 8.dpToPx(parent.context).toFloat()
+                        popup.width = WindowManager.LayoutParams.WRAP_CONTENT
+                        popup.height = WindowManager.LayoutParams.WRAP_CONTENT
+
+                        val popupBinding = MessageListItemOptionsBinding.bind(view)
+                        popupBinding.copy.setOnClickListener {
+                            popup.dismiss()
+                            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+                                binding.body.clearFocus()
+                                binding.body.requestFocus()
+                                Selection.selectAll(binding.body.text as Spannable)
+
+                                val actionMode = binding.body.startActionMode(actionModeCallback, ActionMode.TYPE_FLOATING)
+                                actionMode.tag = binding.body
+                            } else {
+                                ClipboardUtils.copy(context, binding.body.text.toString())
+                            }
+                        }
+                        popupBinding.delete.setOnClickListener { popup.dismiss() }
+                        popupBinding.forward.setOnClickListener { popup.dismiss() }
+                        popupBinding.select.setOnClickListener { popup.dismiss() }
+                        popupBinding.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+
+                        popup.showAsDropDown(binding.avatar, 0, 0)
+                        view.requestFocus()
                     }
                 }
             }
@@ -300,10 +340,8 @@ class MessagesAdapter @Inject constructor(
         }
 
         holder.binding.status.setVisible(when {
-            expanded[message.id] == true -> true
             message.isSending() -> true
             message.isFailedMessage() -> true
-            expanded[message.id] == false -> false
             conversation?.recipients?.size ?: 0 > 1 && !message.isMe() && next?.compareSender(message) != true -> true
             message.isDelivered() && next?.isDelivered() != true && age <= BubbleUtils.TIMESTAMP_THRESHOLD -> true
             else -> false

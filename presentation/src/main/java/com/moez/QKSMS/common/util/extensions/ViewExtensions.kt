@@ -90,11 +90,19 @@ fun View.forwardTouches(parent: View) {
     var isLongClick = false
 
     setOnLongClickListener {
+        if (hasFocus()) {
+            return@setOnLongClickListener false
+        }
+
         isLongClick = true
         true
     }
 
     setOnTouchListener { v, event ->
+        if (hasFocus()) {
+            return@setOnTouchListener false
+        }
+
         parent.onTouchEvent(event)
 
         when {
@@ -111,14 +119,6 @@ fun View.forwardTouches(parent: View) {
             else -> v.onTouchEvent(event)
         }
     }
-}
-
-fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
-    addOnPageChangeListener(object : ViewPager.SimpleOnPageChangeListener() {
-        override fun onPageSelected(position: Int) {
-            listener(position)
-        }
-    })
 }
 
 fun RecyclerView.scrapViews() {
