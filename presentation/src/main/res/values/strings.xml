@@ -55,7 +55,7 @@
     <string name="main_menu_block">Block</string>
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">You: %s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">Draft</string>
     <string name="main_message_results_title">Results in messages</string>
     <string name="main_message_results">%d messages</string>
     <string name="inbox_empty_text">Your conversations will appear here</string>

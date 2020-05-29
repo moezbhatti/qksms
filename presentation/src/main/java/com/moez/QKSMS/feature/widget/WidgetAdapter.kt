@@ -27,6 +27,8 @@ import android.view.View
 import android.widget.RemoteViews
 import android.widget.RemoteViewsService
 import androidx.core.text.bold
+import androidx.core.text.buildSpannedString
+import androidx.core.text.color
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
@@ -139,7 +141,12 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
         // Name
         remoteViews.setTextColor(R.id.name, textPrimary)
-        remoteViews.setTextViewText(R.id.name, boldText(conversation.getTitle(), conversation.unread))
+        remoteViews.setTextViewText(R.id.name, boldText(buildSpannedString {
+            append(conversation.getTitle())
+            if (conversation.draft.isNotEmpty()) {
+                color(theme.theme) { append(" " + context.getString(R.string.main_draft)) }
+            }
+        }, conversation.unread))
 
         // Date
         val timestamp = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
@@ -148,7 +155,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
 
         // Snippet
         val snippet = when {
-            conversation.draft.isNotEmpty() -> context.getString(R.string.main_draft, conversation.draft)
+            conversation.draft.isNotEmpty() -> conversation.draft
             conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
             else -> conversation.snippet
         }
@@ -172,7 +179,7 @@ class WidgetAdapter(intent: Intent) : RemoteViewsService.RemoteViewsFactory {
         return view
     }
 
-    private fun boldText(text: String?, shouldBold: Boolean): CharSequence? = when {
+    private fun boldText(text: CharSequence?, shouldBold: Boolean): CharSequence? = when {
         shouldBold -> SpannableStringBuilder()
                 .bold { append(text) }
         else -> text

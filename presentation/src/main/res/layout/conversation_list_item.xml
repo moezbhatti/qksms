@@ -51,9 +51,11 @@
         android:lines="1"
         app:layout_constraintBottom_toTopOf="@id/snippet"
         app:layout_constraintEnd_toStartOf="@id/date"
+        app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toEndOf="@id/avatars"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
+        app:layout_constraintWidth_default="wrap"
         tools:text="@tools:sample/full_names" />
 
     <com.moez.QKSMS.common.widget.QkTextView
