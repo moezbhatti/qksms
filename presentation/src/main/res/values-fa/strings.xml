@@ -324,10 +324,12 @@
     <string name="theme_apply">اعمال کردن</string>
     <string-array name="notification_actions">
         <item>هیچ</item>
+        <item>بایگانی</item>
+        <item>پاک کردن</item>
+        <item>مسدود کردن</item>
+        <item>تماس</item>
         <item>علامت گذاری به عنوان خوانده شده</item>
         <item>پاسخ</item>
-        <item>تماس</item>
-        <item>پاک کردن</item>
     </string-array>
     <string name="button_yes">بله</string>
     <string name="button_continue">ادامه</string>
