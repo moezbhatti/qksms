@@ -394,4 +394,5 @@
         <item>LOL</item>
         <item>C\'est d\'accord</item>
     </string-array>
+    <string name="main_menu_select_all">Tout sélectionner</string>
 </resources>

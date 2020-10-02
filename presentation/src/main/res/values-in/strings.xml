@@ -389,4 +389,5 @@
         <item>LOL</item>
         <item>Tidak apa-apa</item>
     </string-array>
+    <string name="main_menu_select_all">Pilih Semua</string>
 </resources>

@@ -394,4 +394,5 @@
         <item>خخخخ</item>
         <item>درست است</item>
     </string-array>
+    <string name="main_menu_select_all">انتخاب همه</string>
 </resources>
