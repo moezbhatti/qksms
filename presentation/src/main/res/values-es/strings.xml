@@ -394,4 +394,5 @@
         <item>JAJAJA</item>
         <item>Está bien</item>
     </string-array>
+    <string name="main_menu_select_all">Seleccionar todo</string>
 </resources>

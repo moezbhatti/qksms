@@ -83,4 +83,11 @@
         android:visible="false"
         app:showAsAction="ifRoom" />
 
+    <item
+        android:id="@+id/select_all"
+        android:icon="@drawable/ic_baseline_select_all_24dp"
+        android:title="@string/main_menu_select_all"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
 </menu>

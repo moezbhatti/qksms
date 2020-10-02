@@ -52,7 +52,7 @@ interface MainView : QkView<MainState> {
     fun showDeleteDialog(conversations: List<Long>)
     fun showChangelog(changelog: ChangelogManager.Changelog)
     fun showArchivedSnackbar()
-
+    fun selectAllConversations()
 }
 
 enum class NavItem { BACK, INBOX, ARCHIVED, BACKUP, SCHEDULED, BLOCKING, SETTINGS, PLUS, HELP, INVITE }

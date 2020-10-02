@@ -363,6 +363,14 @@ class MainViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
+        view.optionsItemIntent
+                .filter { itemId -> itemId == R.id.select_all }
+                .withLatestFrom(view.conversationsSelectedIntent) { _, _ ->
+                    view.selectAllConversations()
+                }
+                .autoDisposable(view.scope())
+                .subscribe()
+
         view.plusBannerIntent
                 .autoDisposable(view.scope())
                 .subscribe {

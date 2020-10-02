@@ -389,4 +389,5 @@
         <item>大爆笑です</item>
         <item>いいんだよ</item>
     </string-array>
+    <string name="main_menu_select_all">すべて選択</string>
 </resources>

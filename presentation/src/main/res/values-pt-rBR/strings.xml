@@ -394,4 +394,5 @@
         <item>KKK</item>
         <item>Está bem</item>
     </string-array>
+    <string name="main_menu_select_all">Selecionar tudo</string>
 </resources>

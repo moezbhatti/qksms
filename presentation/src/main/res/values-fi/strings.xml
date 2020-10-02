@@ -394,4 +394,5 @@
         <item>LOL</item>
         <item>Se on okei</item>
     </string-array>
+    <string name="main_menu_select_all">Valitse kaikki</string>
 </resources>
