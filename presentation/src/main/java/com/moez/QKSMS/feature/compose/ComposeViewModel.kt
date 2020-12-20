@@ -580,7 +580,7 @@ class ComposeViewModel @Inject constructor(
         // an attachment, disable otherwise
         Observables
                 .combineLatest(view.textChangedIntent, attachments) { text, attachments ->
-                    text.isNotBlank() || attachments.isNotEmpty()
+                    text.isNotEmpty() || attachments.isNotEmpty()
                 }
                 .autoDisposable(view.scope())
                 .subscribe { canSend -> newState { copy(canSend = canSend) } }
