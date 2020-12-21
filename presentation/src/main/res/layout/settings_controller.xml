@@ -178,6 +178,14 @@
             app:widget="@layout/settings_switch_widget" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/autoDelete"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_baseline_history_toggle_off_24"
+            app:title="@string/settings_auto_delete"
+            tools:summary="Never" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/longAsMms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

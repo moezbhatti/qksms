@@ -39,11 +39,12 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.common.widget.FieldDialog
+import com.moez.QKSMS.common.widget.TextInputDialog
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.databinding.SettingsControllerBinding
 import com.moez.QKSMS.feature.settings.about.AboutController
+import com.moez.QKSMS.feature.settings.autodelete.AutoDeleteDialog
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
 import com.moez.QKSMS.injection.appComponent
@@ -69,14 +70,18 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     @Inject override lateinit var presenter: SettingsPresenter
 
-    private val signatureDialog: FieldDialog by lazy {
-        FieldDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
+    private val signatureDialog: TextInputDialog by lazy {
+        TextInputDialog(activity!!, context.getString(R.string.settings_signature_title), signatureSubject::onNext)
+    }
+    private val autoDeleteDialog: AutoDeleteDialog by lazy {
+        AutoDeleteDialog(activity!!, autoDeleteSubject::onNext)
     }
 
     private val viewQksmsPlusSubject: Subject<Unit> = PublishSubject.create()
     private val startTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val endTimeSelectedSubject: Subject<Pair<Int, Int>> = PublishSubject.create()
     private val signatureSubject: Subject<String> = PublishSubject.create()
+    private val autoDeleteSubject: Subject<Int> = PublishSubject.create()
 
     private val progressAnimator by lazy { ObjectAnimator.ofInt(binding.syncingProgress, "progress", 0, 0) }
 
@@ -132,7 +137,9 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
     override fun sendDelaySelected(): Observable<Int> = sendDelayDialog.adapter.menuItemClicks
 
-    override fun signatureSet(): Observable<String> = signatureSubject
+    override fun signatureChanged(): Observable<String> = signatureSubject
+
+    override fun autoDeleteChanged(): Observable<Int> = autoDeleteSubject
 
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
 
@@ -167,6 +174,13 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
 
         binding.unicode.widget<QkSwitch>().isChecked = state.stripUnicodeEnabled
         binding.mobileOnly.widget<QkSwitch>().isChecked = state.mobileOnly
+
+        binding.autoDelete.summary = when (state.autoDelete) {
+            0 -> context.getString(R.string.settings_auto_delete_never)
+            else -> context.resources.getQuantityString(
+                    R.plurals.settings_auto_delete_summary, state.autoDelete, state.autoDelete)
+        }
+
         binding.longAsMms.widget<QkSwitch>().isChecked = state.longAsMms
 
         binding.mmsSize.summary = state.maxMmsSizeSummary
@@ -198,13 +212,13 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun showNightModeDialog() = nightModeDialog.show(activity!!)
 
     override fun showStartTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
+        TimePickerDialog(activity, { _, newHour, newMinute ->
             startTimeSelectedSubject.onNext(Pair(newHour, newMinute))
         }, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
 
     override fun showEndTimePicker(hour: Int, minute: Int) {
-        TimePickerDialog(activity, TimePickerDialog.OnTimeSetListener { _, newHour, newMinute ->
+        TimePickerDialog(activity, { _, newHour, newMinute ->
             endTimeSelectedSubject.onNext(Pair(newHour, newMinute))
         }, hour, minute, DateFormat.is24HourFormat(activity)).show()
     }
@@ -214,6 +228,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun showDelayDurationDialog() = sendDelayDialog.show(activity!!)
 
     override fun showSignatureDialog(signature: String) = signatureDialog.setText(signature).show()
+
+    override fun showAutoDeleteDialog(days: Int) = autoDeleteDialog.setExpiry(days).show()
 
     override fun showMmsSizePicker() = mmsSizeDialog.show(activity!!)
 

@@ -114,6 +114,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.mobileOnly.asObservable()
                 .subscribe { enabled -> newState { copy(mobileOnly = enabled) } }
 
+        disposables += prefs.autoDelete.asObservable()
+                .subscribe { autoDelete -> newState { copy(autoDelete = autoDelete) } }
+
         disposables += prefs.longAsMms.asObservable()
                 .subscribe { enabled -> newState { copy(longAsMms = enabled) } }
 
@@ -183,6 +186,8 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.mobileOnly -> prefs.mobileOnly.set(!prefs.mobileOnly.get())
 
+                        R.id.autoDelete -> view.showAutoDeleteDialog(prefs.autoDelete.get())
+
                         R.id.longAsMms -> prefs.longAsMms.set(!prefs.longAsMms.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
@@ -242,8 +247,13 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.signatureSet()
+        view.signatureChanged()
                 .doOnNext(prefs.signature::set)
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        view.autoDeleteChanged()
+                .doOnNext(prefs.autoDelete::set)
                 .autoDisposable(view.scope())
                 .subscribe()
 
