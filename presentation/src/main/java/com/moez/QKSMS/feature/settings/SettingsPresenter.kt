@@ -26,10 +26,12 @@ import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
+import com.moez.QKSMS.interactor.DeleteOldMessages
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
+import com.moez.QKSMS.service.AutoDeleteService
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
@@ -50,6 +52,7 @@ class SettingsPresenter @Inject constructor(
     private val context: Context,
     private val billingManager: BillingManager,
     private val dateFormatter: DateFormatter,
+    private val deleteOldMessages: DeleteOldMessages,
     private val messageRepo: MessageRepository,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
@@ -265,6 +268,15 @@ class SettingsPresenter @Inject constructor(
 
                     val counts = messageRepo.getOldMessageCounts(maxAge)
                     runBlocking { view.showAutoDeleteWarningDialog(counts.values.sum()) }
+                }
+                .doOnNext { maxAge ->
+                    when (maxAge == 0) {
+                        true -> AutoDeleteService.cancelJob(context)
+                        false -> {
+                            AutoDeleteService.scheduleJob(context)
+                            deleteOldMessages.execute(Unit)
+                        }
+                    }
                 }
                 .doOnNext(prefs.autoDelete::set)
                 .autoDisposable(view.scope())

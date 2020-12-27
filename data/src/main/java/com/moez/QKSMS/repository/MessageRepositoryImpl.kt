@@ -737,4 +737,17 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun deleteOldMessages(maxAgeDays: Int) {
+        return Realm.getDefaultInstance().use { realm ->
+            val messages = realm.where(Message::class.java)
+                    .lessThan("date", now() - TimeUnit.DAYS.toMillis(maxAgeDays.toLong()))
+                    .findAll()
+
+            val uris = messages.map { it.getUri() }
+
+            realm.executeTransaction { messages.deleteAllFromRealm() }
+
+            uris.forEach { uri -> context.contentResolver.delete(uri, null, null) }
+        }
+    }
 }

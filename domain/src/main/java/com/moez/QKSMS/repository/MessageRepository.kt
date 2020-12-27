@@ -107,4 +107,9 @@ interface MessageRepository {
      */
     fun getOldMessageCounts(maxAgeDays: Int): Map<Long, Int>
 
+    /**
+     * Deletes all messages older than [maxAgeDays]
+     */
+    fun deleteOldMessages(maxAgeDays: Int)
+
 }
