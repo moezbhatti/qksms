@@ -26,7 +26,9 @@ import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
+import com.moez.QKSMS.interactor.SyncContacts
 import com.moez.QKSMS.interactor.SyncMessages
+import com.moez.QKSMS.listener.ContactAddedListener
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.repository.SyncRepository
 import com.moez.QKSMS.util.NightModeManager
@@ -35,6 +37,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.schedulers.Schedulers
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -50,12 +53,18 @@ class SettingsPresenter @Inject constructor(
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
+    private val contactAddedListener: ContactAddedListener,
+    private val syncContacts: SyncContacts,
     private val syncMessages: SyncMessages
 ) : QkPresenter<SettingsView, SettingsState>(SettingsState(
         nightModeId = prefs.nightMode.get()
 )) {
 
+    private var contactsSubscribed: Boolean
+
     init {
+        contactsSubscribed = false
+
         disposables += colors.themeObservable()
                 .subscribe { theme -> newState { copy(theme = theme.theme) } }
 
@@ -101,6 +110,9 @@ class SettingsPresenter @Inject constructor(
                 .subscribe { textSize ->
                     newState { copy(textSizeSummary = textSizeLabels[textSize], textSizeId = textSize) }
                 }
+
+        disposables += prefs.altNamesDisplay.asObservable()
+                .subscribe { enabled -> newState { copy(altNamesDisplay = enabled) } }
 
         disposables += prefs.autoColor.asObservable()
                 .subscribe { autoColor -> newState { copy(autoColor = autoColor) } }
@@ -171,6 +183,17 @@ class SettingsPresenter @Inject constructor(
                         R.id.signature -> view.showSignatureDialog(prefs.signature.get())
 
                         R.id.textSize -> view.showTextSizePicker()
+
+                        R.id.altNamesDisplay -> {
+                            prefs.altNamesDisplay.set(!prefs.altNamesDisplay.get())
+                            if (!contactsSubscribed) {
+                                disposables += contactAddedListener.listen()
+                                        .debounce(1, TimeUnit.SECONDS)
+                                        .subscribeOn(Schedulers.io())
+                                        .subscribe { syncContacts.execute(Unit) }
+                                contactsSubscribed = true
+                            }
+                        }
 
                         R.id.autoColor -> {
                             analytics.setUserProperty("Preference: Auto Color", !prefs.autoColor.get())

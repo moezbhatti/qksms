@@ -85,6 +85,14 @@
             app:title="@string/settings_text_size_title" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/altNamesDisplay"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_person_black_24dp"
+            app:title="Last name before first"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/autoColor"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

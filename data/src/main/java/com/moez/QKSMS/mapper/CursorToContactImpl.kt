@@ -24,11 +24,13 @@ import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Contact
 import com.moez.QKSMS.model.PhoneNumber
+import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 
 class CursorToContactImpl @Inject constructor(
     private val context: Context,
-    private val permissionManager: PermissionManager
+    private val permissionManager: PermissionManager,
+    private val prefs: Preferences
 ) : CursorToContact {
 
     companion object {
@@ -43,7 +45,8 @@ class CursorToContactImpl @Inject constructor(
                 Phone.DISPLAY_NAME,
                 Phone.PHOTO_URI,
                 Phone.STARRED,
-                Phone.CONTACT_LAST_UPDATED_TIMESTAMP
+                Phone.CONTACT_LAST_UPDATED_TIMESTAMP,
+                Phone.DISPLAY_NAME_ALTERNATIVE
         )
 
         const val COLUMN_ID = 0
@@ -56,11 +59,16 @@ class CursorToContactImpl @Inject constructor(
         const val COLUMN_PHOTO_URI = 7
         const val COLUMN_STARRED = 8
         const val CONTACT_LAST_UPDATED = 9
+        const val COLUMN_DISPLAY_NAME_ALT = 10
     }
 
     override fun map(from: Cursor) = Contact().apply {
         lookupKey = from.getString(COLUMN_LOOKUP_KEY)
-        name = from.getString(COLUMN_DISPLAY_NAME) ?: ""
+        name = if (prefs.altNamesDisplay.get()) {
+            from.getString(COLUMN_DISPLAY_NAME_ALT) ?: ""
+        } else {
+            from.getString(COLUMN_DISPLAY_NAME) ?: ""
+        }
         photoUri = from.getString(COLUMN_PHOTO_URI)
         numbers.add(PhoneNumber(
                 id = from.getLong(COLUMN_ID),

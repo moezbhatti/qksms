@@ -28,6 +28,7 @@ data class SettingsState(
     val nightStart: String = "",
     val nightEnd: String = "",
     val black: Boolean = false,
+    val altNamesDisplay: Boolean = true,
     val autoColor: Boolean = true,
     val autoEmojiEnabled: Boolean = true,
     val notificationsEnabled: Boolean = true,

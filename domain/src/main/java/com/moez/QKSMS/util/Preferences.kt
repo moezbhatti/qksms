@@ -96,6 +96,7 @@ class Preferences @Inject constructor(
     val nightEnd = rxPrefs.getString("nightEnd", "6:00")
     val black = rxPrefs.getBoolean("black", false)
     val autoColor = rxPrefs.getBoolean("autoColor", true)
+    val altNamesDisplay = rxPrefs.getBoolean("altNamesDisplay", false)
     val systemFont = rxPrefs.getBoolean("systemFont", false)
     val textSize = rxPrefs.getInteger("textSize", TEXT_SIZE_NORMAL)
     val blockingManager = rxPrefs.getInteger("blockingManager", BLOCKING_MANAGER_QKSMS)

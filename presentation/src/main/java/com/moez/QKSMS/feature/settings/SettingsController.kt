@@ -161,6 +161,8 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         binding.textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
 
+        binding.altNamesDisplay.widget<QkSwitch>().isChecked = state.altNamesDisplay
+
         binding.autoColor.widget<QkSwitch>().isChecked = state.autoColor
 
         binding.systemFont.widget<QkSwitch>().isChecked = state.systemFontEnabled
