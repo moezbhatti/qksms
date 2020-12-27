@@ -262,7 +262,8 @@
     <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
     <string name="settings_auto_delete_dialog_hint">Number of days</string>
     <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Are you sure you would like to enable this setting? %1$d messages will be deleted</string>
+    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
+    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
     <plurals name="settings_auto_delete_summary">
         <item quantity="zero">Never</item>
         <item quantity="one">After 1 day</item>

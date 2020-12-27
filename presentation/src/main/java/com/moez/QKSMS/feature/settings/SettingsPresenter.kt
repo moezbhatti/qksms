@@ -267,6 +267,10 @@ class SettingsPresenter @Inject constructor(
                     }
 
                     val counts = messageRepo.getOldMessageCounts(maxAge)
+                    if (counts.values.sum() == 0) {
+                        return@filter true
+                    }
+
                     runBlocking { view.showAutoDeleteWarningDialog(counts.values.sum()) }
                 }
                 .doOnNext { maxAge ->
