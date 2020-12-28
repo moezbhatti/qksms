@@ -194,6 +194,8 @@ class MainViewModel @Inject constructor(
                     query
                 }
                 .filter { query -> query.length >= 2 }
+                .map { query -> query.trim() }
+                .distinctUntilChanged()
                 .doOnNext {
                     newState {
                         val page = (page as? Searching) ?: Searching()
