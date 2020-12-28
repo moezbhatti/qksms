@@ -53,7 +53,7 @@ class FileLoggingTree @Inject constructor(private val prefs: Preferences) : Timb
             }
 
             // Format the log to be written to the file
-            val log = "$timestamp $priorityString/$tag: $message ${Log.getStackTraceString(t)}<br>".toByteArray()
+            val log = "$timestamp $priorityString/$tag: $message ${Log.getStackTraceString(t)}\n".toByteArray()
 
             // Ensure that only one thread is writing to the file at a time
             synchronized(fileLock) {
@@ -62,7 +62,7 @@ class FileLoggingTree @Inject constructor(private val prefs: Preferences) : Timb
                     val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Logs").apply { mkdirs() }
 
                     // Create the file
-                    val file = File(dir, "${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis())}.html")
+                    val file = File(dir, "${SimpleDateFormat("yyyy-MM-dd", Locale.getDefault()).format(System.currentTimeMillis())}.log")
 
                     // Write the log to the file
                     FileOutputStream(file, true).use { fileOutputStream -> fileOutputStream.write(log) }
