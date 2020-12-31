@@ -186,8 +186,7 @@ dependencies {
     implementation project(':data')
     implementation project(':domain')
 
-    withAnalyticsImplementation 'com.google.firebase:firebase-core:16.0.9'
-    withAnalyticsImplementation 'com.crashlytics.sdk.android:crashlytics:2.10.1'
+    withAnalyticsImplementation 'com.google.firebase:firebase-crashlytics:17.3.0'
 
     noAnalyticsDebug project(path: ':data', configuration: 'noAnalyticsDebug')
     noAnalyticsRelease project(path: ':data', configuration: 'noAnalyticsRelease')
@@ -196,6 +195,6 @@ dependencies {
 }
 
 if (getGradle().getStartParameter().getTaskRequests().toString().contains("WithAnalytics")) {
-    apply plugin: 'io.fabric'
     apply plugin: 'com.google.gms.google-services'
+    apply plugin: 'com.google.firebase.crashlytics'
 }
