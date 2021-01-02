@@ -160,6 +160,7 @@ class MainViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { intent ->
                     when (intent.getStringExtra("screen")) {
+                        "compose" -> navigator.showConversation(intent.getLongExtra("threadId", 0))
                         "blocking" -> navigator.showBlockedConversations()
                     }
                 }
