@@ -51,7 +51,7 @@ class ComposeActivityModule {
                 ?.decodedDataString()
                 ?.substringAfter(':') // Remove scheme
                 ?.replaceAfter("?", "") // Remove query
-                ?.split(",")
+                ?.split(",", ";")
                 ?: listOf()
     }
 
