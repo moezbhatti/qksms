@@ -331,7 +331,10 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         startActivityForResult(Intent.createChooser(intent, null), AttachPhotoRequestCode)
     }
 
-    override fun setDraft(draft: String) = binding.message.setText(draft)
+    override fun setDraft(draft: String) {
+        binding.message.setText(draft)
+        binding.message.setSelection(draft.length)
+    }
 
     override fun scrollToMessage(id: Long) {
         messageAdapter.data?.second
