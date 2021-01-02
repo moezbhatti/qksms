@@ -84,15 +84,15 @@ class AvatarView @JvmOverloads constructor(
         binding.initial.setTextColor(theme.textPrimary)
         binding.icon.setTint(theme.textPrimary)
 
-        if (fullName?.isNotEmpty() == true) {
-            val initials = fullName
-                    ?.substringBefore(',')
-                    ?.split(" ").orEmpty()
-                    .filter { name -> name.isNotEmpty() }
-                    .map { name -> name[0] }
-                    .filter { initial -> initial.isLetterOrDigit() }
-                    .map { initial -> initial.toString() }
+        val initials = fullName
+                ?.substringBefore(',')
+                ?.split(" ").orEmpty()
+                .filter { name -> name.isNotEmpty() }
+                .map { name -> name[0] }
+                .filter { initial -> initial.isLetterOrDigit() }
+                .map { initial -> initial.toString() }
 
+        if (initials.isNotEmpty()) {
             binding.initial.text = if (initials.size > 1) initials.first() + initials.last() else initials.first()
             binding.icon.visibility = GONE
         } else {
