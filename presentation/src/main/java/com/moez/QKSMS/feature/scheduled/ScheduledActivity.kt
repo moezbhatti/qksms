@@ -18,81 +18,40 @@
  */
 package com.moez.QKSMS.feature.scheduled
 
-import android.graphics.Typeface
 import android.os.Bundle
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
-import com.jakewharton.rxbinding2.view.clicks
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.QkDialog
 import com.moez.QKSMS.common.base.QkThemedActivity
-import com.moez.QKSMS.common.util.FontProvider
-import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.viewBinding
-import com.moez.QKSMS.databinding.ScheduledActivityBinding
+import com.moez.QKSMS.databinding.ContainerActivityBinding
+import com.moez.QKSMS.feature.contacts.ContactsActivity
+import com.moez.QKSMS.feature.contacts.ContactsController
 import dagger.android.AndroidInjection
-import javax.inject.Inject
 
+class ScheduledActivity : QkThemedActivity() {
 
-class ScheduledActivity : QkThemedActivity(), ScheduledView {
-
-    @Inject lateinit var dialog: QkDialog
-    @Inject lateinit var fontProvider: FontProvider
-    @Inject lateinit var messageAdapter: ScheduledMessageAdapter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    override val messageClickIntent by lazy { messageAdapter.clicks }
-    override val messageMenuIntent by lazy { dialog.adapter.menuItemClicks }
-    override val composeIntent by lazy { binding.compose.clicks() }
-    override val upgradeIntent by lazy { binding.upgrade.clicks() }
-
-    private val binding by viewBinding(ScheduledActivityBinding::inflate)
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ScheduledViewModel::class.java] }
+    private val binding by viewBinding(ContainerActivityBinding::inflate)
+    private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        setTitle(R.string.scheduled_title)
-        showBackButton(true)
-        viewModel.bindView(this)
+        toolbar.isVisible = false
 
-        if (!prefs.systemFont.get()) {
-            fontProvider.getLato { lato ->
-                val typeface = Typeface.create(lato, Typeface.BOLD)
-                binding.appBarLayout.collapsingToolbar.setCollapsedTitleTypeface(typeface)
-                binding.appBarLayout.collapsingToolbar.setExpandedTitleTypeface(typeface)
-            }
-        }
-
-        dialog.title = getString(R.string.scheduled_options_title)
-        dialog.adapter.setData(R.array.scheduled_options)
-
-        messageAdapter.emptyView = binding.empty
-        binding.messages.adapter = messageAdapter
-
-        colors.theme().let { theme ->
-            binding.sampleMessage.setBackgroundTint(theme.theme)
-            binding.sampleMessage.setTextColor(theme.textPrimary)
-            binding.compose.setTint(theme.textPrimary)
-            binding.compose.setBackgroundTint(theme.theme)
-            binding.upgrade.setBackgroundTint(theme.theme)
-            binding.upgradeIcon.setTint(theme.textPrimary)
-            binding.upgradeLabel.setTextColor(theme.textPrimary)
+        router = Conductor.attachRouter(this, binding.container, savedInstanceState)
+        if (!router.hasRootController()) {
+            router.setRoot(RouterTransaction.with(ScheduledController()))
         }
     }
 
-    override fun render(state: ScheduledState) {
-        messageAdapter.updateData(state.scheduledMessages)
-
-        binding.compose.isVisible = state.upgraded
-        binding.upgrade.isVisible = !state.upgraded
-    }
-
-    override fun showMessageOptions() {
-        dialog.show(this)
+    override fun onBackPressed() {
+        if (!router.handleBack()) {
+            super.onBackPressed()
+        }
     }
 
 }

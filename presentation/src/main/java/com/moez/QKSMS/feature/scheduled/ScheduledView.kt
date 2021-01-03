@@ -18,10 +18,10 @@
  */
 package com.moez.QKSMS.feature.scheduled
 
-import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkViewContract
 import io.reactivex.Observable
 
-interface ScheduledView : QkView<ScheduledState> {
+interface ScheduledView : QkViewContract<ScheduledState> {
 
     val messageClickIntent: Observable<Long>
     val messageMenuIntent: Observable<Int>
