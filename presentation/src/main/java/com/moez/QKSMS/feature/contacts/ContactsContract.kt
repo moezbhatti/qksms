@@ -18,14 +18,14 @@
  */
 package com.moez.QKSMS.feature.contacts
 
-import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkViewContract
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.PhoneNumberAction
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 
-interface ContactsContract : QkView<ContactsState> {
+interface ContactsContract : QkViewContract<ContactsState> {
 
     val queryChangedIntent: Observable<CharSequence>
     val queryClearedIntent: Observable<*>

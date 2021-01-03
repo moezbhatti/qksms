@@ -41,13 +41,13 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     protected val themedActivity: QkThemedActivity?
         get() = activity as? QkThemedActivity
 
-    private val toolbar by lazy { view?.findViewById<Toolbar>(R.id.toolbar) }
     private val toolbarTitle by lazy { view?.findViewById<QkTextView>(R.id.toolbarTitle) }
 
     lateinit var binding: Binding
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         binding = bindingInflater(inflater, container, false)
+        binding.root.findViewById<Toolbar>(R.id.toolbar)?.let { appCompatActivity?.setSupportActionBar(it) }
         onViewCreated()
         return binding.root
     }

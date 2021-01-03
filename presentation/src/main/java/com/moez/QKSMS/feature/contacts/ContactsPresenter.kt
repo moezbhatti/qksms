@@ -19,6 +19,7 @@
 package com.moez.QKSMS.feature.contacts
 
 import android.view.inputmethod.EditorInfo
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
@@ -46,17 +47,18 @@ import io.realm.RealmList
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.rx2.awaitFirst
 import javax.inject.Inject
+import javax.inject.Named
 
-class ContactsViewModel @Inject constructor(
-    sharing: Boolean,
-    serializedChips: HashMap<String, String?>,
+class ContactsPresenter @Inject constructor(
+    @Named("isSharing") sharing: Boolean,
+    @Named("chips") serializedChips: HashMap<String, String?>,
     private val contactFilter: ContactFilter,
     private val contactGroupFilter: ContactGroupFilter,
     private val contactsRepo: ContactRepository,
     private val conversationRepo: ConversationRepository,
     private val phoneNumberUtils: PhoneNumberUtils,
     private val setDefaultPhoneNumber: SetDefaultPhoneNumber
-) : QkViewModel<ContactsContract, ContactsState>(ContactsState()) {
+) : QkPresenter<ContactsContract, ContactsState>(ContactsState()) {
 
     private val contactGroups: Observable<List<ContactGroup>> by lazy { contactsRepo.getUnmanagedContactGroups() }
     private val contacts: Observable<List<Contact>> by lazy { contactsRepo.getUnmanagedContacts() }
@@ -75,8 +77,8 @@ class ContactsViewModel @Inject constructor(
 
     private var shouldOpenKeyboard: Boolean = true
 
-    override fun bindView(view: ContactsContract) {
-        super.bindView(view)
+    override fun bindIntents(view: ContactsContract) {
+        super.bindIntents(view)
 
         if (shouldOpenKeyboard) {
             view.openKeyboard()
