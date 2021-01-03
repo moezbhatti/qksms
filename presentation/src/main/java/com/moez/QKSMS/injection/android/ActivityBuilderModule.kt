@@ -23,7 +23,6 @@ import com.moez.QKSMS.feature.blocking.BlockingActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
 import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.contacts.ContactsActivity
-import com.moez.QKSMS.feature.contacts.ContactsActivityModule
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivityModule
@@ -62,7 +61,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindComposeActivity(): ComposeActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [ContactsActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindContactsActivity(): ContactsActivity
 
     @ActivityScope

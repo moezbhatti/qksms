@@ -34,6 +34,8 @@ import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.feature.compose.editing.DetailedChipView
+import com.moez.QKSMS.feature.contacts.ContactsController
+import com.moez.QKSMS.feature.contacts.injection.ContactsComponent
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
@@ -56,6 +58,7 @@ import javax.inject.Singleton
     ServiceBuilderModule::class])
 interface AppComponent {
 
+    fun contactsBuilder(): ContactsComponent.Builder
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
 
