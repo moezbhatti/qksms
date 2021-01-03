@@ -37,6 +37,7 @@ import com.moez.QKSMS.feature.compose.editing.DetailedChipView
 import com.moez.QKSMS.feature.contacts.ContactsController
 import com.moez.QKSMS.feature.contacts.injection.ContactsComponent
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
+import com.moez.QKSMS.feature.plus.PlusController
 import com.moez.QKSMS.feature.scheduled.ScheduledController
 import com.moez.QKSMS.feature.settings.SettingsController
 import com.moez.QKSMS.feature.settings.about.AboutController
@@ -71,6 +72,7 @@ interface AppComponent {
     fun inject(controller: BlockedNumbersController)
     fun inject(controller: BlockingController)
     fun inject(controller: BlockingManagerController)
+    fun inject(controller: PlusController)
     fun inject(controller: ScheduledController)
     fun inject(controller: SettingsController)
     fun inject(controller: SwipeActionsController)

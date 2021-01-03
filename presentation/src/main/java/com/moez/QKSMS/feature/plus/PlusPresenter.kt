@@ -19,7 +19,7 @@
 package com.moez.QKSMS.feature.plus
 
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.BillingManager
 import com.uber.autodispose.android.lifecycle.scope
@@ -28,11 +28,11 @@ import io.reactivex.Observable
 import io.reactivex.rxkotlin.plusAssign
 import javax.inject.Inject
 
-class PlusViewModel @Inject constructor(
+class PlusPresenter @Inject constructor(
     private val analyticsManager: AnalyticsManager,
     private val billingManager: BillingManager,
     private val navigator: Navigator
-) : QkViewModel<PlusView, PlusState>(PlusState()) {
+) : QkPresenter<PlusView, PlusState>(PlusState()) {
 
     init {
         disposables += billingManager.upgradeStatus
@@ -49,8 +49,8 @@ class PlusViewModel @Inject constructor(
                 }
     }
 
-    override fun bindView(view: PlusView) {
-        super.bindView(view)
+    override fun bindIntents(view: PlusView) {
+        super.bindIntents(view)
 
         Observable.merge(
                 view.upgradeIntent.map { BillingManager.SKU_PLUS },

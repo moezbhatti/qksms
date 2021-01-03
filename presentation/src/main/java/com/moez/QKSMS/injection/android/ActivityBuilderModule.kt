@@ -31,7 +31,6 @@ import com.moez.QKSMS.feature.main.MainActivityModule
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivityModule
 import com.moez.QKSMS.feature.plus.PlusActivity
-import com.moez.QKSMS.feature.plus.PlusActivityModule
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
 import com.moez.QKSMS.feature.scheduled.ScheduledActivity
@@ -48,7 +47,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindMainActivity(): MainActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [PlusActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindPlusActivity(): PlusActivity
 
     @ActivityScope
