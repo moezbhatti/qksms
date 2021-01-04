@@ -18,112 +18,44 @@
  */
 package com.moez.QKSMS.feature.gallery
 
-import android.Manifest
 import android.os.Bundle
-import android.view.Menu
-import android.view.MenuItem
 import androidx.appcompat.app.AppCompatDelegate
-import androidx.core.app.ActivityCompat
 import androidx.core.view.isVisible
-import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.ViewPager2
-import com.moez.QKSMS.R
+import com.bluelinelabs.conductor.Conductor
+import com.bluelinelabs.conductor.Router
+import com.bluelinelabs.conductor.RouterTransaction
 import com.moez.QKSMS.common.base.QkActivity
-import com.moez.QKSMS.common.util.DateFormatter
-import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.util.extensions.viewBinding
-import com.moez.QKSMS.databinding.GalleryActivityBinding
-import com.moez.QKSMS.model.MmsPart
+import com.moez.QKSMS.databinding.ContainerActivityBinding
+import com.moez.QKSMS.feature.contacts.ContactsActivity
+import com.moez.QKSMS.feature.contacts.ContactsController
 import dagger.android.AndroidInjection
-import io.reactivex.Observable
-import io.reactivex.subjects.PublishSubject
-import io.reactivex.subjects.Subject
-import javax.inject.Inject
 
-class GalleryActivity : QkActivity(), GalleryView {
+class GalleryActivity : QkActivity() {
 
-    @Inject lateinit var dateFormatter: DateFormatter
-    @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
-    @Inject lateinit var pagerAdapter: GalleryPagerAdapter
-
-    val partId by lazy { intent.getLongExtra("partId", 0L) }
-
-    private val binding by viewBinding(GalleryActivityBinding::inflate)
-    private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[GalleryViewModel::class.java] }
-    private val optionsItemSubject: Subject<Int> = PublishSubject.create()
-    private val pageChangedSubject: Subject<MmsPart> = PublishSubject.create()
+    private val binding by viewBinding(ContainerActivityBinding::inflate)
+    private lateinit var router: Router
 
     override fun onCreate(savedInstanceState: Bundle?) {
         delegate.localNightMode = AppCompatDelegate.MODE_NIGHT_YES
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
-        showBackButton(true)
-        viewModel.bindView(this)
+        toolbar.isVisible = false
 
-        binding.pager.adapter = pagerAdapter
-        binding.pager.registerOnPageChangeCallback(object : ViewPager2.OnPageChangeCallback() {
-            override fun onPageSelected(position: Int) {
-                this@GalleryActivity.onPageSelected(position)
-            }
-        })
-
-        pagerAdapter.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
-            override fun onChanged() {
-                pagerAdapter.data?.takeIf { pagerAdapter.itemCount > 0 }
-                        ?.indexOfFirst { part -> part.id == partId }
-                        ?.let { index ->
-                            onPageSelected(index)
-                            binding.pager.setCurrentItem(index, false)
-                            pagerAdapter.unregisterAdapterDataObserver(this)
-                        }
-            }
-        })
-    }
-
-    fun onPageSelected(position: Int) {
-        binding.toolbarSubtitle.text = pagerAdapter.getItem(position)?.messages?.firstOrNull()?.date
-                ?.let(dateFormatter::getDetailedTimestamp)
-        binding.toolbarSubtitle.isVisible = binding.toolbarTitle.text.isNotBlank()
-
-        pagerAdapter.getItem(position)?.run(pageChangedSubject::onNext)
-    }
-
-    override fun render(state: GalleryState) {
-        binding.toolbar.setVisible(state.navigationVisible)
-
-        title = state.title
-        pagerAdapter.updateData(state.parts)
-    }
-
-    override fun optionsItemSelected(): Observable<Int> = optionsItemSubject
-
-    override fun screenTouched(): Observable<*> = pagerAdapter.clicks
-
-    override fun pageChanged(): Observable<MmsPart> = pageChangedSubject
-
-    override fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        menuInflater.inflate(R.menu.gallery, menu)
-        return super.onCreateOptionsMenu(menu)
-    }
-
-    override fun onOptionsItemSelected(item: MenuItem): Boolean {
-        when (item.itemId) {
-            android.R.id.home -> onBackPressed()
-            else -> optionsItemSubject.onNext(item.itemId)
+        router = Conductor.attachRouter(this, binding.container, savedInstanceState)
+        if (!router.hasRootController()) {
+            val partId = intent.extras?.getLong("partId") ?: 0
+            router.setRoot(RouterTransaction.with(GalleryController(partId)))
         }
-        return true
     }
 
-    override fun onDestroy() {
-        super.onDestroy()
-        pagerAdapter.destroy()
+    override fun onBackPressed() {
+        if (!router.handleBack()) {
+            super.onBackPressed()
+        }
     }
 
 }

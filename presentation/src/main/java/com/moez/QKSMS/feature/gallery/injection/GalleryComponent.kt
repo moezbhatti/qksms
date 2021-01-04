@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,18 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.gallery
+package com.moez.QKSMS.feature.gallery.injection
 
-import com.moez.QKSMS.common.base.QkViewContract
-import com.moez.QKSMS.model.MmsPart
-import io.reactivex.Observable
+import com.moez.QKSMS.feature.gallery.GalleryController
+import com.moez.QKSMS.feature.notificationprefs.injection.NotificationPrefsComponent
+import com.moez.QKSMS.injection.scope.ControllerScope
+import dagger.Subcomponent
 
-interface GalleryView : QkViewContract<GalleryState> {
+@ControllerScope
+@Subcomponent(modules = [GalleryModule::class])
+interface GalleryComponent {
 
-    fun optionsItemSelected(): Observable<Int>
-    fun screenTouched(): Observable<*>
-    fun pageChanged(): Observable<MmsPart>
+    fun inject(controller: GalleryController)
 
-    fun requestStoragePermission()
+    @Subcomponent.Builder
+    interface Builder {
+        fun galleryModule(module: GalleryModule): Builder
+        fun build(): GalleryComponent
+    }
 
 }

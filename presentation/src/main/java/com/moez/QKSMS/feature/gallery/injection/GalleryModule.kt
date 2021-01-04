@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,29 +16,23 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.gallery
+package com.moez.QKSMS.feature.gallery.injection
 
-import android.content.Intent
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
+import com.moez.QKSMS.feature.gallery.GalleryController
+import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsController
+import com.moez.QKSMS.injection.scope.ControllerScope
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import javax.inject.Named
 
 @Module
-class GalleryActivityModule {
+class GalleryModule(private val controller: GalleryController) {
 
     @Provides
-    fun provideIntent(activity: GalleryActivity): Intent = activity.intent
-
-    @Provides
+    @ControllerScope
     @Named("partId")
-    fun providePartId(activity: GalleryActivity): Long = activity.partId
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(GalleryViewModel::class)
-    fun provideGalleryViewModel(viewModel: GalleryViewModel): ViewModel = viewModel
+    fun providePartId(): Long {
+        return controller.partId
+    }
 
 }

@@ -36,6 +36,7 @@ import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.feature.compose.editing.DetailedChipView
 import com.moez.QKSMS.feature.contacts.injection.ContactsComponent
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
+import com.moez.QKSMS.feature.gallery.injection.GalleryComponent
 import com.moez.QKSMS.feature.notificationprefs.injection.NotificationPrefsComponent
 import com.moez.QKSMS.feature.plus.PlusController
 import com.moez.QKSMS.feature.scheduled.ScheduledController
@@ -62,6 +63,7 @@ interface AppComponent {
 
     fun contactsBuilder(): ContactsComponent.Builder
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder
+    fun galleryBuilder(): GalleryComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
     fun notificationPrefsBuilder(): NotificationPrefsComponent.Builder
 
