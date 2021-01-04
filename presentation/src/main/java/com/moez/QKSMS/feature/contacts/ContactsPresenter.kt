@@ -20,7 +20,6 @@ package com.moez.QKSMS.feature.contacts
 
 import android.view.inputmethod.EditorInfo
 import com.moez.QKSMS.common.base.QkPresenter
-import com.moez.QKSMS.common.base.QkViewModel
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.extensions.removeAccents
 import com.moez.QKSMS.feature.compose.editing.ComposeItem

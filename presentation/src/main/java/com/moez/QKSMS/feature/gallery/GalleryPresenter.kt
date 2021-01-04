@@ -21,7 +21,7 @@ package com.moez.QKSMS.feature.gallery
 import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.interactor.SaveImage
@@ -36,7 +36,7 @@ import io.reactivex.rxkotlin.withLatestFrom
 import javax.inject.Inject
 import javax.inject.Named
 
-class GalleryViewModel @Inject constructor(
+class GalleryPresenter @Inject constructor(
     conversationRepo: ConversationRepository,
     @Named("partId") private val partId: Long,
     private val context: Context,
@@ -44,7 +44,7 @@ class GalleryViewModel @Inject constructor(
     private val navigator: Navigator,
     private val saveImage: SaveImage,
     private val permissions: PermissionManager
-) : QkViewModel<GalleryView, GalleryState>(GalleryState()) {
+) : QkPresenter<GalleryView, GalleryState>(GalleryState()) {
 
     init {
         disposables += Flowable.just(partId)
@@ -59,8 +59,8 @@ class GalleryViewModel @Inject constructor(
                 .subscribe()
     }
 
-    override fun bindView(view: GalleryView) {
-        super.bindView(view)
+    override fun bindIntents(view: GalleryView) {
+        super.bindIntents(view)
 
         // When the screen is touched, toggle the visibility of the navigation UI
         view.screenTouched()
