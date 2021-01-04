@@ -47,7 +47,7 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup): View {
         binding = bindingInflater(inflater, container, false)
-        binding.root.findViewById<Toolbar>(R.id.toolbar)?.let { appCompatActivity?.setSupportActionBar(it) }
+        binding.root.findViewById<Toolbar?>(R.id.toolbar)?.let { appCompatActivity?.setSupportActionBar(it) }
         onViewCreated()
         return binding.root
     }

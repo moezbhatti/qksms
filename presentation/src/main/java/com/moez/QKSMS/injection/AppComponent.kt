@@ -34,9 +34,9 @@ import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
 import com.moez.QKSMS.feature.compose.editing.DetailedChipView
-import com.moez.QKSMS.feature.contacts.ContactsController
 import com.moez.QKSMS.feature.contacts.injection.ContactsComponent
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
+import com.moez.QKSMS.feature.notificationprefs.injection.NotificationPrefsComponent
 import com.moez.QKSMS.feature.plus.PlusController
 import com.moez.QKSMS.feature.scheduled.ScheduledController
 import com.moez.QKSMS.feature.settings.SettingsController
@@ -63,6 +63,7 @@ interface AppComponent {
     fun contactsBuilder(): ContactsComponent.Builder
     fun conversationInfoBuilder(): ConversationInfoComponent.Builder
     fun themePickerBuilder(): ThemePickerComponent.Builder
+    fun notificationPrefsBuilder(): NotificationPrefsComponent.Builder
 
     fun inject(application: QKApplication)
 

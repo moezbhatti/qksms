@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,25 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.notificationprefs
+package com.moez.QKSMS.feature.notificationprefs.injection
 
-import androidx.lifecycle.ViewModel
-import com.moez.QKSMS.injection.ViewModelKey
+import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsController
+import com.moez.QKSMS.injection.scope.ControllerScope
 import dagger.Module
 import dagger.Provides
-import dagger.multibindings.IntoMap
 import javax.inject.Named
 
 @Module
-class NotificationPrefsActivityModule {
+class NotificationPrefsModule(private val controller: NotificationPrefsController) {
 
     @Provides
+    @ControllerScope
     @Named("threadId")
-    fun provideThreadId(activity: NotificationPrefsActivity): Long = activity.intent.extras?.getLong("threadId") ?: 0L
-
-    @Provides
-    @IntoMap
-    @ViewModelKey(NotificationPrefsViewModel::class)
-    fun provideNotificationPrefsViewModel(viewModel: NotificationPrefsViewModel): ViewModel = viewModel
+    fun provideThreadId(): Long {
+        return controller.threadId
+    }
 
 }
