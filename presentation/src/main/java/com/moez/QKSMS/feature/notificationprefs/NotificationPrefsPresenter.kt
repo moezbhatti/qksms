@@ -23,7 +23,7 @@ import android.media.RingtoneManager
 import android.net.Uri
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
-import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
@@ -36,13 +36,13 @@ import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
-class NotificationPrefsViewModel @Inject constructor(
+class NotificationPrefsPresenter @Inject constructor(
     @Named("threadId") private val threadId: Long,
     private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
     private val prefs: Preferences
-) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
+) : QkPresenter<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
     private val notifications = prefs.notifications(threadId)
     private val previews = prefs.notificationPreviews(threadId)
@@ -98,8 +98,8 @@ class NotificationPrefsViewModel @Inject constructor(
                 .subscribe { enabled -> newState { copy(qkReplyTapDismiss = enabled) } }
     }
 
-    override fun bindView(view: NotificationPrefsView) {
-        super.bindView(view)
+    override fun bindIntents(view: NotificationPrefsView) {
+        super.bindIntents(view)
 
         view.preferenceClickIntent
                 .autoDisposable(view.scope())

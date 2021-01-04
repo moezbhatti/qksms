@@ -20,11 +20,12 @@ package com.moez.QKSMS.feature.notificationprefs
 
 import android.net.Uri
 import com.moez.QKSMS.common.base.QkView
+import com.moez.QKSMS.common.base.QkViewContract
 import com.moez.QKSMS.common.widget.PreferenceView
 import io.reactivex.Observable
 import io.reactivex.subjects.Subject
 
-interface NotificationPrefsView : QkView<NotificationPrefsState> {
+interface NotificationPrefsView : QkViewContract<NotificationPrefsState> {
 
     val preferenceClickIntent: Subject<PreferenceView>
     val previewModeSelectedIntent: Subject<Int>

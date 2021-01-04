@@ -29,7 +29,6 @@ import com.moez.QKSMS.feature.gallery.GalleryActivityModule
 import com.moez.QKSMS.feature.main.MainActivity
 import com.moez.QKSMS.feature.main.MainActivityModule
 import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivity
-import com.moez.QKSMS.feature.notificationprefs.NotificationPrefsActivityModule
 import com.moez.QKSMS.feature.plus.PlusActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivity
 import com.moez.QKSMS.feature.qkreply.QkReplyActivityModule
@@ -71,7 +70,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindGalleryActivity(): GalleryActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [NotificationPrefsActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindNotificationPrefsActivity(): NotificationPrefsActivity
 
     @ActivityScope
