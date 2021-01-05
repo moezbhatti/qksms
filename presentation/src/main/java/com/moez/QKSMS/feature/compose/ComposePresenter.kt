@@ -27,6 +27,7 @@ import androidx.core.content.getSystemService
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.base.QkPresenter
 import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.MessageDetailsFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
@@ -68,13 +69,12 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import io.realm.kotlin.freeze
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
 import javax.inject.Named
 
-class ComposeViewModel @Inject constructor(
+class ComposePresenter @Inject constructor(
     @Named("query") private val query: String,
     @Named("threadId") private val threadId: Long,
     @Named("addresses") private val addresses: List<String>,
@@ -98,7 +98,7 @@ class ComposeViewModel @Inject constructor(
     private val retrySending: RetrySending,
     private val sendMessage: SendMessage,
     private val subscriptionManager: SubscriptionManagerCompat
-) : QkViewModel<ComposeView, ComposeState>(ComposeState(
+) : QkPresenter<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && addresses.isEmpty(),
         threadId = threadId,
         query = query)
@@ -228,8 +228,8 @@ class ComposeViewModel @Inject constructor(
         }.subscribe()
     }
 
-    override fun bindView(view: ComposeView) {
-        super.bindView(view)
+    override fun bindIntents(view: ComposeView) {
+        super.bindIntents(view)
 
         val sharing = sharedText.isNotEmpty() || sharedAttachments.isNotEmpty()
         if (shouldShowContacts) {

@@ -27,7 +27,6 @@ import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.FontProvider
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
@@ -38,6 +37,7 @@ import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.databinding.QksmsPlusControllerBinding
 import com.moez.QKSMS.feature.plus.experiment.UpgradeButtonExperiment
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.manager.BillingManager
 import com.moez.QKSMS.util.Preferences
 import javax.inject.Inject
 

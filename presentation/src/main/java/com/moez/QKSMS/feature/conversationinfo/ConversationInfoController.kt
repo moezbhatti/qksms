@@ -26,6 +26,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.widget.TextInputDialog
 import com.moez.QKSMS.databinding.ConversationInfoControllerBinding
@@ -47,7 +48,9 @@ class ConversationInfoController(
         ConversationInfoControllerBinding>(ConversationInfoControllerBinding::inflate), ConversationInfoView {
 
     @Inject override lateinit var presenter: ConversationInfoPresenter
+
     @Inject lateinit var blockingDialog: BlockingDialog
+    @Inject lateinit var colors: Colors
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var adapter: ConversationInfoAdapter
 
@@ -75,10 +78,9 @@ class ConversationInfoController(
             }
         }
 
-        themedActivity?.theme
-                ?.subscribeOn(AndroidSchedulers.mainThread())
-                ?.autoDisposable(scope())
-                ?.subscribe { binding.recyclerView.scrapViews() }
+        colors.themeObservable()
+                .autoDisposable(scope())
+                .subscribe { binding.recyclerView.scrapViews() }
     }
 
     override fun onAttach(view: View) {

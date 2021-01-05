@@ -43,6 +43,7 @@ import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.androidxcompat.drawerOpen
 import com.moez.QKSMS.common.base.QkThemedActivity
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.autoScrollToStart
 import com.moez.QKSMS.common.util.extensions.dismissKeyboard
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
@@ -71,6 +72,7 @@ import javax.inject.Inject
 class MainActivity : QkThemedActivity(), MainView {
 
     @Inject lateinit var blockingDialog: BlockingDialog
+    @Inject lateinit var colors: Colors
     @Inject lateinit var disposables: CompositeDisposable
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var conversationsAdapter: ConversationsAdapter
@@ -143,8 +145,7 @@ class MainActivity : QkThemedActivity(), MainView {
         binding.drawer.root.clicks().autoDisposable(scope()).subscribe()
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
-        theme
-                .observeOn(AndroidSchedulers.mainThread())
+        colors.themeObservable()
                 .autoDisposable(scope())
                 .subscribe { theme ->
                     // Set the color for the drawer icons

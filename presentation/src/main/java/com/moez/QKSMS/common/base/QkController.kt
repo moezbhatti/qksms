@@ -19,15 +19,22 @@
 package com.moez.QKSMS.common.base
 
 import android.view.LayoutInflater
+import android.view.Menu
+import android.view.MenuInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.annotation.CallSuper
 import androidx.annotation.StringRes
 import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.Toolbar
+import androidx.core.view.forEach
 import androidx.viewbinding.ViewBinding
 import com.bluelinelabs.conductor.archlifecycle.LifecycleController
 import com.moez.QKSMS.R
+import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.widget.QkTextView
+import io.reactivex.subjects.BehaviorSubject
+import io.reactivex.subjects.Subject
 
 abstract class QkController<ViewContract : QkViewContract<State>, State, Presenter : QkPresenter<ViewContract, State>, Binding : ViewBinding>(
     private val bindingInflater: (LayoutInflater, ViewGroup, Boolean) -> Binding
@@ -41,6 +48,10 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
     protected val themedActivity: QkThemedActivity?
         get() = activity as? QkThemedActivity
 
+    protected val toolbar: Toolbar?
+        get() = appCompatActivity?.supportActionBar as? Toolbar
+
+    protected val menu: Subject<Menu> = BehaviorSubject.create()
     private val toolbarTitle by lazy { view?.findViewById<QkTextView>(R.id.toolbarTitle) }
 
     lateinit var binding: Binding
@@ -66,6 +77,20 @@ abstract class QkController<ViewContract : QkViewContract<State>, State, Present
 
     fun showBackButton(show: Boolean) {
         appCompatActivity?.supportActionBar?.setDisplayHomeAsUpEnabled(show)
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        super.onCreateOptionsMenu(menu, inflater)
+        this.menu.onNext(menu)
+    }
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val textSecondary = activity!!.resolveThemeColor(android.R.attr.textColorSecondary)
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
+
+        menu.forEach { menuItem -> menuItem.icon.setTint(textSecondary) }
     }
 
     override fun onDestroy() {

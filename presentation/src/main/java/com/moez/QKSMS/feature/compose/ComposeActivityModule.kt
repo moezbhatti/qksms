@@ -97,11 +97,6 @@ class ComposeActivityModule {
         })
     }
 
-    @Provides
-    @IntoMap
-    @ViewModelKey(ComposeViewModel::class)
-    fun provideComposeViewModel(viewModel: ComposeViewModel): ViewModel = viewModel
-
     // The dialer app on Oreo sends a URL encoded string, make sure to decode it
     private fun Intent.decodedDataString(): String? {
         val data = data?.toString()

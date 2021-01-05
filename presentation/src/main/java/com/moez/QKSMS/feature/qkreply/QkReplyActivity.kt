@@ -92,8 +92,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
             finish()
         }
 
-        threadId.onNext(state.threadId)
-
         title = state.title
 
         binding.toolbar.menu.findItem(R.id.expand)?.isVisible = !state.expanded
