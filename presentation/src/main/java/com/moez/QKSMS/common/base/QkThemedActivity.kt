@@ -24,26 +24,14 @@ import android.graphics.BitmapFactory
 import android.os.Build
 import android.os.Bundle
 import android.view.View
-import androidx.core.view.iterator
-import androidx.lifecycle.Lifecycle
 import com.moez.QKSMS.R
-import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeBoolean
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.extensions.Optional
-import com.moez.QKSMS.extensions.asObservable
-import com.moez.QKSMS.extensions.mapNotNull
-import com.moez.QKSMS.repository.ConversationRepository
-import com.moez.QKSMS.repository.MessageRepository
-import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.rxkotlin.Observables
-import io.reactivex.subjects.BehaviorSubject
-import io.reactivex.subjects.Subject
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -55,46 +43,7 @@ import javax.inject.Inject
  */
 abstract class QkThemedActivity : QkActivity() {
 
-    @Inject lateinit var colors: Colors
-    @Inject lateinit var conversationRepo: ConversationRepository
-    @Inject lateinit var messageRepo: MessageRepository
-    @Inject lateinit var phoneNumberUtils: PhoneNumberUtils
     @Inject lateinit var prefs: Preferences
-
-    /**
-     * In case the activity should be themed for a specific conversation, the selected conversation
-     * can be changed by pushing the threadId to this subject
-     */
-    val threadId: Subject<Long> = BehaviorSubject.createDefault(0)
-
-    /**
-     * Switch the theme if the threadId changes
-     * Set it based on the latest message in the conversation
-     */
-    val theme: Observable<Colors.Theme> = threadId
-            .distinctUntilChanged()
-            .switchMap { threadId ->
-                val conversation = conversationRepo.getConversation(threadId)
-                when {
-                    conversation == null -> Observable.just(Optional(null))
-
-                    conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
-
-                    else -> messageRepo.getLastIncomingMessage(conversation.id)
-                            .asObservable()
-                            .mapNotNull { messages -> messages.firstOrNull() }
-                            .distinctUntilChanged { message -> message.address }
-                            .mapNotNull { message ->
-                                conversation.recipients.find { recipient ->
-                                    phoneNumberUtils.compare(recipient.address, message.address)
-                                }
-                            }
-                            .map { recipient -> Optional(recipient) }
-                            .startWith(Optional(conversation.recipients.firstOrNull()))
-                            .distinctUntilChanged()
-                }
-            }
-            .switchMap { colors.themeObservable(it.value) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -126,30 +75,6 @@ abstract class QkThemedActivity : QkActivity() {
         val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
         val taskDesc = ActivityManager.TaskDescription(getString(R.string.app_name), icon, toolbarColor)
         setTaskDescription(taskDesc)
-    }
-
-    override fun onPostCreate(savedInstanceState: Bundle?) {
-        super.onPostCreate(savedInstanceState)
-
-        // Set the color for the overflow and navigation icon
-        val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
-        toolbar.overflowIcon = toolbar.overflowIcon?.apply { setTint(textSecondary) }
-
-        // Update the colours of the menu items
-        Observables.combineLatest(menu, theme) { menu, theme ->
-            menu.iterator().forEach { menuItem ->
-                val tint = when (menuItem.itemId) {
-                    in getColoredMenuItems() -> theme.theme
-                    else -> textSecondary
-                }
-
-                menuItem.icon = menuItem.icon?.apply { setTint(tint) }
-            }
-        }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
-    }
-
-    open fun getColoredMenuItems(): List<Int> {
-        return listOf()
     }
 
     /**

@@ -31,6 +31,7 @@ import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
+import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
@@ -52,6 +53,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter, 
 ), BackupView {
 
     @Inject lateinit var adapter: BackupAdapter
+    @Inject lateinit var colors: Colors
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
@@ -101,7 +103,7 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter, 
     override fun onViewCreated() {
         super.onViewCreated()
 
-        themedActivity?.colors?.theme()?.let { theme ->
+        colors.theme().let { theme ->
             binding.progressBar.indeterminateTintList = ColorStateList.valueOf(theme.theme)
             binding.progressBar.progressTintList = ColorStateList.valueOf(theme.theme)
             binding.fab.setBackgroundTint(theme.theme)

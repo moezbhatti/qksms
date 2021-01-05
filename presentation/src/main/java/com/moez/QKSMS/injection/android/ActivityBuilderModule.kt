@@ -21,7 +21,6 @@ package com.moez.QKSMS.injection.android
 import com.moez.QKSMS.feature.backup.BackupActivity
 import com.moez.QKSMS.feature.blocking.BlockingActivity
 import com.moez.QKSMS.feature.compose.ComposeActivity
-import com.moez.QKSMS.feature.compose.ComposeActivityModule
 import com.moez.QKSMS.feature.contacts.ContactsActivity
 import com.moez.QKSMS.feature.conversationinfo.ConversationInfoActivity
 import com.moez.QKSMS.feature.gallery.GalleryActivity
@@ -53,7 +52,7 @@ abstract class ActivityBuilderModule {
     abstract fun bindBackupActivity(): BackupActivity
 
     @ActivityScope
-    @ContributesAndroidInjector(modules = [ComposeActivityModule::class])
+    @ContributesAndroidInjector(modules = [])
     abstract fun bindComposeActivity(): ComposeActivity
 
     @ActivityScope

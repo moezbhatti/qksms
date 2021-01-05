@@ -33,8 +33,6 @@ import io.reactivex.subjects.Subject
 abstract class QkActivity : AppCompatActivity() {
 
     val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar)!! }
-
-    protected val menu: Subject<Menu> = BehaviorSubject.create()
     protected val toolbarTitle by lazy { findViewById<QkTextView>(R.id.toolbarTitle) }
 
     @SuppressLint("InlinedApi")
@@ -66,14 +64,6 @@ abstract class QkActivity : AppCompatActivity() {
     override fun setTitle(title: CharSequence?) {
         super.setTitle(title)
         toolbarTitle?.text = title
-    }
-
-    override fun onCreateOptionsMenu(menu: Menu?): Boolean {
-        val result = super.onCreateOptionsMenu(menu)
-        if (menu != null) {
-            this.menu.onNext(menu)
-        }
-        return result
     }
 
     protected open fun showBackButton(show: Boolean) {
