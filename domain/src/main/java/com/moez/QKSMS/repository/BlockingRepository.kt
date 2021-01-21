@@ -19,20 +19,33 @@
 package com.moez.QKSMS.repository
 
 import com.moez.QKSMS.model.BlockedNumber
+import com.moez.QKSMS.model.BlockedRegex
 import io.realm.RealmResults
 
 interface BlockingRepository {
 
     fun blockNumber(vararg addresses: String)
 
+    fun blockRegex(vararg regexps: String)
+
     fun getBlockedNumbers(): RealmResults<BlockedNumber>
 
     fun getBlockedNumber(id: Long): BlockedNumber?
 
-    fun isBlocked(address: String): Boolean
+    fun getBlockedRegexps(): RealmResults<BlockedRegex>
+
+    fun getBlockedRegex(id: Long): BlockedRegex?
+
+    fun isBlockedAddress(address: String): Boolean
+
+    fun isBlockedContent(content: String): Boolean
 
     fun unblockNumber(id: Long)
 
     fun unblockNumbers(vararg addresses: String)
+
+    fun unblockRegex(id: Long)
+
+    fun unblockRegexps(vararg regexps: String)
 
 }

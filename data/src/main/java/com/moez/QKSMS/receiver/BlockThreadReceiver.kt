@@ -44,7 +44,7 @@ class BlockThreadReceiver : BroadcastReceiver() {
         val blockingManager = prefs.blockingManager.get()
 
         blockingClient
-                .block(conversation.recipients.map { it.address })
+                .blockAddresses(conversation.recipients.map { it.address })
                 .andThen(markBlocked.buildObservable(MarkBlocked.Params(listOf(threadId), blockingManager, null)))
                 .subscribe { pendingResult.finish() }
     }

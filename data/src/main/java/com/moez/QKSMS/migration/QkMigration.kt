@@ -62,7 +62,7 @@ class QkMigration @Inject constructor(
                 .map { recipient -> recipient.address }
                 .distinct()
 
-        qksmsBlockingClient.block(addresses).blockingAwait()
+        qksmsBlockingClient.blockAddresses(addresses).blockingAwait()
     }
 
 }

@@ -20,6 +20,7 @@ package com.moez.QKSMS.repository
 
 import com.moez.QKSMS.extensions.anyOf
 import com.moez.QKSMS.model.BlockedNumber
+import com.moez.QKSMS.model.BlockedRegex
 import com.moez.QKSMS.util.PhoneNumberUtils
 import io.realm.Realm
 import io.realm.RealmResults
@@ -49,6 +50,26 @@ class BlockingRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun blockRegex(vararg regexps: String) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.refresh()
+
+            val blockedRegexps = realm.where(BlockedRegex::class.java).findAll()
+            val newRegexps = regexps.filter { regex ->
+                blockedRegexps.none { blockedRegex -> phoneNumberUtils.compare(blockedRegex.regex, regex) }
+            }
+
+            val maxId = realm.where(BlockedRegex::class.java)
+                    .max("id")?.toLong() ?: -1
+
+            realm.executeTransaction {
+                realm.insert(newRegexps.mapIndexed { index, regex ->
+                    BlockedRegex(maxId + 1 + index, regex)
+                })
+            }
+        }
+    }
+
     override fun getBlockedNumbers(): RealmResults<BlockedNumber> {
         return Realm.getDefaultInstance()
                 .where(BlockedNumber::class.java)
@@ -62,12 +83,36 @@ class BlockingRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
-    override fun isBlocked(address: String): Boolean {
+    override fun getBlockedRegexps(): RealmResults<BlockedRegex> {
+        return Realm.getDefaultInstance()
+                .where(BlockedRegex::class.java)
+                .findAllAsync()
+    }
+
+    override fun getBlockedRegex(id: Long): BlockedRegex? {
+        return Realm.getDefaultInstance()
+                .where(BlockedRegex::class.java)
+                .equalTo("id", id)
+                .findFirst()
+    }
+
+    override fun isBlockedAddress(address: String): Boolean {
         return Realm.getDefaultInstance().use { realm ->
             realm.where(BlockedNumber::class.java)
                     .findAll()
                     .any { number -> phoneNumberUtils.compare(number.address, address) }
         }
+    }
+
+    override fun isBlockedContent(content: String): Boolean {
+        val blockedRegexps = Realm.getDefaultInstance()
+                .where(BlockedRegex::class.java)
+                .findAll()
+        for (blockedRegex in blockedRegexps){
+            val regex = Regex(blockedRegex.regex)
+            if (regex.containsMatchIn(content)) return true
+        }
+        return false
     }
 
     override fun unblockNumber(id: Long) {
@@ -93,6 +138,36 @@ class BlockingRepositoryImpl @Inject constructor(
 
             realm.executeTransaction {
                 realm.where(BlockedNumber::class.java)
+                        .anyOf("id", ids)
+                        .findAll()
+                        .deleteAllFromRealm()
+            }
+        }
+    }
+
+    override fun unblockRegex(id: Long) {
+        Realm.getDefaultInstance().use { realm ->
+            realm.executeTransaction {
+                realm.where(BlockedRegex::class.java)
+                        .equalTo("id", id)
+                        .findAll()
+                        .deleteAllFromRealm()
+            }
+        }
+    }
+
+    override fun unblockRegexps(vararg regexps: String) {
+        Realm.getDefaultInstance().use { realm ->
+            val ids = realm.where(BlockedRegex::class.java)
+                    .findAll()
+                    .filter { blockedRegex ->
+                        regexps.any { address -> phoneNumberUtils.compare(blockedRegex.regex, address) }
+                    }
+                    .map { number -> number.id }
+                    .toLongArray()
+
+            realm.executeTransaction {
+                realm.where(BlockedRegex::class.java)
                         .anyOf("id", ids)
                         .findAll()
                         .deleteAllFromRealm()

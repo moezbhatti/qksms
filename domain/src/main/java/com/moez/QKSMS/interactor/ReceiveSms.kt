@@ -49,7 +49,16 @@ class ReceiveSms @Inject constructor(
                     // Don't continue if the sender is blocked
                     val messages = it.messages
                     val address = messages[0].displayOriginatingAddress
-                    val action = blockingClient.getAction(address).blockingGet()
+
+                    val body: String = messages
+                            .mapNotNull { message -> message.displayMessageBody }
+                            .reduce { body, new -> body + new }
+
+                    var action = blockingClient.getActionFromAddress(address).blockingGet()
+                    if (action !is BlockingClient.Action.Block) {
+                        // Check if we should block it because of its content
+                        action = blockingClient.getActionFromContent(body).blockingGet()
+                    }
                     val shouldDrop = prefs.drop.get()
                     Timber.v("block=$action, drop=$shouldDrop")
 
@@ -58,11 +67,8 @@ class ReceiveSms @Inject constructor(
                         return@mapNotNull null
                     }
 
-                    val time = messages[0].timestampMillis
-                    val body: String = messages
-                            .mapNotNull { message -> message.displayMessageBody }
-                            .reduce { body, new -> body + new }
 
+                    val time = messages[0].timestampMillis
                     // Add the message to the db
                     val message = messageRepo.insertReceivedSms(it.subId, address, body, time)
 

@@ -47,6 +47,12 @@
             app:title="@string/blocked_numbers_title" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/blockedRegexps"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:title="@string/blocked_regexps_title" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/drop"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

@@ -55,7 +55,7 @@ class ShouldIAnswerBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.CANT_BLOCK
 
-    override fun getAction(address: String): Single<BlockingClient.Action> {
+    override fun getActionFromAddress(address: String): Single<BlockingClient.Action> {
         return Binder(context, address).isBlocked()
                 .map { blocked ->
                     when (blocked) {
@@ -65,9 +65,13 @@ class ShouldIAnswerBlockingClient @Inject constructor(
                 }
     }
 
-    override fun block(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
+    override fun getActionFromContent(content: String): Single<BlockingClient.Action> = Single.fromCallable{
+        BlockingClient.Action.DoNothing
+    }
 
-    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
+    override fun blockAddresses(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
+
+    override fun unblockAddresses(addresses: List<String>): Completable = Completable.fromCallable { openSettings() }
 
     override fun openSettings() {
         val pm = context.packageManager

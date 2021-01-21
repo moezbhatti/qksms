@@ -57,7 +57,7 @@ class BlockingManagerPresenter @Inject constructor(
         view.qksmsClicked()
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(qksms) }
-                .switchMap { numbers -> qksms.block(numbers).andThen(Observable.just(Unit)) } // Hack
+                .switchMap { numbers -> qksms.blockAddresses(numbers).andThen(Observable.just(Unit)) } // Hack
                 .autoDisposable(view.scope())
                 .subscribe {
                     analytics.setUserProperty("Blocking Manager", "QKSMS")
@@ -89,10 +89,10 @@ class BlockingManagerPresenter @Inject constructor(
                 .filter { it }
                 .observeOn(Schedulers.io())
                 .map { getAddressesToBlock(callControl) } // This sucks. Can't wait to use coroutines
-                .switchMap { numbers -> callControl.block(numbers).andThen(Observable.just(Unit)) } // Hack
+                .switchMap { numbers -> callControl.blockAddresses(numbers).andThen(Observable.just(Unit)) } // Hack
                 .autoDisposable(view.scope())
                 .subscribe {
-                    callControl.getAction("callcontrol").blockingGet()
+                    callControl.getActionFromAddress("callcontrol").blockingGet()
                     analytics.setUserProperty("Blocking Manager", "Call Control")
                     prefs.blockingManager.set(Preferences.BLOCKING_MANAGER_CC)
                 }
@@ -117,6 +117,6 @@ class BlockingManagerPresenter @Inject constructor(
 
     private fun getAddressesToBlock(client: BlockingClient) = conversationRepo.getBlockedConversations()
             .fold(listOf<String>(), { numbers, conversation -> numbers + conversation.recipients.map { it.address } })
-            .filter { number -> client.getAction(number).blockingGet() !is BlockingClient.Action.Block }
+            .filter { number -> client.getActionFromAddress(number).blockingGet() !is BlockingClient.Action.Block }
 
 }

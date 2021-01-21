@@ -33,6 +33,7 @@ import com.moez.QKSMS.feature.blocking.BlockingController
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
+import com.moez.QKSMS.feature.blocking.regexps.BlockedRegexpsController
 import com.moez.QKSMS.feature.compose.editing.DetailedChipView
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoComponent
 import com.moez.QKSMS.feature.settings.SettingsController
@@ -65,6 +66,7 @@ interface AppComponent {
     fun inject(controller: BackupController)
     fun inject(controller: BlockedMessagesController)
     fun inject(controller: BlockedNumbersController)
+    fun inject(controller: BlockedRegexpsController)
     fun inject(controller: BlockingController)
     fun inject(controller: BlockingManagerController)
     fun inject(controller: SettingsController)

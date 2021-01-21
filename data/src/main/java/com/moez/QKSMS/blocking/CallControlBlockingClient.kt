@@ -48,7 +48,7 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun getActionFromAddress(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
         val blockReason = tryOrNull {
             context.contentResolver.query(uri, projection, null, null, null) // Query URI
@@ -62,13 +62,13 @@ class CallControlBlockingClient @Inject constructor(
         }
     }
 
-    override fun block(addresses: List<String>): Completable = Completable.fromCallable {
+    override fun blockAddresses(addresses: List<String>): Completable = Completable.fromCallable {
         val reports = addresses.map { CallControl.Report(it) }
         val reportsArrayList = arrayListOf<CallControl.Report>().apply { addAll(reports) }
         CallControl.addRule(context, reportsArrayList, Intent.FLAG_ACTIVITY_NEW_TASK)
     }
 
-    override fun unblock(addresses: List<String>): Completable = Completable.fromCallable {
+    override fun unblockAddresses(addresses: List<String>): Completable = Completable.fromCallable {
         val reports = addresses.map { CallControl.Report(it, null, false) }
         val reportsArrayList = arrayListOf<CallControl.Report>().apply { addAll(reports) }
         CallControl.addRule(context, reportsArrayList, Intent.FLAG_ACTIVITY_NEW_TASK)

@@ -28,11 +28,17 @@ class BlockingManager @Inject constructor(
 
     override fun getClientCapability(): BlockingClient.Capability = client.getClientCapability()
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = client.getAction(address)
+    override fun getActionFromAddress(address: String): Single<BlockingClient.Action> = client.getActionFromAddress(address)
 
-    override fun block(addresses: List<String>): Completable = client.block(addresses)
+    override fun getActionFromContent(content: String): Single<BlockingClient.Action> = client.getActionFromContent(content)
 
-    override fun unblock(addresses: List<String>): Completable = client.unblock(addresses)
+    override fun blockAddresses(addresses: List<String>): Completable = client.blockAddresses(addresses)
+
+    override fun unblockAddresses(addresses: List<String>): Completable = client.unblockAddresses(addresses)
+
+    override fun blockRegexps(regexps: List<String>): Completable = client.blockRegexps(regexps)
+
+    override fun unblockRegexps(regexps: List<String>): Completable = client.unblockRegexps(regexps)
 
     override fun openSettings() = client.openSettings()
 

@@ -303,6 +303,13 @@
     <string name="blocked_numbers_dialog_hint">Phone number</string>
     <string name="blocked_numbers_dialog_block">Block</string>
 
+    <string name="blocked_regexps_title">Regex block rules</string>
+    <string name="blocked_regexps_empty">Your regexps rule will appear here</string>
+    <string name="blocked_regexps_add_cd">add a new regex rule</string>
+    <string name="blocked_regexps_dialog_title">New regex rule</string>
+    <string name="blocked_regexps_dialog_hint">Regex rule</string>
+    <string name="blocked_regexps_dialog_block">Block</string>
+
     <string name="blocked_messages_title">Blocked messages</string>
     <string name="blocked_messages_empty">Your blocked messages will appear here</string>
 

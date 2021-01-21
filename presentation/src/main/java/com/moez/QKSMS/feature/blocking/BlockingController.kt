@@ -31,6 +31,7 @@ import com.moez.QKSMS.databinding.BlockingControllerBinding
 import com.moez.QKSMS.feature.blocking.manager.BlockingManagerController
 import com.moez.QKSMS.feature.blocking.messages.BlockedMessagesController
 import com.moez.QKSMS.feature.blocking.numbers.BlockedNumbersController
+import com.moez.QKSMS.feature.blocking.regexps.BlockedRegexpsController
 import com.moez.QKSMS.injection.appComponent
 import javax.inject.Inject
 
@@ -40,6 +41,7 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
 
     override val blockingManagerIntent by lazy { binding.blockingManager.clicks() }
     override val blockedNumbersIntent by lazy { binding.blockedNumbers.clicks() }
+    override val blockedRegexpsIntent by lazy { binding.blockedRegexps.clicks() }
     override val blockedMessagesIntent by lazy { binding.blockedMessages.clicks() }
     override val dropClickedIntent by lazy { binding.drop.clicks() }
 
@@ -71,6 +73,12 @@ class BlockingController : QkController<BlockingView, BlockingState, BlockingPre
 
     override fun openBlockedNumbers() {
         router.pushController(RouterTransaction.with(BlockedNumbersController())
+                .pushChangeHandler(QkChangeHandler())
+                .popChangeHandler(QkChangeHandler()))
+    }
+
+    override fun openBlockedRegexps() {
+        router.pushController(RouterTransaction.with(BlockedRegexpsController())
                 .pushChangeHandler(QkChangeHandler())
                 .popChangeHandler(QkChangeHandler()))
     }
