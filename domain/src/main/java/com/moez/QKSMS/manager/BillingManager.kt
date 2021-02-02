@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,23 +16,28 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.plus
 
-import com.moez.QKSMS.common.base.QkView
-import com.moez.QKSMS.manager.BillingManager
+package com.moez.QKSMS.manager
+
+import android.app.Activity
 import io.reactivex.Observable
 
-interface PlusView : QkView<PlusState> {
+interface BillingManager {
 
-    val upgradeIntent: Observable<Unit>
-    val upgradeDonateIntent: Observable<Unit>
-    val donateIntent: Observable<*>
-    val themeClicks: Observable<*>
-    val scheduleClicks: Observable<*>
-    val backupClicks: Observable<*>
-    val delayedClicks: Observable<*>
-    val nightClicks: Observable<*>
+    companion object {
+        const val SKU_PLUS = "remove_ads"
+        const val SKU_PLUS_DONATE = "qksms_plus_donate"
+    }
 
-    fun initiatePurchaseFlow(billingManager: BillingManager, sku: String)
+    data class Product(
+        val sku: String,
+        val price: String,
+        val priceCurrencyCode: String
+    )
+
+    val products: Observable<List<Product>>
+    val upgradeStatus: Observable<Boolean>
+
+    fun initiatePurchaseFlow(activity: Activity, sku: String)
 
 }

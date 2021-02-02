@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,23 +16,22 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.plus
+package com.moez.QKSMS.common.util
 
-import com.moez.QKSMS.common.base.QkView
+import android.app.Activity
 import com.moez.QKSMS.manager.BillingManager
 import io.reactivex.Observable
+import io.reactivex.subjects.BehaviorSubject
+import javax.inject.Inject
+import javax.inject.Singleton
 
-interface PlusView : QkView<PlusState> {
+@Singleton
+class BillingManagerImpl @Inject constructor(
+): BillingManager {
 
-    val upgradeIntent: Observable<Unit>
-    val upgradeDonateIntent: Observable<Unit>
-    val donateIntent: Observable<*>
-    val themeClicks: Observable<*>
-    val scheduleClicks: Observable<*>
-    val backupClicks: Observable<*>
-    val delayedClicks: Observable<*>
-    val nightClicks: Observable<*>
+    override val products: Observable<List<BillingManager.Product>> = BehaviorSubject.createDefault(listOf())
+    override val upgradeStatus: Observable<Boolean> = BehaviorSubject.createDefault(true)
 
-    fun initiatePurchaseFlow(billingManager: BillingManager, sku: String)
+    override fun initiatePurchaseFlow(activity: Activity, sku: String) = Unit
 
 }

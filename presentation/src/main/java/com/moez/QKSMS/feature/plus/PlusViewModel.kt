@@ -20,8 +20,8 @@ package com.moez.QKSMS.feature.plus
 
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.BillingManager
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable

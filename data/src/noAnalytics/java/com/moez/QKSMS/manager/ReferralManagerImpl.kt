@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,23 +16,18 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
-package com.moez.QKSMS.feature.plus
 
-import com.moez.QKSMS.common.base.QkView
-import com.moez.QKSMS.manager.BillingManager
-import io.reactivex.Observable
+package com.moez.QKSMS.manager
 
-interface PlusView : QkView<PlusState> {
+import android.content.Context
+import com.moez.QKSMS.util.Preferences
+import kotlinx.coroutines.suspendCancellableCoroutine
+import javax.inject.Inject
+import kotlin.coroutines.resume
 
-    val upgradeIntent: Observable<Unit>
-    val upgradeDonateIntent: Observable<Unit>
-    val donateIntent: Observable<*>
-    val themeClicks: Observable<*>
-    val scheduleClicks: Observable<*>
-    val backupClicks: Observable<*>
-    val delayedClicks: Observable<*>
-    val nightClicks: Observable<*>
+class ReferralManagerImpl @Inject constructor() : ReferralManager {
 
-    fun initiatePurchaseFlow(billingManager: BillingManager, sku: String)
+    override suspend fun trackReferrer() {
+    }
 
 }
