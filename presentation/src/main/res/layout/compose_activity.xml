@@ -330,6 +330,13 @@
                 tools:text="Moez Bhatti" />
 
             <com.moez.QKSMS.common.widget.QkTextView
+                android:id="@+id/toolbarNumber"
+                style="@style/ToolbarText"
+                android:layout_height="wrap_content"
+                app:textSize="secondary"
+                tools:text="+12345678" />
+
+            <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
                 style="@style/ToolbarText"
                 android:textColor="?android:attr/textColorTertiary"

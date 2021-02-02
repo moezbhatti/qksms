@@ -190,6 +190,11 @@ class ComposeViewModel @Inject constructor(
                 .distinctUntilChanged()
                 .subscribe { title -> newState { copy(conversationtitle = title) } }
 
+        disposables += conversation
+                .map { conversation -> conversation.getNumberForSingleReceipt() }
+                .distinctUntilChanged()
+                .subscribe { number -> newState { copy(conversationNumber = number) } }
+
         disposables += prefs.sendAsGroup.asObservable()
                 .distinctUntilChanged()
                 .subscribe { enabled -> newState { copy(sendAsGroup = enabled) } }

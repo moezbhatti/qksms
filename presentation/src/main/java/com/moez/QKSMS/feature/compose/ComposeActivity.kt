@@ -188,11 +188,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             else -> state.conversationtitle
         }
 
+        binding.toolbarNumber.text = state.conversationNumber
+
         binding.toolbarSubtitle.setVisible(state.query.isNotEmpty())
         binding.toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition,
                 state.searchResults)
 
         binding.toolbarTitle.setVisible(!state.editingMode)
+        binding.toolbarNumber.setVisible(!state.editingMode && state.conversationNumber.isNotEmpty() )
         binding.chips.setVisible(state.editingMode)
         binding.composeBar.setVisible(!state.loading)
 

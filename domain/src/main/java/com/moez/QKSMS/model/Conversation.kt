@@ -47,4 +47,8 @@ open class Conversation(
         return name.takeIf { it.isNotBlank() } ?: recipients.joinToString { recipient -> recipient.getDisplayName() }
     }
 
+    fun getNumberForSingleReceipt(): String {
+        return if(recipients.isNullOrEmpty() || recipients.size > 1 || recipients[0]!!.contact == null) "" else recipients[0]!!.address
+    }
+
 }
