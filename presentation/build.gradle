@@ -30,8 +30,8 @@ android {
         applicationId "com.moez.QKSMS"
         minSdkVersion 21
         targetSdkVersion 29
-        versionCode 2214
-        versionName "3.9.0"
+        versionCode 2215
+        versionName "3.9.1"
         setProperty("archivesBaseName", "QKSMS-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
