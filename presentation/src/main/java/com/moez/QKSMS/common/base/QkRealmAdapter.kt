@@ -52,7 +52,7 @@ abstract class QkRealmAdapter<T : RealmModel, Binding : ViewBinding>
 
     val selectionChanges: Subject<List<Long>> = BehaviorSubject.create()
 
-    private var selection = listOf<Long>()
+    var selection = listOf<Long>()
 
     /**
      * Toggles the selected state for a particular view

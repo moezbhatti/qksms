@@ -410,4 +410,5 @@ BAĞLAM İSTEĞİ</string>
         <item>He</item>
         <item>Tamam o zaman</item>
     </string-array>
+    <string name="main_menu_select_all">Hepsini seç</string>
 </resources>

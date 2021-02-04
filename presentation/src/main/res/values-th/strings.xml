@@ -402,4 +402,5 @@
         <item>555</item>
         <item>ไม่เป็นไร</item>
     </string-array>
+    <string name="main_menu_select_all">เลือกทั้งหมด</string>
 </resources>

@@ -408,4 +408,5 @@
         <item>LOL</item>
         <item>Det er greit</item>
     </string-array>
+    <string name="main_menu_select_all">Velg alle</string>
 </resources>

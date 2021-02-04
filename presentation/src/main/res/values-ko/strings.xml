@@ -404,4 +404,5 @@
         <item>웃음</item>
         <item>괜찮아요</item>
     </string-array>
+    <string name="main_menu_select_all">모두 선택</string>
 </resources>

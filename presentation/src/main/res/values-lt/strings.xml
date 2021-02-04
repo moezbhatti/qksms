@@ -420,4 +420,5 @@
         <item>HAHA</item>
         <item>Viskas gerai</item>
     </string-array>
+    <string name="main_menu_select_all">Pasirinkti viską</string>
 </resources>

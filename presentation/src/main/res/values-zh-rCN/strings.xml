@@ -402,4 +402,5 @@
         <item>啊哈哈哈哈</item>
         <item>好的</item>
     </string-array>
+    <string name="main_menu_select_all">全选</string>
 </resources>

@@ -53,6 +53,7 @@
     <string name="main_menu_read">Mark read</string>
     <string name="main_menu_unread">Mark unread</string>
     <string name="main_menu_block">Block</string>
+    <string name="main_menu_select_all">Select All</string>
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">You: %s</string>
     <string name="main_draft">Draft</string>

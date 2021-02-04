@@ -420,4 +420,5 @@
         <item>LOL</item>
         <item>To je v poriadku</item>
     </string-array>
+    <string name="main_menu_select_all">Vybrať všetko</string>
 </resources>

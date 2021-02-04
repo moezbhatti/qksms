@@ -414,4 +414,5 @@
         <item>Значи, ЛОЛ</item>
         <item>Добро онда</item>
     </string-array>
+    <string name="main_menu_select_all">Изабери све</string>
 </resources>

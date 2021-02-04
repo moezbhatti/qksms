@@ -414,4 +414,5 @@
         <item>LOL</item>
         <item>That\'s okay</item>
     </string-array>
+    <string name="main_menu_select_all">Selectează tot</string>
 </resources>

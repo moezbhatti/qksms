@@ -408,4 +408,5 @@
         <item>হাহা</item>
         <item>তা ঠিক আছে।</item>
     </string-array>
+    <string name="main_menu_select_all">সমস্ত নির্বাচন করুন</string>
 </resources>

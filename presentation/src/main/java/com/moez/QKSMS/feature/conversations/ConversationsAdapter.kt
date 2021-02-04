@@ -127,4 +127,22 @@ class ConversationsAdapter @Inject constructor(
     override fun getItemViewType(position: Int): Int {
         return if (getItem(position)?.unread == false) 0 else 1
     }
+
+    fun selectAllConversations() {
+        data?.let { adapterItems ->
+            if (adapterItems.isNotEmpty()) {
+                //If data is empty, does not get into the scope.
+                selection = mutableListOf()
+                for (conversation in adapterItems) {
+                    // Writing the code at individual adapter levels,
+                    // since data can be of different object types,
+                    // and not at [QkRealmAdapter]
+                    (selection as MutableList<Long>).add(conversation.id)
+                }
+                selectionChanges.onNext(selection)
+                notifyDataSetChanged()
+            }
+        }
+    }
+
 }
