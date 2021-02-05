@@ -18,27 +18,27 @@
  */
 package com.moez.QKSMS.interactor
 
-import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
+import com.moez.QKSMS.util.Preferences
 import io.reactivex.Flowable
+import timber.log.Timber
 import javax.inject.Inject
 
-class DeleteMessages @Inject constructor(
+class DeleteOldMessages @Inject constructor(
     private val conversationRepo: ConversationRepository,
     private val messageRepo: MessageRepository,
-    private val notificationManager: NotificationManager,
-    private val updateBadge: UpdateBadge
-) : Interactor<DeleteMessages.Params>() {
+    private val prefs: Preferences
+) : Interactor<Unit>() {
 
-    data class Params(val messageIds: List<Long>, val threadId: Long)
+    override fun buildObservable(params: Unit): Flowable<*> = Flowable.fromCallable {
+        val maxAge = prefs.autoDelete.get().takeIf { it > 0 } ?: return@fromCallable
+        val counts = messageRepo.getOldMessageCounts(maxAge)
+        val threadIds = counts.keys.toLongArray()
 
-    override fun buildObservable(params: Params): Flowable<*> {
-        return Flowable.just(params.messageIds.toLongArray())
-                .doOnNext { messageIds -> messageRepo.deleteMessages(*messageIds) } // Delete the messages
-                .doOnNext { conversationRepo.updateConversations(params.threadId) } // Update the conversation
-                .doOnNext { notificationManager.update(params.threadId) }
-                .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
+        Timber.d("Deleting ${counts.values.sum()} old messages from ${threadIds.size} conversations")
+        messageRepo.deleteOldMessages(maxAge)
+        conversationRepo.updateConversations(*threadIds)
     }
 
 }

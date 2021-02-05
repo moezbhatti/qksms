@@ -44,7 +44,7 @@ class AvatarView @JvmOverloads constructor(
     private val binding = viewBinding(AvatarViewBinding::inflate)
 
     private var lookupKey: String? = null
-    private var name: String? = null
+    private var fullName: String? = null
     private var photoUri: String? = null
     private var lastUpdated: Long? = null
 
@@ -63,7 +63,7 @@ class AvatarView @JvmOverloads constructor(
      */
     fun setRecipient(recipient: Recipient?) {
         lookupKey = recipient?.contact?.lookupKey
-        name = recipient?.contact?.name
+        fullName = recipient?.contact?.name
         photoUri = recipient?.contact?.photoUri
         lastUpdated = recipient?.contact?.lastUpdate
         theme = colors.theme(recipient)
@@ -84,13 +84,15 @@ class AvatarView @JvmOverloads constructor(
         binding.initial.setTextColor(theme.textPrimary)
         binding.icon.setTint(theme.textPrimary)
 
-        if (name?.isNotEmpty() == true) {
-            val initials = name
-                    ?.substringBefore(',')
-                    ?.split(" ").orEmpty()
-                    .filter { subname -> subname.isNotEmpty() }
-                    .map { subname -> subname[0].toString() }
+        val initials = fullName
+                ?.substringBefore(',')
+                ?.split(" ").orEmpty()
+                .filter { name -> name.isNotEmpty() }
+                .map { name -> name[0] }
+                .filter { initial -> initial.isLetterOrDigit() }
+                .map { initial -> initial.toString() }
 
+        if (initials.isNotEmpty()) {
             binding.initial.text = if (initials.size > 1) initials.first() + initials.last() else initials.first()
             binding.icon.visibility = GONE
         } else {

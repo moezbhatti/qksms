@@ -66,8 +66,11 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.util.*
+import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.collections.ArrayList
 import kotlin.math.sqrt
 
 @Singleton
@@ -724,4 +727,27 @@ class MessageRepositoryImpl @Inject constructor(
         }
     }
 
+    override fun getOldMessageCounts(maxAgeDays: Int): Map<Long, Int> {
+        return Realm.getDefaultInstance().use { realm ->
+            realm.where(Message::class.java)
+                    .lessThan("date", now() - TimeUnit.DAYS.toMillis(maxAgeDays.toLong()))
+                    .findAll()
+                    .groupingBy { message -> message.threadId }
+                    .eachCount()
+        }
+    }
+
+    override fun deleteOldMessages(maxAgeDays: Int) {
+        return Realm.getDefaultInstance().use { realm ->
+            val messages = realm.where(Message::class.java)
+                    .lessThan("date", now() - TimeUnit.DAYS.toMillis(maxAgeDays.toLong()))
+                    .findAll()
+
+            val uris = messages.map { it.getUri() }
+
+            realm.executeTransaction { messages.deleteAllFromRealm() }
+
+            uris.forEach { uri -> context.contentResolver.delete(uri, null, null) }
+        }
+    }
 }

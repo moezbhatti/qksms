@@ -22,11 +22,11 @@ import android.app.Activity
 import android.content.DialogInterface
 import androidx.appcompat.app.AlertDialog
 import com.moez.QKSMS.R
-import com.moez.QKSMS.databinding.FieldDialogBinding
+import com.moez.QKSMS.databinding.TextInputDialogBinding
 
-class FieldDialog(context: Activity, hint: String, listener: (String) -> Unit) : AlertDialog(context) {
+class TextInputDialog(context: Activity, hint: String, listener: (String) -> Unit) : AlertDialog(context) {
 
-    private val binding = FieldDialogBinding.inflate(context.layoutInflater)
+    private val binding = TextInputDialogBinding.inflate(context.layoutInflater)
 
     init {
         binding.field.hint = hint
@@ -39,7 +39,7 @@ class FieldDialog(context: Activity, hint: String, listener: (String) -> Unit) :
         }
     }
 
-    fun setText(text: String): FieldDialog {
+    fun setText(text: String): TextInputDialog {
         binding.field.setText(text)
         return this
     }

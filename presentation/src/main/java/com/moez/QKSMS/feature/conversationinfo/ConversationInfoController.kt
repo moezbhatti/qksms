@@ -27,7 +27,7 @@ import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.extensions.scrapViews
-import com.moez.QKSMS.common.widget.FieldDialog
+import com.moez.QKSMS.common.widget.TextInputDialog
 import com.moez.QKSMS.databinding.ConversationInfoControllerBinding
 import com.moez.QKSMS.feature.blocking.BlockingDialog
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
@@ -50,8 +50,8 @@ class ConversationInfoController(
     @Inject lateinit var navigator: Navigator
     @Inject lateinit var adapter: ConversationInfoAdapter
 
-    private val nameDialog: FieldDialog by lazy {
-        FieldDialog(activity!!, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
+    private val nameDialog: TextInputDialog by lazy {
+        TextInputDialog(activity!!, activity!!.getString(R.string.info_name), nameChangeSubject::onNext)
     }
 
     private val nameChangeSubject: Subject<String> = PublishSubject.create()

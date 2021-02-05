@@ -21,7 +21,7 @@ package com.moez.QKSMS.manager
 import android.Manifest
 import android.app.role.RoleManager
 import android.content.Context
-import android.content.pm.PackageManager.PERMISSION_GRANTED
+import android.content.pm.PackageManager
 import android.os.Build
 import android.provider.Telephony
 import androidx.core.content.ContextCompat
@@ -38,28 +38,31 @@ class PermissionManagerImpl @Inject constructor(private val context: Context) : 
     }
 
     override fun hasReadSms(): Boolean {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_SMS) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.READ_SMS)
     }
 
     override fun hasSendSms(): Boolean {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.SEND_SMS) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.SEND_SMS)
     }
 
     override fun hasContacts(): Boolean {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_CONTACTS) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.READ_CONTACTS)
     }
 
     override fun hasPhone(): Boolean {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.READ_PHONE_STATE) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.READ_PHONE_STATE)
     }
 
     override fun hasCalling(): Boolean {
-        return ContextCompat.checkSelfPermission(context, Manifest.permission.CALL_PHONE) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.CALL_PHONE)
     }
 
     override fun hasStorage(): Boolean {
-        return ContextCompat.checkSelfPermission(context,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE) == PERMISSION_GRANTED
+        return hasPermission(Manifest.permission.WRITE_EXTERNAL_STORAGE)
+    }
+
+    private fun hasPermission(permission: String): Boolean {
+        return ContextCompat.checkSelfPermission(context, permission) == PackageManager.PERMISSION_GRANTED
     }
 
 }

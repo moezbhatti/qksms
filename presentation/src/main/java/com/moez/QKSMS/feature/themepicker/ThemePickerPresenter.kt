@@ -21,8 +21,8 @@ package com.moez.QKSMS.feature.themepicker
 import com.f2prateek.rx.preferences2.Preference
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.manager.BillingManager
 import com.moez.QKSMS.manager.WidgetManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope

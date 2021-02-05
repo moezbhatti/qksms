@@ -20,7 +20,6 @@ package com.moez.QKSMS.feature.compose
 
 import android.content.Intent
 import android.net.Uri
-import androidx.core.net.toFile
 import androidx.lifecycle.ViewModel
 import com.google.android.mms.ContentType
 import com.moez.QKSMS.injection.ViewModelKey
@@ -50,8 +49,9 @@ class ComposeActivityModule {
         return activity.intent
                 ?.decodedDataString()
                 ?.substringAfter(':') // Remove scheme
-                ?.replaceAfter("?", "") // Remove query
-                ?.split(",")
+                ?.substringBeforeLast("?") // Remove query
+                ?.split(",", ";")
+                ?.filter { number -> number.isNotEmpty() }
                 ?: listOf()
     }
 

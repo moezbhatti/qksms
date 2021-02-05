@@ -22,19 +22,24 @@ import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
+import com.moez.QKSMS.interactor.DeleteOldMessages
 import com.moez.QKSMS.interactor.SyncMessages
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.BillingManager
+import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.repository.SyncRepository
+import com.moez.QKSMS.service.AutoDeleteService
 import com.moez.QKSMS.util.NightModeManager
 import com.moez.QKSMS.util.Preferences
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.runBlocking
 import timber.log.Timber
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -47,6 +52,8 @@ class SettingsPresenter @Inject constructor(
     private val context: Context,
     private val billingManager: BillingManager,
     private val dateFormatter: DateFormatter,
+    private val deleteOldMessages: DeleteOldMessages,
+    private val messageRepo: MessageRepository,
     private val navigator: Navigator,
     private val nightModeManager: NightModeManager,
     private val prefs: Preferences,
@@ -113,6 +120,9 @@ class SettingsPresenter @Inject constructor(
 
         disposables += prefs.mobileOnly.asObservable()
                 .subscribe { enabled -> newState { copy(mobileOnly = enabled) } }
+
+        disposables += prefs.autoDelete.asObservable()
+                .subscribe { autoDelete -> newState { copy(autoDelete = autoDelete) } }
 
         disposables += prefs.longAsMms.asObservable()
                 .subscribe { enabled -> newState { copy(longAsMms = enabled) } }
@@ -183,6 +193,8 @@ class SettingsPresenter @Inject constructor(
 
                         R.id.mobileOnly -> prefs.mobileOnly.set(!prefs.mobileOnly.get())
 
+                        R.id.autoDelete -> view.showAutoDeleteDialog(prefs.autoDelete.get())
+
                         R.id.longAsMms -> prefs.longAsMms.set(!prefs.longAsMms.get())
 
                         R.id.mmsSize -> view.showMmsSizePicker()
@@ -242,8 +254,35 @@ class SettingsPresenter @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        view.signatureSet()
+        view.signatureChanged()
                 .doOnNext(prefs.signature::set)
+                .autoDisposable(view.scope())
+                .subscribe()
+
+        view.autoDeleteChanged()
+                .observeOn(Schedulers.io())
+                .filter { maxAge ->
+                    if (maxAge == 0) {
+                        return@filter true
+                    }
+
+                    val counts = messageRepo.getOldMessageCounts(maxAge)
+                    if (counts.values.sum() == 0) {
+                        return@filter true
+                    }
+
+                    runBlocking { view.showAutoDeleteWarningDialog(counts.values.sum()) }
+                }
+                .doOnNext { maxAge ->
+                    when (maxAge == 0) {
+                        true -> AutoDeleteService.cancelJob(context)
+                        false -> {
+                            AutoDeleteService.scheduleJob(context)
+                            deleteOldMessages.execute(Unit)
+                        }
+                    }
+                }
+                .doOnNext(prefs.autoDelete::set)
                 .autoDisposable(view.scope())
                 .subscribe()
 

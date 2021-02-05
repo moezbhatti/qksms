@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2020 Moez Bhatti <moez.bhatti@gmail.com>
  *
  * This file is part of QKSMS.
  *
@@ -16,21 +16,20 @@
  * You should have received a copy of the GNU General Public License
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
+
 package com.moez.QKSMS.common.util
 
 import android.app.Activity
 import android.content.Context
 import com.android.billingclient.api.BillingClient
-import com.android.billingclient.api.BillingClient.BillingResponse
-import com.android.billingclient.api.BillingClient.SkuType
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
-import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.BillingManager
 import io.reactivex.Flowable
 import io.reactivex.Observable
 import io.reactivex.schedulers.Schedulers
@@ -41,18 +40,18 @@ import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class BillingManager @Inject constructor(
+class BillingManagerImpl @Inject constructor(
     context: Context,
     private val analyticsManager: AnalyticsManager
-) : PurchasesUpdatedListener {
+) : BillingManager, PurchasesUpdatedListener {
 
     companion object {
         const val SKU_PLUS = "remove_ads"
         const val SKU_PLUS_DONATE = "qksms_plus_donate"
     }
 
-    val products: Observable<List<SkuDetails>> = BehaviorSubject.create()
-    val upgradeStatus: Observable<Boolean>
+    override val products: Observable<List<BillingManager.Product>> = BehaviorSubject.create()
+    override val upgradeStatus: Observable<Boolean>
 
     private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
     private val purchaseListObservable = BehaviorSubject.create<List<Purchase>>()
@@ -66,23 +65,19 @@ class BillingManager @Inject constructor(
             querySkuDetailsAsync()
         }
 
-        upgradeStatus = when (BuildConfig.FLAVOR) {
-            "noAnalytics" -> BehaviorSubject.createDefault(true)
-
-            else -> purchaseListObservable
-                    .map { purchases -> purchases.any { it.sku == SKU_PLUS } || purchases.any { it.sku == SKU_PLUS_DONATE } }
-                    .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
-        }
+        upgradeStatus = purchaseListObservable
+                .map { purchases -> purchases.any { it.sku == SKU_PLUS } || purchases.any { it.sku == SKU_PLUS_DONATE } }
+                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
     }
 
     private fun queryPurchases() {
         executeServiceRequest {
             // Load the cached data
-            purchaseListObservable.onNext(billingClient.queryPurchases(SkuType.INAPP).purchasesList.orEmpty())
+            purchaseListObservable.onNext(billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList.orEmpty())
 
             // On a fresh device, the purchase might not be cached, and so we'll need to force a refresh
-            billingClient.queryPurchaseHistoryAsync(SkuType.INAPP) { _, _ ->
-                purchaseListObservable.onNext(billingClient.queryPurchases(SkuType.INAPP).purchasesList.orEmpty())
+            billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP) { _, _ ->
+                purchaseListObservable.onNext(billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList.orEmpty())
             }
         }
     }
@@ -90,8 +85,8 @@ class BillingManager @Inject constructor(
 
     private fun startServiceConnection(onSuccess: () -> Unit) {
         val listener = object : BillingClientStateListener {
-            override fun onBillingSetupFinished(@BillingResponse billingResponseCode: Int) {
-                if (billingResponseCode == BillingResponse.OK) {
+            override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
+                if (billingResponseCode == BillingClient.BillingResponse.OK) {
                     isServiceConnected = true
                     onSuccess()
                 } else {
@@ -114,16 +109,18 @@ class BillingManager @Inject constructor(
         executeServiceRequest {
             val subParams = SkuDetailsParams.newBuilder().setSkusList(skus).setType(BillingClient.SkuType.INAPP)
             billingClient.querySkuDetailsAsync(subParams.build()) { responseCode, skuDetailsList ->
-                if (responseCode == BillingResponse.OK) {
-                    (products as Subject).onNext(skuDetailsList)
+                if (responseCode == BillingClient.BillingResponse.OK) {
+                    (products as Subject).onNext(skuDetailsList.map { skuDetails ->
+                        BillingManager.Product(skuDetails.sku, skuDetails.price, skuDetails.priceCurrencyCode)
+                    })
                 }
             }
         }
     }
 
-    fun initiatePurchaseFlow(activity: Activity, sku: String) {
+    override fun initiatePurchaseFlow(activity: Activity, sku: String) {
         executeServiceRequest {
-            val params = BillingFlowParams.newBuilder().setSku(sku).setType(SkuType.INAPP)
+            val params = BillingFlowParams.newBuilder().setSku(sku).setType(BillingClient.SkuType.INAPP)
             billingClient.launchBillingFlow(activity, params.build())
         }
     }
@@ -136,7 +133,7 @@ class BillingManager @Inject constructor(
     }
 
     override fun onPurchasesUpdated(resultCode: Int, purchases: List<Purchase>?) {
-        if (resultCode == BillingResponse.OK) {
+        if (resultCode == BillingClient.BillingResponse.OK) {
             purchaseListObservable.onNext(purchases.orEmpty())
         }
     }

@@ -22,7 +22,6 @@ import android.content.Context
 import com.amplitude.api.Amplitude
 import com.amplitude.api.AmplitudeClient
 import com.amplitude.api.Identify
-import com.mixpanel.android.mpmetrics.MixpanelAPI
 import com.moez.QKSMS.data.BuildConfig
 import org.json.JSONArray
 import org.json.JSONObject
@@ -34,7 +33,6 @@ import javax.inject.Singleton
 class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsManager {
 
     private val amplitude: AmplitudeClient = Amplitude.getInstance().initialize(context, BuildConfig.AMPLITUDE_API_KEY)
-    private val mixpanel: MixpanelAPI = MixpanelAPI.getInstance(context, BuildConfig.MIXPANEL_API_KEY)
 
     init {
         amplitude.trackSessionEvents(true)
@@ -47,19 +45,10 @@ class AnalyticsManagerImpl @Inject constructor(context: Context) : AnalyticsMana
                 .also { Timber.v("$event: $it") }
 
         amplitude.logEvent(event, propertiesJson)
-
-        synchronized(mixpanel) {
-            mixpanel.track(event, propertiesJson)
-        }
     }
 
     override fun setUserProperty(key: String, value: Any) {
         Timber.v("$key: $value")
-
-        // Set the value in Mixpanel
-        val properties = JSONObject()
-        properties.put(key, value)
-        mixpanel.registerSuperProperties(properties)
 
         // Set the value in Amplitude
         val identify = Identify()
