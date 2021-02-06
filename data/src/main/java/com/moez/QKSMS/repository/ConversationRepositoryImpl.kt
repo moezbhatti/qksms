@@ -226,6 +226,13 @@ class ConversationRepositoryImpl @Inject constructor(
                 .findAll()
     }
 
+    override fun getRecipients(lookupKey: String): RealmResults<Recipient> {
+        val realm = Realm.getDefaultInstance()
+        return realm.where(Recipient::class.java)
+                .equalTo("contact.lookupKey", lookupKey)
+                .findAll()
+    }
+
     override fun getUnmanagedRecipients(): Observable<List<Recipient>> {
         val realm = Realm.getDefaultInstance()
         return realm.where(Recipient::class.java)

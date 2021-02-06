@@ -50,7 +50,7 @@ class ScheduledMessageRepositoryImpl @Inject constructor() : ScheduledMessageRep
         return Realm.getDefaultInstance()
                 .where(ScheduledMessage::class.java)
                 .sort("date")
-                .findAll()
+                .findAllAsync()
     }
 
     override fun getScheduledMessage(id: Long): ScheduledMessage? {

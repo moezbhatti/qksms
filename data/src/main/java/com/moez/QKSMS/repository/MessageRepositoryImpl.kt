@@ -44,6 +44,8 @@ import com.klinker.android.send_message.Transaction
 import com.moez.QKSMS.common.util.extensions.now
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
+import com.moez.QKSMS.extensions.asObservable
+import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.model.Attachment
@@ -57,6 +59,7 @@ import com.moez.QKSMS.util.ImageUtils
 import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
+import io.reactivex.Observable
 import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
@@ -117,7 +120,7 @@ class MessageRepositoryImpl @Inject constructor(
                 .findFirst()
     }
 
-    override fun getLastIncomingMessage(threadId: Long): RealmResults<Message> {
+    override fun getLastIncomingMessage(threadId: Long): Observable<Message> {
         return Realm.getDefaultInstance()
                 .where(Message::class.java)
                 .equalTo("threadId", threadId)
@@ -133,7 +136,9 @@ class MessageRepositoryImpl @Inject constructor(
                 .endGroup()
                 .endGroup()
                 .sort("date", Sort.DESCENDING)
-                .findAll()
+                .findAllAsync()
+                .asObservable()
+                .mapNotNull { messages -> messages.firstOrNull() }
     }
 
     override fun getUnreadCount(): Long {

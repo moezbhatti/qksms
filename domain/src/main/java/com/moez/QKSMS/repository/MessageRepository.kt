@@ -21,6 +21,7 @@ package com.moez.QKSMS.repository
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
+import io.reactivex.Observable
 import io.realm.RealmResults
 import java.io.File
 
@@ -32,7 +33,7 @@ interface MessageRepository {
 
     fun getMessageForPart(id: Long): Message?
 
-    fun getLastIncomingMessage(threadId: Long): RealmResults<Message>
+    fun getLastIncomingMessage(threadId: Long): Observable<Message>
 
     fun getUnreadCount(): Long
 

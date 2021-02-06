@@ -17,9 +17,9 @@
  * along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
  */
 apply plugin: 'com.android.application'
-apply plugin: 'realm-android' // Realm needs to be before Kotlin or the build will fail
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
+apply plugin: 'realm-android'
 
 android {
     compileSdkVersion 29
@@ -40,6 +40,10 @@ android {
 
     signingConfigs {
         release
+    }
+
+    buildFeatures {
+        viewBinding = true
     }
 
     buildTypes {
@@ -67,10 +71,6 @@ android {
     productFlavors {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
-    }
-
-    viewBinding {
-        enabled = true
     }
 
     if (System.getenv("CI") == "true") {

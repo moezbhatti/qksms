@@ -65,6 +65,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import java.text.SimpleDateFormat
@@ -149,6 +150,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         binding.message.supportsInputContent = true
 
         theme
+                .observeOn(AndroidSchedulers.mainThread())
                 .doOnNext { binding.loading.setTint(it.theme) }
                 .doOnNext { binding.attach.setBackgroundTint(it.theme) }
                 .doOnNext { binding.attach.setTint(it.textPrimary) }

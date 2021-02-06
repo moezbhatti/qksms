@@ -33,6 +33,7 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.extensions.asObservable
 import com.moez.QKSMS.extensions.mapNotNull
+import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.PhoneNumberUtils
@@ -42,8 +43,10 @@ import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import io.realm.kotlin.freeze
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -73,16 +76,16 @@ abstract class QkThemedActivity : QkActivity() {
      */
     val theme: Observable<Colors.Theme> = threadId
             .distinctUntilChanged()
-            .switchMap { threadId ->
-                val conversation = conversationRepo.getConversation(threadId)
+            .observeOn(Schedulers.io())
+            .map { threadId -> Optional(conversationRepo.getConversation(threadId)?.freeze<Conversation>()) }
+            .observeOn(AndroidSchedulers.mainThread())
+            .switchMap { (conversation) ->
                 when {
                     conversation == null -> Observable.just(Optional(null))
 
                     conversation.recipients.size == 1 -> Observable.just(Optional(conversation.recipients.first()))
 
                     else -> messageRepo.getLastIncomingMessage(conversation.id)
-                            .asObservable()
-                            .mapNotNull { messages -> messages.firstOrNull() }
                             .distinctUntilChanged { message -> message.address }
                             .mapNotNull { message ->
                                 conversation.recipients.find { recipient ->
@@ -136,16 +139,20 @@ abstract class QkThemedActivity : QkActivity() {
         toolbar.overflowIcon = toolbar.overflowIcon?.apply { setTint(textSecondary) }
 
         // Update the colours of the menu items
-        Observables.combineLatest(menu, theme) { menu, theme ->
-            menu.iterator().forEach { menuItem ->
-                val tint = when (menuItem.itemId) {
-                    in getColoredMenuItems() -> theme.theme
-                    else -> textSecondary
-                }
+        Observables.combineLatest(menu, theme)
+                .observeOn(AndroidSchedulers.mainThread())
+                .doOnNext { (menu, theme) ->
+                    menu.iterator().forEach { menuItem ->
+                        val tint = when (menuItem.itemId) {
+                            in getColoredMenuItems() -> theme.theme
+                            else -> textSecondary
+                        }
 
-                menuItem.icon = menuItem.icon?.apply { setTint(tint) }
-            }
-        }.autoDisposable(scope(Lifecycle.Event.ON_DESTROY)).subscribe()
+                        menuItem.icon = menuItem.icon?.apply { setTint(tint) }
+                    }
+                }
+                .autoDisposable(scope(Lifecycle.Event.ON_DESTROY))
+                .subscribe()
     }
 
     open fun getColoredMenuItems(): List<Int> {

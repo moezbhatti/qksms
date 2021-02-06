@@ -68,6 +68,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import io.realm.kotlin.freeze
 import timber.log.Timber
 import java.util.*
 import javax.inject.Inject
@@ -249,17 +250,18 @@ class ComposeViewModel @Inject constructor(
                     }
                 }
                 .filter { hashmap -> hashmap.isNotEmpty() }
+                .observeOn(Schedulers.io())
                 .map { hashmap ->
                     hashmap.map { (address, lookupKey) ->
-                        conversationRepo.getRecipients()
-                                .asSequence()
-                                .filter { recipient -> recipient.contact?.lookupKey == lookupKey }
-                                .firstOrNull { recipient -> phoneNumberUtils.compare(recipient.address, address) }
+                        lookupKey?.let(conversationRepo::getRecipients)
+                                ?.firstOrNull { recipient -> phoneNumberUtils.compare(recipient.address, address) }
+                                ?.freeze()
                                 ?: Recipient(
                                         address = address,
                                         contact = lookupKey?.let(contactRepo::getUnmanagedContact))
                     }
                 }
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
                 .subscribe { chips ->
                     chipsReducer.onNext { list -> list + chips }
@@ -413,6 +415,7 @@ class ComposeViewModel @Inject constructor(
 
         // Retry sending
         view.messageClickIntent
+                .observeOn(Schedulers.io())
                 .mapNotNull(messageRepo::getMessage)
                 .filter { message -> message.isFailedMessage() }
                 .doOnNext { message -> retrySending.execute(message.id) }

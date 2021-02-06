@@ -31,14 +31,18 @@ import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.databinding.TabViewBinding
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.injection.appComponent
+import com.moez.QKSMS.model.Recipient
 import com.moez.QKSMS.repository.ConversationRepository
 import com.uber.autodispose.android.ViewScopeProvider
 import com.uber.autodispose.autoDisposable
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import javax.inject.Inject
 
-class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
+class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
+    LinearLayout(context, attrs) {
 
     @Inject lateinit var colors: Colors
     @Inject lateinit var conversationRepo: ConversationRepository
@@ -94,8 +98,11 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
 
         recipientId
                 .distinctUntilChanged()
-                .map { recipientId -> Optional(conversationRepo.getRecipient(recipientId)) }
-                .switchMap { recipient -> colors.themeObservable(recipient.value) }
+                .observeOn(Schedulers.io())
+                .switchMap { recipientId ->
+                    colors.themeObservable(conversationRepo.getRecipient(recipientId))
+                }
+                .observeOn(AndroidSchedulers.mainThread())
                 .map { theme ->
                     val textSecondary = context.resolveThemeColor(android.R.attr.textColorSecondary)
                     ColorStateList(states, intArrayOf(theme.theme, textSecondary))

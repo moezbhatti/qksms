@@ -62,6 +62,7 @@ import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import dagger.android.AndroidInjection
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
@@ -143,6 +144,7 @@ class MainActivity : QkThemedActivity(), MainView {
 
         // Set the theme color tint to the recyclerView, progressbar, and FAB
         theme
+                .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(scope())
                 .subscribe { theme ->
                     // Set the color for the drawer icons

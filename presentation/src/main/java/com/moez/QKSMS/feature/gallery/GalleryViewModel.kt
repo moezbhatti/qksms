@@ -33,6 +33,7 @@ import com.uber.autodispose.autoDisposable
 import io.reactivex.Flowable
 import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
+import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 import javax.inject.Named
 
@@ -48,13 +49,13 @@ class GalleryViewModel @Inject constructor(
 
     init {
         disposables += Flowable.just(partId)
+                .observeOn(Schedulers.io())
                 .mapNotNull(messageRepo::getMessageForPart)
                 .mapNotNull { message -> message.threadId }
                 .doOnNext { threadId -> newState { copy(parts = messageRepo.getPartsForConversation(threadId)) } }
                 .doOnNext { threadId ->
-                    newState {
-                        copy(title = conversationRepo.getConversation(threadId)?.getTitle())
-                    }
+                    val title = conversationRepo.getConversation(threadId)?.getTitle()
+                    newState { copy(title = title) }
                 }
                 .subscribe()
     }

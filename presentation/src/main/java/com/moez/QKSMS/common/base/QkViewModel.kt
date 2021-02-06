@@ -28,8 +28,15 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.SupervisorJob
+import kotlinx.coroutines.cancel
+import kotlin.coroutines.CoroutineContext
 
-abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) : ViewModel() {
+abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) : ViewModel(), CoroutineScope {
+
+    override var coroutineContext: CoroutineContext = SupervisorJob() + Dispatchers.Main
 
     protected val disposables = CompositeDisposable()
     protected val state: Subject<State> = BehaviorSubject.createDefault(initialState)
@@ -55,6 +62,9 @@ abstract class QkViewModel<in View : QkView<State>, State>(initialState: State) 
 
     protected fun newState(reducer: State.() -> State) = stateReducer.onNext(reducer)
 
-    override fun onCleared() = disposables.dispose()
+    override fun onCleared() {
+        disposables.dispose()
+        cancel()
+    }
 
 }
