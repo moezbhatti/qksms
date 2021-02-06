@@ -201,4 +201,22 @@ class Preferences @Inject constructor(
             else -> rxPrefs.getString("ringtone_$threadId", default.get())
         }
     }
+
+    fun vibratePattern(threadId: Long = 0): Preference<Int> {
+        val default = rxPrefs.getInteger("vibrate_pattern", 0)
+
+        return when (threadId) {
+            0L -> default
+            else -> rxPrefs.getInteger("vibrate_pattern_$threadId", default.get())
+        }
+    }
+
+    fun notificationChannelCount(threadId: Long = 0): Preference<Int> {
+        val suffix = if (threadId == 0L) "" else "_$threadId"
+        return rxPrefs.getInteger("notification_channel_count$suffix", 0)
+//        return when (threadId) {
+//            0L -> rxPrefs.getInteger("notification_channel_count", 0)
+//            else -> rxPrefs.getInteger("notification_channel_count_$threadId", 0)
+//        }
+    }
 }

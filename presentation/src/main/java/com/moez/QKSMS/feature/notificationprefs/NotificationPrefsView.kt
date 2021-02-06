@@ -29,9 +29,11 @@ interface NotificationPrefsView : QkView<NotificationPrefsState> {
     val preferenceClickIntent: Subject<PreferenceView>
     val previewModeSelectedIntent: Subject<Int>
     val ringtoneSelectedIntent: Observable<String>
+    val vibratePatternIntent: Subject<Int>
     val actionsSelectedIntent: Subject<Int>
 
     fun showPreviewModeDialog()
     fun showRingtonePicker(default: Uri?)
+    fun showVibratePatternDialog(selected: Int)
     fun showActionDialog(selected: Int)
 }

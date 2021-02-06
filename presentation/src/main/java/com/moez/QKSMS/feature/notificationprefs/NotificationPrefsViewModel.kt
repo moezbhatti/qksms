@@ -24,6 +24,7 @@ import android.net.Uri
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
+import com.moez.QKSMS.common.util.NotificationManagerImpl
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.util.Preferences
@@ -41,6 +42,7 @@ class NotificationPrefsViewModel @Inject constructor(
     private val context: Context,
     private val conversationRepo: ConversationRepository,
     private val navigator: Navigator,
+    private val notificationManagerImpl: NotificationManagerImpl,
     private val prefs: Preferences
 ) : QkViewModel<NotificationPrefsView, NotificationPrefsState>(NotificationPrefsState(threadId = threadId)) {
 
@@ -49,6 +51,7 @@ class NotificationPrefsViewModel @Inject constructor(
     private val wake = prefs.wakeScreen(threadId)
     private val vibration = prefs.vibration(threadId)
     private val ringtone = prefs.ringtone(threadId)
+    private val vibratePattern = prefs.vibratePattern(threadId)
 
     init {
         disposables += Flowable.just(threadId)
@@ -91,6 +94,10 @@ class NotificationPrefsViewModel @Inject constructor(
                 }
                 .subscribe { title -> newState { copy(ringtoneName = title) } }
 
+        val vibratePatternLabels = context.resources.getStringArray(R.array.settings_vibrate_patterns)
+        disposables += vibratePattern.asObservable()
+                .subscribe { previewId -> newState { copy(vibratePatternSummary = vibratePatternLabels[previewId]) } }
+
         disposables += prefs.qkreply.asObservable()
                 .subscribe { enabled -> newState { copy(qkReplyEnabled = enabled) } }
 
@@ -117,6 +124,8 @@ class NotificationPrefsViewModel @Inject constructor(
 
                         R.id.ringtone -> view.showRingtonePicker(ringtone.get().takeIf { it.isNotEmpty() }?.let(Uri::parse))
 
+                        R.id.vibrate_pattern -> view.showVibratePatternDialog(prefs.vibratePattern(threadId).get())
+
                         R.id.action1 -> view.showActionDialog(prefs.notifAction1.get())
 
                         R.id.action2 -> view.showActionDialog(prefs.notifAction2.get())
@@ -136,6 +145,11 @@ class NotificationPrefsViewModel @Inject constructor(
         view.ringtoneSelectedIntent
                 .autoDisposable(view.scope())
                 .subscribe { ringtone -> this.ringtone.set(ringtone) }
+
+        view.vibratePatternIntent
+                .autoDisposable(view.scope())
+                .subscribe { vibratePattern.set(it)
+                    notificationManagerImpl.replaceNotificationChannel(threadId)}
 
         view.actionsSelectedIntent
                 .withLatestFrom(view.preferenceClickIntent) { action, preference ->

@@ -28,6 +28,8 @@ interface NotificationManager {
 
     fun createNotificationChannel(threadId: Long = 0L)
 
+    fun replaceNotificationChannel(threadId: Long = 0L)
+
     fun buildNotificationChannelId(threadId: Long): String
 
     fun getNotificationForBackup(): NotificationCompat.Builder
