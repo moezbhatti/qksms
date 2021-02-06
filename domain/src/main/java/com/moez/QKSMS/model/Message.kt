@@ -33,6 +33,7 @@ open class Message : RealmObject() {
     @PrimaryKey var id: Long = 0
 
     @Index var threadId: Long = 0
+    @Index var date: Long = 0
 
     // The MMS-SMS content provider returns messages where duplicate ids can exist. This is because
     // SMS and MMS are stored in separate tables. We can't use these ids as our realm message id
@@ -42,7 +43,6 @@ open class Message : RealmObject() {
     var address: String = ""
     var boxId: Int = 0
     var type: String = ""
-    var date: Long = 0
     var dateSent: Long = 0
     var seen: Boolean = false
     var read: Boolean = false
