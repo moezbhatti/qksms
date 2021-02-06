@@ -92,6 +92,12 @@
                 android:layout_height="wrap_content"
                 app:title="@string/settings_ringtone_title" />
 
+            <com.moez.QKSMS.common.widget.PreferenceView
+                android:id="@+id/vibrate_pattern"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:title="@string/settings_vibrate_pattern_title" />
+
             <View
                 android:id="@+id/actionsDivider"
                 android:layout_width="match_parent"

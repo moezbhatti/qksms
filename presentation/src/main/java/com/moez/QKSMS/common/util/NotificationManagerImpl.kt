@@ -31,6 +31,7 @@ import android.net.Uri
 import android.os.Build
 import android.os.PowerManager
 import android.provider.ContactsContract
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.app.Person
@@ -79,6 +80,18 @@ class NotificationManagerImpl @Inject constructor(
     }
 
     private val notificationManager = context.getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+
+    private fun getVibratePattern(threadId: Long):LongArray {
+        return(when(prefs.vibratePattern(threadId).get()) {
+            0 -> longArrayOf(0, 400)
+            1 -> longArrayOf(0, 200)
+            2 -> longArrayOf(0, 400, 200, 400)
+            3 -> longArrayOf(0, 200, 200, 200)
+            4 -> longArrayOf(0, 400, 200, 200)
+            5 -> longArrayOf(0, 200, 200, 400)
+            else -> longArrayOf(0, 400)
+        })
+    }
 
     init {
         // Make sure the default channel has been initialized
@@ -141,7 +154,7 @@ class NotificationManagerImpl @Inject constructor(
                 .setSound(ringtone)
                 .setLights(Color.WHITE, 500, 2000)
                 .setWhen(conversation.lastMessage?.date ?: System.currentTimeMillis())
-                .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
+                .setVibrate(if (prefs.vibration(threadId).get()) getVibratePattern(threadId) else longArrayOf(0))
 
         // Tell the notification if it's a group message
         val messagingStyle = NotificationCompat.MessagingStyle("Me")
@@ -349,7 +362,7 @@ class NotificationManagerImpl @Inject constructor(
                 .setContentIntent(contentPI)
                 .setSound(Uri.parse(prefs.ringtone(threadId).get()))
                 .setLights(Color.WHITE, 500, 2000)
-                .setVibrate(if (prefs.vibration(threadId).get()) VIBRATE_PATTERN else longArrayOf(0))
+                .setVibrate(if (prefs.vibration(threadId).get()) getVibratePattern(threadId) else longArrayOf(0))
 
         notificationManager.notify(threadId.toInt() + 100000, notification.build())
     }
@@ -387,11 +400,12 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         val channel = when (threadId) {
-            0L -> NotificationChannel(DEFAULT_CHANNEL_ID, "Default", NotificationManager.IMPORTANCE_HIGH).apply {
+            0L -> NotificationChannel(buildNotificationChannelId(0L),
+                    "Default", NotificationManager.IMPORTANCE_HIGH).apply {
                 enableLights(true)
                 lightColor = Color.WHITE
                 enableVibration(true)
-                vibrationPattern = VIBRATE_PATTERN
+                vibrationPattern = getVibratePattern(threadId)
             }
 
             else -> {
@@ -402,7 +416,7 @@ class NotificationManagerImpl @Inject constructor(
                     enableLights(true)
                     lightColor = Color.WHITE
                     enableVibration(true)
-                    vibrationPattern = VIBRATE_PATTERN
+                    vibrationPattern = getVibratePattern(threadId)
                     lockscreenVisibility = Notification.VISIBILITY_PUBLIC
                     setSound(prefs.ringtone().get().let(Uri::parse), AudioAttributes.Builder()
                             .setUsage(AudioAttributes.USAGE_NOTIFICATION)
@@ -413,6 +427,46 @@ class NotificationManagerImpl @Inject constructor(
         }
 
         notificationManager.createNotificationChannel(channel)
+    }
+
+    /**
+     * Removes the existing notification channel and replaces it, as this is the only way to
+     * change a setting
+     */
+
+    override fun replaceNotificationChannel(threadId: Long) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.O) return
+
+        // Get the existing channel, if it exists
+        val oldChannelId = buildNotificationChannelId(threadId)
+        val oldChannel = notificationManager.notificationChannels.find { channel -> channel.id == oldChannelId }
+        if (oldChannel != null) {
+            // Increment the channel count so that we always make a new, unique channel ID
+            prefs.notificationChannelCount(threadId).set(prefs.notificationChannelCount(threadId).get() + 1)
+            // Make a get a new channel id with the incremented count
+            val newChannelId = buildNotificationChannelId(threadId)
+            // Make a new channel with all the same properties as the old
+            // Replace channelId and Vibration with new values
+            // lockscreenVisibility and setBypassDnd can not be set at all, so will be reset by Android
+            val newChannel = NotificationChannel(newChannelId, oldChannel.name, oldChannel.importance)
+            newChannel.vibrationPattern = getVibratePattern(threadId)
+
+            newChannel.enableLights(oldChannel.shouldShowLights())
+            newChannel.enableVibration(oldChannel.shouldVibrate())
+//            newChannel.lockscreenVisibility = oldChannel.lockscreenVisibility
+            newChannel.setSound(oldChannel.sound, oldChannel.audioAttributes)
+            newChannel.setAllowBubbles(oldChannel.canBubble())
+//            newChannel.setBypassDnd(oldChannel.canBypassDnd())
+            newChannel.setShowBadge(oldChannel.canShowBadge())
+
+            notificationManager.deleteNotificationChannel(oldChannelId)
+            notificationManager.createNotificationChannel(newChannel)
+
+        }
+        else {
+            // Call the standard create function if the channel doesn't already exist
+            createNotificationChannel(threadId)
+        }
     }
 
     /**
@@ -437,20 +491,29 @@ class NotificationManagerImpl @Inject constructor(
      */
     private fun getChannelIdForNotification(threadId: Long): String {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            return getNotificationChannel(threadId)?.id ?: DEFAULT_CHANNEL_ID
+            return getNotificationChannel(threadId)?.id ?: buildNotificationChannelId(0L)
         }
 
-        return DEFAULT_CHANNEL_ID
+        return buildNotificationChannelId(0L)
     }
 
     /**
      * Formats a notification channel id for a given thread id, whether the channel exists or not
      */
     override fun buildNotificationChannelId(threadId: Long): String {
-        return when (threadId) {
-            0L -> DEFAULT_CHANNEL_ID
-            else -> "notifications_$threadId"
+        val channelID =  when (threadId) {
+            // Add an incrementing number to the end of the channel
+            // In order to support previous channels that didn't have the appended 0, only append
+            // if count is > 0
+            0L -> { val channelCount = prefs.notificationChannelCount(0L).get()
+                DEFAULT_CHANNEL_ID + if (channelCount == 0) "" else "_$channelCount"
+            }
+            else -> { val channelCount = prefs.notificationChannelCount(threadId).get()
+                "notifications_$threadId" + if (channelCount == 0) "" else "_$channelCount"
+            }
         }
+//        Log.i("NotificationManagerImpl", "ChannelID: $channelID")
+        return channelID
     }
 
     override fun getNotificationForBackup(): NotificationCompat.Builder {

@@ -18,7 +18,7 @@
   -->
 <resources>
 
-    <string name="app_name" translatable="false">QKSMS</string>
+    <string name="app_name" translatable="false">QKSMSDev</string>
 
     <string name="shortcut_compose_long_label">New conversation</string>
     <string name="shortcut_compose_short_label">Compose</string>
@@ -231,6 +231,15 @@
     <string name="settings_vibration_title">Vibration</string>
     <string name="settings_ringtone_title">Sound</string>
     <string name="settings_ringtone_none">None</string>
+    <string name="settings_vibrate_pattern_title">Vibrate Pattern</string>
+    <string-array name="settings_vibrate_patterns">
+        <item>Long</item>
+        <item>Short</item>
+        <item>Long Long</item>
+        <item>Short Short</item>
+        <item>Long Short</item>
+        <item>Short Long</item>
+    </string-array>
     <string name="settings_qkreply_title">QK Reply</string>
     <string name="settings_qkreply_summary">Popup for new messages</string>
     <string name="settings_qkreply_tap_dismiss_title">Tap to dismiss</string>

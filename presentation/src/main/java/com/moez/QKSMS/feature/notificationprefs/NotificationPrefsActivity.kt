@@ -48,12 +48,14 @@ import javax.inject.Inject
 class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
     @Inject lateinit var previewModeDialog: QkDialog
+    @Inject lateinit var vibrationPatternDialog: QkDialog
     @Inject lateinit var actionsDialog: QkDialog
     @Inject lateinit var viewModelFactory: ViewModelProvider.Factory
 
     override val preferenceClickIntent: Subject<PreferenceView> = PublishSubject.create()
     override val previewModeSelectedIntent by lazy { previewModeDialog.adapter.menuItemClicks }
     override val ringtoneSelectedIntent: Subject<String> = PublishSubject.create()
+    override val vibratePatternIntent by lazy { vibrationPatternDialog.adapter.menuItemClicks }
     override val actionsSelectedIntent by lazy { actionsDialog.adapter.menuItemClicks }
 
     private val binding by viewBinding(NotificationPrefsActivityBinding::inflate)
@@ -80,6 +82,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
 
         previewModeDialog.setTitle(R.string.settings_notification_previews_title)
         previewModeDialog.adapter.setData(R.array.notification_preview_options)
+        vibrationPatternDialog.adapter.setData(R.array.settings_vibrate_patterns)
         actionsDialog.adapter.setData(R.array.notification_actions)
 
         // Listen to clicks for all of the preferences
@@ -103,6 +106,7 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         binding.wake.widget<QkSwitch>().isChecked = state.wakeEnabled
         binding.vibration.widget<QkSwitch>().isChecked = state.vibrationEnabled
         binding.ringtone.summary = state.ringtoneName
+        binding.vibratePattern.summary = state.vibratePatternSummary
 
         binding.actionsDivider.isVisible = state.threadId == 0L
         binding.actionsTitle.isVisible = state.threadId == 0L
@@ -131,6 +135,11 @@ class NotificationPrefsActivity : QkThemedActivity(), NotificationPrefsView {
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_EXISTING_URI, default)
         intent.putExtra(RingtoneManager.EXTRA_RINGTONE_TYPE, RingtoneManager.TYPE_NOTIFICATION)
         startActivityForResult(intent, 123)
+    }
+
+    override fun showVibratePatternDialog(selected: Int) {
+        vibrationPatternDialog.adapter.selectedItem = selected
+        vibrationPatternDialog.show(this)
     }
 
     override fun showActionDialog(selected: Int) {
