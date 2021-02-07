@@ -46,7 +46,6 @@ import com.moez.QKSMS.common.util.extensions.setPadding
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.compat.SubscriptionManagerCompat
-import com.moez.QKSMS.databinding.MessageListItemInBinding
 import com.moez.QKSMS.extensions.isSmil
 import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
@@ -60,6 +59,15 @@ import com.moez.QKSMS.util.Preferences
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import io.realm.RealmResults
+import kotlinx.android.synthetic.main.message_list_item_in.*
+import kotlinx.android.synthetic.main.message_list_item_in.attachments
+import kotlinx.android.synthetic.main.message_list_item_in.body
+import kotlinx.android.synthetic.main.message_list_item_in.sim
+import kotlinx.android.synthetic.main.message_list_item_in.simIndex
+import kotlinx.android.synthetic.main.message_list_item_in.status
+import kotlinx.android.synthetic.main.message_list_item_in.timestamp
+import kotlinx.android.synthetic.main.message_list_item_in.view.*
+import kotlinx.android.synthetic.main.message_list_item_out.*
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -74,7 +82,7 @@ class MessagesAdapter @Inject constructor(
     private val phoneNumberUtils: PhoneNumberUtils,
     private val prefs: Preferences,
     private val textViewStyler: TextViewStyler
-) : QkRealmAdapter<Message, MessageListItemInBinding>() {
+) : QkRealmAdapter<Message>() {
 
     companion object {
         private const val VIEW_TYPE_MESSAGE_IN = 0
@@ -130,7 +138,7 @@ class MessagesAdapter @Inject constructor(
      * this a unique viewType even though it uses the same view, so that regular messages
      * don't need clipToOutline set to true, and they don't need to worry about images
      */
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<MessageListItemInBinding> {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
 
         // Use the parent's context to inflate the layout, otherwise link clicks will crash the app
         val layoutInflater = LayoutInflater.from(parent.context)
@@ -144,26 +152,24 @@ class MessagesAdapter @Inject constructor(
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
         }
 
-        val binding = MessageListItemInBinding.bind(view)
-
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            binding.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
+            view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
         }
 
         val partsAdapter = partsAdapterProvider.get()
         partsAdapter.clicks.subscribe(partClicks)
-        binding.attachments.adapter = partsAdapter
-        binding.attachments.setRecycledViewPool(partsViewPool)
-        binding.body.forwardTouches(view)
+        view.attachments.adapter = partsAdapter
+        view.attachments.setRecycledViewPool(partsViewPool)
+        view.body.forwardTouches(view)
 
-        return QkViewHolder(binding).apply {
+        return QkViewHolder(view).apply {
             view.setOnClickListener {
                 val message = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(message.id, false)) {
                     true -> view.isActivated = isSelected(message.id)
                     false -> {
                         clicks.onNext(message.id)
-                        expanded[message.id] = binding.status.visibility != View.VISIBLE
+                        expanded[message.id] = view.status.visibility != View.VISIBLE
                         notifyItemChanged(adapterPosition)
                     }
                 }
@@ -177,7 +183,7 @@ class MessagesAdapter @Inject constructor(
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<MessageListItemInBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val message = getItem(position) ?: return
         val previous = if (position == 0) null else getItem(position - 1)
         val next = if (position == itemCount - 1) null else getItem(position + 1)
@@ -188,10 +194,10 @@ class MessagesAdapter @Inject constructor(
         }
 
         // Update the selected state
-        holder.binding.root.isActivated = isSelected(message.id) || highlight == message.id
+        holder.containerView.isActivated = isSelected(message.id) || highlight == message.id
 
         // Bind the cancel view
-        holder.binding.cancel.let { cancel ->
+        holder.cancel?.let { cancel ->
             val isCancellable = message.isSending() && message.date > System.currentTimeMillis()
             cancel.setVisible(isCancellable)
             cancel.clicks().subscribe { cancelSending.onNext(message.id) }
@@ -219,25 +225,26 @@ class MessagesAdapter @Inject constructor(
         val timeSincePrevious = TimeUnit.MILLISECONDS.toMinutes(message.date - (previous?.date ?: 0))
         val subscription = subs.find { sub -> sub.subscriptionId == message.subId }
 
-        holder.binding.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
-        holder.binding.simIndex.text = subscription?.simSlotIndex?.plus(1)?.toString()
+        holder.timestamp.text = dateFormatter.getMessageTimestamp(message.date)
+        holder.simIndex.text = subscription?.simSlotIndex?.plus(1)?.toString()
 
-        holder.binding.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
+        holder.timestamp.setVisible(timeSincePrevious >= BubbleUtils.TIMESTAMP_THRESHOLD
                 || message.subId != previous?.subId && subscription != null)
-        holder.binding.sim.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
-        holder.binding.simIndex.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
+
+        holder.sim.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
+        holder.simIndex.setVisible(message.subId != previous?.subId && subscription != null && subs.size > 1)
 
         // Bind the grouping
         val media = message.parts.filter { !it.isSmil() && !it.isText() }
-        holder.binding.root.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
+        holder.containerView.setPadding(bottom = if (canGroup(message, next)) 0 else 16.dpToPx(context))
 
         // Bind the avatar and bubble colour
         if (!message.isMe()) {
-            holder.binding.avatar.setRecipient(contactCache[message.address])
-            holder.binding.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
+            holder.avatar.setRecipient(contactCache[message.address])
+            holder.avatar.setVisible(!canGroup(message, next), View.INVISIBLE)
 
-            holder.binding.body.setTextColor(theme.textPrimary)
-            holder.binding.body.setBackgroundTint(theme.theme)
+            holder.body.setTextColor(theme.textPrimary)
+            holder.body.setBackgroundTint(theme.theme)
         }
 
         // Bind the body text
@@ -263,29 +270,29 @@ class MessagesAdapter @Inject constructor(
             }
         }
         val emojiOnly = messageText.isNotBlank() && messageText.matches(EMOJI_REGEX)
-        textViewStyler.setTextSize(holder.binding.body, when (emojiOnly) {
+        textViewStyler.setTextSize(holder.body, when (emojiOnly) {
             true -> TextViewStyler.SIZE_EMOJI
             false -> TextViewStyler.SIZE_PRIMARY
         })
 
-        holder.binding.body.text = messageText
-        holder.binding.body.setVisible(message.isSms() || messageText.isNotBlank())
-        holder.binding.body.setBackgroundResource(getBubble(
+        holder.body.text = messageText
+        holder.body.setVisible(message.isSms() || messageText.isNotBlank())
+        holder.body.setBackgroundResource(getBubble(
                 emojiOnly = emojiOnly,
                 canGroupWithPrevious = canGroup(message, previous) || media.isNotEmpty(),
                 canGroupWithNext = canGroup(message, next),
                 isMe = message.isMe()))
 
         // Bind the attachments
-        val partsAdapter = holder.binding.attachments.adapter as PartsAdapter
+        val partsAdapter = holder.attachments.adapter as PartsAdapter
         partsAdapter.theme = theme
         partsAdapter.setData(message, previous, next, holder)
     }
 
-    private fun bindStatus(holder: QkViewHolder<MessageListItemInBinding>, message: Message, next: Message?) {
+    private fun bindStatus(holder: QkViewHolder, message: Message, next: Message?) {
         val age = TimeUnit.MILLISECONDS.toMinutes(System.currentTimeMillis() - message.date)
 
-        holder.binding.status.text = when {
+        holder.status.text = when {
             message.isSending() -> context.getString(R.string.message_status_sending)
             message.isDelivered() -> context.getString(R.string.message_status_delivered,
                     dateFormatter.getTimestamp(message.dateSent))
@@ -299,7 +306,7 @@ class MessagesAdapter @Inject constructor(
             else -> dateFormatter.getTimestamp(message.date)
         }
 
-        holder.binding.status.setVisible(when {
+        holder.status.setVisible(when {
             expanded[message.id] == true -> true
             message.isSending() -> true
             message.isFailedMessage() -> true

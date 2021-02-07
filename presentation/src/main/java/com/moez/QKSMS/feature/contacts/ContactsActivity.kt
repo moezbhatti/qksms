@@ -34,9 +34,7 @@ import com.moez.QKSMS.common.util.extensions.hideKeyboard
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.showKeyboard
-import com.moez.QKSMS.common.util.extensions.viewBinding
 import com.moez.QKSMS.common.widget.QkDialog
-import com.moez.QKSMS.databinding.ContactsActivityBinding
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.feature.compose.editing.ComposeItem
 import com.moez.QKSMS.feature.compose.editing.ComposeItemAdapter
@@ -46,6 +44,7 @@ import dagger.android.AndroidInjection
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.contacts_activity.*
 import javax.inject.Inject
 
 class ContactsActivity : QkThemedActivity(), ContactsContract {
@@ -59,15 +58,14 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     @Inject lateinit var phoneNumberAdapter: PhoneNumberPickerAdapter
     @Inject lateinit var viewModelFactory: ViewModelFactory
 
-    override val queryChangedIntent: Observable<CharSequence> by lazy { binding.search.textChanges() }
-    override val queryClearedIntent: Observable<*> by lazy { binding.cancel.clicks() }
-    override val queryEditorActionIntent: Observable<Int> by lazy { binding.search.editorActions() }
+    override val queryChangedIntent: Observable<CharSequence> by lazy { search.textChanges() }
+    override val queryClearedIntent: Observable<*> by lazy { cancel.clicks() }
+    override val queryEditorActionIntent: Observable<Int> by lazy { search.editorActions() }
     override val composeItemPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.clicks }
     override val composeItemLongPressedIntent: Subject<ComposeItem> by lazy { contactsAdapter.longClicks }
     override val phoneNumberSelectedIntent: Subject<Optional<Long>> by lazy { phoneNumberAdapter.selectedItemChanges }
     override val phoneNumberActionIntent: Subject<PhoneNumberAction> = PublishSubject.create()
 
-    private val binding by viewBinding(ContactsActivityBinding::inflate)
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ContactsViewModel::class.java] }
 
     private val phoneNumberDialog by lazy {
@@ -85,20 +83,20 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     override fun onCreate(savedInstanceState: Bundle?) {
         AndroidInjection.inject(this)
         super.onCreate(savedInstanceState)
-        setContentView(binding.root)
+        setContentView(R.layout.contacts_activity)
         showBackButton(true)
         viewModel.bindView(this)
 
-        binding.contacts.adapter = contactsAdapter
+        contacts.adapter = contactsAdapter
 
         // These theme attributes don't apply themselves on API 21
         if (Build.VERSION.SDK_INT <= 22) {
-            binding.search.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
+            search.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
         }
     }
 
     override fun render(state: ContactsState) {
-        binding.cancel.isVisible = state.query.length > 1
+        cancel.isVisible = state.query.length > 1
 
         contactsAdapter.data = state.composeItems
 
@@ -112,17 +110,17 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
     }
 
     override fun clearQuery() {
-        binding.search.text = null
+        search.text = null
     }
 
     override fun openKeyboard() {
-        binding.search.postDelayed({
-            binding.search.showKeyboard()
+        search.postDelayed({
+            search.showKeyboard()
         }, 200)
     }
 
     override fun finish(result: HashMap<String, String?>) {
-        binding.search.hideKeyboard()
+        search.hideKeyboard()
         val intent = Intent().putExtra(ChipsKey, result)
         setResult(Activity.RESULT_OK, intent)
         finish()

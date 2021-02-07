@@ -25,10 +25,10 @@ import android.view.LayoutInflater
 import android.widget.LinearLayout
 import android.widget.TextView
 import androidx.viewpager.widget.ViewPager
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forEach
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
-import com.moez.QKSMS.databinding.TabViewBinding
 import com.moez.QKSMS.extensions.Optional
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.repository.ConversationRepository
@@ -36,6 +36,7 @@ import com.uber.autodispose.android.ViewScopeProvider
 import com.uber.autodispose.autoDisposable
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.tab_view.view.*
 import javax.inject.Inject
 
 class PagerTitleView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) : LinearLayout(context, attrs) {
@@ -65,11 +66,11 @@ class PagerTitleView @JvmOverloads constructor(context: Context, attrs: Attribut
         removeAllViews()
 
         pager?.adapter?.count?.forEach { position ->
-            val binding = TabViewBinding.inflate(LayoutInflater.from(context), this, false)
-            binding.label.text = pager?.adapter?.getPageTitle(position)
-            binding.root.setOnClickListener { pager?.currentItem = position }
+            val view = LayoutInflater.from(context).inflate(R.layout.tab_view, this, false)
+            view.label.text = pager?.adapter?.getPageTitle(position)
+            view.setOnClickListener { pager?.currentItem = position }
 
-            addView(binding.root)
+            addView(view)
         }
 
         childCount.forEach { index ->

@@ -44,6 +44,7 @@ import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.toolbar.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
@@ -133,7 +134,7 @@ abstract class QkThemedActivity : QkActivity() {
 
         // Set the color for the overflow and navigation icon
         val textSecondary = resolveThemeColor(android.R.attr.textColorSecondary)
-        toolbar.overflowIcon = toolbar.overflowIcon?.apply { setTint(textSecondary) }
+        toolbar?.overflowIcon = toolbar?.overflowIcon?.apply { setTint(textSecondary) }
 
         // Update the colours of the menu items
         Observables.combineLatest(menu, theme) { menu, theme ->
