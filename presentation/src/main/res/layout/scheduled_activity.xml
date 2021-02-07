@@ -151,7 +151,9 @@
 
     </LinearLayout>
 
-    <include layout="@layout/collapsing_toolbar" />
+    <include
+        android:id="@+id/appBarLayout"
+        layout="@layout/collapsing_toolbar" />
 
     <View
         android:layout_width="match_parent"

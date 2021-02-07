@@ -22,14 +22,20 @@ import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.Menu
 import android.view.MenuItem
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.Toolbar
+import com.moez.QKSMS.R
+import com.moez.QKSMS.common.widget.QkTextView
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.toolbar.*
 
 abstract class QkActivity : AppCompatActivity() {
 
+    val toolbar by lazy { findViewById<Toolbar>(R.id.toolbar)!! }
+
     protected val menu: Subject<Menu> = BehaviorSubject.create()
+    protected val toolbarTitle by lazy { findViewById<QkTextView>(R.id.toolbarTitle) }
 
     @SuppressLint("InlinedApi")
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,8 +53,8 @@ abstract class QkActivity : AppCompatActivity() {
         }
     }
 
-    override fun setContentView(layoutResID: Int) {
-        super.setContentView(layoutResID)
+    override fun setContentView(view: View?) {
+        super.setContentView(view)
         setSupportActionBar(toolbar)
         title = title // The title may have been set before layout inflation
     }

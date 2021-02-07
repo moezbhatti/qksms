@@ -18,15 +18,14 @@
  */
 package com.moez.QKSMS.feature.changelog
 
-import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
+import com.moez.QKSMS.databinding.ChangelogDialogBinding
 import com.moez.QKSMS.feature.main.MainActivity
 import com.moez.QKSMS.manager.ChangelogManager
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.changelog_dialog.view.*
 
 class ChangelogDialog(activity: MainActivity) {
 
@@ -36,17 +35,17 @@ class ChangelogDialog(activity: MainActivity) {
     private val adapter = ChangelogAdapter(activity)
 
     init {
-        val layout = LayoutInflater.from(activity).inflate(R.layout.changelog_dialog, null)
+        val binding = ChangelogDialogBinding.inflate(activity.layoutInflater)
 
         dialog = AlertDialog.Builder(activity)
                 .setCancelable(true)
-                .setView(layout)
+                .setView(binding.root)
                 .create()
 
-        layout.version.text = activity.getString(R.string.changelog_version, BuildConfig.VERSION_NAME)
-        layout.changelog.adapter = adapter
-        layout.more.setOnClickListener { dialog.dismiss(); moreClicks.onNext(Unit) }
-        layout.dismiss.setOnClickListener { dialog.dismiss() }
+        binding.version.text = activity.getString(R.string.changelog_version, BuildConfig.VERSION_NAME)
+        binding.changelog.adapter = adapter
+        binding.more.setOnClickListener { dialog.dismiss(); moreClicks.onNext(Unit) }
+        binding.dismiss.setOnClickListener { dialog.dismiss() }
     }
 
     fun show(changelog: ChangelogManager.Changelog) {

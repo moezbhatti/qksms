@@ -27,16 +27,15 @@ import android.view.View
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.databinding.BlockedMessagesControllerBinding
 import com.moez.QKSMS.feature.blocking.BlockingDialog
 import com.moez.QKSMS.injection.appComponent
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
-import kotlinx.android.synthetic.main.blocked_messages_controller.*
-import kotlinx.android.synthetic.main.container_activity.*
 import javax.inject.Inject
 
-class BlockedMessagesController : QkController<BlockedMessagesView, BlockedMessagesState, BlockedMessagesPresenter>(),
-    BlockedMessagesView {
+class BlockedMessagesController : QkController<BlockedMessagesView, BlockedMessagesState, BlockedMessagesPresenter,
+        BlockedMessagesControllerBinding>(BlockedMessagesControllerBinding::inflate), BlockedMessagesView {
 
     override val menuReadyIntent: Subject<Unit> = PublishSubject.create()
     override val optionsItemIntent: Subject<Int> = PublishSubject.create()
@@ -54,13 +53,12 @@ class BlockedMessagesController : QkController<BlockedMessagesView, BlockedMessa
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
-        layoutRes = R.layout.blocked_messages_controller
     }
 
     override fun onViewCreated() {
         super.onViewCreated()
-        blockedMessagesAdapter.emptyView = empty
-        conversations.adapter = blockedMessagesAdapter
+        blockedMessagesAdapter.emptyView = binding.empty
+        binding.conversations.adapter = blockedMessagesAdapter
     }
 
     override fun onAttach(view: View) {

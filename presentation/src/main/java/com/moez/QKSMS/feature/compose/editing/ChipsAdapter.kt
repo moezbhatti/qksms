@@ -20,7 +20,6 @@ package com.moez.QKSMS.feature.compose.editing
 
 import android.content.Context
 import android.os.Build
-import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.widget.RelativeLayout
 import androidx.recyclerview.widget.RecyclerView
@@ -30,37 +29,35 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.databinding.ContactChipBinding
 import com.moez.QKSMS.model.Recipient
 import io.reactivex.subjects.PublishSubject
-import kotlinx.android.synthetic.main.contact_chip.*
 import javax.inject.Inject
 
-class ChipsAdapter @Inject constructor() : QkAdapter<Recipient>() {
+class ChipsAdapter @Inject constructor() : QkAdapter<Recipient, ContactChipBinding>() {
 
     var view: RecyclerView? = null
     val chipDeleted: PublishSubject<Recipient> = PublishSubject.create<Recipient>()
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
-        val inflater = LayoutInflater.from(parent.context)
-        val view = inflater.inflate(R.layout.contact_chip, parent, false)
-        return QkViewHolder(view).apply {
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ContactChipBinding> {
+        return QkViewHolder(parent, ContactChipBinding::inflate).apply {
             // These theme attributes don't apply themselves on API 21
             if (Build.VERSION.SDK_INT <= 22) {
-                content.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
+                binding.content.setBackgroundTint(parent.context.resolveThemeColor(R.attr.bubbleColor))
             }
 
-            view.setOnClickListener {
+            binding.root.setOnClickListener {
                 val chip = getItem(adapterPosition)
-                showDetailedChip(view.context, chip)
+                showDetailedChip(parent.context, chip)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder<ContactChipBinding>, position: Int) {
         val recipient = getItem(position)
 
-        holder.avatar.setRecipient(recipient)
-        holder.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
+        holder.binding.avatar.setRecipient(recipient)
+        holder.binding.name.text = recipient.contact?.name?.takeIf { it.isNotBlank() } ?: recipient.address
     }
 
     /**
@@ -76,8 +73,9 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Recipient>() {
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.WRAP_CONTENT)
 
-        layoutParams.topMargin = 24.dpToPx(context)
+        layoutParams.topMargin = 32.dpToPx(context)
         layoutParams.marginStart = 56.dpToPx(context)
+        layoutParams.marginEnd = 8.dpToPx(context)
 
         rootView.addView(detailedChipView, layoutParams)
         detailedChipView.show()

@@ -20,7 +20,10 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.Activity
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.inputmethod.InputMethodManager
+import androidx.appcompat.app.AppCompatActivity
+import androidx.viewbinding.ViewBinding
 
 fun Activity.dismissKeyboard() {
     window.currentFocus?.let { focus ->
@@ -29,4 +32,10 @@ fun Activity.dismissKeyboard() {
 
         focus.clearFocus()
     }
+}
+
+inline fun <T : ViewBinding> AppCompatActivity.viewBinding(
+    crossinline bindingInflater: (LayoutInflater) -> T
+): Lazy<T> = lazy(LazyThreadSafetyMode.NONE) {
+    bindingInflater(layoutInflater)
 }

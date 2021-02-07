@@ -23,7 +23,7 @@
     android:orientation="vertical">
 
     <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/syncingLabel"
+        android:id="@+id/label"
         style="@style/TextPrimary"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:textStyle="bold" />
 
     <ProgressBar
-        android:id="@+id/syncingProgress"
+        android:id="@+id/progress"
         style="@style/Widget.AppCompat.ProgressBar.Horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
