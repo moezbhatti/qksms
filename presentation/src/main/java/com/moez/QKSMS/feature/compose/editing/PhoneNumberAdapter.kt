@@ -18,23 +18,27 @@
  */
 package com.moez.QKSMS.feature.compose.editing
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
-import com.moez.QKSMS.databinding.ContactNumberListItemBinding
 import com.moez.QKSMS.model.PhoneNumber
+import kotlinx.android.synthetic.main.contact_number_list_item.*
 
-class PhoneNumberAdapter : QkAdapter<PhoneNumber, ContactNumberListItemBinding>() {
+class PhoneNumberAdapter : QkAdapter<PhoneNumber>() {
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ContactNumberListItemBinding> {
-        return QkViewHolder(parent, ContactNumberListItemBinding::inflate)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        val view = inflater.inflate(R.layout.contact_number_list_item, parent, false)
+        return QkViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<ContactNumberListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val number = getItem(position)
 
-        holder.binding.address.text = number.address
-        holder.binding.type.text = number.type
+        holder.address.text = number.address
+        holder.type.text = number.type
     }
 
     override fun areItemsTheSame(old: PhoneNumber, new: PhoneNumber): Boolean {

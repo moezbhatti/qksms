@@ -35,9 +35,10 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.databinding.ConversationListItemBinding
 import com.moez.QKSMS.model.Conversation
 import com.moez.QKSMS.util.PhoneNumberUtils
+import kotlinx.android.synthetic.main.conversation_list_item.*
+import kotlinx.android.synthetic.main.conversation_list_item.view.*
 import javax.inject.Inject
 
 class ConversationsAdapter @Inject constructor(
@@ -46,48 +47,50 @@ class ConversationsAdapter @Inject constructor(
     private val dateFormatter: DateFormatter,
     private val navigator: Navigator,
     private val phoneNumberUtils: PhoneNumberUtils
-) : QkRealmAdapter<Conversation, ConversationListItemBinding>() {
+) : QkRealmAdapter<Conversation>() {
 
     init {
         // This is how we access the threadId for the swipe actions
         setHasStableIds(true)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ConversationListItemBinding> {
-        return QkViewHolder(parent, ConversationListItemBinding::inflate).apply {
-            if (viewType == 1) {
-                val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.conversation_list_item, parent, false)
 
-                binding.title.setTypeface(binding.title.typeface, Typeface.BOLD)
+        if (viewType == 1) {
+            val textColorPrimary = parent.context.resolveThemeColor(android.R.attr.textColorPrimary)
 
-                binding.snippet.setTypeface(binding.snippet.typeface, Typeface.BOLD)
-                binding.snippet.setTextColor(textColorPrimary)
-                binding.snippet.maxLines = 5
+            view.title.setTypeface(view.title.typeface, Typeface.BOLD)
 
-                binding.unread.isVisible = true
+            view.snippet.setTypeface(view.snippet.typeface, Typeface.BOLD)
+            view.snippet.setTextColor(textColorPrimary)
+            view.snippet.maxLines = 5
 
-                binding.date.setTypeface(binding.date.typeface, Typeface.BOLD)
-                binding.date.setTextColor(textColorPrimary)
-            }
+            view.unread.isVisible = true
 
-            binding.root.setOnClickListener {
+            view.date.setTypeface(view.date.typeface, Typeface.BOLD)
+            view.date.setTextColor(textColorPrimary)
+        }
+
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnClickListener
                 when (toggleSelection(conversation.id, false)) {
-                    true -> binding.root.isActivated = isSelected(conversation.id)
+                    true -> view.isActivated = isSelected(conversation.id)
                     false -> navigator.showConversation(conversation.id)
                 }
             }
-
-            binding.root.setOnLongClickListener {
+            view.setOnLongClickListener {
                 val conversation = getItem(adapterPosition) ?: return@setOnLongClickListener true
                 toggleSelection(conversation.id)
-                binding.root.isActivated = isSelected(conversation.id)
+                view.isActivated = isSelected(conversation.id)
                 true
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<ConversationListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val conversation = getItem(position) ?: return
 
         // If the last message wasn't incoming, then the colour doesn't really matter anyway
@@ -100,24 +103,24 @@ class ConversationsAdapter @Inject constructor(
         }
         val theme = colors.theme(recipient).theme
 
-        holder.binding.root.isActivated = isSelected(conversation.id)
+        holder.containerView.isActivated = isSelected(conversation.id)
 
-        holder.binding.avatars.recipients = conversation.recipients
-        holder.binding.title.collapseEnabled = conversation.recipients.size > 1
-        holder.binding.title.text = buildSpannedString {
+        holder.avatars.recipients = conversation.recipients
+        holder.title.collapseEnabled = conversation.recipients.size > 1
+        holder.title.text = buildSpannedString {
             append(conversation.getTitle())
             if (conversation.draft.isNotEmpty()) {
                 color(theme) { append(" " + context.getString(R.string.main_draft)) }
             }
         }
-        holder.binding.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
-        holder.binding.snippet.text = when {
+        holder.date.text = conversation.date.takeIf { it > 0 }?.let(dateFormatter::getConversationTimestamp)
+        holder.snippet.text = when {
             conversation.draft.isNotEmpty() -> conversation.draft
             conversation.me -> context.getString(R.string.main_sender_you, conversation.snippet)
             else -> conversation.snippet
         }
-        holder.binding.pinned.isVisible = conversation.pinned
-        holder.binding.unread.setTint(theme)
+        holder.pinned.isVisible = conversation.pinned
+        holder.unread.setTint(theme)
     }
 
     override fun getItemId(position: Int): Long {

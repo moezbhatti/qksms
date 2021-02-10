@@ -23,7 +23,6 @@ import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.PorterDuff
 import android.os.Build
-import android.view.LayoutInflater
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup
@@ -32,7 +31,6 @@ import android.widget.EditText
 import android.widget.ImageView
 import android.widget.ProgressBar
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import androidx.viewpager.widget.ViewPager
 
 var ViewGroup.animateLayoutChanges: Boolean
@@ -124,8 +122,4 @@ fun ViewPager.addOnPageChangeListener(listener: (Int) -> Unit) {
 fun RecyclerView.scrapViews() {
     recycledViewPool.clear()
     adapter?.notifyDataSetChanged()
-}
-
-inline fun <T : ViewBinding> ViewGroup.viewBinding(crossinline bindingInflater: (LayoutInflater, ViewGroup) -> T): T  {
-    return bindingInflater(LayoutInflater.from(context), this)
 }

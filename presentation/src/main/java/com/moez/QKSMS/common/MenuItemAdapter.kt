@@ -20,26 +20,26 @@ package com.moez.QKSMS.common
 
 import android.content.Context
 import android.content.res.ColorStateList
+import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.annotation.ArrayRes
 import androidx.recyclerview.widget.RecyclerView
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.databinding.MenuListItemBinding
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.menu_list_item.*
+import kotlinx.android.synthetic.main.menu_list_item.view.*
 import javax.inject.Inject
 
 data class MenuItem(val title: String, val actionId: Int)
 
-class MenuItemAdapter @Inject constructor(
-    private val context: Context,
-    private val colors: Colors
-) : QkAdapter<MenuItem, MenuListItemBinding>() {
+class MenuItemAdapter @Inject constructor(private val context: Context, private val colors: Colors) : QkAdapter<MenuItem>() {
 
     val menuItemClicks: Subject<Int> = PublishSubject.create()
 
@@ -47,13 +47,13 @@ class MenuItemAdapter @Inject constructor(
 
     var selectedItem: Int? = null
         set(value) {
-            val old = data.map { it.actionId }.indexOfFirst { it == field }.takeIf { it != -1 }
-            val new = data.map { it.actionId }.indexOfFirst { it == value }.takeIf { it != -1 }
+            val old = data.map { it.actionId }.indexOfFirst { it == field }
+            val new = data.map { it.actionId }.indexOfFirst { it == value }
 
             field = value
 
-            old?.let(::notifyItemChanged)
-            new?.let(::notifyItemChanged)
+            old.let { notifyItemChanged(it) }
+            new.let { notifyItemChanged(it) }
         }
 
     fun setData(@ArrayRes titles: Int, @ArrayRes values: Int = -1) {
@@ -63,28 +63,31 @@ class MenuItemAdapter @Inject constructor(
                 .mapIndexed { index, title -> MenuItem(title, valueInts?.getOrNull(index) ?: index) }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<MenuListItemBinding> {
-        return QkViewHolder(parent, MenuListItemBinding::inflate).apply {
-            val states = arrayOf(
-                    intArrayOf(android.R.attr.state_activated),
-                    intArrayOf(-android.R.attr.state_activated))
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+        val layoutInflater = LayoutInflater.from(parent.context)
+        val view = layoutInflater.inflate(R.layout.menu_list_item, parent, false)
 
-            val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
-            binding.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
+        val states = arrayOf(
+                intArrayOf(android.R.attr.state_activated),
+                intArrayOf(-android.R.attr.state_activated))
 
-            binding.root.setOnClickListener {
+        val text = parent.context.resolveThemeColor(android.R.attr.textColorTertiary)
+        view.check.imageTintList = ColorStateList(states, intArrayOf(colors.theme().theme, text))
+
+        return QkViewHolder(view).apply {
+            view.setOnClickListener {
                 val menuItem = getItem(adapterPosition)
                 menuItemClicks.onNext(menuItem.actionId)
             }
         }
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<MenuListItemBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val menuItem = getItem(position)
 
-        holder.binding.title.text = menuItem.title
-        holder.binding.check.isActivated = (menuItem.actionId == selectedItem)
-        holder.binding.check.setVisible(selectedItem != null)
+        holder.title.text = menuItem.title
+        holder.check.isActivated = (menuItem.actionId == selectedItem)
+        holder.check.setVisible(selectedItem != null)
     }
 
     override fun onDetachedFromRecyclerView(recyclerView: RecyclerView) {

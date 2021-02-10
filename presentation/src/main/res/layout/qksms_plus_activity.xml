@@ -23,9 +23,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <include
-        android:id="@+id/appBarLayout"
-        layout="@layout/collapsing_toolbar" />
+    <include layout="@layout/collapsing_toolbar" />
 
     <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"

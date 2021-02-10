@@ -18,20 +18,20 @@
  */
 package com.moez.QKSMS.feature.compose.part
 
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.forwardTouches
-import com.moez.QKSMS.databinding.MessageListItemInBinding
 import com.moez.QKSMS.extensions.isSmil
 import com.moez.QKSMS.extensions.isText
 import com.moez.QKSMS.feature.compose.BubbleUtils.canGroup
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
 import io.reactivex.Observable
+import kotlinx.android.synthetic.main.message_list_item_in.*
 import javax.inject.Inject
 
 class PartsAdapter @Inject constructor(
@@ -39,7 +39,7 @@ class PartsAdapter @Inject constructor(
     fileBinder: FileBinder,
     mediaBinder: MediaBinder,
     vCardBinder: VCardBinder
-) : QkAdapter<MmsPart, ViewBinding>() {
+) : QkAdapter<MmsPart>() {
 
     private val partBinders = listOf(mediaBinder, vCardBinder, fileBinder)
 
@@ -54,31 +54,34 @@ class PartsAdapter @Inject constructor(
     private lateinit var message: Message
     private var previous: Message? = null
     private var next: Message? = null
-    private var holder: QkViewHolder<MessageListItemInBinding>? = null
+    private var holder: QkViewHolder? = null
     private var bodyVisible: Boolean = true
 
-    fun setData(message: Message, previous: Message?, next: Message?, holder: QkViewHolder<MessageListItemInBinding>) {
+    fun setData(message: Message, previous: Message?, next: Message?, holder: QkViewHolder) {
         this.message = message
         this.previous = previous
         this.next = next
         this.holder = holder
-        this.bodyVisible = holder.binding.body.visibility == View.VISIBLE
+        this.bodyVisible = holder.body.visibility == View.VISIBLE
         this.data = message.parts.filter { !it.isSmil() && !it.isText() }
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ViewBinding> {
-        return QkViewHolder(parent, partBinders[viewType].bindingInflater).apply {
-            holder?.binding?.root?.let(binding.root::forwardTouches)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+        val layout = partBinders.getOrNull(viewType)?.partLayout ?: 0
+        val view = LayoutInflater.from(parent.context).inflate(layout, parent, false)
+        holder?.containerView?.let(view::forwardTouches)
+        return QkViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<ViewBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = data[position]
 
         val canGroupWithPrevious = canGroup(message, previous) || position > 0
         val canGroupWithNext = canGroup(message, next) || position < itemCount - 1 || bodyVisible
 
-        partBinders.find { binder -> binder.bindPart(holder, part, message, canGroupWithPrevious, canGroupWithNext) }
+        partBinders
+                .firstOrNull { it.canBindPart(part) }
+                ?.bindPart(holder, part, message, canGroupWithPrevious, canGroupWithNext)
     }
 
     override fun getItemViewType(position: Int): Int {

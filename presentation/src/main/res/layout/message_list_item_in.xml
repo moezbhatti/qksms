@@ -107,12 +107,6 @@
         tools:backgroundTint="@color/tools_theme"
         tools:text="@tools:sample/lorem/random" />
 
-    <ProgressBar
-        android:id="@+id/cancel"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        tools:ignore="MissingConstraints" />
-
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/status"
         android:layout_width="wrap_content"

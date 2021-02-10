@@ -24,22 +24,22 @@
     android:layout_height="wrap_content">
 
     <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/title"
+        android:id="@+id/snackbarTitle"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
         android:paddingTop="16dp"
         android:textColor="?android:attr/textColorPrimary"
         android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@id/message"
-        app:layout_constraintEnd_toStartOf="@id/button"
+        app:layout_constraintBottom_toTopOf="@id/snackbarMessage"
+        app:layout_constraintEnd_toStartOf="@id/snackbarButton"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:textSize="primary"
         tools:text="Love texting again" />
 
     <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/message"
+        android:id="@+id/snackbarMessage"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="16dp"
@@ -47,14 +47,14 @@
         android:paddingBottom="16dp"
         android:textColor="?android:attr/textColorSecondary"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/button"
+        app:layout_constraintEnd_toStartOf="@id/snackbarButton"
         app:layout_constraintHorizontal_bias="0"
         app:layout_constraintStart_toStartOf="parent"
         app:textSize="secondary"
         tools:text="Make QKSMS your default SMS app" />
 
     <com.moez.QKSMS.common.widget.QkTextView
-        android:id="@+id/button"
+        android:id="@+id/snackbarButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="8dp"
@@ -63,9 +63,9 @@
         android:textAllCaps="true"
         android:textColor="@color/tools_theme"
         android:textStyle="bold"
-        app:layout_constraintBottom_toBottomOf="@id/message"
+        app:layout_constraintBottom_toBottomOf="@id/snackbarMessage"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toTopOf="@id/title"
+        app:layout_constraintTop_toTopOf="@id/snackbarTitle"
         app:textColor="theme"
         app:textSize="secondary"
         tools:text="Change" />

@@ -43,7 +43,6 @@ import com.moez.QKSMS.common.util.extensions.setVisible
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.common.widget.QkSwitch
 import com.moez.QKSMS.common.widget.TextInputDialog
-import com.moez.QKSMS.databinding.SettingsControllerBinding
 import com.moez.QKSMS.feature.settings.about.AboutController
 import com.moez.QKSMS.feature.settings.autodelete.AutoDeleteDialog
 import com.moez.QKSMS.feature.settings.swipe.SwipeActionsController
@@ -59,12 +58,14 @@ import io.reactivex.subjects.Subject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.suspendCancellableCoroutine
 import kotlinx.coroutines.withContext
+import kotlinx.android.synthetic.main.settings_controller.*
+import kotlinx.android.synthetic.main.settings_controller.view.*
+import kotlinx.android.synthetic.main.settings_switch_widget.view.*
+import kotlinx.android.synthetic.main.settings_theme_widget.*
 import javax.inject.Inject
 import kotlin.coroutines.resume
 
-class SettingsController : QkController<SettingsView, SettingsState, SettingsPresenter, SettingsControllerBinding>(
-        SettingsControllerBinding::inflate
-), SettingsView {
+class SettingsController : QkController<SettingsView, SettingsState, SettingsPresenter>(), SettingsView {
 
     @Inject lateinit var context: Context
     @Inject lateinit var colors: Colors
@@ -88,11 +89,12 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     private val signatureSubject: Subject<String> = PublishSubject.create()
     private val autoDeleteSubject: Subject<Int> = PublishSubject.create()
 
-    private val progressAnimator by lazy { ObjectAnimator.ofInt(binding.syncingProgress, "progress", 0, 0) }
+    private val progressAnimator by lazy { ObjectAnimator.ofInt(syncingProgress, "progress", 0, 0) }
 
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
+        layoutRes = R.layout.settings_controller
 
         colors.themeObservable()
                 .autoDisposable(scope())
@@ -100,7 +102,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     }
 
     override fun onViewCreated() {
-        binding.preferences.postDelayed({ binding.preferences.animateLayoutChanges = true }, 100)
+        preferences.postDelayed({ preferences?.animateLayoutChanges = true }, 100)
 
         when (Build.VERSION.SDK_INT >= 29) {
             true -> nightModeDialog.adapter.setData(R.array.night_modes)
@@ -112,7 +114,7 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         sendDelayDialog.adapter.setData(R.array.delayed_sending_labels)
         mmsSizeDialog.adapter.setData(R.array.mms_sizes, R.array.mms_sizes_ids)
 
-        binding.about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
+        about.summary = context.getString(R.string.settings_version, BuildConfig.VERSION_NAME)
     }
 
     override fun onAttach(view: View) {
@@ -122,13 +124,13 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
         showBackButton(true)
     }
 
-    override fun preferenceClicks(): Observable<PreferenceView> = (0 until binding.preferences.childCount)
-            .map { index -> binding.preferences.getChildAt(index) }
+    override fun preferenceClicks(): Observable<PreferenceView> = (0 until preferences.childCount)
+            .map { index -> preferences.getChildAt(index) }
             .mapNotNull { view -> view as? PreferenceView }
             .map { preference -> preference.clicks().map { preference } }
             .let { preferences -> Observable.merge(preferences) }
 
-    override fun aboutLongClicks(): Observable<*> = binding.about.longClicks()
+    override fun aboutLongClicks(): Observable<*> = about.longClicks()
 
     override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 
@@ -149,64 +151,63 @@ class SettingsController : QkController<SettingsView, SettingsState, SettingsPre
     override fun mmsSizeSelected(): Observable<Int> = mmsSizeDialog.adapter.menuItemClicks
 
     override fun render(state: SettingsState) {
-        binding.theme.widget<View>().setBackgroundTint(state.theme)
-        binding.night.summary = state.nightModeSummary
+        themePreview.setBackgroundTint(state.theme)
+        night.summary = state.nightModeSummary
         nightModeDialog.adapter.selectedItem = state.nightModeId
-        binding.nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-        binding.nightStart.summary = state.nightStart
-        binding.nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
-        binding.nightEnd.summary = state.nightEnd
+        nightStart.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightStart.summary = state.nightStart
+        nightEnd.setVisible(state.nightModeId == Preferences.NIGHT_MODE_AUTO)
+        nightEnd.summary = state.nightEnd
 
-        binding.black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
-        binding.black.widget<QkSwitch>().isChecked = state.black
+        black.setVisible(state.nightModeId != Preferences.NIGHT_MODE_OFF)
+        black.checkbox.isChecked = state.black
 
-        binding.autoEmoji.widget<QkSwitch>().isChecked = state.autoEmojiEnabled
+        autoEmoji.checkbox.isChecked = state.autoEmojiEnabled
 
-        binding.delayed.summary = state.sendDelaySummary
+        delayed.summary = state.sendDelaySummary
         sendDelayDialog.adapter.selectedItem = state.sendDelayId
 
-        binding.delivery.widget<QkSwitch>().isChecked = state.deliveryEnabled
+        delivery.checkbox.isChecked = state.deliveryEnabled
 
-        binding.signature.summary = state.signature.takeIf { it.isNotBlank() }
+        signature.summary = state.signature.takeIf { it.isNotBlank() }
                 ?: context.getString(R.string.settings_signature_summary)
 
-        binding.textSize.summary = state.textSizeSummary
+        textSize.summary = state.textSizeSummary
         textSizeDialog.adapter.selectedItem = state.textSizeId
 
-        binding.autoColor.widget<QkSwitch>().isChecked = state.autoColor
+        autoColor.checkbox.isChecked = state.autoColor
 
-        binding.systemFont.widget<QkSwitch>().isChecked = state.systemFontEnabled
+        systemFont.checkbox.isChecked = state.systemFontEnabled
 
-        binding.unicode.widget<QkSwitch>().isChecked = state.stripUnicodeEnabled
-        binding.mobileOnly.widget<QkSwitch>().isChecked = state.mobileOnly
+        unicode.checkbox.isChecked = state.stripUnicodeEnabled
+        mobileOnly.checkbox.isChecked = state.mobileOnly
 
-        binding.autoDelete.summary = when (state.autoDelete) {
+        autoDelete.summary = when (state.autoDelete) {
             0 -> context.getString(R.string.settings_auto_delete_never)
             else -> context.resources.getQuantityString(
                     R.plurals.settings_auto_delete_summary, state.autoDelete, state.autoDelete)
         }
 
-        binding.longAsMms.widget<QkSwitch>().isChecked = state.longAsMms
+        longAsMms.checkbox.isChecked = state.longAsMms
 
-        binding.mmsSize.summary = state.maxMmsSizeSummary
+        mmsSize.summary = state.maxMmsSizeSummary
         mmsSizeDialog.adapter.selectedItem = state.maxMmsSizeId
 
         when (state.syncProgress) {
-            is SyncRepository.SyncProgress.Idle -> binding.syncingProgress.isVisible = false
+            is SyncRepository.SyncProgress.Idle -> syncingProgress.isVisible = false
 
             is SyncRepository.SyncProgress.Running -> {
-                binding.syncingProgress.isVisible = true
-                binding.syncingProgress.max = state.syncProgress.max
-                progressAnimator.apply { setIntValues(binding.syncingProgress.progress, state.syncProgress.progress) }
-                        .start()
-                binding.syncingProgress.isIndeterminate = state.syncProgress.indeterminate
+                syncingProgress.isVisible = true
+                syncingProgress.max = state.syncProgress.max
+                progressAnimator.apply { setIntValues(syncingProgress.progress, state.syncProgress.progress) }.start()
+                syncingProgress.isIndeterminate = state.syncProgress.indeterminate
             }
         }
     }
 
     override fun showQksmsPlusSnackbar() {
         view?.run {
-            Snackbar.make(binding.root, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
+            Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
                 setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
                 setActionTextColor(colors.theme().theme)
                 show()

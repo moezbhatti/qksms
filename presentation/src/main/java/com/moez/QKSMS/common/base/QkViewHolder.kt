@@ -18,16 +18,10 @@
  */
 package com.moez.QKSMS.common.base
 
-import android.view.LayoutInflater
-import android.view.ViewGroup
+import android.view.View
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
+import kotlinx.android.extensions.LayoutContainer
 
-class QkViewHolder<T : ViewBinding>(val binding: T) : RecyclerView.ViewHolder(binding.root) {
-
-    constructor(
-        parent: ViewGroup,
-        bindingInflator: (LayoutInflater, ViewGroup, Boolean) -> T
-    ) : this(bindingInflator(LayoutInflater.from(parent.context), parent, false))
-
+class QkViewHolder(view: View) : RecyclerView.ViewHolder(view), LayoutContainer {
+    override val containerView: View = view
 }

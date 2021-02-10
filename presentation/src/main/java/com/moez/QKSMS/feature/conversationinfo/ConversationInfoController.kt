@@ -28,7 +28,6 @@ import com.moez.QKSMS.common.QkChangeHandler
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.extensions.scrapViews
 import com.moez.QKSMS.common.widget.TextInputDialog
-import com.moez.QKSMS.databinding.ConversationInfoControllerBinding
 import com.moez.QKSMS.feature.blocking.BlockingDialog
 import com.moez.QKSMS.feature.conversationinfo.injection.ConversationInfoModule
 import com.moez.QKSMS.feature.themepicker.ThemePickerController
@@ -38,12 +37,12 @@ import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.conversation_info_controller.*
 import javax.inject.Inject
 
 class ConversationInfoController(
     val threadId: Long = 0
-) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter,
-        ConversationInfoControllerBinding>(ConversationInfoControllerBinding::inflate), ConversationInfoView {
+) : QkController<ConversationInfoView, ConversationInfoState, ConversationInfoPresenter>(), ConversationInfoView {
 
     @Inject override lateinit var presenter: ConversationInfoPresenter
     @Inject lateinit var blockingDialog: BlockingDialog
@@ -63,12 +62,14 @@ class ConversationInfoController(
                 .conversationInfoModule(ConversationInfoModule(this))
                 .build()
                 .inject(this)
+
+        layoutRes = R.layout.conversation_info_controller
     }
 
     override fun onViewCreated() {
-        binding.recyclerView.adapter = adapter
-        binding.recyclerView.addItemDecoration(GridSpacingItemDecoration(adapter, activity!!))
-        binding.recyclerView.layoutManager = GridLayoutManager(activity, 3).apply {
+        recyclerView.adapter = adapter
+        recyclerView.addItemDecoration(GridSpacingItemDecoration(adapter, activity!!))
+        recyclerView.layoutManager = GridLayoutManager(activity, 3).apply {
             spanSizeLookup = object : GridLayoutManager.SpanSizeLookup() {
                 override fun getSpanSize(position: Int): Int = if (adapter.getItemViewType(position) == 2) 1 else 3
             }
@@ -76,7 +77,7 @@ class ConversationInfoController(
 
         themedActivity?.theme
                 ?.autoDisposable(scope())
-                ?.subscribe { binding.recyclerView.scrapViews() }
+                ?.subscribe { recyclerView.scrapViews() }
     }
 
     override fun onAttach(view: View) {

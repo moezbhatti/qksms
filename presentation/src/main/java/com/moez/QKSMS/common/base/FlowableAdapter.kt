@@ -20,7 +20,6 @@ package com.moez.QKSMS.common.base
 
 import androidx.annotation.CallSuper
 import androidx.recyclerview.widget.RecyclerView
-import androidx.viewbinding.ViewBinding
 import io.reactivex.Flowable
 import io.reactivex.disposables.Disposable
 
@@ -28,7 +27,7 @@ import io.reactivex.disposables.Disposable
  * Base RecyclerView.Adapter that provides some convenience when creating a new Adapter, such as
  * data list handing and item animations
  */
-abstract class FlowableAdapter<T, Binding: ViewBinding> : QkAdapter<T, Binding>() {
+abstract class FlowableAdapter<T> : QkAdapter<T>() {
 
     var flowable: Flowable<List<T>>? = null
         set(value) {
