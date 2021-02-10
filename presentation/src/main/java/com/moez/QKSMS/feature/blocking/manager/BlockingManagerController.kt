@@ -44,6 +44,9 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     override fun render(state: BlockingManagerState) {
         qksms.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_QKSMS
 
+        callBlocker.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CB
+        callBlocker.install.isVisible = !state.callBlockerInstalled
+
         callControl.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CC
         callControl.install.isVisible = !state.callControlInstalled
 
@@ -53,6 +56,7 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
 
     override fun activityResumed(): Observable<*> = activityResumedSubject
     override fun qksmsClicked(): Observable<*> = qksms.clicks()
+    override fun callBlockerClicked(): Observable<*> = callBlocker.clicks()
     override fun callControlClicked(): Observable<*> = callControl.clicks()
     override fun siaClicked(): Observable<*> = shouldIAnswer.clicks()
 
