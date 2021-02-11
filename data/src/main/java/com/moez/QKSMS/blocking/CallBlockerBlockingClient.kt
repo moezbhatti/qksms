@@ -25,10 +25,10 @@ import android.net.Uri
 import androidx.core.database.getStringOrNull
 import com.moez.QKSMS.common.util.extensions.isInstalled
 import com.moez.QKSMS.extensions.map
-import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Single
-import java.util.ArrayList
+import timber.log.Timber
+import java.util.*
 import javax.inject.Inject
 
 class CallBlockerBlockingClient @Inject constructor(
@@ -43,31 +43,25 @@ class CallBlockerBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun shouldBlock(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = lookup(address, "incomingNumber")
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = lookup(address, "blacklistLookup")
+
+    private fun lookup(address: String, reason: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.parse("content://com.cuiet.blockCalls.ContProvBlockCalls/lookup/is.blocked.lookup")
-        val blockReason = tryOrNull {
-            context.contentResolver.query(uri, arrayOf("result"), "incomingNumber", arrayOf(address), null)
+        return@fromCallable try {
+            val blockReason = context.contentResolver.query(uri, arrayOf("result"), reason, arrayOf(address), null)
                     ?.use { cursor -> cursor.map(::LookupResult) }
                     ?.find { result -> result.blockReason != null }
-        }?.blockReason
+                    ?.blockReason
 
-        when (blockReason) {
-            "true" -> BlockingClient.Action.Block()
-            else ->  BlockingClient.Action.Unblock
-        }
-    }
-
-    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = Single.fromCallable {
-        val uri = Uri.parse("content://com.cuiet.blockCalls.ContProvBlockCalls/lookup/is.blocked.lookup")
-        val blockReason = tryOrNull {
-            context.contentResolver.query(uri, arrayOf("result"), "blacklistLookup", arrayOf(address), null)
-                    ?.use { cursor -> cursor.map(::LookupResult) }
-                    ?.find { result -> result.blockReason != null }
-        }?.blockReason
-
-        when (blockReason) {
-            "true" -> BlockingClient.Action.Block()
-            else ->  BlockingClient.Action.Unblock
+            when (blockReason) {
+                "true" -> BlockingClient.Action.Block()
+                else -> BlockingClient.Action.Unblock
+            }
+        } catch (e: Exception) {
+            Timber.w(e)
+            BlockingClient.Action.DoNothing
         }
     }
 
