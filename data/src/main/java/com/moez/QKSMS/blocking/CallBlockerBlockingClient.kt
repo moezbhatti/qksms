@@ -43,11 +43,24 @@ class CallBlockerBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.parse("content://com.cuiet.blockCalls.ContProvBlockCalls/lookup/is.blocked.lookup")
         val blockReason = tryOrNull {
-            context.contentResolver.query(uri, arrayOf("result"), "incomingNumber",
-                    arrayOf(address), null)
+            context.contentResolver.query(uri, arrayOf("result"), "incomingNumber", arrayOf(address), null)
+                    ?.use { cursor -> cursor.map(::LookupResult) }
+                    ?.find { result -> result.blockReason != null }
+        }?.blockReason
+
+        when (blockReason) {
+            "true" -> BlockingClient.Action.Block()
+            else ->  BlockingClient.Action.Unblock
+        }
+    }
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+        val uri = Uri.parse("content://com.cuiet.blockCalls.ContProvBlockCalls/lookup/is.blocked.lookup")
+        val blockReason = tryOrNull {
+            context.contentResolver.query(uri, arrayOf("result"), "blacklistLookup", arrayOf(address), null)
                     ?.use { cursor -> cursor.map(::LookupResult) }
                     ?.find { result -> result.blockReason != null }
         }?.blockReason

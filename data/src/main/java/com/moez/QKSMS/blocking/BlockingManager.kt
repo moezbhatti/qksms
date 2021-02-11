@@ -30,7 +30,9 @@ class BlockingManager @Inject constructor(
 
     override fun getClientCapability(): BlockingClient.Capability = client.getClientCapability()
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = client.getAction(address)
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = client.shouldBlock(address)
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = client.isBlacklisted(address)
 
     override fun block(addresses: List<String>): Completable = client.block(addresses)
 

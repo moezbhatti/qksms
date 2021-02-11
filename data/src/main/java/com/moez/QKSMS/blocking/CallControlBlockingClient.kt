@@ -48,7 +48,9 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = isBlacklisted(address)
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
         val blockReason = tryOrNull {
             context.contentResolver.query(uri, projection, null, null, null) // Query URI
