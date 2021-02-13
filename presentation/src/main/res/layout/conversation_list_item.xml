@@ -78,7 +78,7 @@
         android:layout_height="16dp"
         android:layout_marginTop="2dp"
         android:paddingStart="4dp"
-        android:src="@drawable/ic_pin_black_24dp"
+        android:src="@drawable/ic_baseline_push_pin_24"
         android:tint="?android:attr/textColorTertiary"
         android:visibility="gone"
         app:layout_constraintEnd_toStartOf="@id/unread"

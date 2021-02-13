@@ -50,14 +50,14 @@
 
     <item
         android:id="@+id/pin"
-        android:icon="@drawable/ic_pin_black_24dp"
+        android:icon="@drawable/ic_baseline_push_pin_24"
         android:title="@string/main_menu_pin"
         android:visible="false"
         app:showAsAction="ifRoom" />
 
     <item
         android:id="@+id/unpin"
-        android:icon="@drawable/ic_pin_black_24dp"
+        android:icon="@drawable/ic_baseline_push_pin_24"
         android:title="@string/main_menu_unpin"
         android:visible="false"
         app:showAsAction="ifRoom" />
