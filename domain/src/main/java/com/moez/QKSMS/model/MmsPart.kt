@@ -21,12 +21,14 @@ package com.moez.QKSMS.model
 import androidx.core.net.toUri
 import io.realm.RealmObject
 import io.realm.RealmResults
+import io.realm.annotations.Index
 import io.realm.annotations.LinkingObjects
 import io.realm.annotations.PrimaryKey
 
 open class MmsPart : RealmObject() {
 
     @PrimaryKey var id: Long = 0
+    @Index var messageId: Long = 0
     var type: String = ""
     var seq: Int = -1
     var name: String? = null
