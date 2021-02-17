@@ -21,23 +21,32 @@ package com.moez.QKSMS.common.util
 
 import android.app.Activity
 import android.content.Context
+import com.android.billingclient.api.AcknowledgePurchaseParams
 import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
+import com.android.billingclient.api.BillingResult
 import com.android.billingclient.api.Purchase
 import com.android.billingclient.api.PurchasesUpdatedListener
 import com.android.billingclient.api.SkuDetails
 import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.queryPurchaseHistory
+import com.android.billingclient.api.querySkuDetails
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.BillingManager
-import io.reactivex.Flowable
 import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
+import kotlin.coroutines.resume
+import kotlin.coroutines.suspendCoroutine
 
 @Singleton
 class BillingManagerImpl @Inject constructor(
@@ -45,96 +54,120 @@ class BillingManagerImpl @Inject constructor(
     private val analyticsManager: AnalyticsManager
 ) : BillingManager, PurchasesUpdatedListener {
 
-    companion object {
-        const val SKU_PLUS = "remove_ads"
-        const val SKU_PLUS_DONATE = "qksms_plus_donate"
-    }
+    private val productsSubject: Subject<List<SkuDetails>> = BehaviorSubject.create()
+    override val products: Observable<List<BillingManager.Product>> = productsSubject
+            .map { skuDetailsList ->
+                skuDetailsList.map { skuDetails ->
+                    BillingManager.Product(skuDetails.sku, skuDetails.price, skuDetails.priceCurrencyCode)
+                }
+            }
 
-    override val products: Observable<List<BillingManager.Product>> = BehaviorSubject.create()
-    override val upgradeStatus: Observable<Boolean>
+    private val purchaseListSubject = BehaviorSubject.create<List<Purchase>>()
+    override val upgradeStatus: Observable<Boolean> = purchaseListSubject
+            .map { purchases ->
+                purchases
+                        .filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }
+                        .any { it.sku in skus }
+            }
+            .distinctUntilChanged()
+            .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
 
-    private val skus = listOf(SKU_PLUS, SKU_PLUS_DONATE)
-    private val purchaseListObservable = BehaviorSubject.create<List<Purchase>>()
+    private val skus = listOf(BillingManager.SKU_PLUS, BillingManager.SKU_PLUS_DONATE)
+    private val billingClient: BillingClient = BillingClient.newBuilder(context)
+            .setListener(this)
+            .enablePendingPurchases()
+            .build()
 
-    private val billingClient: BillingClient = BillingClient.newBuilder(context).setListener(this).build()
     private var isServiceConnected = false
 
-    init {
-        startServiceConnection {
-            queryPurchases()
-            querySkuDetailsAsync()
-        }
+    override suspend fun checkForPurchases() = executeServiceRequest {
+        // Load the cached data
+        queryPurchases()
 
-        upgradeStatus = purchaseListObservable
-                .map { purchases -> purchases.any { it.sku == SKU_PLUS } || purchases.any { it.sku == SKU_PLUS_DONATE } }
-                .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
+        // On a fresh device, the purchase might not be cached, and so we'll need to force a refresh
+        billingClient.queryPurchaseHistory(BillingClient.SkuType.INAPP)
+        queryPurchases()
     }
 
-    private fun queryPurchases() {
-        executeServiceRequest {
-            // Load the cached data
-            purchaseListObservable.onNext(billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList.orEmpty())
+    override suspend fun queryProducts() = executeServiceRequest {
+        val params = SkuDetailsParams.newBuilder()
+                .setSkusList(skus)
+                .setType(BillingClient.SkuType.INAPP)
 
-            // On a fresh device, the purchase might not be cached, and so we'll need to force a refresh
-            billingClient.queryPurchaseHistoryAsync(BillingClient.SkuType.INAPP) { _, _ ->
-                purchaseListObservable.onNext(billingClient.queryPurchases(BillingClient.SkuType.INAPP).purchasesList.orEmpty())
+        val (billingResult, skuDetailsList) = billingClient.querySkuDetails(params.build())
+        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            productsSubject.onNext(skuDetailsList.orEmpty())
+        }
+    }
+
+    override suspend fun initiatePurchaseFlow(activity: Activity, sku: String) = executeServiceRequest {
+        val skuDetails = withContext(Dispatchers.IO) {
+            val params = SkuDetailsParams.newBuilder()
+                    .setType(BillingClient.SkuType.INAPP)
+                    .setSkusList(listOf(sku))
+                    .build()
+
+            billingClient.querySkuDetails(params).skuDetailsList?.firstOrNull()!!
+        }
+
+        val params = BillingFlowParams.newBuilder().setSkuDetails(skuDetails)
+        billingClient.launchBillingFlow(activity, params.build())
+    }
+
+    override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+            GlobalScope.launch(Dispatchers.IO) {
+                handlePurchases(purchases.orEmpty())
             }
         }
     }
 
-
-    private fun startServiceConnection(onSuccess: () -> Unit) {
-        val listener = object : BillingClientStateListener {
-            override fun onBillingSetupFinished(@BillingClient.BillingResponse billingResponseCode: Int) {
-                if (billingResponseCode == BillingClient.BillingResponse.OK) {
-                    isServiceConnected = true
-                    onSuccess()
-                } else {
-                    Timber.w("Billing response: $billingResponseCode")
-                    purchaseListObservable.onNext(listOf())
-                }
-            }
-
-            override fun onBillingServiceDisconnected() {
-                isServiceConnected = false
-            }
-        }
-
-        Flowable.fromCallable { billingClient.startConnection(listener) }
-                .subscribeOn(Schedulers.io())
-                .subscribe()
-    }
-
-    private fun querySkuDetailsAsync() {
-        executeServiceRequest {
-            val subParams = SkuDetailsParams.newBuilder().setSkusList(skus).setType(BillingClient.SkuType.INAPP)
-            billingClient.querySkuDetailsAsync(subParams.build()) { responseCode, skuDetailsList ->
-                if (responseCode == BillingClient.BillingResponse.OK) {
-                    (products as Subject).onNext(skuDetailsList.map { skuDetails ->
-                        BillingManager.Product(skuDetails.sku, skuDetails.price, skuDetails.priceCurrencyCode)
-                    })
-                }
-            }
+    private suspend fun queryPurchases() {
+        val result = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
+        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+            handlePurchases(result.purchasesList.orEmpty())
         }
     }
 
-    override fun initiatePurchaseFlow(activity: Activity, sku: String) {
-        executeServiceRequest {
-            val params = BillingFlowParams.newBuilder().setSku(sku).setType(BillingClient.SkuType.INAPP)
-            billingClient.launchBillingFlow(activity, params.build())
+    private suspend fun handlePurchases(purchases: List<Purchase>) = executeServiceRequest {
+        purchases.forEach { purchase ->
+            if (!purchase.isAcknowledged) {
+                val params = AcknowledgePurchaseParams.newBuilder()
+                        .setPurchaseToken(purchase.purchaseToken)
+                        .build()
+
+                Timber.i("Acknowledging purchase ${purchase.orderId}")
+                val result = billingClient.acknowledgePurchase(params)
+                Timber.i("Acknowledgement result: ${result.responseCode}, ${result.debugMessage}")
+            }
         }
+
+        purchaseListSubject.onNext(purchases)
     }
 
-    private fun executeServiceRequest(runnable: () -> Unit) {
-        when (isServiceConnected) {
+    private suspend fun executeServiceRequest(runnable: suspend () -> Unit) {
+        when (billingClient.isReady) {
             true -> runnable()
             false -> startServiceConnection(runnable)
         }
     }
 
-    override fun onPurchasesUpdated(resultCode: Int, purchases: List<Purchase>?) {
-        if (resultCode == BillingClient.BillingResponse.OK) {
-            purchaseListObservable.onNext(purchases.orEmpty())
+    private suspend fun startServiceConnection(onSuccess: suspend () -> Unit) = withContext(Dispatchers.IO) {
+        val result = suspendCoroutine<BillingResult> { cont ->
+            val listener = object : BillingClientStateListener {
+                override fun onBillingSetupFinished(result: BillingResult) = cont.resume(result)
+                override fun onBillingServiceDisconnected() = Timber.i("Billing service disconnected")
+            }
+
+            Timber.i("Starting billing service")
+            billingClient.startConnection(listener)
+        }
+
+        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
+            Timber.i("Billing service connected")
+            onSuccess()
+        } else {
+            Timber.w("Billing response: ${result.responseCode}")
         }
     }
 

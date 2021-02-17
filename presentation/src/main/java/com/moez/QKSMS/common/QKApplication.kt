@@ -31,6 +31,7 @@ import com.moez.QKSMS.common.util.FileLoggingTree
 import com.moez.QKSMS.injection.AppComponentManager
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.manager.AnalyticsManager
+import com.moez.QKSMS.manager.BillingManager
 import com.moez.QKSMS.manager.ReferralManager
 import com.moez.QKSMS.migration.QkMigration
 import com.moez.QKSMS.migration.QkRealmMigration
@@ -60,6 +61,7 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
     @Suppress("unused")
     @Inject lateinit var qkMigration: QkMigration
 
+    @Inject lateinit var billingManager: BillingManager
     @Inject lateinit var dispatchingActivityInjector: DispatchingAndroidInjector<Activity>
     @Inject lateinit var dispatchingBroadcastReceiverInjector: DispatchingAndroidInjector<BroadcastReceiver>
     @Inject lateinit var dispatchingServiceInjector: DispatchingAndroidInjector<Service>
@@ -85,6 +87,8 @@ class QKApplication : Application(), HasActivityInjector, HasBroadcastReceiverIn
 
         GlobalScope.launch(Dispatchers.IO) {
             referralManager.trackReferrer()
+            billingManager.checkForPurchases()
+            billingManager.queryProducts()
         }
 
         nightModeManager.updateCurrentTheme()

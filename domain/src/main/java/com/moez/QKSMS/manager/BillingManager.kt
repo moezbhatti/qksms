@@ -38,6 +38,10 @@ interface BillingManager {
     val products: Observable<List<Product>>
     val upgradeStatus: Observable<Boolean>
 
-    fun initiatePurchaseFlow(activity: Activity, sku: String)
+    suspend fun checkForPurchases()
+
+    suspend fun queryProducts()
+
+    suspend fun initiatePurchaseFlow(activity: Activity, sku: String)
 
 }

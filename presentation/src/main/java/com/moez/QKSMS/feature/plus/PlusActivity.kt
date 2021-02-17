@@ -24,11 +24,11 @@ import androidx.core.view.children
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelProviders
 import com.jakewharton.rxbinding2.view.clicks
-import com.jakewharton.rxbinding2.view.enabled
 import com.moez.QKSMS.BuildConfig
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkThemedActivity
 import com.moez.QKSMS.common.util.FontProvider
+import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
@@ -37,10 +37,13 @@ import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.feature.plus.experiment.UpgradeButtonExperiment
 import com.moez.QKSMS.manager.BillingManager
 import dagger.android.AndroidInjection
-import io.reactivex.Observable
 import kotlinx.android.synthetic.main.collapsing_toolbar.*
 import kotlinx.android.synthetic.main.preference_view.view.*
 import kotlinx.android.synthetic.main.qksms_plus_activity.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 
 class PlusActivity : QkThemedActivity(), PlusView {
@@ -113,7 +116,14 @@ class PlusActivity : QkThemedActivity(), PlusView {
     }
 
     override fun initiatePurchaseFlow(billingManager: BillingManager, sku: String) {
-        billingManager.initiatePurchaseFlow(this, sku)
+        GlobalScope.launch(Dispatchers.Main) {
+            try {
+                billingManager.initiatePurchaseFlow(this@PlusActivity, sku)
+            } catch (e: Exception) {
+                Timber.w(e)
+                makeToast(R.string.qksms_plus_error)
+            }
+        }
     }
 
 }
