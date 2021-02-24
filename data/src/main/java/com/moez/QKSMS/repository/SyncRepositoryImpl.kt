@@ -251,6 +251,12 @@ class SyncRepositoryImpl @Inject constructor(
             cursorToMessage.map(Pair(cursor, columnsMap)).apply {
                 existingId?.let { this.id = it }
 
+                if (isMms()) {
+                    parts = RealmList<MmsPart>().apply {
+                        addAll(cursorToPart.getPartsCursor(contentId)?.map { cursorToPart.map(it) }.orEmpty())
+                    }
+                }
+
                 conversationRepo.getOrCreateConversation(threadId)
                 insertOrUpdate()
             }
