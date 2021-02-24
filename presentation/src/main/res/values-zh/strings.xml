@@ -259,6 +259,7 @@
     <string name="blocking_manager_title">封鎖管理器</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS內建封鎖功能</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">自動過濾來電與簡訊！群眾智慧Community IQ™能讓你遠離不想要的垃圾簡訊</string>
     <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
     <string name="blocking_manager_copy_title">複製封鎖號碼</string>
@@ -295,6 +296,7 @@
     <string name="qksms_plus_upgrade_donate">解鎖並捐贈只需 %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">感謝您對 QKSMS 的支持！</string>
     <string name="qksms_plus_thanks_summary">現在您可以使用 QKSMS+ 的全部功能！</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+對F-Droid用戶免費！如果您想支持開發，可以隨意捐款。</string>
     <string name="qksms_plus_donate">使用PayPal捐贈</string>
     <string name="qksms_plus_coming_soon">即將推出</string>

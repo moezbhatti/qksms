@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">অবরুদ্ধকরণ ব্যবস্থাপক</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS-এর অন্তর্ভুক্ত অবরোধী সক্ষমতা(blocking)</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">তোমার কল আর বার্তা একটাই সুবিধাজনক জায়গা থেকে ফিল্টার করো বা ছাঁকো! Community IQ™ দিয়ে অবাঞ্ছিত বার্তা আটকানো যায় সমাজে পরিচিত স্প্যামারদের থেকে</string>
     <string name="blocking_manager_sia_summary">স্বয়ংক্রিয়ভাবে \"Should I Answer\"(আমার কি উত্তর দেয়া উচিত?) অ্যাপ্লিকেশন ব্যবহার করে অযাচিত নম্বর-এর বার্তাগুলি ফিল্টার করো</string>
     <string name="blocking_manager_copy_title">অবরুদ্ধ নম্বরগুলো অনুলিপি করো</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">%1$s %2$s দান করুন, + আনলক করুন</string>
     <string name="qksms_plus_thanks_title">QKSMS সমর্থনের জন্য আপনাকে ধন্যবাদ!</string>
     <string name="qksms_plus_thanks_summary">আপনি এখন QKSMS+-এর সব বৈশিষ্ট্যেের সুবিধা পাচ্ছেন</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">F-Droid ব্যবহারকারীরা QKSMS+ বিনামূল্যে ব্যবহার করতে পারবেন! যদি আপনি উন্নয়ন সমর্থন করতে মুক্ত মনে অনুদান করুন।</string>
     <string name="qksms_plus_donate">পেপাল এর মাধ্যমে দান করুন</string>
     <string name="qksms_plus_coming_soon">শীঘ্রই আসছে</string>

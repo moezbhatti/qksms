@@ -259,6 +259,7 @@
     <string name="blocking_manager_title">Quản lý danh sách chặn</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Chức năng chặn tích hợp sẵn trong QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Tự động lọc các cuộc gọi và tin nhắn của bạn ở một nơi thuận tiện! Cộng đồng IQ™ cho phép bạn ngăn chặn các tin nhắn từ những kẻ gửi tin rác được đóng góp bởi cộng đồng</string>
     <string name="blocking_manager_sia_summary">Tự động lọc tin nhắn từ số điện thoại không mong muốn bằng cách sử dụng ứng dụng \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Sao chép số đã chặn</string>
@@ -295,6 +296,7 @@
     <string name="qksms_plus_upgrade_donate">Mở khoá và tài trợ với %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Cảm ơn bạn đã ủng hộ QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Bây giờ bạn có thể sử dụng tất cả các chức năng của QKSMS+</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ miễn phí cho người sử dụng F-Droid! Bạn có thể trả phí nếu muốn hỗ trợ phát triển.</string>
     <string name="qksms_plus_donate">Tài trợ bằng PayPal</string>
     <string name="qksms_plus_coming_soon">Sắp có</string>

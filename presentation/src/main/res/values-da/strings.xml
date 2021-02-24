@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Blokeringshåndtering</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Indbygget blokeringsfunktionalitet i QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Filtrér automatisk dine opkald og beskeder på ét praktisk sted! Community IQ ™ giver dig mulighed for at forhindre uønskede beskeder fra spammere kendt af fællesskabet</string>
     <string name="blocking_manager_sia_summary">Filtrér automatisk beskeder fra uopfordrede numre vha. \"Bør jeg besvare\"-app\'en</string>
     <string name="blocking_manager_copy_title">Kopiér blokerede numre</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Oplås + donér for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Tak for din støtte til QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Du har nu adgang til alle QKSMS+-funktioner</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ er gratis for F-Droid-brugere! Ønsker du at støtte udviklingen, er du velkommen til at donere.</string>
     <string name="qksms_plus_donate">Donér via PayPal</string>
     <string name="qksms_plus_coming_soon">Kommer snart</string>

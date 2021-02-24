@@ -259,6 +259,7 @@
     <string name="blocking_manager_title">Pengelola Pemblokiran</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Fitur pemblokiran pesan di dalam QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Otomatis menyaring panggilan dan pesan di dalam satu tempat! Community IQ™ memungkinkan anda memblokir pesan yang tidak diinginkan dari daftar spammer</string>
     <string name="blocking_manager_sia_summary">Secara otomatis menyaring pesan dari nomor yang tidak diinginkan menggunakan aplikasi \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Salin nomor yang diblokir</string>
@@ -295,6 +296,7 @@
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Terima kasih telah mendukung QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Anda sekarang bisa mengakses semua fitur QKSMS+</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ selalu gratis untuk pengguna F-Droid! Jika anda ingin mendukung pengembangan, jangan ragu untuk donasi.</string>
     <string name="qksms_plus_donate">Donasi via PayPal</string>
     <string name="qksms_plus_coming_soon">Segera hadir</string>

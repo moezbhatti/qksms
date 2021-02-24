@@ -235,15 +235,15 @@
     <string name="settings_unicode_summary">Supprimer les accents des caractères lors de l\'envoi de messages SMS</string>
     <string name="settings_mobile_title">Numéros de mobile</string>
     <string name="settings_mobile_summary">Lorsque vous composez un message, afficher uniquement les numéros de mobile</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">Supprimer les anciens messages automatiquement</string>
+    <string name="settings_auto_delete_dialog_message">Les messages seront supprimés après le nombre de jours spécifié</string>
+    <string name="settings_auto_delete_dialog_hint">Nombre de jours</string>
+    <string name="settings_auto_delete_never">Jamais</string>
+    <string name="settings_auto_delete_warning">Supprimer les anciens messages automatiquement ?</string>
+    <string name="settings_auto_delete_warning_message">Si vous continuez, %1$d messages seront supprimés maintenant</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">Après 1 jour</item>
+        <item quantity="other">Après %d jours</item>
     </plurals>
     <string name="settings_long_as_mms_title">Envoyer les messages longs en MMS</string>
     <string name="settings_long_as_mms_summary">Si vos messages texte plus longs ne parviennent pas à être envoyés, ou s\'ils sont envoyés dans le désordre, vous pouvez les envoyer sous forme de messages MMS à la place. Des frais supplémentaires peuvent s\'appliquer</string>
@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Gestionnaire de blocage</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Filtrez automatiquement vos appels et vos messages dans un seul endroit pratique ! La communauté IQ™ vous permet d\'éviter les messages indésirables des spammeurs connus de celle-ci</string>
     <string name="blocking_manager_sia_summary">Filtrer automatiquement les messages de numéros non sollicités à l’aide de l’application « Devrais-je répondre »</string>
     <string name="blocking_manager_copy_title">Copier les numéros bloqués</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Déverrouiller + faire un don pour %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Merci de soutenir QKSMS !</string>
     <string name="qksms_plus_thanks_summary">Vous avez maintenant accès à toutes les fonctionnalités de QKSMS+</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS + est gratuit pour les utilisateurs de F-Droid ! Si vous souhaitez soutenir le développement, n’hésitez pas à faire un don.</string>
     <string name="qksms_plus_donate">Faire un don avec PayPal</string>
     <string name="qksms_plus_coming_soon">Prochainement</string>

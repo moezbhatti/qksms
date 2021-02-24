@@ -78,7 +78,7 @@
     <string name="dialog_delete_title">حذف</string>
     <plurals name="dialog_delete_message">
         <item quantity="one">آیا مطمئن هستید که می خواهید این گفتگو را حذف کنید؟</item>
-        <item quantity="other">آیا مطمئن هستید که می خواهید این %d گفتگو را حذف کنید؟</item>
+        <item quantity="other">آیا مطمئن هستید که می خواهید %d گفتگو را حذف کنید؟</item>
     </plurals>
     <string-array name="message_options">
         <item>کپی متن</item>
@@ -181,7 +181,7 @@
     <string name="scheduled_compose_cd">یک پیام را برنامه‌ریزی کنید</string>
     <string name="scheduled_options_title">پیام برنامه‌ریزی شده</string>
     <string-array name="scheduled_options">
-        <item>هم‌اکنون ارسال کن</item>
+        <item>هم اکنون بفرست</item>
         <item>کپی متن</item>
         <item>حذف</item>
     </string-array>
@@ -235,15 +235,15 @@
     <string name="settings_unicode_summary">حذف کاراکترهای اضافه پیام ارسالی</string>
     <string name="settings_mobile_title">فقط شماره های تلفن</string>
     <string name="settings_mobile_summary">وقتی در حال ارسال پیام هستید فقط می توانید شماره تلفن را ببنید</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">حذف خودکار پیام های قدیمی</string>
+    <string name="settings_auto_delete_dialog_message">پیام ها پس از تعداد روز تعیین شده حذف می شوند</string>
+    <string name="settings_auto_delete_dialog_hint">تعداد روزها</string>
+    <string name="settings_auto_delete_never">هرگز</string>
+    <string name="settings_auto_delete_warning">پیام های قدیمی به طور خودکار حذف شوند؟</string>
+    <string name="settings_auto_delete_warning_message">اگر ادامه دهید، اکنون %1$d پیام حذف خواهد شد</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">بعد از ۱ روز</item>
+        <item quantity="other">بعد از %d روز</item>
     </plurals>
     <string name="settings_long_as_mms_title">پیام های طولانی را به عنوان MMS ارسال کن</string>
     <string name="settings_long_as_mms_summary">اگر پیام های متنی طولانی شما نتوانسته اند ارسال شوند یا به ترتیب اشتباه ارسال شوند ، می توانید به جای آنها پیام های MMS ارسال کنید. هزینه های اضافی ممکن است اعمال شود</string>
@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">مدیریت انسداد</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">عملکرد مسدود کننده داخلی در QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">تماس ها و پیام های خود را بطور خودکار فیلتر کنید! IQ Community به شما اجازه می دهد تا از پیام های ناخواسته توسط اسپمرهای شناخته شده در جامعه جلوگیری کنید</string>
     <string name="blocking_manager_sia_summary">با استفاده از برنامه «آیا باید جواب بدم»، پیام‌ها را از شماره های ناخواسته به طور خودکار فیلتر کنید</string>
     <string name="blocking_manager_copy_title">کپی شماره های مسدود شده</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">نسخه پیشرفته و حمایت به‌ازای %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">سپاس از شما برای حمایت از QKSMS! </string>
     <string name="qksms_plus_thanks_summary">حال شما به همه امکانات QKSMS+ دسترسی دارید</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ برای کاربران F-Droid رایگان است! اگر می‌خواهید از توسعه حمایت کنید، از کمک مالی بسیار قدردانی می‌شود. </string>
     <string name="qksms_plus_donate">از طریق PayPal کمک مالی کنید</string>
     <string name="qksms_plus_coming_soon">به زودی</string>

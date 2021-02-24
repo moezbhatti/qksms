@@ -268,6 +268,7 @@
     <string name="blocking_manager_title">Upravljalnik Blokiranja</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Vgrajena sposobnost blokiranja v QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Samodejno razvrstite vaše klice in sporočila v eno priročno mesto! Skupnostni IQ™ omogoča, da preprečite prejemanje sporočil pošiljateljev neželenih sporočil, kateri so skupnosti poznani</string>
     <string name="blocking_manager_sia_summary">Samodejno razvrstite sporočila neželenih številk tako, da uporabiš \"Should I Answer\" aplikacijo</string>
     <string name="blocking_manager_copy_title">Kopiraj blokirane številke</string>
@@ -310,6 +311,7 @@
     <string name="qksms_plus_upgrade_donate">Odkleni + doniraj za %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Hvala da podpirate QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Zdaj imate dostop do vseh QKSMS+ funkcij</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ je brezplačen za F-Droid uporabnike! Če želite podpirati razvoj, so donacije zelo dobrodošle.</string>
     <string name="qksms_plus_donate">Doniraj preko PayPal</string>
     <string name="qksms_plus_coming_soon">Prihaja kmalu</string>
