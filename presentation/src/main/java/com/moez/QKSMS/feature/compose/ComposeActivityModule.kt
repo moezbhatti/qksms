@@ -49,7 +49,7 @@ class ComposeActivityModule {
         return activity.intent
                 ?.decodedDataString()
                 ?.substringAfter(':') // Remove scheme
-                ?.substringBeforeLast("?") // Remove query
+                ?.substringBefore("?") // Remove query
                 ?.split(",", ";")
                 ?.filter { number -> number.isNotEmpty() }
                 ?: listOf()
