@@ -67,8 +67,7 @@ class ComposeActivityModule {
                 ?: activity.intent.extras?.getString("sms_body")
                 ?: activity.intent?.decodedDataString()
                         ?.substringAfter('?') // Query string
-                        ?.split(',')
-                        ?.firstOrNull { param -> param.startsWith("body") }
+                        ?.takeIf { it.startsWith("body") }
                         ?.substringAfter('=')
                 ?: "")
     }
