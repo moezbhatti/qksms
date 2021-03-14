@@ -388,7 +388,7 @@ class MainActivity : QkThemedActivity(), MainView {
                 .show()
     }
 
-    override fun showChangelog(changelog: ChangelogManager.Changelog) {
+    override fun showChangelog(changelog: ChangelogManager.CumulativeChangelog) {
         changelogDialog.show(changelog)
     }
 

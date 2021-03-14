@@ -50,6 +50,9 @@ import io.reactivex.rxkotlin.plusAssign
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
 import io.realm.Realm
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
 import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
@@ -168,12 +171,11 @@ class MainViewModel @Inject constructor(
         // Show changelog
         if (changelogManager.didUpdate()) {
             if (Locale.getDefault().language.startsWith("en")) {
-                disposables += changelogManager.getChangelog()
-                        .timeout(3, TimeUnit.SECONDS) // If it takes long than 3s, we'll just try again next time
-                        .subscribe({ changelog ->
-                            changelogManager.markChangelogSeen()
-                            view.showChangelog(changelog)
-                        }, {}) // Ignore error
+                GlobalScope.launch(Dispatchers.Main) {
+                    val changelog = changelogManager.getChangelog()
+                    changelogManager.markChangelogSeen()
+                    view.showChangelog(changelog)
+                }
             } else {
                 changelogManager.markChangelogSeen()
             }

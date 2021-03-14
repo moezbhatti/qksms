@@ -32,21 +32,21 @@ class ChangelogAdapter(private val context: Context) : QkAdapter<ChangelogAdapte
 
     data class ChangelogItem(val type: Int, val label: String)
 
-    fun setChangelog(changelog: ChangelogManager.Changelog) {
+    fun setChangelog(changelog: ChangelogManager.CumulativeChangelog) {
         val changes = mutableListOf<ChangelogItem>()
         if (changelog.added.isNotEmpty()) {
             changes += ChangelogItem(0, context.getString(R.string.changelog_added))
-            changes += changelog.added.map { change -> ChangelogItem(1, change) }
+            changes += changelog.added.map { change -> ChangelogItem(1, "• $change") }
             changes += ChangelogItem(0, "")
         }
         if (changelog.improved.isNotEmpty()) {
             changes += ChangelogItem(0, context.getString(R.string.changelog_improved))
-            changes += changelog.improved.map { change -> ChangelogItem(1, change) }
+            changes += changelog.improved.map { change -> ChangelogItem(1, "• $change") }
             changes += ChangelogItem(0, "")
         }
         if (changelog.fixed.isNotEmpty()) {
             changes += ChangelogItem(0, context.getString(R.string.changelog_fixed))
-            changes += changelog.fixed.map { change -> ChangelogItem(1, change) }
+            changes += changelog.fixed.map { change -> ChangelogItem(1, "• $change") }
             changes += ChangelogItem(0, "")
         }
         data = changes
