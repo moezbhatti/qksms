@@ -40,19 +40,20 @@ import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.channels.BufferOverflow
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
-import kotlin.coroutines.resume
-import kotlin.coroutines.suspendCoroutine
 
 @Singleton
 class BillingManagerImpl @Inject constructor(
     context: Context,
     private val analyticsManager: AnalyticsManager
-) : BillingManager, PurchasesUpdatedListener {
+) : BillingManager, BillingClientStateListener, PurchasesUpdatedListener {
 
     private val productsSubject: Subject<List<SkuDetails>> = BehaviorSubject.create()
     override val products: Observable<List<BillingManager.Product>> = productsSubject
@@ -78,7 +79,14 @@ class BillingManagerImpl @Inject constructor(
             .enablePendingPurchases()
             .build()
 
-    private var isServiceConnected = false
+    private val billingClientState = MutableSharedFlow<Int>(
+            replay = 1,
+            onBufferOverflow = BufferOverflow.DROP_OLDEST
+    )
+
+    init {
+        billingClientState.tryEmit(BillingClient.BillingResponseCode.SERVICE_DISCONNECTED)
+    }
 
     override suspend fun checkForPurchases() = executeServiceRequest {
         // Load the cached data
@@ -146,29 +154,23 @@ class BillingManagerImpl @Inject constructor(
     }
 
     private suspend fun executeServiceRequest(runnable: suspend () -> Unit) {
-        when (billingClient.isReady) {
-            true -> runnable()
-            false -> startServiceConnection(runnable)
+        if (billingClientState.first() != BillingClient.BillingResponseCode.OK) {
+            Timber.i("Starting billing service")
+            billingClient.startConnection(this)
         }
+
+        billingClientState.first { state -> state == BillingClient.BillingResponseCode.OK }
+        runnable()
     }
 
-    private suspend fun startServiceConnection(onSuccess: suspend () -> Unit) = withContext(Dispatchers.IO) {
-        val result = suspendCoroutine<BillingResult> { cont ->
-            val listener = object : BillingClientStateListener {
-                override fun onBillingSetupFinished(result: BillingResult) = cont.resume(result)
-                override fun onBillingServiceDisconnected() = Timber.i("Billing service disconnected")
-            }
+    override fun onBillingSetupFinished(result: BillingResult) {
+        Timber.i("Billing response: ${result.responseCode}")
+        billingClientState.tryEmit(result.responseCode)
+    }
 
-            Timber.i("Starting billing service")
-            billingClient.startConnection(listener)
-        }
-
-        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-            Timber.i("Billing service connected")
-            onSuccess()
-        } else {
-            Timber.w("Billing response: ${result.responseCode}")
-        }
+    override fun onBillingServiceDisconnected() {
+        Timber.i("Billing service disconnected")
+        billingClientState.tryEmit(BillingClient.BillingResponseCode.SERVICE_DISCONNECTED)
     }
 
 }
