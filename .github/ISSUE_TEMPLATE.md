@@ -4,14 +4,18 @@ Example: Conversations aren't marked as read when they are opened from a notific
 
 ### STEPS
 1. Steps
-2. to 
+2. to
 3. reproduce
-4. the 
+4. the
 5. issue.
 
 ### EXPECTED
 Describe the expected behaviour.
 
+### DEVICE INFO
+* QKSMS version:
+* Android OS version:
+* Phone make/model:
+
 ### OBSERVATIONS
 Describe what happens instead of the expected behaviour.
-
