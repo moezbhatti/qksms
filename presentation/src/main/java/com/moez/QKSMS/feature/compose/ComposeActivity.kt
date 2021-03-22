@@ -186,11 +186,14 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             else -> state.conversationtitle
         }
 
+        toolbarNumber.text = state.conversationNumber
+
         toolbarSubtitle.setVisible(state.query.isNotEmpty())
         toolbarSubtitle.text = getString(R.string.compose_subtitle_results, state.searchSelectionPosition,
                 state.searchResults)
 
         toolbarTitle.setVisible(!state.editingMode)
+        toolbarNumber.setVisible(!state.editingMode && state.conversationNumber.isNotEmpty() )
         chips.setVisible(state.editingMode)
         composeBar.setVisible(!state.loading)
 
