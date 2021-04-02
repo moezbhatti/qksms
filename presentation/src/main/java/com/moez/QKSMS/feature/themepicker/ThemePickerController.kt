@@ -29,19 +29,18 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.dpToPx
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setVisible
-import com.moez.QKSMS.databinding.ThemePickerControllerBinding
 import com.moez.QKSMS.feature.themepicker.injection.ThemePickerModule
 import com.moez.QKSMS.injection.appComponent
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.theme_picker_controller.*
+import kotlinx.android.synthetic.main.theme_picker_hsv.*
 import javax.inject.Inject
 
 class ThemePickerController(
     val recipientId: Long = 0L
-) : QkController<ThemePickerView, ThemePickerState, ThemePickerPresenter, ThemePickerControllerBinding>(
-   ThemePickerControllerBinding::inflate
-), ThemePickerView {
+) : QkController<ThemePickerView, ThemePickerState, ThemePickerPresenter>(), ThemePickerView {
 
     @Inject override lateinit var presenter: ThemePickerPresenter
 
@@ -57,17 +56,19 @@ class ThemePickerController(
                 .themePickerModule(ThemePickerModule(this))
                 .build()
                 .inject(this)
+
+        layoutRes = R.layout.theme_picker_controller
     }
 
     override fun onViewCreated() {
-        binding.pager.offscreenPageLimit = 1
-        binding.pager.adapter = themePagerAdapter
-        binding.tabs.pager = binding.pager
+        pager.offscreenPageLimit = 1
+        pager.adapter = themePagerAdapter
+        tabs.pager = pager
 
         themeAdapter.data = colors.materialColors
 
-        binding.materialColors.layoutManager = LinearLayoutManager(activity)
-        binding.materialColors.adapter = themeAdapter
+        materialColors.layoutManager = LinearLayoutManager(activity)
+        materialColors.adapter = themeAdapter
     }
 
     override fun onAttach(view: View) {
@@ -85,13 +86,12 @@ class ThemePickerController(
         super.onDetach(view)
 
         themedActivity?.supportActionBar?.let { toolbar ->
-            ObjectAnimator.ofFloat(toolbar, "elevation", toolbar.elevation, 8.dpToPx(toolbar.themedContext).toFloat())
-                    .start()
+            ObjectAnimator.ofFloat(toolbar, "elevation", toolbar.elevation, 8.dpToPx(toolbar.themedContext).toFloat()).start()
         }
     }
 
     override fun showQksmsPlusSnackbar() {
-        Snackbar.make(binding.contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
+        Snackbar.make(contentView, R.string.toast_qksms_plus, Snackbar.LENGTH_LONG).run {
             setAction(R.string.button_more) { viewQksmsPlusSubject.onNext(Unit) }
             setActionTextColor(colors.theme().theme)
             show()
@@ -100,26 +100,26 @@ class ThemePickerController(
 
     override fun themeSelected(): Observable<Int> = themeAdapter.colorSelected
 
-    override fun hsvThemeSelected(): Observable<Int> = binding.hsvPicker.picker.selectedColor
+    override fun hsvThemeSelected(): Observable<Int> = picker.selectedColor
 
-    override fun clearHsvThemeClicks(): Observable<*> = binding.hsvPicker.clear.clicks()
+    override fun clearHsvThemeClicks(): Observable<*> = clear.clicks()
 
-    override fun applyHsvThemeClicks(): Observable<*> = binding.hsvPicker.apply.clicks()
+    override fun applyHsvThemeClicks(): Observable<*> = apply.clicks()
 
     override fun viewQksmsPlusClicks(): Observable<*> = viewQksmsPlusSubject
 
     override fun render(state: ThemePickerState) {
-        binding.tabs.setRecipientId(state.recipientId)
+        tabs.setRecipientId(state.recipientId)
 
-        binding.hsvPicker.hex.setText(Integer.toHexString(state.newColor).takeLast(6))
+        hex.setText(Integer.toHexString(state.newColor).takeLast(6))
 
-        binding.hsvPicker.applyGroup.setVisible(state.applyThemeVisible)
-        binding.hsvPicker.apply.setBackgroundTint(state.newColor)
-        binding.hsvPicker.apply.setTextColor(state.newTextColor)
+        applyGroup.setVisible(state.applyThemeVisible)
+        apply.setBackgroundTint(state.newColor)
+        apply.setTextColor(state.newTextColor)
     }
 
     override fun setCurrentTheme(color: Int) {
-        binding.hsvPicker.picker.setColor(color)
+        picker.setColor(color)
         themeAdapter.selectedColor = color
     }
 

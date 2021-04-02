@@ -28,20 +28,16 @@ import com.moez.QKSMS.common.util.Colors
 import com.moez.QKSMS.common.util.extensions.animateLayoutChanges
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
-import com.moez.QKSMS.databinding.SwipeActionsControllerBinding
 import com.moez.QKSMS.injection.appComponent
-import com.uber.autodispose.android.autoDisposable
-import com.uber.autodispose.android.lifecycle.autoDisposable
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.swipe_actions_controller.*
 import javax.inject.Inject
 
-class SwipeActionsController :
-    QkController<SwipeActionsView, SwipeActionsState, SwipeActionsPresenter, SwipeActionsControllerBinding>(
-            SwipeActionsControllerBinding::inflate), SwipeActionsView {
+class SwipeActionsController : QkController<SwipeActionsView, SwipeActionsState, SwipeActionsPresenter>(), SwipeActionsView {
 
     @Inject override lateinit var presenter: SwipeActionsPresenter
     @Inject lateinit var actionsDialog: QkDialog
@@ -54,24 +50,25 @@ class SwipeActionsController :
 
     init {
         appComponent.inject(this)
+        layoutRes = R.layout.swipe_actions_controller
 
         actionsDialog.adapter.setData(R.array.settings_swipe_actions)
     }
 
     override fun onViewCreated() {
         colors.theme().let { theme ->
-            binding.rightIcon.setBackgroundTint(theme.theme)
-            binding.rightIcon.setTint(theme.textPrimary)
-            binding.leftIcon.setBackgroundTint(theme.theme)
-            binding.leftIcon.setTint(theme.textPrimary)
+            rightIcon.setBackgroundTint(theme.theme)
+            rightIcon.setTint(theme.textPrimary)
+            leftIcon.setBackgroundTint(theme.theme)
+            leftIcon.setTint(theme.textPrimary)
         }
 
-        binding.right.postDelayed({ binding.right.animateLayoutChanges = true }, 100)
-        binding.left.postDelayed({ binding.left.animateLayoutChanges = true }, 100)
+        right.postDelayed({ right?.animateLayoutChanges = true }, 100)
+        left.postDelayed({ left?.animateLayoutChanges = true }, 100)
 
         Observable.merge(
-                binding.right.clicks().map { SwipeActionsView.Action.RIGHT },
-                binding.left.clicks().map { SwipeActionsView.Action.LEFT })
+                right.clicks().map { SwipeActionsView.Action.RIGHT },
+                left.clicks().map { SwipeActionsView.Action.LEFT })
                 .autoDisposable(scope())
                 .subscribe(actionClicks)
     }
@@ -93,13 +90,13 @@ class SwipeActionsController :
     }
 
     override fun render(state: SwipeActionsState) {
-        binding.rightIcon.isVisible = state.rightIcon != 0
-        binding.rightIcon.setImageResource(state.rightIcon)
-        binding.rightLabel.text = state.rightLabel
+        rightIcon.isVisible = state.rightIcon != 0
+        rightIcon.setImageResource(state.rightIcon)
+        rightLabel.text = state.rightLabel
 
-        binding.leftIcon.isVisible = state.leftIcon != 0
-        binding.leftIcon.setImageResource(state.leftIcon)
-        binding.leftLabel.text = state.leftLabel
+        leftIcon.isVisible = state.leftIcon != 0
+        leftIcon.setImageResource(state.leftIcon)
+        leftLabel.text = state.leftLabel
     }
 
 }

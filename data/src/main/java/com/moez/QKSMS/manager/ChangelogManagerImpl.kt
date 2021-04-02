@@ -24,14 +24,14 @@ import com.moez.QKSMS.util.Preferences
 import com.squareup.moshi.Json
 import com.squareup.moshi.JsonClass
 import com.squareup.moshi.Moshi
+import com.squareup.moshi.Types
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.schedulers.Schedulers
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import okhttp3.Call
 import okhttp3.Callback
-import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
-import okhttp3.OkHttpClient
-import okhttp3.Request
 import okhttp3.Response
 import java.io.IOException
 import javax.inject.Inject
@@ -44,54 +44,24 @@ class ChangelogManagerImpl @Inject constructor(
 
     override fun didUpdate(): Boolean = prefs.changelogVersion.get() != context.versionCode
 
-    override fun getChangelog(): Single<ChangelogManager.Changelog> {
-        val url = "https://firestore.googleapis.com/v1/projects/qksms-app/databases/(default)/documents/changelog"
-        val request = url.toHttpUrlOrNull()?.let { Request.Builder().url(it).build() }
-        val call = request?.let { OkHttpClient().newCall(it) }
-        val adapter = moshi.adapter(ChangelogResponse::class.java)
+    override suspend fun getChangelog(): ChangelogManager.CumulativeChangelog {
+        val listType = Types.newParameterizedType(List::class.java, Changeset::class.java)
+        val adapter = moshi.adapter<List<Changeset>>(listType)
 
-        return Single
-                .create<Response> { emitter ->
-                    call?.enqueue(object : Callback {
-                        override fun onResponse(call: Call, response: Response) {
-                            if (!emitter.isDisposed) {
-                                emitter.onSuccess(response)
-                            }
-                        }
+        return withContext(Dispatchers.IO) {
+            val changelogs = context.assets.open("changelog.json").bufferedReader().use { it.readText() }
+                    .let(adapter::fromJson)
+                    .orEmpty()
+                    .sortedBy { changelog -> changelog.versionCode }
+                    .filter { changelog ->
+                        changelog.versionCode in prefs.changelogVersion.get().inc()..context.versionCode
+                    }
 
-                        override fun onFailure(call: Call, e: IOException) {
-                            if (!emitter.isDisposed) {
-                                emitter.onError(e)
-                            }
-                        }
-                    })
-                    emitter.setCancellable {
-                        call?.cancel()
-                    }
-                }
-                .map { response -> response.body?.string()?.let(adapter::fromJson) }
-                .map { response ->
-                    response.documents
-                            .sortedBy { document -> document.fields.versionCode.value }
-                            .filter { document ->
-                                val range = (prefs.changelogVersion.get() + 1)..context.versionCode
-                                document.fields.versionCode.value.toInt() in range
-                            }
-                }
-                .map { documents ->
-                    val added = documents.fold(listOf<String>()) { acc, document ->
-                        acc + document.fields.added?.value?.values?.map { value -> value.value }.orEmpty()
-                    }
-                    val improved = documents.fold(listOf<String>()) { acc, document ->
-                        acc + document.fields.improved?.value?.values?.map { value -> value.value }.orEmpty()
-                    }
-                    val fixed = documents.fold(listOf<String>()) { acc, document ->
-                        acc + document.fields.fixed?.value?.values?.map { value -> value.value }.orEmpty()
-                    }
-                    ChangelogManager.Changelog(added, improved, fixed)
-                }
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
+            ChangelogManager.CumulativeChangelog(
+                    added = changelogs.fold(listOf()) { acc, changelog -> acc + changelog.added.orEmpty()},
+                    improved = changelogs.fold(listOf()) { acc, changelog -> acc + changelog.improved.orEmpty()},
+                    fixed = changelogs.fold(listOf()) { acc, changelog -> acc + changelog.fixed.orEmpty()})
+        }
     }
 
     override fun markChangelogSeen() {
@@ -99,42 +69,12 @@ class ChangelogManagerImpl @Inject constructor(
     }
 
     @JsonClass(generateAdapter = true)
-    data class ChangelogResponse(
-        @Json(name = "documents") val documents: List<Document>
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class Document(
-        @Json(name = "fields") val fields: Changelog
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class Changelog(
-        @Json(name = "added") val added: ArrayField?,
-        @Json(name = "improved") val improved: ArrayField?,
-        @Json(name = "fixed") val fixed: ArrayField?,
-        @Json(name = "versionName") val versionName: StringField,
-        @Json(name = "versionCode") val versionCode: IntegerField
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class ArrayField(
-        @Json(name = "arrayValue") val value: ArrayValues
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class ArrayValues(
-        @Json(name = "values") val values: List<StringField>
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class StringField(
-        @Json(name = "stringValue") val value: String
-    )
-
-    @JsonClass(generateAdapter = true)
-    data class IntegerField(
-        @Json(name = "integerValue") val value: String
+    data class Changeset(
+        @Json(name = "added") val added: List<String>?,
+        @Json(name = "improved") val improved: List<String>?,
+        @Json(name = "fixed") val fixed: List<String>?,
+        @Json(name = "versionName") val versionName: String,
+        @Json(name = "versionCode") val versionCode: Int
     )
 
 }

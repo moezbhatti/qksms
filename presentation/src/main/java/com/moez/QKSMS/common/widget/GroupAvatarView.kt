@@ -20,15 +20,16 @@ package com.moez.QKSMS.common.widget
 
 import android.content.Context
 import android.util.AttributeSet
+import android.view.View
 import androidx.constraintlayout.widget.ConstraintLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.util.extensions.getColorCompat
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
-import com.moez.QKSMS.common.util.extensions.viewBinding
-import com.moez.QKSMS.databinding.GroupAvatarViewBinding
 import com.moez.QKSMS.model.Recipient
+import kotlinx.android.synthetic.main.group_avatar_view.view.*
 
 class GroupAvatarView @JvmOverloads constructor(
     context: Context, attrs: AttributeSet? = null
@@ -40,7 +41,9 @@ class GroupAvatarView @JvmOverloads constructor(
             updateView()
         }
 
-    private val binding = viewBinding(GroupAvatarViewBinding::inflate)
+    init {
+        View.inflate(context, R.layout.group_avatar_view, this)
+    }
 
     override fun onFinishInflate() {
         super.onFinishInflate()
@@ -51,18 +54,18 @@ class GroupAvatarView @JvmOverloads constructor(
     }
 
     private fun updateView() {
-        binding.avatar1Frame.setBackgroundTint(when (recipients.size > 1) {
+        avatar1Frame.setBackgroundTint(when (recipients.size > 1) {
             true -> context.resolveThemeColor(android.R.attr.windowBackground)
             false -> context.getColorCompat(android.R.color.transparent)
         })
-        binding.avatar1Frame.updateLayoutParams<LayoutParams> {
+        avatar1Frame.updateLayoutParams<LayoutParams> {
             matchConstraintPercentWidth = if (recipients.size > 1) 0.75f else 1.0f
         }
-        binding.avatar2.isVisible = recipients.size > 1
+        avatar2.isVisible = recipients.size > 1
 
 
-        recipients.getOrNull(0).run(binding.avatar1::setRecipient)
-        recipients.getOrNull(1).run(binding.avatar2::setRecipient)
+        recipients.getOrNull(0).run(avatar1::setRecipient)
+        recipients.getOrNull(1).run(avatar2::setRecipient)
     }
 
 }

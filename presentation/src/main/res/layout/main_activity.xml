@@ -121,20 +121,20 @@
             android:background="?android:attr/divider"
             app:layout_constraintBottom_toTopOf="@id/snackbar" />
 
-        <include
+        <ViewStub
             android:id="@+id/snackbar"
-            layout="@layout/main_permission_hint"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:inflatedId="@id/snackbar"
+            android:layout="@layout/main_permission_hint"
             app:layout_constraintBottom_toTopOf="@id/syncing" />
 
-        <include
+        <ViewStub
             android:id="@+id/syncing"
-            layout="@layout/main_syncing"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:visibility="gone"
+            android:inflatedId="@id/syncing"
+            android:layout="@layout/main_syncing"
             app:layout_constraintBottom_toBottomOf="parent" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,0 +1,272 @@
+[
+  {
+    "versionCode": "2218",
+    "versionName": "3.9.4",
+    "fixed": [
+      "Incorrect handling of shared text that contains a question mark"
+    ]
+  },
+  {
+    "versionCode": "2217",
+    "versionName": "3.9.3",
+    "improved": [
+      "Message sync is now 2x faster"
+    ]
+  },
+  {
+    "versionCode": "2216",
+    "versionName": "3.9.2",
+    "fixed": [
+      "Crash when launching app in 3.9.1"
+    ]
+  },
+  {
+    "versionCode": "2215",
+    "versionName": "3.9.1",
+    "improved": [
+      "Support SMS URIs that only have a body"
+    ],
+    "fixed": [
+      "Slowness introduced in 3.9.0"
+    ]
+  },
+  {
+    "versionCode": "2214",
+    "versionName": "3.9.0",
+    "added": [
+      "Auto-delete old messages",
+      "Block/archive messages from notification",
+      "Swipe to block conversation",
+      "Share vCard from other apps"
+    ],
+    "improved": [
+      "Better visibility for conversations with drafts",
+      "Remember send-as-group preference",
+      "Shorten \"mark read\" string for notification actions",
+      "Clarify delayed message durations",
+      "Trim whitespace when searching",
+      "Line count limit for contact groups in compose screen",
+      "Buzz and show warning when SIM is changed",
+      "Removed Mixpanel"
+    ],
+    "fixed": [
+      "Incorrect selection state when picking contact phone number",
+      "Max height for QK dialog",
+      "Duplicate phone numbers when multiple contacts apps are installed",
+      "Swipe state gets stuck when marking read conversation as read again",
+      "Titles and special characters included in contact's initials",
+      "Subject text not included when sharing",
+      "Message history not appearing",
+      "Dismiss notification for failed message not working",
+      "Incorrect padding for SIM selector",
+      "Incorrect padding for contact search",
+      "Incorrect empty state for messasge search",
+      "Pressing enter creates line break when searching",
+      "Crash when composing message",
+      "Scheduled message date picker can be blocked by keyboard",
+      "Cursor set to wrong position when cancelling message",
+      "Can't share to group via Simple Contacts",
+      "\"View more conversations\" button on widget broken"
+    ]
+  },
+  {
+    "versionCode": "2213",
+    "versionName": "3.8.1",
+    "fixed": [
+      "MMS not sending",
+      "Crash when deleting conversation",
+      "Crash on startup when upgrading from old version",
+      "Contact Groups not showing up in some cases"
+    ]
+  },
+  {
+    "versionCode": "2212",
+    "versionName": "3.8.0",
+    "improved": [
+      "Updated translations"
+    ]
+  },
+  {
+    "versionCode": "2211",
+    "versionName": "3.8.0-beta2",
+    "fixed": [
+      "Crash when starting new conversation",
+      "Swipe actions not working"
+    ]
+  },
+  {
+    "versionCode": "2210",
+    "versionName": "3.8.0-beta1",
+    "added": [
+      "Support for Contact Groups and Starred Contacts",
+      "Wake screen setting",
+      "Per-contact colours",
+      "Automatic colours",
+      "Option to send long messages as MMS",
+      "Long-press recipient to copy phone number",
+      "Copy text from multiple messages",
+      "Share photos externally"
+    ],
+    "improved": [
+      "Redesigned compose message screen",
+      "Redesigned avatars",
+      "More reliable contact photo loading",
+      "Custom colours for contacts will appear everywhere, not just inside the conversation",
+      "More intuitive unicode stripping",
+      "Make drafts easier to find",
+      "Faster scrolling performance everywhere",
+      "Increased max signature length"
+    ],
+    "fixed": [
+      "Sent attachments are always low quality",
+      "Not receiving all MMS",
+      "Contact name/photo might be out of sync with contacts app",
+      "MMS might appear in the wrong thread",
+      "Duplicate phone numbers appear when Whatsapp is installed",
+      "Can't share to multiple people via another app",
+      "Body not parsed correctly in SMS Uri",
+      "Notification sounds not working on Android 7",
+      "Sometimes can't add number to contacts",
+      "Default SMS \"CHANGE\" button sometimes doesn't work",
+      "24h timestamps don't work correctly when language set to Japanese",
+      "Conversation details page slow when there are lots of attachments"
+    ]
+  },
+  {
+    "versionCode": "2209",
+    "versionName": "3.7.10",
+    "improved": [
+      "Include archived conversations in search results",
+      "Allow manually blocking non-numeric addresses"
+    ],
+    "fixed": [
+      "MMS appear to have sent, but they haven't",
+      "New conversations sometimes don't appear"
+    ]
+  },
+  {
+    "versionCode": "2208",
+    "versionName": "3.7.9",
+    "improved": [
+      "Better reliability for sending MMS"
+    ],
+    "fixed": [
+      "Fixed delayed messages getting stuck \"Sending...\""
+    ]
+  },
+  {
+    "versionCode": "2207",
+    "versionName": "3.7.8",
+    "fixed": [
+      "Contact not always linked to conversation",
+      "Wrong colour for disabled preference icons",
+      "Multiple crashes"
+    ]
+  },
+  {
+    "versionCode": "2206",
+    "versionName": "3.7.7",
+    "fixed": [
+      "New conversations may not appear in inbox"
+    ]
+  },
+  {
+    "versionCode": "2204",
+    "versionName": "3.7.5",
+    "added": [
+      "Added ability to retry sending failed MMS"
+    ],
+    "improved": [
+      "Show hint for signature setting",
+      "Keep widget more up-to-date",
+      "Improve MMS support for Dual-SIM phones",
+      "Display sent time for incoming MMS",
+      "Improve MMS sending reliability"
+    ],
+    "fixed": [
+      "Contacts sometimes not linked to conversation correctly",
+      "Sometimes can't save multiple attachments to phone"
+    ]
+  },
+  {
+    "versionCode": "2203",
+    "versionName": "3.7.4",
+    "added": [
+      "Support for Android Q Roles"
+    ],
+    "improved": [
+      "Use theme color for text cursor",
+      "Better matching between phone number and conversation"
+    ],
+    "fixed": [
+      "Messages often stuck \"Sending...\"",
+      "Short codes won't show up as valid number when composing new message"
+    ]
+  },
+  {
+    "versionCode": "2202",
+    "versionName": "3.7.3",
+    "added": [
+      "You can now view attachments of any filetype"
+    ],
+    "improved": [
+      "Improve search for contacts with accents in their names",
+      "Custom labels for phone numbers will show the custom text",
+      "Include MMS in search results",
+      "Made it easier to access blocked numbers list",
+      "Added option to add number to contacts from main conversation list",
+      "Conversations with drafts will be indicated appropriately in conversation list",
+      "You can now copy text from a scheduled message",
+      "Show blocking reason for numbers blocked via Call Control"
+    ],
+    "fixed": [
+      "Can't open vCard attachments",
+      "Phone number gets blocked when it shouldn't",
+      "Icon gets stretched when swiping conversation",
+      "Can't forward text in MMS message"
+    ]
+  },
+  {
+    "versionCode": "2201",
+    "versionName": "3.7.2",
+    "fixed": [
+      "Various crashes from 3.7.1"
+    ]
+  },
+  {
+    "versionCode": "2200",
+    "versionName": "3.7.1",
+    "fixed": [
+      "Various crashes from 3.7.0"
+    ]
+  },
+  {
+    "versionCode": "2198",
+    "versionName": "3.6.8",
+    "fixed": [
+      "Messages can't be sent or received on older devices",
+      "Norweigan translations not working"
+    ]
+  },
+  {
+    "versionCode": "2197",
+    "versionName": "3.6.7",
+    "added": [
+      "Signature support",
+      "System dark mode support for Android Q"
+    ],
+    "improved": [
+      "You'll be asked for storage permission before trying to save a photo if necessary",
+      "Smaller download size",
+      "Load high resolution contact photos"
+    ],
+    "fixed": [
+      "Contact photos never update",
+      "Can't create new conversation on Huawei devices",
+      "Can't receive MMS on Xiaomi devices",
+      "Visual glitch on compose bar in night mode",
+      "Theme doesn't update in preview after going back to settings",
+      "Search hint gets cut off after rotating screen"
+    ]
+  }
+]

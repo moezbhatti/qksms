@@ -20,27 +20,28 @@ package com.moez.QKSMS.common.widget
 
 import android.app.Activity
 import android.content.DialogInterface
+import android.view.LayoutInflater
 import androidx.appcompat.app.AlertDialog
 import com.moez.QKSMS.R
-import com.moez.QKSMS.databinding.FieldDialogBinding
+import kotlinx.android.synthetic.main.text_input_dialog.view.*
 
-class FieldDialog(context: Activity, hint: String, listener: (String) -> Unit) : AlertDialog(context) {
+class TextInputDialog(context: Activity, hint: String, listener: (String) -> Unit) : AlertDialog(context) {
 
-    private val binding = FieldDialogBinding.inflate(context.layoutInflater)
+    private val layout = LayoutInflater.from(context).inflate(R.layout.text_input_dialog, null)
 
     init {
-        binding.field.hint = hint
+        layout.field.hint = hint
 
-        setView(binding.root)
+        setView(layout)
         setButton(DialogInterface.BUTTON_NEUTRAL, context.getString(R.string.button_cancel)) { _, _ -> }
         setButton(DialogInterface.BUTTON_NEGATIVE, context.getString(R.string.button_delete)) { _, _ -> listener("") }
         setButton(DialogInterface.BUTTON_POSITIVE, context.getString(R.string.button_save)) { _, _ ->
-            listener(binding.field.text.toString())
+            listener(layout.field.text.toString())
         }
     }
 
-    fun setText(text: String): FieldDialog {
-        binding.field.setText(text)
+    fun setText(text: String): TextInputDialog {
+        layout.field.setText(text)
         return this
     }
 

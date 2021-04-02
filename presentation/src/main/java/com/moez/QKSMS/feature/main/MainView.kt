@@ -50,7 +50,7 @@ interface MainView : QkView<MainState> {
     fun themeChanged()
     fun showBlockingDialog(conversations: List<Long>, block: Boolean)
     fun showDeleteDialog(conversations: List<Long>)
-    fun showChangelog(changelog: ChangelogManager.Changelog)
+    fun showChangelog(changelog: ChangelogManager.CumulativeChangelog)
     fun showArchivedSnackbar()
 
 }

@@ -23,6 +23,6 @@ import com.moez.QKSMS.model.MmsPart
 
 interface CursorToPart : Mapper<Cursor, MmsPart> {
 
-    fun getPartsCursor(messageId: Long): Cursor?
+    fun getPartsCursor(messageId: Long? = null): Cursor?
 
 }

@@ -149,7 +149,7 @@ class WidgetProvider : AppWidgetProvider() {
         remoteViews.setOnClickPendingIntent(R.id.compose, composePI)
 
         // Conversation intent
-        val startActivityIntent = Intent(context, ComposeActivity::class.java)
+        val startActivityIntent = Intent(context, MainActivity::class.java)
         val startActivityPendingIntent = PendingIntent.getActivity(context, 0, startActivityIntent, PendingIntent.FLAG_UPDATE_CURRENT)
         remoteViews.setPendingIntentTemplate(R.id.conversations, startActivityPendingIntent)
 

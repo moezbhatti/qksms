@@ -22,10 +22,10 @@ import android.content.Context
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkPresenter
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
 import com.moez.QKSMS.interactor.PerformBackup
+import com.moez.QKSMS.manager.BillingManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.repository.BackupRepository
 import com.uber.autodispose.android.lifecycle.scope

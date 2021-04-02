@@ -17,13 +17,19 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<View xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/themePreview"
-    android:layout_width="24dp"
-    android:layout_height="24dp"
-    android:layout_gravity="center"
-    android:layout_marginStart="8dp"
-    android:layout_marginEnd="8dp"
-    android:background="@drawable/circle"
-    tools:backgroundTint="@color/tools_theme" />
+    android:layout_width="wrap_content"
+    android:layout_height="match_parent"
+    android:paddingStart="8dp"
+    android:paddingEnd="8dp">
+
+    <View
+        android:id="@+id/themePreview"
+        android:layout_width="24dp"
+        android:layout_height="24dp"
+        android:layout_gravity="center"
+        android:background="@drawable/circle"
+        tools:backgroundTint="@color/tools_theme" />
+
+</FrameLayout>

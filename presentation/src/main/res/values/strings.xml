@@ -55,7 +55,7 @@
     <string name="main_menu_block">Block</string>
     <string name="main_syncing">Syncing messages…</string>
     <string name="main_sender_you">You: %s</string>
-    <string name="main_draft">Draft: %s</string>
+    <string name="main_draft">Draft</string>
     <string name="main_message_results_title">Results in messages</string>
     <string name="main_message_results">%d messages</string>
     <string name="inbox_empty_text">Your conversations will appear here</string>
@@ -258,6 +258,17 @@
     <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
     <string name="settings_mobile_title">Mobile numbers only</string>
     <string name="settings_mobile_summary">When composing a message, only show mobile numbers</string>
+    <string name="settings_auto_delete">Delete old messages automatically</string>
+    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
+    <string name="settings_auto_delete_dialog_hint">Number of days</string>
+    <string name="settings_auto_delete_never">Never</string>
+    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
+    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <plurals name="settings_auto_delete_summary">
+        <item quantity="zero">Never</item>
+        <item quantity="one">After 1 day</item>
+        <item quantity="other">After %d days</item>
+    </plurals>
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
     <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
     <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
@@ -326,6 +337,7 @@
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Thank you for supporting QKSMS!</string>
     <string name="qksms_plus_thanks_summary">You now have access to all QKSMS+ features</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, a donation would be highly appreciated.</string>
     <string name="qksms_plus_donate">Donate via PayPal</string>
     <string name="qksms_plus_coming_soon">Coming soon</string>

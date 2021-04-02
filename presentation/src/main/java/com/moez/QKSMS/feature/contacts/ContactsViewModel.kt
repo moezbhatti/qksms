@@ -38,6 +38,7 @@ import com.moez.QKSMS.util.PhoneNumberUtils
 import com.uber.autodispose.android.lifecycle.scope
 import com.uber.autodispose.autoDisposable
 import io.reactivex.Observable
+import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.rxkotlin.Observables
 import io.reactivex.rxkotlin.withLatestFrom
 import io.reactivex.schedulers.Schedulers
@@ -179,9 +180,8 @@ class ContactsViewModel @Inject constructor(
                 .map { composeItem -> composeItem to false }
                 .mergeWith(view.composeItemLongPressedIntent.map { composeItem -> composeItem to true })
                 .observeOn(Schedulers.io())
-                .autoDisposable(view.scope())
-                .subscribe { (composeItem, force) ->
-                    view.finish(HashMap(composeItem.getContacts().associate { contact ->
+                .map { (composeItem, force) ->
+                    HashMap(composeItem.getContacts().associate { contact ->
                         if (contact.numbers.size == 1 || contact.getDefaultNumber() != null && !force) {
                             val address = contact.getDefaultNumber()?.address ?: contact.numbers[0]!!.address
                             address to contact.lookupKey
@@ -203,10 +203,14 @@ class ContactsViewModel @Inject constructor(
                                 }
 
                                 number.address to contact.lookupKey
-                            } ?: return@subscribe
+                            } ?: return@map hashMapOf<String, String?>()
                         }
-                    }))
+                    })
                 }
+                .filter { result -> result.isNotEmpty() }
+                .observeOn(AndroidSchedulers.mainThread())
+                .autoDisposable(view.scope())
+                .subscribe { result -> view.finish(result) }
     }
 
 }

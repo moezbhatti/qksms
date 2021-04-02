@@ -27,7 +27,6 @@ import androidx.core.content.getSystemService
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
 import com.moez.QKSMS.common.base.QkViewModel
-import com.moez.QKSMS.common.util.BillingManager
 import com.moez.QKSMS.common.util.ClipboardUtils
 import com.moez.QKSMS.common.util.MessageDetailsFormatter
 import com.moez.QKSMS.common.util.extensions.makeToast
@@ -44,6 +43,7 @@ import com.moez.QKSMS.interactor.MarkRead
 import com.moez.QKSMS.interactor.RetrySending
 import com.moez.QKSMS.interactor.SendMessage
 import com.moez.QKSMS.manager.ActiveConversationManager
+import com.moez.QKSMS.manager.BillingManager
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Attachments
@@ -450,7 +450,9 @@ class ComposeViewModel @Inject constructor(
                 .mapNotNull(messageRepo::getMessage)
                 .doOnNext { message -> view.setDraft(message.getText()) }
                 .autoDisposable(view.scope())
-                .subscribe { message -> cancelMessage.execute(message.id) }
+                .subscribe { message ->
+                    cancelMessage.execute(CancelDelayedMessage.Params(message.id, message.threadId))
+                }
 
         // Set the current conversation
         Observables

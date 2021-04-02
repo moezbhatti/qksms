@@ -18,16 +18,23 @@
  */
 package com.moez.QKSMS.interactor
 
+import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import io.reactivex.Flowable
 import javax.inject.Inject
 
-class CancelDelayedMessage @Inject constructor(private val messageRepo: MessageRepository) : Interactor<Long>() {
+class CancelDelayedMessage @Inject constructor(
+    private val conversationRepo: ConversationRepository,
+    private val messageRepo: MessageRepository
+) : Interactor<CancelDelayedMessage.Params>() {
 
-    override fun buildObservable(params: Long): Flowable<*> {
-        return Flowable.just(params)
-                .doOnNext { id -> messageRepo.cancelDelayedSms(id) }
-                .doOnNext { id -> messageRepo.deleteMessages(id) }
+    data class Params(val messageId: Long, val threadId: Long)
+
+    override fun buildObservable(params: Params): Flowable<*> {
+        return Flowable.just(Unit)
+                .doOnNext { messageRepo.cancelDelayedSms(params.messageId) }
+                .doOnNext { messageRepo.deleteMessages(params.messageId) }
+                .doOnNext { conversationRepo.updateConversations(params.threadId) } // Update the conversation
     }
 
 }

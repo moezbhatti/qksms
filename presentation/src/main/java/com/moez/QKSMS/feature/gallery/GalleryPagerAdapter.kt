@@ -19,9 +19,9 @@
 package com.moez.QKSMS.feature.gallery
 
 import android.content.Context
+import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.viewbinding.ViewBinding
 import com.google.android.exoplayer2.ExoPlayer
 import com.google.android.exoplayer2.ExoPlayerFactory
 import com.google.android.exoplayer2.source.ExtractorMediaSource
@@ -30,23 +30,22 @@ import com.google.android.exoplayer2.trackselection.DefaultTrackSelector
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory
 import com.google.android.exoplayer2.util.Util
 import com.google.android.mms.ContentType
+import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkRealmAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
-import com.moez.QKSMS.databinding.GalleryImagePageBinding
-import com.moez.QKSMS.databinding.GalleryInvalidPageBinding
-import com.moez.QKSMS.databinding.GalleryVideoPageBinding
 import com.moez.QKSMS.extensions.isImage
 import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.model.MmsPart
 import com.moez.QKSMS.util.GlideApp
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
+import kotlinx.android.synthetic.main.gallery_image_page.*
+import kotlinx.android.synthetic.main.gallery_image_page.view.*
+import kotlinx.android.synthetic.main.gallery_video_page.*
 import java.util.*
 import javax.inject.Inject
 
-class GalleryPagerAdapter @Inject constructor(
-    private val context: Context
-) : QkRealmAdapter<MmsPart, ViewBinding>() {
+class GalleryPagerAdapter @Inject constructor(private val context: Context) : QkRealmAdapter<MmsPart>() {
 
     companion object {
         private const val VIEW_TYPE_INVALID = 0
@@ -59,61 +58,60 @@ class GalleryPagerAdapter @Inject constructor(
     private val contentResolver = context.contentResolver
     private val exoPlayers = Collections.newSetFromMap(WeakHashMap<ExoPlayer?, Boolean>())
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder<ViewBinding> {
-        val holder: QkViewHolder<ViewBinding> = when (viewType) {
-            VIEW_TYPE_IMAGE -> QkViewHolder(parent, GalleryImagePageBinding::inflate)
-            VIEW_TYPE_VIDEO -> QkViewHolder(parent, GalleryVideoPageBinding::inflate)
-            else -> QkViewHolder(parent, GalleryInvalidPageBinding::inflate)
-        }
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): QkViewHolder {
+        val inflater = LayoutInflater.from(parent.context)
+        return QkViewHolder(when (viewType) {
+            VIEW_TYPE_IMAGE -> inflater.inflate(R.layout.gallery_image_page, parent, false).apply {
 
-        return holder.apply {
-            if (binding is GalleryImagePageBinding) {
                 // When calling the public setter, it doesn't allow the midscale to be the same as the
                 // maxscale or the minscale. We don't want 3 levels and we don't want to modify the library
                 // so let's celebrate the invention of reflection!
-                binding.image.attacher.run {
+                image.attacher.run {
                     javaClass.getDeclaredField("mMinScale").run {
                         isAccessible = true
-                        setFloat(binding.image.attacher, 1f)
+                        setFloat(image.attacher, 1f)
                     }
                     javaClass.getDeclaredField("mMidScale").run {
                         isAccessible = true
-                        setFloat(binding.image.attacher, 1f)
+                        setFloat(image.attacher, 1f)
                     }
                     javaClass.getDeclaredField("mMaxScale").run {
                         isAccessible = true
-                        setFloat(binding.image.attacher, 3f)
+                        setFloat(image.attacher, 3f)
                     }
                 }
             }
 
-            binding.root.setOnClickListener(clicks::onNext)
-        }
+            VIEW_TYPE_VIDEO -> inflater.inflate(R.layout.gallery_video_page, parent, false)
+
+            else -> inflater.inflate(R.layout.gallery_invalid_page, parent, false)
+
+        }.apply { setOnClickListener(clicks::onNext) })
     }
 
-    override fun onBindViewHolder(holder: QkViewHolder<ViewBinding>, position: Int) {
+    override fun onBindViewHolder(holder: QkViewHolder, position: Int) {
         val part = getItem(position) ?: return
-        when {
-            getItemViewType(position) == VIEW_TYPE_IMAGE && holder.binding is GalleryImagePageBinding -> {
+        when (getItemViewType(position)) {
+            VIEW_TYPE_IMAGE -> {
                 // We need to explicitly request a gif from glide for animations to work
                 when (part.getUri().let(contentResolver::getType)) {
                     ContentType.IMAGE_GIF -> GlideApp.with(context)
                             .asGif()
                             .load(part.getUri())
-                            .into(holder.binding.image)
+                            .into(holder.image)
 
                     else -> GlideApp.with(context)
                             .asBitmap()
                             .load(part.getUri())
-                            .into(holder.binding.image)
+                            .into(holder.image)
                 }
             }
 
-            getItemViewType(position) == VIEW_TYPE_VIDEO && holder.binding is GalleryVideoPageBinding -> {
+            VIEW_TYPE_VIDEO -> {
                 val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
                 val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
                 val exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
-                holder.binding.video.player = exoPlayer
+                holder.video.player = exoPlayer
                 exoPlayers.add(exoPlayer)
 
                 val dataSourceFactory = DefaultDataSourceFactory(context, Util.getUserAgent(context, "QKSMS"))

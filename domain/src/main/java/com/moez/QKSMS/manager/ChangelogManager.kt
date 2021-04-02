@@ -18,11 +18,9 @@
  */
 package com.moez.QKSMS.manager
 
-import io.reactivex.Single
-
 interface ChangelogManager {
 
-    data class Changelog(
+    data class CumulativeChangelog(
         val added: List<String>,
         val improved: List<String>,
         val fixed: List<String>
@@ -33,7 +31,7 @@ interface ChangelogManager {
      */
     fun didUpdate(): Boolean
 
-    fun getChangelog(): Single<Changelog>
+    suspend fun getChangelog(): CumulativeChangelog
 
     fun markChangelogSeen()
 

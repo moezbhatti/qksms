@@ -35,6 +35,7 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
 
     override fun map(from: Cursor) = MmsPart().apply {
         id = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part._ID))
+        messageId = from.getLong(from.getColumnIndexOrThrow(Telephony.Mms.Part.MSG_ID))
         type = from.getStringOrNull(from.getColumnIndexOrThrow(Telephony.Mms.Part.CONTENT_TYPE)) ?: "*/*"
         seq = from.getIntOrNull(from.getColumnIndexOrThrow(Telephony.Mms.Part.SEQ)) ?: -1
         name = from.getStringOrNull(from.getColumnIndexOrThrow(Telephony.Mms.Part.NAME))
@@ -43,9 +44,12 @@ class CursorToPartImpl @Inject constructor(private val context: Context) : Curso
         text = from.getStringOrNull(from.getColumnIndexOrThrow(Telephony.Mms.Part.TEXT))
     }
 
-    override fun getPartsCursor(messageId: Long): Cursor? {
-        return context.contentResolver.query(CONTENT_URI, null,
-                "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(messageId.toString()), null)
+    override fun getPartsCursor(messageId: Long?): Cursor? {
+        return when (messageId) {
+            null -> context.contentResolver.query(CONTENT_URI, null, null, null, null)
+            else -> context.contentResolver.query(CONTENT_URI, null,
+                    "${Telephony.Mms.Part.MSG_ID} = ?", arrayOf(messageId.toString()), null)
+        }
     }
 
 }

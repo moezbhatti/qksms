@@ -79,11 +79,6 @@
         tools:itemCount="1"
         tools:listitem="@layout/mms_preview_list_item" />
 
-    <com.moez.QKSMS.common.widget.AvatarView
-        android:id="@+id/avatar"
-        android:layout_width="0dp"
-        android:layout_height="0dp" />
-
     <com.moez.QKSMS.common.widget.TightTextView
         android:id="@+id/body"
         style="@style/TextPrimary"

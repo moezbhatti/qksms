@@ -7,16 +7,18 @@ import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.databinding.BlockingManagerControllerBinding
 import com.moez.QKSMS.injection.appComponent
 import com.moez.QKSMS.util.Preferences
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.subjects.PublishSubject
+import kotlinx.android.synthetic.main.blocking_manager_controller.*
+import kotlinx.android.synthetic.main.blocking_manager_list_option.view.*
+import kotlinx.android.synthetic.main.radio_preference_view.view.*
 import javax.inject.Inject
 
-class BlockingManagerController : QkController<BlockingManagerView, BlockingManagerState, BlockingManagerPresenter,
-        BlockingManagerControllerBinding>(BlockingManagerControllerBinding::inflate), BlockingManagerView {
+class BlockingManagerController : QkController<BlockingManagerView, BlockingManagerState, BlockingManagerPresenter>(),
+    BlockingManagerView {
 
     @Inject override lateinit var presenter: BlockingManagerPresenter
 
@@ -25,6 +27,7 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     init {
         appComponent.inject(this)
         retainViewMode = RetainViewMode.RETAIN_DETACH
+        layoutRes = R.layout.blocking_manager_controller
     }
 
     override fun onAttach(view: View) {
@@ -39,19 +42,19 @@ class BlockingManagerController : QkController<BlockingManagerView, BlockingMana
     }
 
     override fun render(state: BlockingManagerState) {
-        binding.qksms.binding.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_QKSMS
+        qksms.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_QKSMS
 
-        binding.callControl.binding.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CC
-        binding.callControl.binding.widgetFrame.isVisible = !state.callControlInstalled
+        callControl.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_CC
+        callControl.install.isVisible = !state.callControlInstalled
 
-        binding.shouldIAnswer.binding.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_SIA
-        binding.shouldIAnswer.binding.widgetFrame.isVisible = !state.siaInstalled
+        shouldIAnswer.radioButton.isChecked = state.blockingManager == Preferences.BLOCKING_MANAGER_SIA
+        shouldIAnswer.install.isVisible = !state.siaInstalled
     }
 
     override fun activityResumed(): Observable<*> = activityResumedSubject
-    override fun qksmsClicked(): Observable<*> = binding.qksms.clicks()
-    override fun callControlClicked(): Observable<*> = binding.callControl.clicks()
-    override fun siaClicked(): Observable<*> = binding.shouldIAnswer.clicks()
+    override fun qksmsClicked(): Observable<*> = qksms.clicks()
+    override fun callControlClicked(): Observable<*> = callControl.clicks()
+    override fun siaClicked(): Observable<*> = shouldIAnswer.clicks()
 
     override fun showCopyDialog(manager: String): Single<Boolean> = Single.create { emitter ->
         AlertDialog.Builder(activity)

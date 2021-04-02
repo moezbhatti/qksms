@@ -31,15 +31,13 @@ class DeleteMessages @Inject constructor(
     private val updateBadge: UpdateBadge
 ) : Interactor<DeleteMessages.Params>() {
 
-    data class Params(val messageIds: List<Long>, val threadId: Long? = null)
+    data class Params(val messageIds: List<Long>, val threadId: Long)
 
     override fun buildObservable(params: Params): Flowable<*> {
         return Flowable.just(params.messageIds.toLongArray())
                 .doOnNext { messageIds -> messageRepo.deleteMessages(*messageIds) } // Delete the messages
-                .doOnNext {
-                    params.threadId?.let { conversationRepo.updateConversations(it) } // Update the conversation
-                }
-                .doOnNext { params.threadId?.let { notificationManager.update(it) } }
+                .doOnNext { conversationRepo.updateConversations(params.threadId) } // Update the conversation
+                .doOnNext { notificationManager.update(params.threadId) }
                 .flatMap { updateBadge.buildObservable(Unit) } // Update the badge
     }
 

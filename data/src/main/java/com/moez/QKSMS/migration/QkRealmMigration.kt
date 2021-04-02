@@ -36,7 +36,7 @@ class QkRealmMigration @Inject constructor(
 ) : RealmMigration {
 
     companion object {
-        const val SchemaVersion: Long = 10
+        const val SchemaVersion: Long = 11
     }
 
     @SuppressLint("ApplySharedPref")
@@ -219,6 +219,17 @@ class QkRealmMigration @Inject constructor(
             if (prefs.notifAction3.isSet) prefs.notifAction3.set(migrateNotificationAction(prefs.notifAction3.get()))
             if (prefs.swipeLeft.isSet) prefs.swipeLeft.set(migrateSwipeAction(prefs.swipeLeft.get()))
             if (prefs.swipeRight.isSet) prefs.swipeRight.set(migrateSwipeAction(prefs.swipeRight.get()))
+
+            version++
+        }
+
+        if (version == 10L) {
+            realm.schema.get("MmsPart")
+                    ?.addField("messageId", Long::class.java, FieldAttribute.INDEXED, FieldAttribute.REQUIRED)
+                    ?.transform { part ->
+                        val messageId = part.linkingObjects("Message", "parts").firstOrNull()?.getLong("contentId") ?: 0
+                        part.setLong("messageId", messageId)
+                    }
 
             version++
         }
