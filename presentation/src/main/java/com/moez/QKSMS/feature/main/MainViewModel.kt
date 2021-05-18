@@ -190,6 +190,7 @@ class MainViewModel @Inject constructor(
         view.queryChangedIntent
                 .debounce(200, TimeUnit.MILLISECONDS)
                 .observeOn(AndroidSchedulers.mainThread())
+                .map { query -> query.trim() }
                 .withLatestFrom(state) { query, state ->
                     if (query.isEmpty() && state.page is Searching) {
                         newState { copy(page = Inbox(data = conversationRepo.getConversations())) }
@@ -197,7 +198,6 @@ class MainViewModel @Inject constructor(
                     query
                 }
                 .filter { query -> query.length >= 2 }
-                .map { query -> query.trim() }
                 .distinctUntilChanged()
                 .doOnNext {
                     newState {
