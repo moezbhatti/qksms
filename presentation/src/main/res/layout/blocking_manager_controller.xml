@@ -30,25 +30,38 @@
         android:paddingTop="8dp"
         android:paddingBottom="8dp">
 
-        <com.moez.QKSMS.common.widget.RadioPreferenceView
+        <com.moez.QKSMS.feature.blocking.manager.BlockingManagerPreferenceView
             android:id="@+id/qksms"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_blocking_manager_qksms"
             app:summary="@string/blocking_manager_qksms_summary"
-            app:title="@string/blocking_manager_qksms_title" />
+            app:title="@string/blocking_manager_qksms_title"
+            app:widget="@layout/blocking_manager_list_option" />
 
-        <com.moez.QKSMS.common.widget.RadioPreferenceView
+        <com.moez.QKSMS.feature.blocking.manager.BlockingManagerPreferenceView
+            android:id="@+id/callBlocker"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_blocking_manager_call_blocker"
+            app:summary="@string/blocking_manager_call_blocker_summary"
+            app:title="@string/blocking_manager_call_blocker_title"
+            app:widget="@layout/blocking_manager_list_option" />
+
+        <com.moez.QKSMS.feature.blocking.manager.BlockingManagerPreferenceView
             android:id="@+id/callControl"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_blocking_manager_call_control"
             app:summary="@string/blocking_manager_call_control_summary"
             app:title="@string/blocking_manager_call_control_title"
             app:widget="@layout/blocking_manager_list_option" />
 
-        <com.moez.QKSMS.common.widget.RadioPreferenceView
+        <com.moez.QKSMS.feature.blocking.manager.BlockingManagerPreferenceView
             android:id="@+id/shouldIAnswer"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            app:icon="@drawable/ic_blocking_manager_sia"
             app:summary="@string/blocking_manager_sia_summary"
             app:title="@string/blocking_manager_sia_title"
             app:widget="@layout/blocking_manager_list_option" />

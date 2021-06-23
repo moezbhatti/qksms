@@ -18,11 +18,11 @@
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
 <ImageView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:id="@+id/install"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/action"
     android:layout_width="56dp"
     android:layout_height="match_parent"
-    android:background="?attr/selectableItemBackground"
     android:orientation="vertical"
     android:padding="16dp"
-    android:src="@drawable/ic_info_black_24dp"
-    android:tint="?android:attr/textColorTertiary" />
+    tools:src="@drawable/ic_chevron_right_black_24dp"
+    tools:tint="?android:attr/textColorTertiary" />

@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Gestore blocchi</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Funzionalità di blocco integrata in QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Blocca i messaggi di spam, i numeri e le chiamate sconosciute con la blacklist e con lo Scheduler</string>
     <string name="blocking_manager_call_control_summary">Filtra automaticamente le tue chiamate e i tuoi messaggi in un unico comodo posto! Community IQ™ ti consente di prevenire messaggi indesiderati dagli spammer noti alla comunità</string>
     <string name="blocking_manager_sia_summary">Filtrare automaticamente i messaggi provenienti da numeri indesiderati utilizzando l\'app \"Dovrei rispondere?\"</string>
     <string name="blocking_manager_copy_title">Copia i numeri bloccati</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Sblocca &amp; dona per %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Grazie per il supporto a QKSMS!</string>
     <string name="qksms_plus_thanks_summary">È ora possibile accedere a tutte le funzioni QKSMS+</string>
+    <string name="qksms_plus_error">Si è verificato un errore, si prega di riprovare</string>
     <string name="qksms_plus_free_title">QKSMS+ è gratuito per gli utenti di F-Droid! Se desideri sostenere il progetto, una tua donazione sarebbe molto apprezzata.</string>
     <string name="qksms_plus_donate">Fai una donazione tramite PayPal</string>
     <string name="qksms_plus_coming_soon">Prossimamente</string>

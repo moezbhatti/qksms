@@ -51,9 +51,9 @@
     <string name="main_draft">Szkic</string>
     <string name="main_message_results_title">Wyniki w wiadomościach</string>
     <string name="main_message_results">%d wiadomości</string>
-    <string name="inbox_empty_text">Twoje rozmowy będą wyświetlane tutaj</string>
+    <string name="inbox_empty_text">Miejsce dla twoich bieżących rozmów</string>
     <string name="inbox_search_empty_text">Brak wyników</string>
-    <string name="archived_empty_text">Twoje zarchiwizowane rozmowy będą wyświetlane tutaj</string>
+    <string name="archived_empty_text">Miejsce dla twoich zarchiwizowanych rozmów</string>
     <string name="main_fab_cd">Rozpocznij nową rozmowę</string>
     <string name="main_default_sms_title">Pokochaj SMSowanie na nowo</string>
     <string name="main_default_sms_message">Ustaw QKSMS jako domyślną aplikację do osbługi SMSów i MMSów</string>
@@ -218,7 +218,7 @@
     <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
     <string name="settings_delayed_title">Opóźnione wysyłanie</string>
     <string name="settings_swipe_actions">Akcje po przeciągnięciu</string>
-    <string name="settings_swipe_actions_summary">Ustaw akcje po przeciągnięciu dla rozmów</string>
+    <string name="settings_swipe_actions_summary">Ustaw akcje dla rozmów po przeciągnięciu</string>
     <string name="settings_swipe_actions_right">Przeciągnięcie w prawo</string>
     <string name="settings_swipe_actions_left">Przeciągnięcie w lewo</string>
     <string name="settings_swipe_actions_change">ZMIEŃ</string>
@@ -239,17 +239,17 @@
     <string name="settings_unicode_summary">Usuwaj ogonki ze znaków w wiadomościach</string>
     <string name="settings_mobile_title">Tylko numery komórkowe</string>
     <string name="settings_mobile_summary">Pokazuj kontakty tylko z numerami komórkowymi</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">Automatycznie usuwaj wiadomości</string>
+    <string name="settings_auto_delete_dialog_message">Stare wiadomości będą usuwane po określonej liczbie dni</string>
+    <string name="settings_auto_delete_dialog_hint">Liczba dni</string>
+    <string name="settings_auto_delete_never">Nigdy</string>
+    <string name="settings_auto_delete_warning">Usunąć automatycznie stare wiadomości?</string>
+    <string name="settings_auto_delete_warning_message">Jeśli przejdziesz dalej, %1$d wiadomość(-ci) zostanie usuniętych</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="few">After %d days</item>
-        <item quantity="many">After %d days</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">Po 1 dniu</item>
+        <item quantity="few">Po %d dniach</item>
+        <item quantity="many">Po %d dniach</item>
+        <item quantity="other">Po %d dniach</item>
     </plurals>
     <string name="settings_long_as_mms_title">Wysyłaj długie wiadomości jako MMS</string>
     <string name="settings_long_as_mms_summary">Jeśli dłuższe wiadomości tekstowe nie są wysyłane lub wysyłane są w złej kolejności, możesz wysyłać je jako wiadomości MMS. Mogą zostać naliczone dodatkowe opłaty</string>
@@ -268,6 +268,7 @@
     <string name="blocking_manager_title">Menadżer Blokowania</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Wbudowana funkcja blokowania w QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Blokuj spam, numery i połączenia od nieznajomych za pomocą czarnej listy i harmonogramu.</string>
     <string name="blocking_manager_call_control_summary">Automatycznie filtruj twoje rozmowy i wiadomości tekstowe w jednym wygodnym miejscu! Community IQ™ pozwala zapobiegać niechcianym wiadomościom od znanych spamerów</string>
     <string name="blocking_manager_sia_summary">Automatycznie filtruj wiadomości od niechcianych numerów za pomocą aplikacji \"Should I Answer?\"</string>
     <string name="blocking_manager_copy_title">Skopiuj zablokowane numery</string>
@@ -279,7 +280,7 @@
     <string name="blocked_numbers_dialog_hint">Numer telefonu</string>
     <string name="blocked_numbers_dialog_block">Blokuj</string>
     <string name="blocked_messages_title">Zablokowane wiadomości</string>
-    <string name="blocked_messages_empty">Tutaj pojawią się twoje zablokowane wiadomości</string>
+    <string name="blocked_messages_empty">Miejsce dla twoich zablokowanych wiadomości</string>
     <string name="blocking_block_title">Blokuj</string>
     <string name="blocking_unblock_title">Odblokuj</string>
     <plurals name="blocking_block_external">
@@ -310,6 +311,7 @@
     <string name="qksms_plus_upgrade_donate">Odblokuj i wesprzyj (%1$s %2$s)</string>
     <string name="qksms_plus_thanks_title">Dziękujemy za wsparcie aplikacji QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Masz teraz dostęp do wszystkich funkcji QKSMS+</string>
+    <string name="qksms_plus_error">Wystąpił błąd. Spróbuj ponownie.</string>
     <string name="qksms_plus_free_title">Aplikacja QKSMS+ jest bezpłatna dla użytkowników F-Droid! Jeśli chcesz wesprzeć jej rozwój, rzuć pieniążka.</string>
     <string name="qksms_plus_donate">Wsparcie za pośrednictwem serwisu PayPal</string>
     <string name="qksms_plus_coming_soon">Już wkrótce</string>

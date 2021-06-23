@@ -26,9 +26,9 @@ import androidx.core.database.getStringOrNull
 import com.callcontrol.datashare.CallControl
 import com.moez.QKSMS.common.util.extensions.isInstalled
 import com.moez.QKSMS.extensions.map
-import com.moez.QKSMS.util.tryOrNull
 import io.reactivex.Completable
 import io.reactivex.Single
+import timber.log.Timber
 import javax.inject.Inject
 
 class CallControlBlockingClient @Inject constructor(
@@ -48,17 +48,23 @@ class CallControlBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITH_PERMISSION
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = isBlacklisted(address)
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         val uri = Uri.withAppendedPath(CallControl.LOOKUP_TEXT_URI, address)
-        val blockReason = tryOrNull {
-            context.contentResolver.query(uri, projection, null, null, null) // Query URI
+        return@fromCallable try {
+            val blockReason = context.contentResolver.query(uri, projection, null, null, null) // Query URI
                     ?.use { cursor -> cursor.map(::LookupResult) } // Map to Result object
                     ?.find { result -> result.blockReason != null } // Check if any are blocked
-        }?.blockReason // If none are blocked or we errored at some point, return false
+                    ?.blockReason // If none are blocked or we errored at some point, return false
 
-        when (blockReason) {
-            null -> BlockingClient.Action.Unblock
-            else -> BlockingClient.Action.Block(blockReason)
+            when (blockReason) {
+                null -> BlockingClient.Action.Unblock
+                else -> BlockingClient.Action.Block(blockReason)
+            }
+        } catch (e: Exception) {
+            Timber.w(e)
+            BlockingClient.Action.DoNothing
         }
     }
 

@@ -242,7 +242,7 @@
     <string name="settings_auto_delete_warning">Radera gamla meddelanden automatiskt?</string>
     <string name="settings_auto_delete_warning_message">Om du fortsätter raderas %1$d meddelanden direkt</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
+        <item quantity="one">Efter 1 dag</item>
         <item quantity="other">Efter %d dagar</item>
     </plurals>
     <string name="settings_long_as_mms_title">Skicka långa meddelanden som MMS</string>
@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Blockerings-hanterare</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Inbyggd blockeringsfunktion i QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Filtrera automatiskt dina samtal och meddelanden på ett bekvämt ställe! Med Community IQ™ kan du förhindra oönskade meddelanden från gemenskapens kända spammare</string>
     <string name="blocking_manager_sia_summary">Filtrera automatiskt meddelanden från oönskade nummer genom att använda appen \"Borde jag svara\"</string>
     <string name="blocking_manager_copy_title">Kopiera blockerade nummer</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Lås upp + donera för %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Tack för att du stöttar QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Du har nu tillgång till alla funktioner i QKSMS+</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS + är gratis för F-Droid användare! Om du vill stödja utvecklingen, Så får du gärna donationera.</string>
     <string name="qksms_plus_donate">Donera via PayPal</string>
     <string name="qksms_plus_coming_soon">Kommer snart</string>

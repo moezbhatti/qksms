@@ -49,7 +49,7 @@ class ReceiveSms @Inject constructor(
                     // Don't continue if the sender is blocked
                     val messages = it.messages
                     val address = messages[0].displayOriginatingAddress
-                    val action = blockingClient.getAction(address).blockingGet()
+                    val action = blockingClient.shouldBlock(address).blockingGet()
                     val shouldDrop = prefs.drop.get()
                     Timber.v("block=$action, drop=$shouldDrop")
 

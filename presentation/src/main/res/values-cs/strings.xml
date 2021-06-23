@@ -268,6 +268,7 @@
     <string name="blocking_manager_title">Správce blokování</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Vestavěné blokování v QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Automatické filtrování hovorů a zpráv na jednom místě. Community IQ™ poskytuje ochranu před nevyžádanými zprávami od komunitou označených spammerů.</string>
     <string name="blocking_manager_sia_summary">Automaticky filtrovat zprávy od nevyžádaných čísel pomocí aplikace „Můžu to zvednout?“</string>
     <string name="blocking_manager_copy_title">Kopírovat blokovaná čísla</string>
@@ -310,6 +311,7 @@
     <string name="qksms_plus_upgrade_donate">Odemknout + darovat %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Děkujeme za podporu QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Nyní máte přístup ke všem funkcím QKSMS+</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS + je zdarma pro uživatele F-Droid! Pokud byste chtěli podpořit vývoj, neváhejte přispět.</string>
     <string name="qksms_plus_donate">Darovat pomocí PayPal</string>
     <string name="qksms_plus_coming_soon">Připravujeme</string>

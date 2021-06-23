@@ -52,7 +52,14 @@ interface BlockingClient {
     /**
      * Returns the recommendation action to perform given a message from the [address]
      */
-    fun getAction(address: String): Single<Action>
+    fun shouldBlock(address: String): Single<Action>
+
+    /**
+     * Returns whether or not the [address] is in the blocking manager's blacklist
+     * In most cases this will return the same result as [shouldBlock], but it's possible for an app's blacklist
+     * to be temporarily deactivated, in which case the results will differ
+     */
+    fun isBlacklisted(address: String): Single<Action>
 
     /**
      * Blocks the numbers or opens the manager

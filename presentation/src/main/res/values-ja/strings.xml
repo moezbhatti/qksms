@@ -259,6 +259,7 @@
     <string name="blocking_manager_title">ブロッキングマネージャー</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS の内蔵ブロック機能</string>
+    <string name="blocking_manager_call_blocker_summary">ブラックリストとスケジュールにより迷惑メッセージ、番号、不明な通話をブロック</string>
     <string name="blocking_manager_call_control_summary">一か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
     <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
     <string name="blocking_manager_copy_title">ブロックした番号をコピー</string>
@@ -295,6 +296,7 @@
     <string name="qksms_plus_upgrade_donate">%1$s %2$s のロック解除と寄付</string>
     <string name="qksms_plus_thanks_title">QKSMS を支援いただきありがとうございます!</string>
     <string name="qksms_plus_thanks_summary">QKSMS+ のすべての機能にアクセスできます</string>
+    <string name="qksms_plus_error">エラーが発生しました。もう一度やり直してください</string>
     <string name="qksms_plus_free_title">QKSMS+ は F-Droid ユーザーは無料です! 開発をサポートしたい場合は、気軽に寄付をしてください。</string>
     <string name="qksms_plus_donate">PayPal で寄付する</string>
     <string name="qksms_plus_coming_soon">近日登場</string>

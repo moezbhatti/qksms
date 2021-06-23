@@ -22,6 +22,7 @@
     <attr name="title" format="string" />
     <attr name="summary" format="string" />
     <attr name="widget" format="reference" />
+    <attr name="icon" format="reference" />
 
     <attr name="textColor" format="enum">
         <enum name="theme" value="0" />
@@ -53,10 +54,17 @@
         <attr name="title" />
         <attr name="summary" />
         <attr name="widget" />
-        <attr name="icon" format="reference" />
+        <attr name="icon" />
     </declare-styleable>
 
     <declare-styleable name="RadioPreferenceView">
+        <attr name="title" />
+        <attr name="summary" />
+        <attr name="widget" />
+    </declare-styleable>
+
+    <declare-styleable name="BlockingManagerPreferenceView">
+        <attr name="icon" />
         <attr name="title" />
         <attr name="summary" />
         <attr name="widget" />

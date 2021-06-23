@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Tiltáskezelő</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">A QKSMS beépített tiltási funkciója</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Egy kényelmesen kezelhető helyen a hívások és üzenetek szűrése! A Community IQ™ megakadályozza a közösség által ismert spammerek üzeneteit</string>
     <string name="blocking_manager_sia_summary">Automatikusan szűrheti az üzeneteket a nem kívánt számok alapján a \"Should I Answer\" alkalmazás használatával</string>
     <string name="blocking_manager_copy_title">Tiltott számok másolása</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Minden funkció engedélyezése + adomány %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatot a QKSMS-t!</string>
     <string name="qksms_plus_thanks_summary">MOst hozzáférsz minden QKSMS+ funkcióhoz</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">A QKSMS+ minden F-Droid felhasználónak ingyenes. Ha támogatni szeretnéd a fejlesztést az alábbi módon megteheted.</string>
     <string name="qksms_plus_donate">Támogatás PayPalon keresztül</string>
     <string name="qksms_plus_coming_soon">Hamarosan</string>

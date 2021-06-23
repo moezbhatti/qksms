@@ -233,14 +233,14 @@
     <string name="settings_unicode_summary">SMS를 주고받을 때, 대문자 없애기</string>
     <string name="settings_mobile_title">전화번호만 보이기</string>
     <string name="settings_mobile_summary">메시지를 쓸 때, 전화번호만 보이게 하기</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">자동으로 오래된 메시지 제거</string>
+    <string name="settings_auto_delete_dialog_message">지정된 일 수 후에 메시지를 삭제합니다</string>
+    <string name="settings_auto_delete_dialog_hint">일 수</string>
+    <string name="settings_auto_delete_never">사용 안 함</string>
+    <string name="settings_auto_delete_warning">자동으로 오래된 메시지를 제거하시겠습니까?</string>
+    <string name="settings_auto_delete_warning_message">이대로 진행하면, %1$d 개의 메시지가 지금 삭제됩니다</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="other">After %d days</item>
+        <item quantity="other">%d 일 후</item>
     </plurals>
     <string name="settings_long_as_mms_title">장문 메시지를 MMS로 보내기</string>
     <string name="settings_long_as_mms_summary">만약 장문의 메시지가 보내지지 않거나, 잘못된 순서로 보내진다면, MMS 메시지로 보낼 수 있습니다. (MMS로 인한 추가요금이 발생할 수 있습니다)</string>
@@ -259,6 +259,7 @@
     <string name="blocking_manager_title">차단 메니저</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">빌트인 차단기능이 있는 기본 필터.</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">자동으오 전화와 메시지를 한 곳에서 필터링하세요! Community IQ™는 커뮤니티 기반으로 원하지 않는 스팸 메시지를 차단해줍니다.</string>
     <string name="blocking_manager_sia_summary">Should I Answer 앱을 이용해 필요없는 번호에서 보낸 메시지를 자동으로 필터링하기</string>
     <string name="blocking_manager_copy_title">차단된 번호 복사하기</string>
@@ -295,6 +296,7 @@
     <string name="qksms_plus_upgrade_donate">%1$s %2$s 으로 프리미엄 기능 잠금 해제 및 기부</string>
     <string name="qksms_plus_thanks_title">QKSMS를 지원해 주셔서 감사합니다!</string>
     <string name="qksms_plus_thanks_summary">이제 모든 QKSMS+ 기능에 액세스할 수 있습니다</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+는 F-Droid 사용자들에게 무료입니다! 만약 여러분이 개발을 지원하고 싶으시다면, 기부해 주시기 바랍니다.</string>
     <string name="qksms_plus_donate">페이팔을 통해 기부</string>
     <string name="qksms_plus_coming_soon">출시 예정</string>
