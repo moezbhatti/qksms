@@ -92,6 +92,10 @@
         <item quantity="one">Are you sure you would like to delete this conversation?</item>
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
+    <plurals name="dialog_delete_chat">
+        <item quantity="one">Are you sure you would like to delete this message?</item>
+        <item quantity="other">Are you sure you would like to delete %d messages?</item>
+    </plurals>
 
     <string-array name="message_options">
         <item>Copy text</item>
