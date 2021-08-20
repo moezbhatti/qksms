@@ -27,4 +27,5 @@
     android:privateImeOptions="nm"
     android:textColor="?android:attr/textColorPrimary"
     android:textColorHint="?android:attr/textColorTertiary"
-    app:textSize="primary" />
+    app:textSize="primary"
+    android:textDirection="ltr" />

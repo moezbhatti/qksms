@@ -24,4 +24,5 @@
     android:clipChildren="false"
     android:clipToPadding="false"
     android:paddingTop="8dp"
-    android:paddingBottom="8dp" />
+    android:paddingBottom="8dp"
+    android:textDirection="ltr" />

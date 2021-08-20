@@ -327,7 +327,8 @@
                 android:id="@+id/toolbarTitle"
                 style="@style/ToolbarText"
                 android:layout_height="wrap_content"
-                tools:text="Moez Bhatti" />
+                tools:text="Moez Bhatti"
+                android:textDirection="ltr" />
 
             <com.moez.QKSMS.common.widget.QkTextView
                 android:id="@+id/toolbarSubtitle"
