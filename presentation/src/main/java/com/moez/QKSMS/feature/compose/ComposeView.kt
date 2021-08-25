@@ -58,6 +58,7 @@ interface ComposeView : QkView<ComposeState> {
 
     fun clearSelection()
     fun showDetails(details: String)
+    fun speechText(text: String)
     fun requestDefaultSms()
     fun requestStoragePermission()
     fun requestSmsPermission()

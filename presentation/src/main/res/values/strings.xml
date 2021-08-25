@@ -1,5 +1,5 @@
 <!--
-  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019,2021 Moez Bhatti <moez.bhatti@gmail.com>,to268
   ~
   ~ This file is part of QKSMS.
   ~
@@ -116,6 +116,7 @@
     <string name="compose_hint">Write a message…</string>
     <string name="compose_menu_copy">Copy text</string>
     <string name="compose_menu_forward">Forward</string>
+    <string name="compose_menu_speech" translatable="false">Speech text</string>
     <string name="compose_menu_delete">Delete</string>
     <string name="compose_menu_previous">Previous</string>
     <string name="compose_menu_next">Next</string>
@@ -382,7 +383,7 @@
     <string name="about_changelog" translatable="false">https://github.com/moezbhatti/qksms/releases</string>
     <string name="about_contact" translatable="false">moez@qklabs.com</string>
     <string name="about_license" translatable="false">GNU General Public License v3.0</string>
-    <string name="about_copyright" translatable="false">© 2014–2019</string>
+    <string name="about_copyright" translatable="false">© 2014–2021</string>
 
     <string name="changelog_title" translatable="false">New in QKSMS</string>
     <string name="changelog_version" translatable="false">Version %s</string>
