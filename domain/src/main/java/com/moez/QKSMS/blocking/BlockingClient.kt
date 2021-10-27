@@ -37,6 +37,14 @@ interface BlockingClient {
         // This means there's a good chance that if a number is blocked in QK, it won't be blocked there, so we
         // shouldn't unblock the conversation in that case
         object DoNothing : Action()
+
+        override fun toString(): String {
+            return when (this) {
+                is Block -> "Block"
+                is Unblock -> "Unblock"
+                is DoNothing -> "DoNothing"
+            }
+        }
     }
 
     /**
