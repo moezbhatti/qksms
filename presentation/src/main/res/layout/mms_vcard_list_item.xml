@@ -27,7 +27,9 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:id="@+id/vCardBackground"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
 
         <ImageView
             android:id="@+id/vCardAvatar"
@@ -45,7 +47,6 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
-            android:paddingTop="8dp"
             android:paddingEnd="12dp"
             android:textColor="?android:attr/textColorPrimary"
             app:layout_constraintStart_toEndOf="@id/vCardAvatar"
@@ -59,11 +60,11 @@
             android:layout_height="wrap_content"
             android:paddingStart="12dp"
             android:paddingEnd="12dp"
-            android:paddingBottom="8dp"
             android:text="@string/compose_vcard_label"
             android:textColor="?android:attr/textColorTertiary"
             app:layout_constraintStart_toStartOf="@id/name"
             app:layout_constraintTop_toBottomOf="@id/name"
+            app:layout_constraintBottom_toBottomOf="parent"
             app:textSize="secondary" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
