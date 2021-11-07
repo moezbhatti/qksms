@@ -55,6 +55,7 @@ interface ComposeView : QkView<ComposeState> {
     val sendIntent: Observable<Unit>
     val viewQksmsPlusIntent: Subject<Unit>
     val backPressedIntent: Observable<Unit>
+    val confirmDeleteIntent: Observable<List<Long>>
 
     fun clearSelection()
     fun showDetails(details: String)
@@ -71,5 +72,6 @@ interface ComposeView : QkView<ComposeState> {
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)
+    fun showDeleteDialog( messages: List<Long>)
 
 }

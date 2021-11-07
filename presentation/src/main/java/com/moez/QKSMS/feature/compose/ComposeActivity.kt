@@ -115,6 +115,7 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
     override val sendIntent by lazy { send.clicks() }
     override val viewQksmsPlusIntent: Subject<Unit> = PublishSubject.create()
     override val backPressedIntent: Subject<Unit> = PublishSubject.create()
+    override val confirmDeleteIntent: Subject<List<Long>> = PublishSubject.create()
 
     private val viewModel by lazy { ViewModelProviders.of(this, viewModelFactory)[ComposeViewModel::class.java] }
 
@@ -347,6 +348,16 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
             setActionTextColor(colors.theme().theme)
             show()
         }
+    }
+
+    override fun showDeleteDialog(messages: List<Long>) {
+        val count = messages.size
+        android.app.AlertDialog.Builder(this)
+                .setTitle(R.string.dialog_delete_title)
+                .setMessage(resources.getQuantityString(R.plurals.dialog_delete_chat, count, count))
+                .setPositiveButton(R.string.button_delete) { _, _ -> confirmDeleteIntent.onNext(messages) }
+                .setNegativeButton(R.string.button_cancel, null)
+                .show()
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {

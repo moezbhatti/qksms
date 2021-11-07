@@ -31,7 +31,8 @@
         android:layout_weight="1"
         android:gravity="center_vertical"
         android:paddingStart="24dp"
-        tools:text="(123) 456-7890" />
+        tools:text="(123) 456-7890"
+        android:textDirection="ltr" />
 
     <ImageView
         android:id="@+id/unblock"

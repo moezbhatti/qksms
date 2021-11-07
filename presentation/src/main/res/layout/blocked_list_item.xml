@@ -51,7 +51,8 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_chainStyle="packed"
         app:textSize="primary"
-        tools:text="@tools:sample/full_names" />
+        tools:text="@tools:sample/full_names"
+        android:textDirection="ltr" />
 
     <com.moez.QKSMS.common.widget.QkTextView
         android:id="@+id/date"

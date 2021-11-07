@@ -72,7 +72,8 @@
         app:layout_constraintTop_toBottomOf="@id/name"
         app:textSize="secondary"
         tools:text="(123) 456-7890"
-        tools:textColor="@color/textTertiaryDark" />
+        tools:textColor="@color/textTertiaryDark"
+        android:textDirection="ltr" />
 
     <ImageView
         android:id="@+id/delete"

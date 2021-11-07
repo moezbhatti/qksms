@@ -48,7 +48,8 @@
             android:textColor="?android:attr/textColorPrimary"
             android:textStyle="bold"
             app:textSize="secondary"
-            tools:text="Moez Bhatti" />
+            tools:text="Moez Bhatti"
+            android:textDirection="ltr" />
 
     </LinearLayout>
 

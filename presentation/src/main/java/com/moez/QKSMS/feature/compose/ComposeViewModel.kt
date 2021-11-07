@@ -340,15 +340,15 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { view.showDetails(it) }
 
-        // Delete the messages
+        // Show the delete message dialog
         view.optionsItemIntent
                 .filter { it == R.id.delete }
                 .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.messagesSelectedIntent, conversation) { _, messages, conversation ->
-                    deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
+                    view.showDeleteDialog(messages)
                 }
                 .autoDisposable(view.scope())
-                .subscribe { view.clearSelection() }
+                .subscribe()
 
         // Forward the message
         view.optionsItemIntent
@@ -727,6 +727,14 @@ class ComposeViewModel @Inject constructor(
                 }
                 .autoDisposable(view.scope())
                 .subscribe()
+
+        // Delete the message
+        view.confirmDeleteIntent
+                .withLatestFrom(view.messagesSelectedIntent, conversation) { _, messages, conversation ->
+                    deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
+                }
+                .autoDisposable(view.scope())
+                .subscribe { view.clearSelection() }
 
     }
 
