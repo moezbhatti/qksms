@@ -32,6 +32,7 @@ data class ComposeState(
     val selectedChips: List<Recipient> = ArrayList(),
     val sendAsGroup: Boolean = true,
     val conversationtitle: String = "",
+    val conversationNumber: String = "",
     val loading: Boolean = false,
     val query: String = "",
     val searchSelectionId: Long = -1,
