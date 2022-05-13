@@ -36,4 +36,4 @@ QKSMS is developed and maintained by [Moez Bhatti](https://github.com/moezbhatti
 
 ## License
 
-QKSMS is released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the `LICENSE` file in the root of this project.
+QKSMS is released under the **The GNU General Public License v3.0 (GPLv3)**, which can be found in the [**LICENSE**](https://github.com/Vishal-beep136/qksms/blob/master/LICENSE) file in the root of this project.
