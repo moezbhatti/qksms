@@ -23,6 +23,7 @@ import com.moez.QKSMS.blocking.BlockingClient
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.manager.NotificationManager
 import com.moez.QKSMS.manager.ShortcutManager
+import com.moez.QKSMS.repository.AndroidMessagesRepository
 import com.moez.QKSMS.repository.ConversationRepository
 import com.moez.QKSMS.repository.MessageRepository
 import com.moez.QKSMS.util.Preferences
@@ -37,7 +38,8 @@ class ReceiveSms @Inject constructor(
     private val messageRepo: MessageRepository,
     private val notificationManager: NotificationManager,
     private val updateBadge: UpdateBadge,
-    private val shortcutManager: ShortcutManager
+    private val shortcutManager: ShortcutManager,
+    private val androidMessagesRepository: AndroidMessagesRepository
 ) : Interactor<ReceiveSms.Params>() {
 
     class Params(val subId: Int, val messages: Array<SmsMessage>)
@@ -74,7 +76,7 @@ class ReceiveSms @Inject constructor(
                         is BlockingClient.Action.Unblock -> conversationRepo.markUnblocked(message.threadId)
                         else -> Unit
                     }
-
+                    androidMessagesRepository.deleteMessage(it.messages)
                     message
                 }
                 .doOnNext { message ->
