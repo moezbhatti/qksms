@@ -20,7 +20,6 @@ package com.moez.QKSMS.mapper
 
 import android.content.Context
 import android.database.Cursor
-import android.net.Uri
 import android.provider.ContactsContract.CommonDataKinds.Phone
 import com.moez.QKSMS.manager.PermissionManager
 import com.moez.QKSMS.model.Contact
@@ -33,7 +32,7 @@ class CursorToContactImpl @Inject constructor(
 ) : CursorToContact {
 
     companion object {
-        val URI = Uri.parse("content://opencontacts.open.com.opencontacts.ContactsProvider")!!
+        val URI = Phone.CONTENT_URI
         val PROJECTION = arrayOf(
                 Phone._ID,
                 Phone.LOOKUP_KEY,
