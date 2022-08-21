@@ -192,6 +192,15 @@ class Navigator @Inject constructor(
     }
 
     /**
+     * Launch the Play Store and display the Call Blocker listing
+     */
+    fun installCallBlocker() {
+        val url = "https://play.google.com/store/apps/details?id=com.cuiet.blockCalls"
+        val intent = Intent(Intent.ACTION_VIEW, Uri.parse(url))
+        startActivityExternal(intent)
+    }
+
+    /**
      * Launch the Play Store and display the Call Control listing
      */
     fun installCallControl() {

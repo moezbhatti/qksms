@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Estojen hallinta</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS:ään sisäänrakennettu esto-toiminto</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Suodata puhelusi ja soittosi automaattisesti, yhdessä kätevässä paikassa! Community IQ™ antaa sinun estää haluamattomia viestejä, yhteisölle tutuilta roskapostin lähettäjiltä</string>
     <string name="blocking_manager_sia_summary">Suodata haluamattomien numeroin lähettämät viestit automaattisesti, \"Should I Answer\" -sovellusta käyttämällä</string>
     <string name="blocking_manager_copy_title">Kopioi estetyt numerot</string>
@@ -300,6 +301,7 @@
     <string name="qksms_plus_upgrade_donate">Ominaisuuksien avaus + lahjoitus hintaan %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Kiitos, kun tuit QKSMS:ää!</string>
     <string name="qksms_plus_thanks_summary">Olet nyt oikeutettu käyttämään kaikkia QKSMS+ -ominaisuuksia</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ on ilmainen F-Droidin käyttäjille! Jos haluaisit tukea kehitystyötä tulevaisuudessa, arvostaisimme lahjoitustasi todella paljon.</string>
     <string name="qksms_plus_donate">Lahjoita PayPalilla</string>
     <string name="qksms_plus_coming_soon">Tulossa pian</string>

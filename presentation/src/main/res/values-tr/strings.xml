@@ -262,6 +262,7 @@
     <string name="blocking_manager_title">Engelleme Yöneticisi</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS\'de yerleşik engelleme işlevi</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
     <string name="blocking_manager_call_control_summary">Aramalarınızı ve mesajlarınızı uygun bir yerde otomatik olarak filtreleyin! Topluluk IQ™ bilinen spam istenmeyen mesajları önlemek için izin verir
 
 BAĞLAM İSTEĞİ</string>
@@ -302,6 +303,7 @@ BAĞLAM İSTEĞİ</string>
     <string name="qksms_plus_upgrade_donate">Kilidi aç ve Satın Al %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">QKSMS desteği için teşekkür ederiz!!</string>
     <string name="qksms_plus_thanks_summary">Şimdi tüm QKSMS+ özellikleri açıldı!</string>
+    <string name="qksms_plus_error">An error has occurred, please try again</string>
     <string name="qksms_plus_free_title">QKSMS+ F-Droid kullanıcıları için ücretsizdir! Eğer gelişmeyi desteklemek istiyorsanız, bağış yapmakta özgürsünüz.</string>
     <string name="qksms_plus_donate">Paypal ile satın al</string>
     <string name="qksms_plus_coming_soon">Yakında</string>

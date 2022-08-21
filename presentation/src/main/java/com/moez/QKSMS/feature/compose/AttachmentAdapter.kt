@@ -21,10 +21,12 @@ package com.moez.QKSMS.feature.compose
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.ViewGroup
+import androidx.core.view.isVisible
 import com.bumptech.glide.Glide
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkAdapter
 import com.moez.QKSMS.common.base.QkViewHolder
+import com.moez.QKSMS.common.util.extensions.getDisplayName
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.model.Attachment
 import ezvcard.Ezvcard
@@ -78,9 +80,13 @@ class AttachmentAdapter @Inject constructor(
 
             is Attachment.Contact -> Observable.just(attachment.vCard)
                     .mapNotNull { vCard -> Ezvcard.parse(vCard).first() }
+                    .map { vcard -> vcard.getDisplayName() ?: "" }
                     .subscribeOn(Schedulers.computation())
                     .observeOn(AndroidSchedulers.mainThread())
-                    .subscribe { vcard -> holder.name?.text = vcard.formattedName.value }
+                    .subscribe { displayName ->
+                        holder.name?.text = displayName
+                        holder.name?.isVisible = displayName.isNotEmpty()
+                    }
         }
     }
 

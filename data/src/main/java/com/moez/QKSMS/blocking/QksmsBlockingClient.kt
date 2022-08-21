@@ -31,7 +31,9 @@ class QksmsBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.BLOCK_WITHOUT_PERMISSION
 
-    override fun getAction(address: String): Single<BlockingClient.Action> = Single.fromCallable {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = isBlacklisted(address)
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> = Single.fromCallable {
         when (blockingRepo.isBlocked(address)) {
             true -> BlockingClient.Action.Block()
             false -> BlockingClient.Action.Unblock

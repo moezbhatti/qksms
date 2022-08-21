@@ -55,7 +55,9 @@ class ShouldIAnswerBlockingClient @Inject constructor(
 
     override fun getClientCapability() = BlockingClient.Capability.CANT_BLOCK
 
-    override fun getAction(address: String): Single<BlockingClient.Action> {
+    override fun shouldBlock(address: String): Single<BlockingClient.Action> = isBlacklisted(address)
+
+    override fun isBlacklisted(address: String): Single<BlockingClient.Action> {
         return Binder(context, address).isBlocked()
                 .map { blocked ->
                     when (blocked) {

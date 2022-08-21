@@ -21,9 +21,11 @@ package com.moez.QKSMS.feature.compose.part
 import android.content.Context
 import android.view.Gravity
 import android.widget.FrameLayout
+import androidx.core.view.isVisible
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.Colors
+import com.moez.QKSMS.common.util.extensions.getDisplayName
 import com.moez.QKSMS.common.util.extensions.resolveThemeColor
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
 import com.moez.QKSMS.common.util.extensions.setTint
@@ -61,9 +63,13 @@ class VCardBinder @Inject constructor(colors: Colors, private val context: Conte
         Observable.just(part.getUri())
                 .map(context.contentResolver::openInputStream)
                 .mapNotNull { inputStream -> inputStream.use { Ezvcard.parse(it).first() } }
+                .map { vcard -> vcard.getDisplayName() ?: "" }
                 .subscribeOn(Schedulers.computation())
                 .observeOn(AndroidSchedulers.mainThread())
-                .subscribe { vcard -> holder.name?.text = vcard.formattedName.value }
+                .subscribe { displayName ->
+                    holder.name?.text = displayName
+                    holder.name.isVisible = displayName.isNotEmpty()
+                }
 
         val params = holder.vCardBackground.layoutParams as FrameLayout.LayoutParams
         if (!message.isMe()) {
