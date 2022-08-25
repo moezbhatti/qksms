@@ -150,13 +150,13 @@ class MainViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe()
 
-        // If we go from not having all permissions to having them, sync messages
-        permissions
-                .skip(1)
-                .filter { it.first && it.second && it.third }
-                .take(1)
-                .autoDisposable(view.scope())
-                .subscribe { syncMessages.execute(Unit) }
+//        // If we go from not having all permissions to having them, sync messages
+//        permissions
+//                .skip(1)
+//                .filter { it.first && it.second && it.third }
+//                .take(1)
+//                .autoDisposable(view.scope())
+//                .subscribe { syncMessages.execute(Unit) }
 
         // Launch screen from intent
         view.onNewIntentIntent

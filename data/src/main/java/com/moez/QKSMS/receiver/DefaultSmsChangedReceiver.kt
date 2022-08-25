@@ -38,10 +38,10 @@ class DefaultSmsChangedReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
         AndroidInjection.inject(this, context)
 
-        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
-            val pendingResult = goAsync()
-            syncMessages.execute(Unit) { pendingResult.finish() }
-        }
+//        if (intent.getBooleanExtra(Telephony.Sms.Intents.EXTRA_IS_DEFAULT_SMS_APP, false)) {
+//            val pendingResult = goAsync()
+//            syncMessages.execute(Unit) { pendingResult.finish() }
+//        }
     }
 
 }
