@@ -66,7 +66,6 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.util.*
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 import javax.inject.Singleton
@@ -556,6 +555,12 @@ class MessageRepositoryImpl @Inject constructor(
     }
 
     override fun insertReceivedSms(subId: Int, address: String, body: String, sentTime: Long): Message {
+        var extractedThreadId = Realm.getDefaultInstance()
+                .where(Message::class.java)
+                .contains("address", address)
+                .contains("type", "sms")
+                .findFirst()
+                ?.threadId ?: (TelephonyCompat.getOrCreateThreadId(context, address));
 
         // Insert the message to Realm
         val message = Message().apply {
@@ -566,7 +571,7 @@ class MessageRepositoryImpl @Inject constructor(
             this.subId = subId
 
             id = messageIds.newId()
-            threadId = TelephonyCompat.getOrCreateThreadId(context, address)
+            threadId = extractedThreadId
             boxId = Sms.MESSAGE_TYPE_INBOX
             type = "sms"
             read = activeConversationManager.getActiveConversation() == threadId
