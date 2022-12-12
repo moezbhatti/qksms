@@ -28,7 +28,7 @@ android {
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
-        minSdkVersion 21
+        minSdkVersion 23
         targetSdkVersion 33
         versionCode 2218
         versionName "3.9.4"
