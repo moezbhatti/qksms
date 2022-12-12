@@ -408,6 +408,8 @@ class MainViewModel @Inject constructor(
                             val page = state.page.copy(addContact = add, markPinned = pin, markRead = read, selected = selected)
                             newState { copy(page = page) }
                         }
+
+                        is Searching -> {} // Ignore
                     }
                 }
                 .autoDisposable(view.scope())

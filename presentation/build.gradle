@@ -60,14 +60,15 @@ android {
         jvmTarget = "1.8"
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     productFlavors {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
     }
+    lint {
+        abortOnError false
+    }
+    namespace 'com.moez.QKSMS'
 
     if (System.getenv("CI") == "true") {
         signingConfigs.release.storeFile = file("../keystore")

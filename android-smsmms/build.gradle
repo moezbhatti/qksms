@@ -25,15 +25,14 @@ android {
     defaultConfig {
         minSdkVersion 21
         targetSdkVersion 25
-        versionCode 1
-        versionName "1.0"
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     useLibrary 'org.apache.http.legacy'
+    lint {
+        abortOnError false
+    }
+    namespace 'com.klinker.android.send_message'
 }
 
 dependencies {

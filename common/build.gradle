@@ -28,6 +28,7 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
+    namespace 'com.moez.QKSMS.common'
 }
 
 dependencies {
