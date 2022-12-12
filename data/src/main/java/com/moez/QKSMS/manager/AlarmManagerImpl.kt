@@ -29,7 +29,7 @@ class AlarmManagerImpl @Inject constructor(private val context: Context) : Alarm
 
     override fun getScheduledMessageIntent(id: Long): PendingIntent {
         val intent = Intent(context, SendScheduledMessageReceiver::class.java).putExtra("id", id)
-        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT)
+        return PendingIntent.getBroadcast(context, id.toInt(), intent, PendingIntent.FLAG_UPDATE_CURRENT or PendingIntent.FLAG_IMMUTABLE)
     }
 
     override fun setAlarm(date: Long, intent: PendingIntent) {
