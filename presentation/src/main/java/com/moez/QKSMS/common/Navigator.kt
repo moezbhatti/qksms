@@ -281,6 +281,14 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
+    fun showPermissions() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        intent.data = Uri.fromParts("package", context.packageName, null)
+
+        startActivity(intent)
+    }
+
     fun showNotificationSettings(threadId: Long = 0) {
         val intent = Intent(context, NotificationPrefsActivity::class.java)
         intent.putExtra("threadId", threadId)

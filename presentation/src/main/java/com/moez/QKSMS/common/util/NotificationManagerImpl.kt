@@ -57,6 +57,7 @@ import com.moez.QKSMS.util.GlideApp
 import com.moez.QKSMS.util.PhoneNumberUtils
 import com.moez.QKSMS.util.Preferences
 import com.moez.QKSMS.util.tryOrNull
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Singleton
 
@@ -91,6 +92,11 @@ class NotificationManagerImpl @Inject constructor(
     override fun update(threadId: Long) {
         // If notifications are disabled, don't do anything
         if (!prefs.notifications(threadId).get()) {
+            return
+        }
+
+        if (!permissions.hasNotifications()) {
+            Timber.w("Cannot update notification because we don't have the notification permission")
             return
         }
 

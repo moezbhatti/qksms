@@ -68,6 +68,7 @@
     <string name="main_permission_required">Permission required</string>
     <string name="main_permission_sms">QKSMS needs permission to send and view SMS messages</string>
     <string name="main_permission_contacts">QKSMS needs permission to view your contacts</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Allow</string>
 
     <string name="drawer_inbox">Inbox</string>

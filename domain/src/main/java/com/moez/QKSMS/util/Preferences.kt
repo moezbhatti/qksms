@@ -84,6 +84,7 @@ class Preferences @Inject constructor(
     val canUseSubId = rxPrefs.getBoolean("canUseSubId", true)
     val version = rxPrefs.getInteger("version", context.versionCode)
     val changelogVersion = rxPrefs.getInteger("changelogVersion", context.versionCode)
+    val hasAskedForNotificationPermission = rxPrefs.getBoolean("hasAskedForNotificationPermission", false)
     @Deprecated("This should only be accessed when migrating to @blockingManager")
     val sia = rxPrefs.getBoolean("sia", false)
 

@@ -289,7 +289,7 @@ class MainActivity : QkThemedActivity(), MainView {
         when (state.syncing) {
             is SyncRepository.SyncProgress.Idle -> {
                 syncing.isVisible = false
-                snackbar.isVisible = !state.defaultSms || !state.smsPermission || !state.contactPermission
+                snackbar.isVisible = !state.defaultSms || !state.smsPermission || !state.contactPermission || !state.notificationPermission
             }
 
             is SyncRepository.SyncProgress.Running -> {
@@ -317,6 +317,12 @@ class MainActivity : QkThemedActivity(), MainView {
             !state.contactPermission -> {
                 snackbarTitle?.setText(R.string.main_permission_required)
                 snackbarMessage?.setText(R.string.main_permission_contacts)
+                snackbarButton?.setText(R.string.main_permission_allow)
+            }
+
+            !state.notificationPermission -> {
+                snackbarTitle?.setText(R.string.main_permission_required)
+                snackbarMessage?.setText(R.string.main_permission_notifications)
                 snackbarButton?.setText(R.string.main_permission_allow)
             }
         }
@@ -350,10 +356,17 @@ class MainActivity : QkThemedActivity(), MainView {
     }
 
     override fun requestPermissions() {
-        ActivityCompat.requestPermissions(this, arrayOf(
-                Manifest.permission.READ_SMS,
-                Manifest.permission.SEND_SMS,
-                Manifest.permission.READ_CONTACTS), 0)
+        val permissions = mutableListOf(
+            Manifest.permission.READ_SMS,
+            Manifest.permission.SEND_SMS,
+            Manifest.permission.READ_CONTACTS
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            permissions += Manifest.permission.POST_NOTIFICATIONS
+        }
+
+        ActivityCompat.requestPermissions(this, permissions.toTypedArray(), 0)
     }
 
     override fun clearSearch() {
