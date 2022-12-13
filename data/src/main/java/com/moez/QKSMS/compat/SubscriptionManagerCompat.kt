@@ -31,36 +31,29 @@ class SubscriptionManagerCompat @Inject constructor(context: Context, private va
 
     val activeSubscriptionInfoList: List<SubscriptionInfoCompat>
         get() {
-            return if (Build.VERSION.SDK_INT >= 22) {
-                subscriptionManager?.activeSubscriptionInfoList?.map { SubscriptionInfoCompat(it) } ?: listOf()
-            } else listOf()
+            return subscriptionManager?.activeSubscriptionInfoList?.map { SubscriptionInfoCompat(it) } ?: listOf()
         }
 
     init {
-        subscriptionManager = if (Build.VERSION.SDK_INT >= 22) SubscriptionManager.from(context) else null
+        subscriptionManager = SubscriptionManager.from(context)
     }
 
     fun addOnSubscriptionsChangedListener(listener: OnSubscriptionsChangedListener) {
-        if (Build.VERSION.SDK_INT >= 22) {
-            subscriptionManager?.addOnSubscriptionsChangedListener(listener.listener)
-        }
+        subscriptionManager?.addOnSubscriptionsChangedListener(listener.listener)
     }
 
     fun removeOnSubscriptionsChangedListener(listener: OnSubscriptionsChangedListener) {
-        if (Build.VERSION.SDK_INT >= 22) {
-            subscriptionManager?.removeOnSubscriptionsChangedListener(listener.listener)
-        }
+        subscriptionManager?.removeOnSubscriptionsChangedListener(listener.listener)
     }
 
     abstract class OnSubscriptionsChangedListener {
 
-        val listener: SubscriptionManager.OnSubscriptionsChangedListener? = if (Build.VERSION.SDK_INT >= 22) {
+        val listener: SubscriptionManager.OnSubscriptionsChangedListener? =
             object : SubscriptionManager.OnSubscriptionsChangedListener() {
                 override fun onSubscriptionsChanged() {
                     this@OnSubscriptionsChangedListener.onSubscriptionsChanged()
                 }
             }
-        } else null
 
         abstract fun onSubscriptionsChanged()
 

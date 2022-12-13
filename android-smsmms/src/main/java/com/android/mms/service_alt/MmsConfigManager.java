@@ -73,23 +73,18 @@ public class MmsConfigManager {
     public void init(final Context context) {
         mContext = context;
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            mSubscriptionManager = SubscriptionManager.from(context);
+        mSubscriptionManager = SubscriptionManager.from(context);
 
-            // TODO: When this object "finishes" we should unregister.
-            IntentFilter intentFilterLoaded =
-                    new IntentFilter("LOADED");
+        // TODO: When this object "finishes" we should unregister.
+        IntentFilter intentFilterLoaded = new IntentFilter("LOADED");
 
-            try {
-                context.registerReceiver(mReceiver, intentFilterLoaded);
-            } catch (Exception e) {
+        try {
+            context.registerReceiver(mReceiver, intentFilterLoaded);
+        } catch (Exception e) {
 
-            }
-
-            load(context);
-        } else {
-            load(context);
         }
+
+        load(context);
 
         // TODO: When this object "finishes" we should unregister by invoking
         // SubscriptionManager.getInstance(mContext).unregister(mOnSubscriptionsChangedListener);
@@ -151,39 +146,37 @@ public class MmsConfigManager {
      *
      */
     private void load(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            List<SubscriptionInfo> subs = mSubscriptionManager.getActiveSubscriptionInfoList();
-            if (subs == null || subs.size() < 1) {
-                Timber.e("MmsConfigManager.load -- empty getActiveSubInfoList");
-                return;
-            }
-            // Load all the mms_config.xml files in a separate map and then swap with the
-            // real map at the end so we don't block anyone sync'd on the real map.
-            final Map<Integer, MmsConfig> newConfigMap = new ArrayMap<Integer, MmsConfig>();
-            for (SubscriptionInfo sub : subs) {
-                Configuration configuration = new Configuration();
-                if (sub.getMcc() == 0 && sub.getMnc() == 0) {
-                    Configuration config = mContext.getResources().getConfiguration();
-                    configuration.mcc = config.mcc;
-                    configuration.mnc = config.mnc;
-                    Timber.i("MmsConfigManager.load -- no mcc/mnc for sub: " + sub +
-                            " using mcc/mnc from main context: " + configuration.mcc + "/" +
-                            configuration.mnc);
-                } else {
-                    Timber.i("MmsConfigManager.load -- mcc/mnc for sub: " + sub);
+        List<SubscriptionInfo> subs = mSubscriptionManager.getActiveSubscriptionInfoList();
+        if (subs == null || subs.size() < 1) {
+            Timber.e("MmsConfigManager.load -- empty getActiveSubInfoList");
+            return;
+        }
+        // Load all the mms_config.xml files in a separate map and then swap with the
+        // real map at the end so we don't block anyone sync'd on the real map.
+        final Map<Integer, MmsConfig> newConfigMap = new ArrayMap<Integer, MmsConfig>();
+        for (SubscriptionInfo sub : subs) {
+            Configuration configuration = new Configuration();
+            if (sub.getMcc() == 0 && sub.getMnc() == 0) {
+                Configuration config = mContext.getResources().getConfiguration();
+                configuration.mcc = config.mcc;
+                configuration.mnc = config.mnc;
+                Timber.i("MmsConfigManager.load -- no mcc/mnc for sub: " + sub +
+                        " using mcc/mnc from main context: " + configuration.mcc + "/" +
+                        configuration.mnc);
+            } else {
+                Timber.i("MmsConfigManager.load -- mcc/mnc for sub: " + sub);
 
-                    configuration.mcc = sub.getMcc();
-                    configuration.mnc = sub.getMnc();
-                }
-                Context subContext = context.createConfigurationContext(configuration);
+                configuration.mcc = sub.getMcc();
+                configuration.mnc = sub.getMnc();
+            }
+            Context subContext = context.createConfigurationContext(configuration);
 
-                int subId = sub.getSubscriptionId();
-                newConfigMap.put(subId, new MmsConfig(subContext, subId));
-            }
-            synchronized (mSubIdConfigMap) {
-                mSubIdConfigMap.clear();
-                mSubIdConfigMap.putAll(newConfigMap);
-            }
+            int subId = sub.getSubscriptionId();
+            newConfigMap.put(subId, new MmsConfig(subContext, subId));
+        }
+        synchronized (mSubIdConfigMap) {
+            mSubIdConfigMap.clear();
+            mSubIdConfigMap.putAll(newConfigMap);
         }
     }
 

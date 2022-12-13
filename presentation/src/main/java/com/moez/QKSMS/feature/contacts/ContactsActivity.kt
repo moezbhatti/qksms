@@ -88,11 +88,6 @@ class ContactsActivity : QkThemedActivity(), ContactsContract {
         viewModel.bindView(this)
 
         contacts.adapter = contactsAdapter
-
-        // These theme attributes don't apply themselves on API 21
-        if (Build.VERSION.SDK_INT <= 22) {
-            search.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-        }
     }
 
     override fun render(state: ContactsState) {

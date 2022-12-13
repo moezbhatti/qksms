@@ -19,7 +19,9 @@
   -->
 <resources>
 
-    <style name="AppTheme" parent="AppBaseTheme" />
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:windowLightStatusBar">false</item>
+    </style>
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.NoActionBar">
         <item name="android:divider">@color/separatorDark</item>

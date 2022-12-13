@@ -123,7 +123,6 @@ class ComposeWindowCallback(
         return localCallback.onSearchRequested()
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onSearchRequested(searchEvent: SearchEvent): Boolean {
         return localCallback.onSearchRequested(searchEvent)
     }
@@ -132,7 +131,6 @@ class ComposeWindowCallback(
         return localCallback.onWindowStartingActionMode(callback)
     }
 
-    @RequiresApi(api = Build.VERSION_CODES.M)
     override fun onWindowStartingActionMode(callback: ActionMode.Callback, i: Int): ActionMode? {
         return localCallback.onWindowStartingActionMode(callback, i)
     }

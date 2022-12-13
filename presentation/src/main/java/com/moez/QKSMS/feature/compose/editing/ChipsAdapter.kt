@@ -44,11 +44,6 @@ class ChipsAdapter @Inject constructor() : QkAdapter<Recipient>() {
         val inflater = LayoutInflater.from(parent.context)
         val view = inflater.inflate(R.layout.contact_chip, parent, false)
         return QkViewHolder(view).apply {
-            // These theme attributes don't apply themselves on API 21
-            if (Build.VERSION.SDK_INT <= 22) {
-                content.setBackgroundTint(view.context.resolveThemeColor(R.attr.bubbleColor))
-            }
-
             view.setOnClickListener {
                 val chip = getItem(adapterPosition)
                 showDetailedChip(view.context, chip)

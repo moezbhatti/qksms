@@ -185,11 +185,6 @@ class MainActivity : QkThemedActivity(), MainView {
                     // Set the FAB compose icon color
                     compose.setTint(theme.textPrimary)
                 }
-
-        // These theme attributes don't apply themselves on API 21
-        if (Build.VERSION.SDK_INT <= 22) {
-            toolbarSearch.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-        }
     }
 
     override fun onNewIntent(intent: Intent?) {

@@ -328,11 +328,7 @@ class MessageRepositoryImpl @Inject constructor(
                 val intent = getIntentForDelayedSms(message.id)
 
                 val alarmManager = context.getSystemService(Context.ALARM_SERVICE) as AlarmManager
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                    alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, sendTime, intent)
-                } else {
-                    alarmManager.setExact(AlarmManager.RTC_WAKEUP, sendTime, intent)
-                }
+                alarmManager.setExactAndAllowWhileIdle(AlarmManager.RTC_WAKEUP, sendTime, intent)
             } else { // No delay
                 val message = insertSentSms(subId, threadId, addresses.first(), strippedBody, now())
                 sendSms(message)

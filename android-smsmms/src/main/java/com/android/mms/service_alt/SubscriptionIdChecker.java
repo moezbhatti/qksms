@@ -16,21 +16,19 @@ class SubscriptionIdChecker {
 
     // I met a device which does not have Telephony.Mms.SUBSCRIPTION_ID event if it's API Level is 22.
     private void check(Context context) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-            Cursor c = null;
-            try {
-                c = SqliteWrapper.query(context, context.getContentResolver(),
-                        Telephony.Mms.CONTENT_URI,
-                        new String[]{Telephony.Mms.SUBSCRIPTION_ID}, null, null, null);
-                if (c != null) {
-                    mCanUseSubscriptionId = true;
-                }
-            } catch (SQLiteException e) {
-                Timber.e("SubscriptionIdChecker.check() fail");
-            } finally {
-                if (c != null) {
-                    c.close();
-                }
+        Cursor c = null;
+        try {
+            c = SqliteWrapper.query(context, context.getContentResolver(),
+                    Telephony.Mms.CONTENT_URI,
+                    new String[]{Telephony.Mms.SUBSCRIPTION_ID}, null, null, null);
+            if (c != null) {
+                mCanUseSubscriptionId = true;
+            }
+        } catch (SQLiteException e) {
+            Timber.e("SubscriptionIdChecker.check() fail");
+        } finally {
+            if (c != null) {
+                c.close();
             }
         }
     }

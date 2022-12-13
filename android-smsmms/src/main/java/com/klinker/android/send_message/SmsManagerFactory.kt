@@ -8,7 +8,7 @@ object SmsManagerFactory {
     fun createSmsManager(subscriptionId: Int): SmsManager {
         var manager: SmsManager? = null
 
-        if (subscriptionId != -1 && Build.VERSION.SDK_INT >= 22) {
+        if (subscriptionId != -1) {
             try {
                 manager = SmsManager.getSmsManagerForSubscriptionId(subscriptionId)
             } catch (e: Exception) {

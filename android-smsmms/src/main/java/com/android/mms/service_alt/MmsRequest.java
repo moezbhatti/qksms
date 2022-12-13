@@ -104,12 +104,8 @@ public abstract class MmsRequest {
     private boolean ensureMmsConfigLoaded() {
         if (mMmsConfig == null) {
             final MmsConfig config;
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                // Not yet retrieved from mms config manager. Try getting it.
-                config = MmsConfigManager.getInstance().getMmsConfigBySubId(mSubId);
-            } else {
-                config = MmsConfigManager.getInstance().getMmsConfig();
-            }
+            // Not yet retrieved from mms config manager. Try getting it.
+            config = MmsConfigManager.getInstance().getMmsConfigBySubId(mSubId);
 
             if (config != null) {
                 mMmsConfig = new MmsConfig.Overridden(config, mMmsConfigOverrides);
@@ -167,11 +163,7 @@ public abstract class MmsRequest {
             result = SmsManager.MMS_ERROR_IO_ERROR;
         } else if (!isDataNetworkAvailable(context, mSubId)) {
             Timber.e("MmsRequest: in airplane mode or mobile data disabled");
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                result = SmsManager.MMS_ERROR_NO_DATA_NETWORK;
-            } else {
-                result = 8;
-            }
+            result = SmsManager.MMS_ERROR_NO_DATA_NETWORK;
         } else { // Execute
             long retryDelaySecs = 2;
             // Try multiple times of MMS HTTP request
@@ -268,11 +260,7 @@ public abstract class MmsRequest {
                 fillIn.putExtra("uri", messageUri.toString());
             }
             if (result == SmsManager.MMS_ERROR_HTTP_FAILURE && httpStatusCode != 0) {
-                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP_MR1) {
-                    fillIn.putExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, httpStatusCode);
-                } else {
-                    fillIn.putExtra("android.telephony.extra.MMS_HTTP_STATUS", httpStatusCode);
-                }
+                fillIn.putExtra(SmsManager.EXTRA_MMS_HTTP_STATUS, httpStatusCode);
             }
             try {
                 if (!succeeded) {
