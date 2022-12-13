@@ -246,4 +246,12 @@
 
     </application>
 
+    <queries>
+        <package android:name="com.cuiet.blockCalls" />
+        <package android:name="com.flexaspect.android.everycallcontrol" />
+        <package android:name="org.mistergroup.muzutozvednout" />
+        <package android:name="org.mistergroup.shouldianswer" />
+        <package android:name="org.mistergroup.shouldianswerpersonal" />
+    </queries>
+
 </manifest>
