@@ -9,7 +9,7 @@ buildscript {
     ext.androidx_testrunner_version = '1.1.0-alpha3'
     ext.androidx_viewpager_version = '1.0.0-beta05'
     ext.autodispose_version = '1.3.0'
-    ext.billing_version = '3.0.2'
+    ext.billing_version = '5.1.0'
     ext.conductor_version = '2.1.5'
     ext.coroutines_version = '1.4.3'
     ext.dagger_version = "2.16"

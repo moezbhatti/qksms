@@ -26,13 +26,17 @@ import com.android.billingclient.api.BillingClient
 import com.android.billingclient.api.BillingClientStateListener
 import com.android.billingclient.api.BillingFlowParams
 import com.android.billingclient.api.BillingResult
+import com.android.billingclient.api.ProductDetails
 import com.android.billingclient.api.Purchase
+import com.android.billingclient.api.Purchase.PurchaseState
 import com.android.billingclient.api.PurchasesUpdatedListener
-import com.android.billingclient.api.SkuDetails
-import com.android.billingclient.api.SkuDetailsParams
+import com.android.billingclient.api.QueryProductDetailsParams
+import com.android.billingclient.api.QueryPurchaseHistoryParams
+import com.android.billingclient.api.QueryPurchasesParams
 import com.android.billingclient.api.acknowledgePurchase
+import com.android.billingclient.api.queryProductDetails
 import com.android.billingclient.api.queryPurchaseHistory
-import com.android.billingclient.api.querySkuDetails
+import com.android.billingclient.api.queryPurchasesAsync
 import com.moez.QKSMS.manager.AnalyticsManager
 import com.moez.QKSMS.manager.BillingManager
 import io.reactivex.Observable
@@ -51,15 +55,19 @@ import javax.inject.Singleton
 
 @Singleton
 class BillingManagerImpl @Inject constructor(
-    context: Context,
-    private val analyticsManager: AnalyticsManager
+        context: Context,
+        private val analyticsManager: AnalyticsManager
 ) : BillingManager, BillingClientStateListener, PurchasesUpdatedListener {
 
-    private val productsSubject: Subject<List<SkuDetails>> = BehaviorSubject.create()
+    private val productsSubject: Subject<List<ProductDetails>> = BehaviorSubject.create()
     override val products: Observable<List<BillingManager.Product>> = productsSubject
-            .map { skuDetailsList ->
-                skuDetailsList.map { skuDetails ->
-                    BillingManager.Product(skuDetails.sku, skuDetails.price, skuDetails.priceCurrencyCode)
+            .map { productDetailsList ->
+                productDetailsList.map { productDetails ->
+                    BillingManager.Product(
+                            sku = productDetails.productId,
+                            price = productDetails.oneTimePurchaseOfferDetails!!.formattedPrice,
+                            priceCurrencyCode = productDetails.oneTimePurchaseOfferDetails!!.priceCurrencyCode
+                    )
                 }
             }
 
@@ -68,7 +76,8 @@ class BillingManagerImpl @Inject constructor(
             .map { purchases ->
                 purchases
                         .filter { it.purchaseState == Purchase.PurchaseState.PURCHASED }
-                        .any { it.sku in skus }
+                        .flatMap { it.products }
+                        .any { it in skus }
             }
             .distinctUntilChanged()
             .doOnNext { upgraded -> analyticsManager.setUserProperty("Upgraded", upgraded) }
@@ -89,51 +98,100 @@ class BillingManagerImpl @Inject constructor(
     }
 
     override suspend fun checkForPurchases() = executeServiceRequest {
-        // Load the cached data
+        // Query from the local cache first
         queryPurchases()
 
-        // On a fresh device, the purchase might not be cached, and so we'll need to force a refresh
-        billingClient.queryPurchaseHistory(BillingClient.SkuType.INAPP)
+        // Update the cache, then read from it again
+        queryPurchaseHistory()
         queryPurchases()
     }
 
     override suspend fun queryProducts() = executeServiceRequest {
-        val params = SkuDetailsParams.newBuilder()
-                .setSkusList(skus)
-                .setType(BillingClient.SkuType.INAPP)
+        val productList = skus.map { sku ->
+            QueryProductDetailsParams.Product.newBuilder()
+                    .setProductId(sku)
+                    .setProductType(BillingClient.ProductType.INAPP)
+                    .build()
+        }
+        val params = QueryProductDetailsParams.newBuilder()
+                .setProductList(productList)
 
-        val (billingResult, skuDetailsList) = billingClient.querySkuDetails(params.build())
-        if (billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
-            productsSubject.onNext(skuDetailsList.orEmpty())
+        val result = billingClient.queryProductDetails(params.build())
+        if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            productsSubject.onNext(result.productDetailsList.orEmpty())
+        } else {
+            Timber.w("Error querying products", result.billingResult)
         }
     }
 
     override suspend fun initiatePurchaseFlow(activity: Activity, sku: String) = executeServiceRequest {
-        val skuDetails = withContext(Dispatchers.IO) {
-            val params = SkuDetailsParams.newBuilder()
-                    .setType(BillingClient.SkuType.INAPP)
-                    .setSkusList(listOf(sku))
-                    .build()
+        val queryProductDetailsParams = QueryProductDetailsParams.newBuilder()
+                .setProductList(listOf(
+                        QueryProductDetailsParams.Product.newBuilder()
+                                .setProductId(sku)
+                                .setProductType(BillingClient.ProductType.INAPP)
+                                .build()
+                ))
+                .build()
 
-            billingClient.querySkuDetails(params).skuDetailsList?.firstOrNull()!!
+        val productDetailsResult = withContext(Dispatchers.IO) {
+            billingClient.queryProductDetails(queryProductDetailsParams)
         }
 
-        val params = BillingFlowParams.newBuilder().setSkuDetails(skuDetails)
-        billingClient.launchBillingFlow(activity, params.build())
+        if (productDetailsResult.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            Timber.w("Error querying product details", productDetailsResult.billingResult)
+            return@executeServiceRequest
+        }
+
+        val productDetailsParams = BillingFlowParams.ProductDetailsParams.newBuilder()
+                .setProductDetails(productDetailsResult.productDetailsList!!.first())
+                .build()
+
+        val billingFlowParams = BillingFlowParams.newBuilder()
+                .setProductDetailsParamsList(listOf(productDetailsParams))
+                .build()
+
+        billingClient.launchBillingFlow(activity, billingFlowParams)
     }
 
-    override fun onPurchasesUpdated(result: BillingResult, purchases: MutableList<Purchase>?) {
+    override fun onPurchasesUpdated(result: BillingResult, purchases: List<Purchase>?) {
         if (result.responseCode == BillingClient.BillingResponseCode.OK) {
             GlobalScope.launch(Dispatchers.IO) {
                 handlePurchases(purchases.orEmpty())
             }
+        } else {
+            Timber.w("Error purchasing", result)
         }
     }
 
+    /**
+     * Queries the local purchases saved in Google Play's cache
+     */
     private suspend fun queryPurchases() {
-        val result = billingClient.queryPurchases(BillingClient.SkuType.INAPP)
-        if (result.responseCode == BillingClient.BillingResponseCode.OK) {
-            handlePurchases(result.purchasesList.orEmpty())
+        val params = QueryPurchasesParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+
+        val result = billingClient.queryPurchasesAsync(params)
+        if (result.billingResult.responseCode == BillingClient.BillingResponseCode.OK) {
+            handlePurchases(result.purchasesList)
+        } else {
+            Timber.w("Error checking for purchases", result.billingResult)
+        }
+    }
+
+    /**
+     * Fetches the list of purchases and updates the local cache
+     */
+    private suspend fun queryPurchaseHistory() {
+        val params = QueryPurchaseHistoryParams.newBuilder()
+                .setProductType(BillingClient.ProductType.INAPP)
+                .build()
+
+        val result = billingClient.queryPurchaseHistory(params)
+        if (result.billingResult.responseCode != BillingClient.BillingResponseCode.OK) {
+            Timber.w("Error querying purchase history", result.billingResult)
+            return
         }
     }
 
