@@ -197,7 +197,7 @@ class BillingManagerImpl @Inject constructor(
 
     private suspend fun handlePurchases(purchases: List<Purchase>) = executeServiceRequest {
         purchases.forEach { purchase ->
-            if (!purchase.isAcknowledged) {
+            if (!purchase.isAcknowledged && purchase.purchaseState == PurchaseState.PURCHASED) {
                 val params = AcknowledgePurchaseParams.newBuilder()
                         .setPurchaseToken(purchase.purchaseToken)
                         .build()
