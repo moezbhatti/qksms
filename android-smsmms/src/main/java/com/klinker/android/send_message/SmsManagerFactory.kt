@@ -1,6 +1,5 @@
 package com.klinker.android.send_message
 
-import android.os.Build
 import android.telephony.SmsManager
 
 object SmsManagerFactory {

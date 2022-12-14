@@ -273,18 +273,6 @@ public class Utils {
         //throw new IllegalArgumentException("Unable to find or allocate a thread ID.");
     }
 
-    public static boolean doesThreadIdExist(Context context, long threadId) {
-        Uri uri = Uri.parse("content://mms-sms/conversations/" + threadId + "/");
-
-        Cursor cursor = context.getContentResolver().query(uri, new String[] {"_id"}, null, null, null);
-        if (cursor != null && cursor.moveToFirst()) {
-            cursor.close();
-            return true;
-        } else {
-            return false;
-        }
-    }
-
     private static boolean isEmailAddress(String address) {
         if (TextUtils.isEmpty(address)) {
             return false;

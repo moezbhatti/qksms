@@ -124,11 +124,6 @@ public class RetrieveTransaction extends Transaction implements Runnable {
     }
 
     public void run() {
-//        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-//            DownloadRequest request = new DownloadRequest(mContentLocation, mUri, null, null, null);
-//            MmsNetworkManager manager = new MmsNetworkManager(mContext);
-//            request.execute(mContext, manager);
-//        } else {
             try {
                 // Change the downloading state of the M-Notification.ind.
                 DownloadManager.init(mContext.getApplicationContext());

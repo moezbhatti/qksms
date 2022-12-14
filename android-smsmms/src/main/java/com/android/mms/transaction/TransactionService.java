@@ -197,33 +197,6 @@ public class TransactionService extends Service implements Observer {
     @Override
     public int onStartCommand(final Intent intent, int flags, int startId) {
         if (intent != null) {
-//            if (intent.getBooleanExtra(TransactionBundle.LOLLIPOP_RECEIVING, false)) {
-//                lollipopReceiving = true;
-//                new Thread(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Timber.v("starting receiving with new lollipop method");
-//                        try { Thread.sleep(60000); } catch (Exception e) { }
-//                        Timber.v("done sleeping, lets try and grab the message");
-//                        Uri contentUri = Uri.parse(intent.getStringExtra(TransactionBundle.URI));
-//                        String downloadLocation = null;
-//                        Cursor locationQuery = getContentResolver().query(contentUri, new String[]{Telephony.Mms.CONTENT_LOCATION, Telephony.Mms._ID}, null, null, "date desc");
-//
-//                        if (locationQuery != null && locationQuery.moveToFirst()) {
-//                            Timber.v("grabbing content location url");
-//                            downloadLocation = locationQuery.getString(locationQuery.getColumnIndex(Telephony.Mms.CONTENT_LOCATION));
-//                        }
-//
-//                        Timber.v("creating request with url: " + downloadLocation);
-//                        DownloadRequest request = new DownloadRequest(downloadLocation, contentUri, null, null, null);
-//                        MmsNetworkManager manager = new MmsNetworkManager(TransactionService.this);
-//                        request.execute(TransactionService.this, manager);
-//                        stopSelf();
-//                    }
-//                }).start();
-//                return START_NOT_STICKY;
-//            }
-
             if (mServiceHandler == null) {
                 initServiceHandler();
             }
