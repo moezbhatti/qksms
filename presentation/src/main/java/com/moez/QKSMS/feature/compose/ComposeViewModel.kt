@@ -634,22 +634,35 @@ class ComposeViewModel @Inject constructor(
 
         // Send a message when the send button is clicked, and disable editing mode if it's enabled
         view.sendIntent
-                .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
-                .filter { permissionManager.hasSendSms().also { if (!it) view.requestSmsPermission() } }
-                .withLatestFrom(view.textChangedIntent) { _, body -> body }
-                .map { body -> body.toString() }
+                .withLatestFrom(view.textChangedIntent) { _, body -> body.toString() }
                 .withLatestFrom(state, attachments, conversation, selectedChips) { body, state, attachments,
                                                                                    conversation, chips ->
-                    val subId = state.subscription?.subscriptionId ?: -1
-                    val addresses = when (conversation.recipients.isNotEmpty()) {
-                        true -> conversation.recipients.map { it.address }
-                        false -> chips.map { chip -> chip.address }
+                    if (!permissionManager.isDefaultSms()) {
+                        view.requestDefaultSms()
+                        return@withLatestFrom
                     }
+
+                    if (!permissionManager.hasSendSms()) {
+                        view.requestSmsPermission()
+                        return@withLatestFrom
+                    }
+
                     val delay = when (prefs.sendDelay.get()) {
                         Preferences.SEND_DELAY_SHORT -> 3000
                         Preferences.SEND_DELAY_MEDIUM -> 5000
                         Preferences.SEND_DELAY_LONG -> 10000
                         else -> 0
+                    }
+
+                    if ((delay != 0 || state.scheduled != 0L) && !permissionManager.hasExactAlarms()) {
+                        navigator.showExactAlarmsSettings()
+                        return@withLatestFrom
+                    }
+
+                    val subId = state.subscription?.subscriptionId ?: -1
+                    val addresses = when (conversation.recipients.isNotEmpty()) {
+                        true -> conversation.recipients.map { it.address }
+                        false -> chips.map { chip -> chip.address }
                     }
                     val sendAsGroup = !state.editingMode || state.sendAsGroup
 
