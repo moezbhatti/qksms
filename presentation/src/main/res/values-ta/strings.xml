@@ -1,0 +1,416 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
+  ~
+  ~ This file is part of QKSMS.
+  ~
+  ~ QKSMS is free software: you can redistribute it and/or modify
+  ~ it under the terms of the GNU General Public License as published by
+  ~ the Free Software Foundation, either version 3 of the License, or
+  ~ (at your option) any later version.
+  ~
+  ~ QKSMS is distributed in the hope that it will be useful,
+  ~ but WITHOUT ANY WARRANTY; without even the implied warranty of
+  ~ MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+  ~ GNU General Public License for more details.
+  ~
+  ~ You should have received a copy of the GNU General Public License
+  ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
+  -->
+<resources>
+    <string name="shortcut_compose_long_label">புதிய உரையாடல்</string>
+    <string name="shortcut_compose_short_label">எழுது</string>
+    <string name="shortcut_compose_disabled_message">குறுக்குவழி முடக்கப்பட்டது</string>
+    <string name="title_archived">காப்பகப்படுத்தியவை</string>
+    <string name="title_settings">அமைப்புகள்</string>
+    <string name="title_notification_prefs">அறிவிப்புகள்</string>
+    <string name="title_theme">நிற அமைப்பு</string>
+    <string name="title_conversations">உட்பெட்டியை தேடு&#8230;</string>
+    <string name="title_compose">பெயர் அ எண்ணைத் தட்டச்சு செய்</string>
+    <string name="setup_skip">தவிர்</string>
+    <string name="setup_next">தொடர்</string>
+    <string name="menu_add_person">நபரைச் சேர்</string>
+    <string name="menu_call">அழை</string>
+    <string name="menu_info">விவரங்கள்</string>
+    <string name="menu_save">காட்சியகத்தில் சேமி</string>
+    <string name="menu_share">பகிர்</string>
+    <string name="main_drawer_open_cd">வழிசெலுத்தல் அலமாரியை திற</string>
+    <string name="main_title_selected">%d தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="main_menu_clear">அழி</string>
+    <string name="main_menu_archive">காப்பகப்படுத்து</string>
+    <string name="main_menu_unarchive">காப்பகம்நீக்கு</string>
+    <string name="main_menu_delete">நீக்கு</string>
+    <string name="main_menu_add_contact">தொடர்பு சேர்</string>
+    <string name="main_menu_pin">மேலே முள்ளிடு</string>
+    <string name="main_menu_unpin">முள்ளெடு</string>
+    <string name="main_menu_read">வாசித்ததாக குறி</string>
+    <string name="main_menu_unread">வாசிக்காததாக குறி</string>
+    <string name="main_menu_block">தடு</string>
+    <string name="main_syncing">செய்திகள் ஒத்திசைக்கப்படுகின்றன&#8230;</string>
+    <string name="main_sender_you">நீங்கள்: %s</string>
+    <string name="main_draft">வரைவு</string>
+    <string name="main_message_results_title">தகவல்களிலுள்ள முடிவுகள்</string>
+    <string name="main_message_results">%d செய்திகள்</string>
+    <string name="inbox_empty_text">உங்கள் உரையாடல்கள் இங்கே தோன்றும்</string>
+    <string name="inbox_search_empty_text">முடிவுகள் இல்லை</string>
+    <string name="archived_empty_text">உம் காப்பகப்படுத்திய உரையாடல்கள் இங்கு தோன்றும்</string>
+    <string name="main_fab_cd">புதிய உரையாடலைத் தொடங்கு</string>
+    <string name="main_default_sms_title">Love texting again</string>
+    <string name="main_default_sms_message">QKSMS-ஐ உம் இயல்புநிலை குறுஞ்செய்தி செயலியாக்கு</string>
+    <string name="main_default_sms_change">மாற்று</string>
+    <string name="main_permission_required">அனுமதி தேவை</string>
+    <string name="main_permission_sms">SMS செய்திகளை அனுப்பவும் பார்க்கவும் QKSMS க்கு அனுமதி தேவை</string>
+    <string name="main_permission_contacts">உங்கள் தொடர்புகளைக் காண QKSMS க்கு அனுமதி தேவை</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
+    <string name="main_permission_allow">அனுமதி</string>
+    <string name="drawer_inbox">உட்பெட்டி</string>
+    <string name="drawer_archived">காப்பகப்படுத்தப்பட்டது</string>
+    <string name="drawer_scheduled">திட்டமிடப்பட்டவை</string>
+    <string name="drawer_blocking">தடுப்பது</string>
+    <string name="drawer_more">மேலும்</string>
+    <string name="drawer_settings">அமைப்புகள்</string>
+    <string name="drawer_help">உதவி &amp; மீள்கருத்து</string>
+    <string name="drawer_invite">நண்பர்களை அழைப்பிடு</string>
+    <string name="drawer_plus_banner_summary">Unlock amazing new features, and support development</string>
+    <string name="rate_title">QKSMSஐ அனுபவித்து மகிழ்கிறீரா?</string>
+    <string name="rate_summary">Google Play இல் சில அன்பைப் பகிர்ந்துகொண்டு எங்களை மதிப்பிடுக!</string>
+    <string name="rate_okay">சரி</string>
+    <string name="rate_dismiss">நிராகரி</string>
+    <string name="dialog_delete_title">நீக்கு</string>
+    <plurals name="dialog_delete_message">
+        <item quantity="one">இவ்வுரையாடலை அழிக்க உறுதியாக விரும்புகிறீரா?</item>
+        <item quantity="other">%d உரையாடலைகளை அழிக்க உறுதியாக விரும்புகிறீரா?</item>
+    </plurals>
+    <string-array name="message_options">
+        <item>சொற்சரத்தை நகலெடு</item>
+        <item>முன்னனுப்பு</item>
+        <item>அழி</item>
+    </string-array>
+    <string name="compose_number_picker_title">தொலைபேசி எண் தேர்வுசெய்</string>
+    <string name="compose_number_picker_default">%s ∙ இயல்புநிலை</string>
+    <string name="compose_number_picker_once">ஒருமுறை மட்டும்</string>
+    <string name="compose_number_picker_always">எப்போதும்</string>
+    <string name="compose_title_selected">%d தேர்ந்தெடுக்கப்பட்டது</string>
+    <string name="compose_subtitle_results">%2$d-ல் %1$d ஆம் முடிவு</string>
+    <string name="compose_send_group_title">குழு தகவலாக அனுப்பு</string>
+    <string name="compose_send_group_summary">பெறுநர்கள் மற்றும் பதில்கள் அனைவருக்கும் தெரியும்</string>
+    <string name="compose_messages_empty">இது உங்கள் உரையாடலின் ஆரம்பம். ஏதாவது நல்லதைச் சொல்லுங்கள்!</string>
+    <string name="compose_vcard_label">தொடர்பு அட்டை</string>
+    <string name="compose_scheduled_for">குறித்த நேரம்</string>
+    <string name="compose_scheduled_future">தேர்ந்தெடுக்கப்பட்ட நேரம் எதிர்காலத்தில் இருக்க வேண்டும்!</string>
+    <string name="compose_scheduled_plus">நேரங்குறித்த தகவல்களை பயன்படுத்த QKSMS+ஐ நீங்கள் பூட்டவிழ்க்க வேண்டும்</string>
+    <string name="compose_scheduled_toast">நேரங்குறிக்கப்பட்ட தகவல்களுக்கு சேர்க்கப்பட்டது</string>
+    <string name="compose_hint">ஒரு தகவலை எழுது&#8230;</string>
+    <string name="compose_menu_copy">சொற்சரத்தை நகலெடு</string>
+    <string name="compose_menu_forward">முன்னனுப்பு</string>
+    <string name="compose_menu_delete">நீக்கு</string>
+    <string name="compose_menu_previous">முந்தைய</string>
+    <string name="compose_menu_next">அடுத்தது</string>
+    <string name="compose_menu_clear">அழி</string>
+    <string name="compose_details_title">செய்தி விவரங்கள்</string>
+    <string name="compose_details_type">தட்டு: %s</string>
+    <string name="compose_details_from">அனுப்புநர்: %s</string>
+    <string name="compose_details_to">பெறுநர்: %s</string>
+    <string name="compose_details_subject">பொருள்: %s</string>
+    <string name="compose_details_priority">முன்னுரிமை: %s</string>
+    <string name="compose_details_size">அளவு: %s</string>
+    <string name="compose_details_sent">அனுப்பியவை: %s</string>
+    <string name="compose_details_received">பெற்றவை: %s</string>
+    <string name="compose_details_delivered">வழங்கியவை: %s</string>
+    <string name="compose_details_error_code">பிழை குறியீடு: %d</string>
+    <string name="compose_attach_cd">இணைப்பைச் சேர்</string>
+    <string name="compose_gallery_cd">புகைப்படத்தை இணை</string>
+    <string name="compose_camera_cd">புகைப்படம் எடு</string>
+    <string name="compose_schedule_cd">செய்தி திட்டமிடு</string>
+    <string name="compose_contact_cd">தொடர்பை இணை</string>
+    <string name="compose_contact_error">தொடர்பை வாசிப்பதில் பிழை</string>
+    <!-- Example: SIM 1 (Verizon) selected-->
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_cd">%s selected, change SIM card</string>
+    <string name="compose_send_cd">தகவல் அனுப்பு</string>
+    <string name="message_status_sending">அனுப்புகிறது&#8230;</string>
+    <string name="message_status_delivered">%s வழங்கப்பட்டது</string>
+    <string name="message_status_failed">அனுப்பப்படவில்லை. மீண்டும் முயல தட்டு</string>
+    <string name="info_title">விவரங்கள்</string>
+    <string name="info_copied_address">முகவரி நகலெடுக்கப்பட்டது</string>
+    <string name="info_name">உரையாடல் தலைப்பு</string>
+    <string name="info_notifications">அறிவிப்புகள்</string>
+    <string name="info_theme">நிற அமைப்பு</string>
+    <string name="info_archive">காப்பகப்படுத்து</string>
+    <string name="info_unarchive">காப்பகம்நீக்கு</string>
+    <string name="info_block">தடு</string>
+    <string name="info_unblock">தடைநீக்கு</string>
+    <string name="info_delete">உரையாடலை அழி</string>
+    <string name="gallery_error">ஊடகத்தை ஏற்ற முடியவில்லை</string>
+    <string name="gallery_toast_saved">காட்சி கூடத்தில் சேமிக்கப்பட்டது</string>
+    <string name="backup_title">காப்பு மற்றும் மீட்பு</string>
+    <string name="backup_backing_up">செய்திகளைக் காப்புப் பிரதி எடுக்கிறது</string>
+    <string name="backup_restoring">காப்புப்பிரதியிலிருந்து மீட்டமைக்கிறது</string>
+    <string name="backup_loading">ஏற்றுகிறது&#8230;</string>
+    <string name="backup_never">எப்போதும் வேண்டாம்</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_restore_title">மீட்டமை</string>
+    <string name="backup_restore_summary">காப்புப்பிரதியைத் தேர்ந்தெடு</string>
+    <string name="backup_restore_error_plus">காப்புப்பிரதி மற்றும் மீட்டமைப்பை பயன்படுத்த QKSMS+ஐ பூட்டவிழ்க்கவும்</string>
+    <string name="backup_restore_error_backup"> செயலில் காப்புப்பிரதி&#8230;</string>
+    <string name="backup_restore_error_restore">செயலில் மீட்டெடுப்பு&#8230;</string>
+    <string name="backup_restore_confirm_title">காப்புப்பிரதியிலிருந்து மீட்டமை</string>
+    <string name="backup_restore_stop_title">மீட்டமைப்பதை நிறுத்து</string>
+    <string name="backup_restore_stop_message">ஏற்கனவே மீட்டமைக்கப்பட்ட செய்திகள் உங்கள் சாதனத்தில் இருக்கும்</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_restore_dialog_title">காப்புப்பிரதிகள்</string>
+    <string name="backup_restore_dialog_empty">காப்புப்பிரதிகள் ஏதுமில்லை</string>
+    <string name="backup_disclaimer">தற்போது, எஸ்எம்எஸ் மட்டுமே காப்பு மற்றும் மீட்டமைப்பால் ஆதரிக்கப்படுகிறது. எம்எம்எஸ் ஆதரவு மற்றும் திட்டமிடப்பட்ட காப்புப்பிரதிகள் விரைவில் வரும்!</string>
+    <string name="backup_now">இப்போது காப்புப்பிரதி செய்</string>
+    <string name="backup_progress_parsing">காப்புப் பிரதி பாகுபடுத்துகிறது&#8230;</string>
+    <string name="backup_progress_running">%d/%d செய்திகள்</string>
+    <string name="backup_progress_saving">காப்புப்பிரதியைச் சேமிக்கிறது&#8230;</string>
+    <string name="backup_progress_syncing">செய்திகளை ஒத்திசைக்கிறது&#8230;</string>
+    <string name="backup_progress_finished">முடிந்தது!</string>
+    <string name="backup_notification_channel_name">காப்பு மற்றும் மீட்பு</string>
+    <string name="scheduled_title">திட்டமிடப்பட்டது</string>
+    <string name="scheduled_empty_description">நீங்கள் விரும்பும் சரியான நேரத்தில் தானாக ஒரு செய்தியை அனுப்பு</string>
+    <string name="scheduled_empty_message_1">ஏய்! உங்கள் பிறந்த நாள் எப்போது?</string>
+    <string name="scheduled_empty_message_2">இது டிசம்பர் 23 அன்று</string>
+    <string name="scheduled_empty_message_3">பிறந்தநாள் வாழ்த்துக்கள்! சிறந்த நண்பனை பார், உன் பிறந்தநாளை நினைவில் வைத்திருப்பவனை</string>
+    <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
+    <string name="scheduled_empty_message_3_timestamp">டிசம்பர் 23 அன்று அனுப்புகிறது</string>
+    <string name="scheduled_compose_cd">செய்தியைத் திட்டமிடு</string>
+    <string name="scheduled_options_title">திட்டமிடப்பட்ட செய்தி</string>
+    <string-array name="scheduled_options">
+        <item>இப்போது அனுப்பு</item>
+        <item>உரையை நகலெடு</item>
+        <item>நீக்கு</item>
+    </string-array>
+    <string name="settings_category_appearance">தோற்றம்</string>
+    <string name="settings_category_general">பொது</string>
+    <string name="settings_category_qkreply">QK பதில்</string>
+    <string name="settings_theme_title">நிற அமைப்பு</string>
+    <string name="settings_night_title">இரவு பயன்முறை</string>
+    <string name="settings_black_title">தூய கருப்பு இரவு பயன்முறை</string>
+    <string name="settings_night_start_title">தொடக்க நேரம்</string>
+    <string name="settings_night_end_title">முடிவு நேரம்</string>
+    <string name="settings_automatic_colors_title">தானியங்கு தொடர்பு நிறங்கள்</string>
+    <string name="settings_text_size_title">எழுத்துரு அளவு</string>
+    <string name="settings_system_font_title">இச்சாதன எழுத்துரு கொள்</string>
+    <string name="settings_auto_emoji_title">தானியங்கு உருவடி</string>
+    <string name="settings_notifications_title">அறிவிப்புகள்</string>
+    <string name="settings_notifications_o_summary">தனிப்பயனாக்க தட்டு</string>
+    <string name="settings_notification_actions_title">செயல்கள்</string>
+    <string name="settings_notification_action_1">பொத்தான் 1</string>
+    <string name="settings_notification_action_2">பொத்தான் 2</string>
+    <string name="settings_notification_action_3">பொத்தான் 3</string>
+    <string name="settings_notification_previews_title">அறிவிப்பு முற்பார்வைகள்</string>
+    <string name="settings_notification_wake_title">திரையை எழுப்பு</string>
+    <string name="settings_vibration_title">அதிர்வு</string>
+    <string name="settings_ringtone_title">ஒலி</string>
+    <string name="settings_ringtone_none">ஏதுமில்லை</string>
+    <string name="settings_qkreply_title">QK பதிலளிப்பு</string>
+    <string name="settings_qkreply_summary">புது தகவல்களுக்கு பாப்அப்</string>
+    <string name="settings_qkreply_tap_dismiss_title">நிராகரிக்க தட்டு</string>
+    <string name="settings_qkreply_tap_dismiss_summary">பாப்அப்பை மூட அதன் வெளியே தட்டு</string>
+    <string name="settings_delayed_title">தாமத அனுப்பல்</string>
+    <string name="settings_swipe_actions">தேய்த்தல் செயல்கள்</string>
+    <string name="settings_swipe_actions_summary">உரையாடல் தேய்த்தல் செயல்களை உள்ளமை</string>
+    <string name="settings_swipe_actions_right">வலது தேய்ப்பு</string>
+    <string name="settings_swipe_actions_left">இடது தேய்ப்பு</string>
+    <string name="settings_swipe_actions_change">மாற்று</string>
+    <string-array name="settings_swipe_actions">
+        <item>ஏதுமில்லை</item>
+        <item>காப்பகப்படுத்து</item>
+        <item>அழி</item>
+        <item>தடு</item>
+        <item>அழை</item>
+        <item>படித்ததாகக் குறி</item>
+        <item>படித்ததாகக் குறி</item>
+    </string-array>
+    <string name="settings_delivery_title">வழங்குதல் உறுதிப்படுத்தல்கள்</string>
+    <string name="settings_delivery_summary">தகவல்கள் வெற்றிகரமாக அனுப்பப்பட்டதை உறுதிசெய்</string>
+    <string name="settings_signature_title">ஒப்பம்</string>
+    <string name="settings_signature_summary">தகவலின் முடிவில் ஒப்பத்தை சேர்</string>
+    <string name="settings_unicode_title">Strip accents</string>
+    <string name="settings_unicode_summary">Remove accents from characters in outgoing SMS messages</string>
+    <string name="settings_mobile_title">கைபேசி எண்கள் மட்டும்</string>
+    <string name="settings_mobile_summary">தகவல் இயற்றும்போது, கைபேசி எண்கள் மட்டும் காட்டு</string>
+    <string name="settings_auto_delete">தானாக பழைய தகவல்களை அழி</string>
+    <string name="settings_auto_delete_dialog_message">குறிப்பிட்ட நாட்களுக்குப் பிறகு செய்திகள் நீக்கப்படும்</string>
+    <string name="settings_auto_delete_dialog_hint">நாட்களின் எண்ணிக்கை</string>
+    <string name="settings_auto_delete_never">எப்போதும் வேண்டாம்</string>
+    <string name="settings_auto_delete_warning">பழைய செய்திகளை தானாக நீக்கவா?</string>
+    <string name="settings_auto_delete_warning_message">தொடர்ந்தால், %1$d செய்திகள் இப்போது நீக்கப்படும்</string>
+    <plurals name="settings_auto_delete_summary">
+        <item quantity="one">1 நாள் கழித்து</item>
+        <item quantity="other">%d நாட்கள் கழித்து</item>
+    </plurals>
+    <string name="settings_long_as_mms_title">நீண்ட செய்திகளை எம்.எம்.எஸ் ஆக அனுப்பு</string>
+    <string name="settings_long_as_mms_summary">If your longer text messages are failing to send, or sending in the wrong order, you can send them as MMS messages instead. Additional charges may apply</string>
+    <string name="settings_mms_size_title">Auto-compress MMS attachments</string>
+    <string name="settings_sync_title">தகவல்களை ஒத்திசை</string>
+    <string name="settings_sync_summary">Re-sync your messages with the native Android SMS database</string>
+    <string name="settings_about_title">QKSMS பற்றி</string>
+    <string name="settings_version">பதிப்பு %s</string>
+    <string name="settings_logging_enabled">பிழைத்திருத்த பதிவுசெய்தல் இயக்கப்பட்டது</string>
+    <string name="settings_logging_disabled">பிழைத்திருத்த பதிவுசெய்தல் முடக்கப்பட்டது</string>
+    <string name="settings_delay_duration_hint">காலஅளவு நுழை (விநாடிகள்)</string>
+    <string name="blocking_title">தடுப்பிலுள்ளவை</string>
+    <string name="blocking_drop_title">தகவல்களை கைவிடு</string>
+    <string name="blocking_drop_summary">தடுத்த அனுப்புநர்களிடமிருந்து வரும் தகவல்களை மறைப்பதற்கு பதிலாக கைவிடு</string>
+    <string name="blocking_conversations">தடுக்கப்பட்ட உரையாடல்கள்</string>
+    <string name="blocking_manager_title">தடுத்தல் மேலாளர்</string>
+    <string name="blocking_manager_qksms_title">QKSMS</string>
+    <string name="blocking_manager_qksms_summary">Built-in blocking functionality in QKSMS</string>
+    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_control_summary">Automatically filter your calls and messages in one convenient place! Community IQ™ allows you to prevent unwanted messages from community known spammers</string>
+    <string name="blocking_manager_sia_summary">Automatically filter messages from unsolicited numbers by using the \"Should I Answer\" app</string>
+    <string name="blocking_manager_copy_title">தடுக்கப்பட்ட எண்களை நகலெடு</string>
+    <string name="blocking_manager_copy_summary">Continue to %s and copy over your existing blocked numbers</string>
+    <string name="blocked_numbers_title">தடுக்கப்பட்ட எண்கள்</string>
+    <string name="blocked_numbers_empty">உம் தடுக்கப்பட்ட எண்கள் இங்கு தோன்றும்</string>
+    <string name="blocked_numbers_add_cd">ஒரு புது எண்ணை தடு</string>
+    <string name="blocked_numbers_dialog_title">Block texts from</string>
+    <string name="blocked_numbers_dialog_hint">தொலைபேசி எண்</string>
+    <string name="blocked_numbers_dialog_block">தடு</string>
+    <string name="blocked_messages_title">தடுக்கப்பட்ட தகவல்கள்</string>
+    <string name="blocked_messages_empty">உம் தடுக்கப்பட்ட தகவல்கள் இங்கு தோன்றும்</string>
+    <string name="blocking_block_title">தடு</string>
+    <string name="blocking_unblock_title">தடைநீக்கு</string>
+    <plurals name="blocking_block_external">
+        <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="other">Continue to %s and block these numbers</item>
+    </plurals>
+    <plurals name="blocking_unblock_external">
+        <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="other">Continue to %s and allow these numbers</item>
+    </plurals>
+    <string name="about_title">இதுபற்றி</string>
+    <string name="about_version_title">பதிப்பு</string>
+    <string name="about_developer_title">உருவாக்குநர்</string>
+    <string name="about_source_title">மூல குறியீடு</string>
+    <string name="about_changelog_title">மாற்றப்பதிவு</string>
+    <string name="about_contact_title">தொடர்பு</string>
+    <string name="about_license_title">உரிமம்</string>
+    <string name="about_copyright_title">பதிப்புரிமை</string>
+    <string name="qksms_plus_description_title">உருவாக்கத்தை ஆதரி, அனைத்தயும் பூட்டவிழ்</string>
+    <string name="qksms_plus_description_summary">பட்டினகிடக்கின்ற உருவாக்குநரை வெறும் %sக்கு தாங்கள் காப்பாற்றலாம்</string>
+    <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
+    <string name="qksms_plus_upgrade">%1$s %2$s க்கு வாழ்நாள் தரமுயர்த்தல்</string>
+    <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
+    <string name="qksms_plus_upgrade_donate">%1$s %2$s க்கு நன்கொடையளி + பூட்டவிழ்</string>
+    <string name="qksms_plus_thanks_title">QKSMSஐ ஆதரித்ததற்கு நன்றி!</string>
+    <string name="qksms_plus_thanks_summary">எல்லா QKSMS+ அம்சங்களுக்கும் இப்போது உமக்கு அனுகல் உண்டு</string>
+    <string name="qksms_plus_error">பிழை ஏற்பட்டது, மீண்டும் முயலவும்</string>
+    <string name="qksms_plus_free_title">QKSMS+ is free for F-Droid users! If you\'d like to support development, a donation would be highly appreciated.</string>
+    <string name="qksms_plus_donate">PayPal மூலம் நன்கொடையளி</string>
+    <string name="qksms_plus_coming_soon">விரைவில் வருகிறது</string>
+    <string name="qksms_plus_themes_title">உயர்தர தோற்றங்கள்</string>
+    <string name="qksms_plus_themes_summary">Unlock beautiful theme colors not available on the Material Design palette</string>
+    <string name="qksms_plus_emoji_title">தனிப்பயன் தானியங்கு-உருவடி</string>
+    <string name="qksms_plus_emoji_summary">தனிப்பயன் தானியங்கு-உருவடி குறுக்குவழிகளை உருவாக்கு</string>
+    <string name="qksms_plus_backup_title">தகவல் காப்புப்பிரதி</string>
+    <string name="qksms_plus_backup_summary">Automatically back up your messages. Never again worry about losing your history if you change phones or your phone gets lost</string>
+    <string name="qksms_plus_scheduled_title">திட்டமிடப்பட்ட தகவல்கள்</string>
+    <string name="qksms_plus_scheduled_summary">குறிப்பிட்ட நேரம் மற்றும் தேதியில் தகவல்கள் தானாக அனுப்பப்பட  நேரங்குறி</string>
+    <string name="qksms_plus_delayed_title">தாமத அனுப்பல்</string>
+    <string name="qksms_plus_delayed_summary">உமது தகவலை அனுப்பும்முன் சில விநாடிகள் காத்திரு</string>
+    <string name="qksms_plus_night_title">தானியங்கு இரவு பயன்முறை</string>
+    <string name="qksms_plus_night_summary">நாளின் நேரத்தின் அடிப்படையில் இரவு பயன்முறையை இயக்கு</string>
+    <string name="qksms_plus_blacklist_title">மேம்பட்ட தடுத்தல்</string>
+    <string name="qksms_plus_blacklist_summary">Block messages that contain keywords or match patterns</string>
+    <string name="qksms_plus_forward_title">தானாக-முன்னனுப்பு</string>
+    <string name="qksms_plus_forward_summary">Automatically forward messages from certain senders</string>
+    <string name="qksms_plus_respond_title">தானாக-விடையளி</string>
+    <string name="qksms_plus_respond_summary">முன்னே அமைத்த விடையுடன் உள்வருங் குறுந்தகவல்களுக்கு தானாக விடையளி</string>
+    <string name="qksms_plus_more_title">மேலும்</string>
+    <string name="qksms_plus_more_summary">QKSMS is under active development, and your purchase will include all future QKSMS+ features!</string>
+    <string name="widget_loading">ஏற்றுகிறது...</string>
+    <string name="widget_more">மேலும் உரையாடல்களை பார்</string>
+    <string name="qkreply_menu_read">படித்ததாகக் குறி</string>
+    <string name="qkreply_menu_call">அழை</string>
+    <string name="qkreply_menu_delete">அழி</string>
+    <string name="qkreply_menu_expand">அதிகம் காட்டு</string>
+    <string name="qkreply_menu_collapse">குறைவாக காட்டு</string>
+    <string name="qkreply_menu_view">உரையாடலை திற</string>
+    <string name="theme_material">Material</string>
+    <string name="theme_hex">HEX</string>
+    <string name="theme_apply">விண்ணப்பி</string>
+    <string-array name="notification_actions">
+        <item>ஏதுமில்லை</item>
+        <item>காப்பகப்படுத்து</item>
+        <item>அழி</item>
+        <item>தடு</item>
+        <item>அழை</item>
+        <item>படித்ததாகக் குறி</item>
+        <item>பதிலளி</item>
+    </string-array>
+    <string name="button_yes">ஆம்</string>
+    <string name="button_continue">தொடரு</string>
+    <string name="button_cancel">ரத்துசெய்</string>
+    <string name="button_delete">அழி</string>
+    <string name="button_save">சேமி</string>
+    <string name="button_stop">நிறுத்து</string>
+    <string name="button_more">மேலும்</string>
+    <string name="button_set">அமை</string>
+    <string name="button_undo">செயல்தவிர்</string>
+    <string name="toast_copied">நகலெடுக்கப்பட்டது</string>
+    <string name="toast_archived">காப்பகப்படுத்திய உரையாடல்</string>
+    <string name="toast_qksms_plus">இதைப் பயன்படுத்த கட்டாயம் QKSMS+ ஐப் பூட்டவிழ்க்க வேண்டும்</string>
+    <plurals name="notification_new_messages">
+        <item quantity="one">புது தகவல்</item>
+        <item quantity="other">%s புது தகவல்கள்</item>
+    </plurals>
+    <string name="notification_message_failed_title">தகவல் அனுப்பப்படவில்லை</string>
+    <string name="notification_message_failed_text">%s-க்கான குறுந்தகவல் அனுப்ப தோல்வி</string>
+    <string-array name="night_modes">
+        <item>முறைமை</item>
+        <item>முடக்கத்தில்</item>
+        <item>எப்போதும் இயக்கத்தில்</item>
+        <item>தானியங்கு</item>
+    </string-array>
+    <string-array name="notification_preview_options">
+        <item>பெயர் மற்றும் தகவல் காட்டு</item>
+        <item>பெயர் காட்டு</item>
+        <item>உள்ளடக்கங்களை மறை</item>
+    </string-array>
+    <string-array name="text_sizes">
+        <item>சிறிய</item>
+        <item>இயல்பு</item>
+        <item>பெரிய</item>
+        <item>மிகப்பெரிய</item>
+    </string-array>
+    <string-array name="delayed_sending_labels">
+        <item>தாமதம் இல்லை</item>
+        <item>3 விநாடிகள்</item>
+        <item>5 வினாடிகள்</item>
+        <item>10 வினாடிகள்</item>
+    </string-array>
+    <string-array name="mms_sizes">
+        <item>தானியங்கு</item>
+        <item>100KB</item>
+        <item>200KB</item>
+        <item>300KB</item>
+        <item>600KB</item>
+        <item>1000KB</item>
+        <item>2000KB</item>
+        <item>No compression</item>
+    </string-array>
+    <string-array name="qk_responses">
+        <item>சரி</item>
+        <item>சற்றுநேரம் பொறு</item>
+        <item>இதோ வந்துகொண்டே</item>
+        <item>நன்றி</item>
+        <item>Sounds good</item>
+        <item>What\'s up?</item>
+        <item>Agreed</item>
+        <item>இல்லை</item>
+        <item>விரும்புகிறேன்</item>
+        <item>மன்னிக்கவும்</item>
+        <item>சசி(சத்தமாக சிரிக்கிறேன்)</item>
+        <item>அது பரவாயில்லை</item>
+    </string-array>
+</resources>

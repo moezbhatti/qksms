@@ -79,6 +79,8 @@
     <string name="dialog_delete_title">Delete</string>
     <plurals name="dialog_delete_message">
         <item quantity="one">Are you sure you would like to delete this conversation?</item>
+        <item quantity="two">Are you sure you would like to delete %d conversations?</item>
+        <item quantity="few">Are you sure you would like to delete %d conversations?</item>
         <item quantity="other">Are you sure you would like to delete %d conversations?</item>
     </plurals>
     <string-array name="message_options">
@@ -246,6 +248,8 @@
     <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
     <plurals name="settings_auto_delete_summary">
         <item quantity="one">After 1 day</item>
+        <item quantity="two">After %d days</item>
+        <item quantity="few">After %d days</item>
         <item quantity="other">After %d days</item>
     </plurals>
     <string name="settings_long_as_mms_title">Send long messages as MMS</string>
@@ -282,10 +286,14 @@
     <string name="blocking_unblock_title">Unblock</string>
     <plurals name="blocking_block_external">
         <item quantity="one">Continue to %s and block this number</item>
+        <item quantity="two">Continue to %s and block these numbers</item>
+        <item quantity="few">Continue to %s and block these numbers</item>
         <item quantity="other">Continue to %s and block these numbers</item>
     </plurals>
     <plurals name="blocking_unblock_external">
         <item quantity="one">Continue to %s and allow this number</item>
+        <item quantity="two">Continue to %s and allow these numbers</item>
+        <item quantity="few">Continue to %s and allow these numbers</item>
         <item quantity="other">Continue to %s and allow these numbers</item>
     </plurals>
     <string name="about_title">About</string>
@@ -362,6 +370,8 @@
     <string name="toast_qksms_plus">You must unlock QKSMS+ to use this</string>
     <plurals name="notification_new_messages">
         <item quantity="one">New message</item>
+        <item quantity="two">%s new messages</item>
+        <item quantity="few">%s new messages</item>
         <item quantity="other">%s new messages</item>
     </plurals>
     <string name="notification_message_failed_title">Message not sent</string>

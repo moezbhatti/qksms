@@ -61,6 +61,7 @@
     <string name="main_permission_required">Autorisation requise</string>
     <string name="main_permission_sms">QKSMS a besoin de l\'autorisation d’envoyer et de consulter des messages SMS</string>
     <string name="main_permission_contacts">QKSMS a besoin de l\'autorisation d\'accéder aux contacts</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Autoriser</string>
     <string name="drawer_inbox">Boite de réception</string>
     <string name="drawer_archived">Archivées</string>
@@ -145,24 +146,26 @@
     <string name="backup_title">Sauvegarde et restauration</string>
     <string name="backup_backing_up">Sauvegarde des messages</string>
     <string name="backup_restoring">Restaurer à partir d\'une sauvegarde</string>
-    <string name="backup_last">Dernière sauvegarde</string>
     <string name="backup_loading">Chargement&#8230;</string>
     <string name="backup_never">Jamais</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Restauration</string>
     <string name="backup_restore_summary">Sélectionner une sauvegarde</string>
     <string name="backup_restore_error_plus">Déverrouillez QKSMS+ pour utiliser la sauvegarde et la restauration</string>
     <string name="backup_restore_error_backup">Sauvegarde en cours&#8230;</string>
     <string name="backup_restore_error_restore">Restauration en cours&#8230;</string>
     <string name="backup_restore_confirm_title">Restaurer à partir d’une sauvegarde</string>
-    <string name="backup_restore_confirm_message">Êtes-vous sûr de vouloir restaurer vos messages à partir de cette sauvegarde ?</string>
     <string name="backup_restore_stop_title">Arrêter la restauration</string>
     <string name="backup_restore_stop_message">Les messages qui ont déjà été restaurés resteront sur votre appareil</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Sauvegardes</string>
     <string name="backup_restore_dialog_empty">Aucune sauvegarde trouvée</string>
-    <plurals name="backup_message_count">
-        <item quantity="one">%d message</item>
-        <item quantity="other">%d messages</item>
-    </plurals>
     <string name="backup_disclaimer">Actuellement, seulement la sauvegarde et la restauration des SMS sont pris en charge. Les MMS et les sauvegardes planifiées arriveront bientôt !</string>
     <string name="backup_now">Sauvegarder maintenant</string>
     <string name="backup_progress_parsing">Analyse de la sauvegarde&#8230;</string>
@@ -262,7 +265,7 @@
     <string name="blocking_manager_title">Gestionnaire de blocage</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Fonction de blocage intégrée dans QKSMS</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">Bloquer les spams, les numéros &amp; les appels inconnus avec une liste noire &amp; Planifier</string>
     <string name="blocking_manager_call_control_summary">Filtrez automatiquement vos appels et vos messages dans un seul endroit pratique ! La communauté IQ™ vous permet d\'éviter les messages indésirables des spammeurs connus de celle-ci</string>
     <string name="blocking_manager_sia_summary">Filtrer automatiquement les messages de numéros non sollicités à l’aide de l’application « Devrais-je répondre »</string>
     <string name="blocking_manager_copy_title">Copier les numéros bloqués</string>
@@ -278,11 +281,11 @@
     <string name="blocking_block_title">Bloquer</string>
     <string name="blocking_unblock_title">Débloquer</string>
     <plurals name="blocking_block_external">
-        <item quantity="one">Continuer avec %s et bloquer ce numéro</item>
+        <item quantity="one">Continuer à %s et bloquer ce numéro</item>
         <item quantity="other">Continuer à %s et bloquer ces numéros</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="one">Continuer avec %s et autoriser ce numéro</item>
+        <item quantity="one">Continuer à %s et autoriser ce numéro</item>
         <item quantity="other">Continuer à %s et autoriser ces numéros</item>
     </plurals>
     <string name="about_title">À propos</string>
@@ -301,7 +304,7 @@
     <string name="qksms_plus_upgrade_donate">Déverrouiller + faire un don pour %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Merci de soutenir QKSMS !</string>
     <string name="qksms_plus_thanks_summary">Vous avez maintenant accès à toutes les fonctionnalités de QKSMS+</string>
-    <string name="qksms_plus_error">An error has occurred, please try again</string>
+    <string name="qksms_plus_error">Une erreur s\'est produite. Merci de réessayer.</string>
     <string name="qksms_plus_free_title">QKSMS + est gratuit pour les utilisateurs de F-Droid ! Si vous souhaitez soutenir le développement, n’hésitez pas à faire un don.</string>
     <string name="qksms_plus_donate">Faire un don avec PayPal</string>
     <string name="qksms_plus_coming_soon">Prochainement</string>

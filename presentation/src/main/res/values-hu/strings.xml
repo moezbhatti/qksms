@@ -43,8 +43,8 @@
     <string name="main_menu_add_contact">Hozzáadás az ismerősökhöz</string>
     <string name="main_menu_pin">Rögzítés a tetejére</string>
     <string name="main_menu_unpin">Rögzítés törlése</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_read">Megjelölés olvasottként</string>
+    <string name="main_menu_unread">Megjelölés olvasatlanként</string>
     <string name="main_menu_block">Tiltás</string>
     <string name="main_syncing">Üzenetek szinkronizálása&#8230;</string>
     <string name="main_sender_you">Te: %s</string>
@@ -61,6 +61,7 @@
     <string name="main_permission_required">Engedély szükséges</string>
     <string name="main_permission_sms">A QKSMS-nek engedélyt kell kapnia az SMS üzenetek küldésére és megtekintésére</string>
     <string name="main_permission_contacts">A QKSMS-nek engedélyt kell kapnia a telefonkönyv megtekintésére</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Engedélyez</string>
     <string name="drawer_inbox">Bejövő üzenetek</string>
     <string name="drawer_archived">Archivált</string>
@@ -124,7 +125,7 @@
     <string name="compose_contact_cd">Személy hozzáadása</string>
     <string name="compose_contact_error">Hiba a személy olvasása közben</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) kiválasztva</string>
     <string name="compose_sim_cd">%s kiválasztva, cserélj SIM kártyát</string>
     <string name="compose_send_cd">Üzenet küldése</string>
     <string name="message_status_sending">Küldés&#8230;</string>
@@ -145,24 +146,26 @@
     <string name="backup_title">Mentés és visszaállítás</string>
     <string name="backup_backing_up">Üzenetek mentése</string>
     <string name="backup_restoring">Üzenetek visszaállítása mentésből</string>
-    <string name="backup_last">Utolsó mentés</string>
     <string name="backup_loading">Betöltés&#8230;</string>
     <string name="backup_never">Soha</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Visszaállítás</string>
     <string name="backup_restore_summary">Válassz egy mentést</string>
     <string name="backup_restore_error_plus">Oldd fel a QKSMS+-t a mentés és visszaállítás használatához</string>
     <string name="backup_restore_error_backup">Mentés folyamatban&#8230;</string>
     <string name="backup_restore_error_restore">Visszaállítás folyamatban&#8230;</string>
     <string name="backup_restore_confirm_title">Visszaállítás mentésből</string>
-    <string name="backup_restore_confirm_message">Biztos vagy benne hogy vissza akarod állítani a mentésből a üzeneteket?</string>
     <string name="backup_restore_stop_title">Visszaállítás megállítása</string>
     <string name="backup_restore_stop_message">A már visszaállított üzenetek a készülékeden maradnak</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Mentések</string>
     <string name="backup_restore_dialog_empty">Nincsenek mentések</string>
-    <plurals name="backup_message_count">
-        <item quantity="one">%d üzenet</item>
-        <item quantity="other">%d üzenet</item>
-    </plurals>
     <string name="backup_disclaimer">Jelenleg a mentés csak az SMS üzeneteket menti. Az MMS támogatás és az időzített mentések hamarosan jönnek!</string>
     <string name="backup_now">Mentés most</string>
     <string name="backup_progress_parsing">Mentés elemzése&#8230;</string>
@@ -222,10 +225,10 @@
         <item>Nincs</item>
         <item>Archiválás</item>
         <item>Törlés</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Blokkolás</item>
+        <item>Hívás</item>
+        <item>Megjelölés olvasottként</item>
+        <item>Megjelölés olvasatlanként</item>
     </string-array>
     <string name="settings_delivery_title">Elküldés megerősítése</string>
     <string name="settings_delivery_summary">Megerősíti, hogy az üzenetek sikeresen el lettek-e küldve</string>
@@ -235,15 +238,15 @@
     <string name="settings_unicode_summary">A kimenő SMS-üzenetek ékezetes karaktereinek átalakítása</string>
     <string name="settings_mobile_title">Csak mobilszámok</string>
     <string name="settings_mobile_summary">Üzenet írásánál csak a mobilszámokat mutassa</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">Régi üzenetek automatikus törlése</string>
+    <string name="settings_auto_delete_dialog_message">Az üzenetek törlődnek pár nap múlva</string>
+    <string name="settings_auto_delete_dialog_hint">Napok száma</string>
+    <string name="settings_auto_delete_never">Soha</string>
+    <string name="settings_auto_delete_warning">Szeretné törölni a régi üzeneteket automatikusan?</string>
+    <string name="settings_auto_delete_warning_message">Ha folytatod, %1$d üzenet törlődik</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">1 nap múlva</item>
+        <item quantity="other">%d nap múlva</item>
     </plurals>
     <string name="settings_long_as_mms_title">A hosszú üzenetek MMS-ként küldése</string>
     <string name="settings_long_as_mms_summary">Ha a hosszabb üzenetek küldése sikertelen, vagy rossz sorrendben érkeznek akkor lehet őket MMS-ként küldeni, de ez díjköteles lehet</string>
@@ -262,7 +265,7 @@
     <string name="blocking_manager_title">Tiltáskezelő</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">A QKSMS beépített tiltási funkciója</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">Spam üzenetek blokkolása, számok &amp; ismeretlek hívások feketelistával &amp; Ütemezés</string>
     <string name="blocking_manager_call_control_summary">Egy kényelmesen kezelhető helyen a hívások és üzenetek szűrése! A Community IQ™ megakadályozza a közösség által ismert spammerek üzeneteit</string>
     <string name="blocking_manager_sia_summary">Automatikusan szűrheti az üzeneteket a nem kívánt számok alapján a \"Should I Answer\" alkalmazás használatával</string>
     <string name="blocking_manager_copy_title">Tiltott számok másolása</string>
@@ -301,7 +304,7 @@
     <string name="qksms_plus_upgrade_donate">Minden funkció engedélyezése + adomány %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Köszönjük, hogy támogatot a QKSMS-t!</string>
     <string name="qksms_plus_thanks_summary">MOst hozzáférsz minden QKSMS+ funkcióhoz</string>
-    <string name="qksms_plus_error">An error has occurred, please try again</string>
+    <string name="qksms_plus_error">Hiba történt, kérjük próbáld újra</string>
     <string name="qksms_plus_free_title">A QKSMS+ minden F-Droid felhasználónak ingyenes. Ha támogatni szeretnéd a fejlesztést az alábbi módon megteheted.</string>
     <string name="qksms_plus_donate">Támogatás PayPalon keresztül</string>
     <string name="qksms_plus_coming_soon">Hamarosan</string>
@@ -327,7 +330,7 @@
     <string name="qksms_plus_more_summary">A QKSMS folyamatos fejlesztés alatt áll és a vásárlásod a jövőbeni QKSMS+ funkciókat is tartalmazza!</string>
     <string name="widget_loading">Betöltés&#8230;</string>
     <string name="widget_more">További társalgások megtekintése</string>
-    <string name="qkreply_menu_read">Mark read</string>
+    <string name="qkreply_menu_read">Megjelölés olvasottként</string>
     <string name="qkreply_menu_call">Hívás</string>
     <string name="qkreply_menu_delete">Törlés</string>
     <string name="qkreply_menu_expand">Több megjelenítése</string>
@@ -338,12 +341,12 @@
     <string name="theme_apply">Alkalmaz</string>
     <string-array name="notification_actions">
         <item>Nincs</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>Arhiválás</item>
+        <item>Törlés</item>
+        <item>Blokkolás</item>
+        <item>Hívás</item>
+        <item>Megjelölés olvasottként</item>
+        <item>Válasz</item>
     </string-array>
     <string name="button_yes">Igen</string>
     <string name="button_continue">Folytatás</string>
@@ -382,19 +385,19 @@
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Nincs késleltetés</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>3 másodperc</item>
+        <item>5 másodperc</item>
+        <item>10 másodperc</item>
     </string-array>
     <string-array name="mms_sizes">
-        <item>Automatic</item>
-        <item>100KB</item>
+        <item>Automatikus</item>
+        <item>100 KB</item>
         <item>200KB</item>
         <item>300KB</item>
         <item>600KB</item>
         <item>1000KB</item>
         <item>2000KB</item>
-        <item>No compression</item>
+        <item>Nincs tömörítés</item>
     </string-array>
     <string-array name="qk_responses">
         <item>Oké</item>

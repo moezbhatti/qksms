@@ -61,6 +61,7 @@
     <string name="main_permission_required">Membutuhkan izin</string>
     <string name="main_permission_sms">QKSMS membutuhkan izin untuk mengirim dan membaca pesan SMS</string>
     <string name="main_permission_contacts">QKSMS membutuhkan izin untuk membaca kontak anda</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Izinkan</string>
     <string name="drawer_inbox">Kotak masuk</string>
     <string name="drawer_archived">Diarsipkan</string>
@@ -144,23 +145,26 @@
     <string name="backup_title">Cadangan dan pemulihan</string>
     <string name="backup_backing_up">Mencadangankan pesan</string>
     <string name="backup_restoring">Memulihkan cadangan pesan</string>
-    <string name="backup_last">Cadangan terakhir</string>
     <string name="backup_loading">Memuat&#8230;</string>
     <string name="backup_never">Tidak pernah</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Pulihkan</string>
     <string name="backup_restore_summary">Pilih cadangan</string>
     <string name="backup_restore_error_plus">Silakan buka akses QKSMS+ untuk menggunakan fitur cadangan dan pemulihan</string>
     <string name="backup_restore_error_backup">Pencadangan sedang berlangsung&#8230;</string>
     <string name="backup_restore_error_restore">Pemulihan sedang berlangsung&#8230;</string>
     <string name="backup_restore_confirm_title">Pulihkan dari cadangan</string>
-    <string name="backup_restore_confirm_message">Apakah anda yakin ingin memulihkan pesan anda dari cadangan ini?</string>
     <string name="backup_restore_stop_title">Setop pemulihan</string>
     <string name="backup_restore_stop_message">Pesan yang telah dipulihkan akan tetap berada di perangkat anda</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Cadangan</string>
     <string name="backup_restore_dialog_empty">Cadangan tidak ditemukan</string>
-    <plurals name="backup_message_count">
-        <item quantity="other">%d pesan</item>
-    </plurals>
     <string name="backup_disclaimer">Saat ini, Cadangan dan Pemulihan hanya mendukung pesan SMS. Dukungan MMS dan cadangan terjadwal akan segera datang!</string>
     <string name="backup_now">Cadangkan sekarang</string>
     <string name="backup_progress_parsing">Membaca cadangan&#8230;</string>
@@ -259,7 +263,7 @@
     <string name="blocking_manager_title">Pengelola Pemblokiran</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Fitur pemblokiran pesan di dalam QKSMS</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">Blokir pesan spam, nomor &amp; panggilan tak dikenal dengan daftar hitam &amp; Jadwal</string>
     <string name="blocking_manager_call_control_summary">Otomatis menyaring panggilan dan pesan di dalam satu tempat! Community IQ™ memungkinkan anda memblokir pesan yang tidak diinginkan dari daftar spammer</string>
     <string name="blocking_manager_sia_summary">Secara otomatis menyaring pesan dari nomor yang tidak diinginkan menggunakan aplikasi \"Should I Answer\"</string>
     <string name="blocking_manager_copy_title">Salin nomor yang diblokir</string>
@@ -296,7 +300,7 @@
     <string name="qksms_plus_upgrade_donate">Unlock + donate for %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Terima kasih telah mendukung QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Anda sekarang bisa mengakses semua fitur QKSMS+</string>
-    <string name="qksms_plus_error">An error has occurred, please try again</string>
+    <string name="qksms_plus_error">Telah terjadi kesalahan, silakan coba kembali</string>
     <string name="qksms_plus_free_title">QKSMS+ selalu gratis untuk pengguna F-Droid! Jika anda ingin mendukung pengembangan, jangan ragu untuk donasi.</string>
     <string name="qksms_plus_donate">Donasi via PayPal</string>
     <string name="qksms_plus_coming_soon">Segera hadir</string>

@@ -43,8 +43,8 @@
     <string name="main_menu_add_contact">Shrani v imenik</string>
     <string name="main_menu_pin">Pripni na vrh</string>
     <string name="main_menu_unpin">Odpni</string>
-    <string name="main_menu_read">Mark read</string>
-    <string name="main_menu_unread">Mark unread</string>
+    <string name="main_menu_read">Označi kot prebrano</string>
+    <string name="main_menu_unread">Označi kot neprebrano</string>
     <string name="main_menu_block">Blokiraj</string>
     <string name="main_syncing">Sinhroniziranje sporočil&#8230;</string>
     <string name="main_sender_you">Vi: %s</string>
@@ -61,6 +61,7 @@
     <string name="main_permission_required">Potrebno dovoljenje</string>
     <string name="main_permission_sms">QKSMS potrebuje dovoljenje za pošiljanje in branje SMS sporočil</string>
     <string name="main_permission_contacts">QKSMS potrebuje dovoljenje za dostop do stikov</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Dovoli</string>
     <string name="drawer_inbox">Prejeto</string>
     <string name="drawer_archived">Arhiv</string>
@@ -84,7 +85,7 @@
     </plurals>
     <string-array name="message_options">
         <item>Kopiraj besedilo</item>
-        <item>Naprej</item>
+        <item>Posreduj</item>
         <item>Izbriši</item>
     </string-array>
     <string name="compose_number_picker_title">Izberi telefonsko številko</string>
@@ -103,7 +104,7 @@
     <string name="compose_scheduled_toast">Dodano k načrtovanim sporočilom</string>
     <string name="compose_hint">Napiši sporočilo&#8230;</string>
     <string name="compose_menu_copy">Kopiraj besedilo</string>
-    <string name="compose_menu_forward">Naprej</string>
+    <string name="compose_menu_forward">Posreduj</string>
     <string name="compose_menu_delete">Izbriši</string>
     <string name="compose_menu_previous">Prejšnje</string>
     <string name="compose_menu_next">Naslednje</string>
@@ -126,7 +127,7 @@
     <string name="compose_contact_cd">Vstavi stik</string>
     <string name="compose_contact_error">Napaka pri branju stika</string>
     <!-- Example: SIM 1 (Verizon) selected-->
-    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selected</string>
+    <string name="compose_sim_changed_toast">SIM %1$d (%2$s) izbrana</string>
     <string name="compose_sim_cd">%s izbran, zamenjaj kartico SIM</string>
     <string name="compose_send_cd">Pošlji sporočilo</string>
     <string name="message_status_sending">Pošiljanje&#8230;</string>
@@ -147,26 +148,26 @@
     <string name="backup_title">Varnostna kopija in obnovitev</string>
     <string name="backup_backing_up">Ustvarjanje varnostne kopije sporočil</string>
     <string name="backup_restoring">Obnovitev varnostne kopije</string>
-    <string name="backup_last">Zadnja varnostna kopija</string>
     <string name="backup_loading">Nalaganje&#8230;</string>
     <string name="backup_never">Nikoli</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Obnovi</string>
     <string name="backup_restore_summary">Izberi varnostno kopijo</string>
     <string name="backup_restore_error_plus">Prosimo odklenite QKSMS+ da omogočite uporabo varnostnih kopij in njihove obnove</string>
     <string name="backup_restore_error_backup">Varnostna kopija se izvaja&#8230;</string>
     <string name="backup_restore_error_restore">Obnavljanje varnostne kopije se izvaja&#8230;</string>
     <string name="backup_restore_confirm_title">Obnovi iz varnotsne kopije</string>
-    <string name="backup_restore_confirm_message">Ali ste prepričani, da želite obnoviti sporočila iz te varnostne kopije?</string>
     <string name="backup_restore_stop_title">Prekliči obnovitev varnostne kopije</string>
     <string name="backup_restore_stop_message">Sporočila, ki so že bila obnovljena, bodo ostala na vaši napravi</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Varnostne kopije</string>
     <string name="backup_restore_dialog_empty">Ni najdenih varnostnih kopij</string>
-    <plurals name="backup_message_count">
-        <item quantity="one">%d sporočilo</item>
-        <item quantity="two">%d sporočila</item>
-        <item quantity="few">%d sporočil</item>
-        <item quantity="other">%d sporočila</item>
-    </plurals>
     <string name="backup_disclaimer">Trenutno so za ustvarjanje in obnovo varnostnih kopij podprta le sporočila SMS. MMS podpora in varnostne kopije pridejo kmalu!</string>
     <string name="backup_now">Ustvari varnostno kopijo</string>
     <string name="backup_progress_parsing">Razčlenjevanje varnostne kopije&#8230;</string>
@@ -226,10 +227,10 @@
         <item>Brez</item>
         <item>Arhiviraj</item>
         <item>Izbriši</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Mark unread</item>
+        <item>Blokiraj</item>
+        <item>Klic</item>
+        <item>Označi kot prebrano</item>
+        <item>Označi kot neprebrano</item>
     </string-array>
     <string name="settings_delivery_title">Potrditev dostavitve sporočila</string>
     <string name="settings_delivery_summary">Potrdi, da so bila sporočila dostavljena uspešno</string>
@@ -239,17 +240,17 @@
     <string name="settings_unicode_summary">Odstrani narečja iz besedila odhodnih SMS sporočil</string>
     <string name="settings_mobile_title">Samo telefonske številke</string>
     <string name="settings_mobile_summary">Ko sestavljaš sporočilo, prikaži samo telefonske številke</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">Samodejno izbriši stara sporočila</string>
+    <string name="settings_auto_delete_dialog_message">Po izbranem številu dni bodo sporočila izbrisana</string>
+    <string name="settings_auto_delete_dialog_hint">Število dni</string>
+    <string name="settings_auto_delete_never">Nikoli</string>
+    <string name="settings_auto_delete_warning">Samodejno izbriši stara sporočila?</string>
+    <string name="settings_auto_delete_warning_message">Če nadaljujete, bo sedaj odstranjenih %1$d sporočil</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="one">After 1 day</item>
-        <item quantity="two">After %d days</item>
-        <item quantity="few">After %d days</item>
-        <item quantity="other">After %d days</item>
+        <item quantity="one">Po %d dnevu</item>
+        <item quantity="two">Po %d dnevih</item>
+        <item quantity="few">po %d dneh</item>
+        <item quantity="other">po %d dnevih</item>
     </plurals>
     <string name="settings_long_as_mms_title">Pošlji dolga sporočila kot MMS</string>
     <string name="settings_long_as_mms_summary">Če se vaša daljša sporočila ne pošljejo, ali se pošiljajo v napačnem vrstnem redu, jih lahko pošljete kot MMS sporočilo. To lahko povzroči dodatne stroške</string>
@@ -268,7 +269,7 @@
     <string name="blocking_manager_title">Upravljalnik Blokiranja</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">Vgrajena sposobnost blokiranja v QKSMS</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">Blokiraj neželena sporočila, številke &amp; neznane klice s črnim seznamom &amp; Urnik</string>
     <string name="blocking_manager_call_control_summary">Samodejno razvrstite vaše klice in sporočila v eno priročno mesto! Skupnostni IQ™ omogoča, da preprečite prejemanje sporočil pošiljateljev neželenih sporočil, kateri so skupnosti poznani</string>
     <string name="blocking_manager_sia_summary">Samodejno razvrstite sporočila neželenih številk tako, da uporabiš \"Should I Answer\" aplikacijo</string>
     <string name="blocking_manager_copy_title">Kopiraj blokirane številke</string>
@@ -311,7 +312,7 @@
     <string name="qksms_plus_upgrade_donate">Odkleni + doniraj za %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">Hvala da podpirate QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Zdaj imate dostop do vseh QKSMS+ funkcij</string>
-    <string name="qksms_plus_error">An error has occurred, please try again</string>
+    <string name="qksms_plus_error">Pojavila se je napaka, prosimo poskusite znova</string>
     <string name="qksms_plus_free_title">QKSMS+ je brezplačen za F-Droid uporabnike! Če želite podpirati razvoj, so donacije zelo dobrodošle.</string>
     <string name="qksms_plus_donate">Doniraj preko PayPal</string>
     <string name="qksms_plus_coming_soon">Prihaja kmalu</string>
@@ -337,7 +338,7 @@
     <string name="qksms_plus_more_summary">QKSMS je pod aktivnim razvojem in vaš nakup QKSMS+ bo vseboval vse prihodnje funkcije!</string>
     <string name="widget_loading">Nalaganje&#8230;</string>
     <string name="widget_more">Poglej več pogovorov</string>
-    <string name="qkreply_menu_read">Mark read</string>
+    <string name="qkreply_menu_read">Označi kot prebrano</string>
     <string name="qkreply_menu_call">Pokliči</string>
     <string name="qkreply_menu_delete">Izbriši</string>
     <string name="qkreply_menu_expand">Pokaži več</string>
@@ -348,12 +349,12 @@
     <string name="theme_apply">Potrdi</string>
     <string-array name="notification_actions">
         <item>Brez</item>
-        <item>Archive</item>
-        <item>Delete</item>
-        <item>Block</item>
-        <item>Call</item>
-        <item>Mark read</item>
-        <item>Reply</item>
+        <item>Arhiv</item>
+        <item>Izbriši</item>
+        <item>Blokiraj</item>
+        <item>Klic</item>
+        <item>Označi kot prebrano</item>
+        <item>Odgovori</item>
     </string-array>
     <string name="button_yes">Da</string>
     <string name="button_continue">Nadaljuj</string>
@@ -394,9 +395,9 @@
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>Brez zakasnitve</item>
-        <item>3 seconds</item>
-        <item>5 seconds</item>
-        <item>10 seconds</item>
+        <item>3 sekunde</item>
+        <item>5 sekund</item>
+        <item>10 sekund</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>Samodejno</item>

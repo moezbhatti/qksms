@@ -19,65 +19,66 @@
   -->
 <resources>
     <string name="shortcut_compose_long_label">新しい会話</string>
-    <string name="shortcut_compose_short_label">メッセージを書く</string>
-    <string name="shortcut_compose_disabled_message">無効にするショートカット</string>
-    <string name="title_archived">アーカイブ済</string>
+    <string name="shortcut_compose_short_label">新規作成</string>
+    <string name="shortcut_compose_disabled_message">ショートカットが無効です</string>
+    <string name="title_archived">アーカイブ済み</string>
     <string name="title_settings">設定</string>
     <string name="title_notification_prefs">通知</string>
     <string name="title_theme">テーマ</string>
     <string name="title_conversations">受信トレイを検索&#8230;</string>
-    <string name="title_compose">作成</string>
+    <string name="title_compose">名前または電話番号を入力</string>
     <string name="setup_skip">スキップ</string>
     <string name="setup_next">続行</string>
-    <string name="menu_add_person">人を追加</string>
+    <string name="menu_add_person">人物を追加</string>
     <string name="menu_call">通話</string>
     <string name="menu_info">詳細</string>
     <string name="menu_save">ギャラリーに保存</string>
     <string name="menu_share">共有</string>
-    <string name="main_drawer_open_cd">ナビゲーション引き出しを開く</string>
-    <string name="main_title_selected">%d 選択された</string>
-    <string name="main_menu_clear">消去しました</string>
+    <string name="main_drawer_open_cd">ナビゲーションドロワーを開く</string>
+    <string name="main_title_selected">%d 件を選択中</string>
+    <string name="main_menu_clear">消去</string>
     <string name="main_menu_archive">アーカイブ</string>
-    <string name="main_menu_unarchive">アーカイブしない</string>
+    <string name="main_menu_unarchive">アーカイブ解除</string>
     <string name="main_menu_delete">削除</string>
     <string name="main_menu_add_contact">連絡先に追加</string>
-    <string name="main_menu_pin">上部に固定します。</string>
-    <string name="main_menu_unpin">固定を解除します。</string>
+    <string name="main_menu_pin">上部に固定</string>
+    <string name="main_menu_unpin">固定を解除</string>
     <string name="main_menu_read">既読にする</string>
     <string name="main_menu_unread">未読にする</string>
     <string name="main_menu_block">ブロック</string>
-    <string name="main_syncing">同期メッセージ&#8230;</string>
+    <string name="main_syncing">メッセージを同期しています...</string>
     <string name="main_sender_you">あなた: %s</string>
-    <string name="main_draft">ドラフト</string>
-    <string name="main_message_results_title">メッセージの結果</string>
-    <string name="main_message_results">%d メッセージ</string>
+    <string name="main_draft">下書き</string>
+    <string name="main_message_results_title">メッセージ内の検索結果</string>
+    <string name="main_message_results">%d 件のメッセージ</string>
     <string name="inbox_empty_text">会話がここに表示されます</string>
-    <string name="inbox_search_empty_text">結果はありません</string>
+    <string name="inbox_search_empty_text">検索結果がありません</string>
     <string name="archived_empty_text">保存した会話がここに表示されます</string>
-    <string name="main_fab_cd">新しい会話を開始します。</string>
-    <string name="main_default_sms_title">もう一度テキストメッセージが大好き</string>
-    <string name="main_default_sms_message">QKSMS を既定の SMS アプリに設定する</string>
+    <string name="main_fab_cd">新しい会話を開始</string>
+    <string name="main_default_sms_title">もう一度テキストメッセージが好きになる</string>
+    <string name="main_default_sms_message">QKSMS を既定の SMS アプリに設定</string>
     <string name="main_default_sms_change">変更</string>
-    <string name="main_permission_required">必要なアクセス許可</string>
-    <string name="main_permission_sms">QKSMSはSMSメッセージを送信および表示する権限を必要とします</string>
-    <string name="main_permission_contacts">QKSMSはあなたの連絡先を閲覧する許可を必要とします</string>
-    <string name="main_permission_allow">許可する</string>
+    <string name="main_permission_required">アクセス権限を許可してください</string>
+    <string name="main_permission_sms">QKSMS は SMS メッセージを送信および表示する権限を必要とします</string>
+    <string name="main_permission_contacts">QKSMS はあなたの連絡先を閲覧する権限を必要とします</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
+    <string name="main_permission_allow">許可</string>
     <string name="drawer_inbox">受信トレイ</string>
-    <string name="drawer_archived">アーカイブ済</string>
-    <string name="drawer_scheduled">スケジュール済</string>
+    <string name="drawer_archived">アーカイブ済み</string>
+    <string name="drawer_scheduled">送信予約済み</string>
     <string name="drawer_blocking">ブロック</string>
     <string name="drawer_more">もっと</string>
     <string name="drawer_settings">設定</string>
     <string name="drawer_help">ヘルプとフィードバック</string>
-    <string name="drawer_invite">友達を招待する</string>
-    <string name="drawer_plus_banner_summary">驚くべき新機能のロックを解除し、開発をサポート</string>
-    <string name="rate_title">QKSMS をお楽みいただいていますか?</string>
-    <string name="rate_summary">Google Play で愛を共有して私たちを評価してください!</string>
-    <string name="rate_okay">OK!</string>
-    <string name="rate_dismiss">免じる</string>
+    <string name="drawer_invite">友達を招待</string>
+    <string name="drawer_plus_banner_summary">素敵な新機能を解放して、開発をサポート</string>
+    <string name="rate_title">QKSMS をお楽みいただいていますか？</string>
+    <string name="rate_summary">Google Play で愛を共有して私たちを評価してください！</string>
+    <string name="rate_okay">OK！</string>
+    <string name="rate_dismiss">非表示</string>
     <string name="dialog_delete_title">削除</string>
     <plurals name="dialog_delete_message">
-        <item quantity="other">%d の会話を削除するよろしいですか。</item>
+        <item quantity="other">本当に %d 件の会話を削除しますか？</item>
     </plurals>
     <string-array name="message_options">
         <item>テキストをコピー</item>
@@ -86,20 +87,20 @@
     </string-array>
     <string name="compose_number_picker_title">電話番号を選択</string>
     <string name="compose_number_picker_default">%s ∙ デフォルト</string>
-    <string name="compose_number_picker_once">一回だけ</string>
+    <string name="compose_number_picker_once">1 回だけ</string>
     <string name="compose_number_picker_always">常に</string>
-    <string name="compose_title_selected">%d件を選択中</string>
-    <string name="compose_subtitle_results">%2$d 結果の %1$d</string>
-    <string name="compose_send_group_title">グループ メッセージとして送信します。</string>
-    <string name="compose_send_group_summary">受信者と返信は全員に表示されます</string>
-    <string name="compose_messages_empty">これが会話の始まりです。 何か素敵なことを言ってください!</string>
+    <string name="compose_title_selected">%d 件を選択中</string>
+    <string name="compose_subtitle_results">%2$d 件中 %1$d 件の結果</string>
+    <string name="compose_send_group_title">グループ メッセージとして送信</string>
+    <string name="compose_send_group_summary">宛先と返信は全員に表示されます</string>
+    <string name="compose_messages_empty">これが会話の始まりです。何か素敵なことを言ってください！</string>
     <string name="compose_vcard_label">連絡先カード</string>
-    <string name="compose_scheduled_for">予定されている</string>
-    <string name="compose_scheduled_future">選択した時間は、将来的にする必要があります!</string>
-    <string name="compose_scheduled_plus">あなたのロックを解除する必要があります QKSMS + スケジュールされたメッセージングを使用するには</string>
-    <string name="compose_scheduled_toast">スケジュールされたメッセージに追加</string>
-    <string name="compose_hint">メッセージを書く&#8230;</string>
-    <string name="compose_menu_copy">テキストのコピー</string>
+    <string name="compose_scheduled_for">送信予約</string>
+    <string name="compose_scheduled_future">今より先の時間を選択してください！</string>
+    <string name="compose_scheduled_plus">メッセージの送信予約には、QKSMS+ のロックを解除する必要があります</string>
+    <string name="compose_scheduled_toast">送信予約メッセージに追加されました</string>
+    <string name="compose_hint">メッセージを書いてください&#8230;</string>
+    <string name="compose_menu_copy">テキストをコピー</string>
     <string name="compose_menu_forward">転送</string>
     <string name="compose_menu_delete">削除</string>
     <string name="compose_menu_previous">前へ</string>
@@ -107,25 +108,25 @@
     <string name="compose_menu_clear">消去</string>
     <string name="compose_details_title">メッセージの詳細</string>
     <string name="compose_details_type">タイプ: %s</string>
-    <string name="compose_details_from">宛先: %s</string>
+    <string name="compose_details_from">差出人: %s</string>
     <string name="compose_details_to">宛先:%s</string>
     <string name="compose_details_subject">件名: %s</string>
-    <string name="compose_details_priority">優先順位: %s</string>
+    <string name="compose_details_priority">優先度: %s</string>
     <string name="compose_details_size">サイズ: %s</string>
-    <string name="compose_details_sent">送られた: %s</string>
-    <string name="compose_details_received">受け取った: %s</string>
-    <string name="compose_details_delivered">配達: %s</string>
-    <string name="compose_details_error_code">エラーコード:%d</string>
-    <string name="compose_attach_cd">添付ファイルを追加する</string>
-    <string name="compose_gallery_cd">写真を添付する</string>
+    <string name="compose_details_sent">送信: %s</string>
+    <string name="compose_details_received">受信: %s</string>
+    <string name="compose_details_delivered">配信: %s</string>
+    <string name="compose_details_error_code">エラーコード: %d</string>
+    <string name="compose_attach_cd">添付ファイルを追加</string>
+    <string name="compose_gallery_cd">写真を添付</string>
     <string name="compose_camera_cd">写真を撮る</string>
-    <string name="compose_schedule_cd">スケジュールメッセージ</string>
-    <string name="compose_contact_cd">連絡先を添付する</string>
+    <string name="compose_schedule_cd">メッセージの送信を予約</string>
+    <string name="compose_contact_cd">連絡先を添付</string>
     <string name="compose_contact_error">連絡先の読み取りエラー</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) を選択しました</string>
-    <string name="compose_sim_cd">%s 選択、SIMカードを交換</string>
-    <string name="compose_send_cd">メッセージを送る</string>
+    <string name="compose_sim_cd">%s 選択、SIM カードを変更</string>
+    <string name="compose_send_cd">メッセージを送信</string>
     <string name="message_status_sending">送信中&#8230;</string>
     <string name="message_status_delivered">%s を配信しました</string>
     <string name="message_status_failed">送信に失敗しました。タップすると、もう一度やり直します</string>
@@ -137,47 +138,50 @@
     <string name="info_archive">アーカイブ</string>
     <string name="info_unarchive">アーカイブ解除</string>
     <string name="info_block">ブロック</string>
-    <string name="info_unblock">ブロックを解除</string>
+    <string name="info_unblock">ブロック解除</string>
     <string name="info_delete">会話を削除</string>
     <string name="gallery_error">メディアを読み込めませんでした</string>
     <string name="gallery_toast_saved">ギャラリーに保存</string>
     <string name="backup_title">バックアップと復元</string>
-    <string name="backup_backing_up">メッセージをバックアップする</string>
-    <string name="backup_restoring">バックアップからの復元</string>
-    <string name="backup_last">最後のバックアップ</string>
-    <string name="backup_loading">ロード中...</string>
-    <string name="backup_never">決して</string>
-    <string name="backup_restore_title">リストア</string>
+    <string name="backup_backing_up">メッセージをバックアップしています</string>
+    <string name="backup_restoring">バックアップから復元</string>
+    <string name="backup_loading">読み込み中...</string>
+    <string name="backup_never">なし</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_restore_title">復元</string>
     <string name="backup_restore_summary">バックアップを選択</string>
-    <string name="backup_restore_error_plus">バックアップと復元を使用するにはQKSMS+のロックを解除してください</string>
+    <string name="backup_restore_error_plus">バックアップと復元を使用するには QKSMS+ のロックを解除してください</string>
     <string name="backup_restore_error_backup">バックアップ中&#8230;</string>
     <string name="backup_restore_error_restore">復元中&#8230;</string>
     <string name="backup_restore_confirm_title">バックアップから復元</string>
-    <string name="backup_restore_confirm_message">このバックアップからメッセージを復元してもよろしいですか？</string>
-    <string name="backup_restore_stop_title">復元を停止する</string>
+    <string name="backup_restore_stop_title">復元を停止</string>
     <string name="backup_restore_stop_message">既に復元されたメッセージはあなたのデバイスに残ります</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">バックアップ</string>
     <string name="backup_restore_dialog_empty">バックアップが見つかりません</string>
-    <plurals name="backup_message_count">
-        <item quantity="other">%d メッセージ</item>
-    </plurals>
-    <string name="backup_disclaimer">現在、SMSのみがバックアップと復元でサポートされています。 MMSのサポートと定期的なバックアップは近日中に開始されます。</string>
+    <string name="backup_disclaimer">現在、SMS のみバックアップと復元に対応しています。 MMS 対応と定期バックアップは近日中に公開されます！</string>
     <string name="backup_now">今すぐバックアップ</string>
-    <string name="backup_progress_parsing">バックアップの解析中...</string>
-    <string name="backup_progress_running">%d/%dすべてのメッセージ</string>
+    <string name="backup_progress_parsing">バックアップを解析中...</string>
+    <string name="backup_progress_running">%d 件/%d 件のメッセージ</string>
     <string name="backup_progress_saving">バックアップを保存しています...</string>
     <string name="backup_progress_syncing">メッセージを同期しています...</string>
-    <string name="backup_progress_finished">終了しました。</string>
+    <string name="backup_progress_finished">終了しました！</string>
     <string name="backup_notification_channel_name">バックアップと復元</string>
-    <string name="scheduled_title">予定</string>
-    <string name="scheduled_empty_description">希望する瞬間に自動的にメッセージを送信する</string>
+    <string name="scheduled_title">予約</string>
+    <string name="scheduled_empty_description">希望する瞬間に自動的にメッセージを送信</string>
     <string name="scheduled_empty_message_1">ちょっと！あなたの誕生日はいつでしたか？</string>
-    <string name="scheduled_empty_message_2">12月23日です</string>
-    <string name="scheduled_empty_message_3">お誕生日おめでとうございます！ 私はあなたの誕生日を思い出して、何という素晴らしい友達なのか見て</string>
+    <string name="scheduled_empty_message_2">12 月 23 日です</string>
+    <string name="scheduled_empty_message_3">お誕生日おめでとうございます！ 私はあなたの誕生日を覚えている、素敵な友達でしょ？</string>
     <!--&#x200A; is a special character required at the end of this string to fix it's formatting in the app -->
-    <string name="scheduled_empty_message_3_timestamp">12月23日に発送</string>
-    <string name="scheduled_compose_cd">メッセージをスケジュールする</string>
-    <string name="scheduled_options_title">スケジュールされたメッセージ</string>
+    <string name="scheduled_empty_message_3_timestamp">12 月 23 日に送信</string>
+    <string name="scheduled_compose_cd">メッセージを送信予約</string>
+    <string name="scheduled_options_title">送信予約されたメッセージ</string>
     <string-array name="scheduled_options">
         <item>今すぐ送る</item>
         <item>テキストをコピー</item>
@@ -185,7 +189,7 @@
     </string-array>
     <string name="settings_category_appearance">外観</string>
     <string name="settings_category_general">全般</string>
-    <string name="settings_category_qkreply">QK 返信</string>
+    <string name="settings_category_qkreply">QK Reply</string>
     <string name="settings_theme_title">テーマ</string>
     <string name="settings_night_title">夜間モード</string>
     <string name="settings_black_title">ピュアブラック夜間モード</string>
@@ -196,28 +200,28 @@
     <string name="settings_system_font_title">システムフォントを使用する</string>
     <string name="settings_auto_emoji_title">自動絵文字</string>
     <string name="settings_notifications_title">通知</string>
-    <string name="settings_notifications_o_summary">カスタマイズするためにタップ</string>
+    <string name="settings_notifications_o_summary">タップしてカスタマイズ</string>
     <string name="settings_notification_actions_title">アクション</string>
     <string name="settings_notification_action_1">ボタン 1</string>
     <string name="settings_notification_action_2">ボタン 2</string>
     <string name="settings_notification_action_3">ボタン 3</string>
     <string name="settings_notification_previews_title">通知プレビュー</string>
-    <string name="settings_notification_wake_title">ウェイクスクリーン</string>
-    <string name="settings_vibration_title">振動</string>
-    <string name="settings_ringtone_title">サウンド</string>
-    <string name="settings_ringtone_none">無し</string>
-    <string name="settings_qkreply_title">QK 返信</string>
-    <string name="settings_qkreply_summary">新しいメッセージのポップアップ</string>
+    <string name="settings_notification_wake_title">画面を点灯</string>
+    <string name="settings_vibration_title">バイブレーション</string>
+    <string name="settings_ringtone_title">音</string>
+    <string name="settings_ringtone_none">なし</string>
+    <string name="settings_qkreply_title">QK Reply</string>
+    <string name="settings_qkreply_summary">新しいメッセージをポップアップ</string>
     <string name="settings_qkreply_tap_dismiss_title">タップして閉じる</string>
     <string name="settings_qkreply_tap_dismiss_summary">ポップアップの外側をタップすると閉じます</string>
     <string name="settings_delayed_title">遅延送信</string>
     <string name="settings_swipe_actions">スワイプアクション</string>
-    <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定する</string>
+    <string name="settings_swipe_actions_summary">会話のスワイプアクションを設定</string>
     <string name="settings_swipe_actions_right">右スワイプ</string>
     <string name="settings_swipe_actions_left">左スワイプ</string>
     <string name="settings_swipe_actions_change">変更</string>
     <string-array name="settings_swipe_actions">
-        <item>無し</item>
+        <item>なし</item>
         <item>アーカイブ</item>
         <item>削除</item>
         <item>ブロック</item>
@@ -242,15 +246,15 @@
     <plurals name="settings_auto_delete_summary">
         <item quantity="other">%d 日後</item>
     </plurals>
-    <string name="settings_long_as_mms_title">長いメッセージをMMSとして送信する</string>
-    <string name="settings_long_as_mms_summary">長いテキストメッセージの送信が失敗する場合、または間違った順序で送信される場合は、代わりにMMSメッセージとして送信できます。 追加料金が適用される場合があります</string>
-    <string name="settings_mms_size_title">MMS添付ファイルの自動圧縮</string>
+    <string name="settings_long_as_mms_title">長いメッセージを MMS として送信</string>
+    <string name="settings_long_as_mms_summary">長いテキストメッセージの送信が失敗する場合、または間違った順序で送信される場合は、代わりに MMS メッセージとして送信できます。 追加料金が適用される場合があります</string>
+    <string name="settings_mms_size_title">MMS 添付ファイルの自動圧縮</string>
     <string name="settings_sync_title">メッセージを同期</string>
     <string name="settings_sync_summary">メッセージをネイティブの Android SMS データベースと再同期します</string>
     <string name="settings_about_title">QKSMS について</string>
     <string name="settings_version">バージョン %s</string>
     <string name="settings_logging_enabled">デバッグログが有効</string>
-    <string name="settings_logging_disabled">デバッグログを無効にする</string>
+    <string name="settings_logging_disabled">デバッグログが無効</string>
     <string name="settings_delay_duration_hint">期間を入力してください (秒)</string>
     <string name="blocking_title">ブロック</string>
     <string name="blocking_drop_title">メッセージをドロップ</string>
@@ -259,11 +263,11 @@
     <string name="blocking_manager_title">ブロッキングマネージャー</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS の内蔵ブロック機能</string>
-    <string name="blocking_manager_call_blocker_summary">ブラックリストとスケジュールにより迷惑メッセージ、番号、不明な通話をブロック</string>
-    <string name="blocking_manager_call_control_summary">一か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
-    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルタします</string>
+    <string name="blocking_manager_call_blocker_summary">ブラックリストにより迷惑メッセージ、番号、不明な通話をブロック</string>
+    <string name="blocking_manager_call_control_summary">1 か所で便利に通話とメッセージを自動的にフィルタリングします! Community IQ™を使用すると、コミュニティで知られているスパマーからの不要なメッセージを防ぐことができます</string>
+    <string name="blocking_manager_sia_summary">\"Should I Answer\" アプリを使用して、迷惑な番号からのメッセージを自動的にフィルターします</string>
     <string name="blocking_manager_copy_title">ブロックした番号をコピー</string>
-    <string name="blocking_manager_copy_summary">既存のブロックした番号のコピーを %s まで続けます</string>
+    <string name="blocking_manager_copy_summary">%s で継続して既存のブロックした番号をコピー</string>
     <string name="blocked_numbers_title">ブロックした番号</string>
     <string name="blocked_numbers_empty">ブロックした番号がここに表示されます</string>
     <string name="blocked_numbers_add_cd">新しい番号をブロック</string>
@@ -275,10 +279,10 @@
     <string name="blocking_block_title">ブロック</string>
     <string name="blocking_unblock_title">ブロック解除</string>
     <plurals name="blocking_block_external">
-        <item quantity="other">%s まで続けてこの番号をブロック</item>
+        <item quantity="other">%s で継続してこの番号をブロック</item>
     </plurals>
     <plurals name="blocking_unblock_external">
-        <item quantity="other">%s まで続けてこの番号を許可</item>
+        <item quantity="other">%s で継続してこの番号を許可</item>
     </plurals>
     <string name="about_title">このアプリについて</string>
     <string name="about_version_title">バージョン</string>
@@ -288,51 +292,51 @@
     <string name="about_contact_title">お問い合わせ</string>
     <string name="about_license_title">ライセンス</string>
     <string name="about_copyright_title">著作権</string>
-    <string name="qksms_plus_description_title">開発をサポートして、すべてのロックを解除します</string>
-    <string name="qksms_plus_description_summary">ちょうど %s 人の飢えている開発者を助けることができます</string>
+    <string name="qksms_plus_description_title">開発をサポートして、すべての機能のロックを解除</string>
+    <string name="qksms_plus_description_summary">%s だけ飢えている開発者を助けることができます</string>
     <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
-    <string name="qksms_plus_upgrade">%1$s %2$s のライフタイムのアップグレード</string>
+    <string name="qksms_plus_upgrade">%1$s %2$s で買い切りのアップグレード</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
-    <string name="qksms_plus_upgrade_donate">%1$s %2$s のロック解除と寄付</string>
-    <string name="qksms_plus_thanks_title">QKSMS を支援いただきありがとうございます!</string>
+    <string name="qksms_plus_upgrade_donate">%1$s %2$s でロック解除と寄付</string>
+    <string name="qksms_plus_thanks_title">QKSMS を支援いただきありがとうございます！</string>
     <string name="qksms_plus_thanks_summary">QKSMS+ のすべての機能にアクセスできます</string>
     <string name="qksms_plus_error">エラーが発生しました。もう一度やり直してください</string>
-    <string name="qksms_plus_free_title">QKSMS+ は F-Droid ユーザーは無料です! 開発をサポートしたい場合は、気軽に寄付をしてください。</string>
-    <string name="qksms_plus_donate">PayPal で寄付する</string>
+    <string name="qksms_plus_free_title">QKSMS+ は F-Droid ユーザーには無料です！開発をサポートしたい場合は、気軽に寄付をしてください。</string>
+    <string name="qksms_plus_donate">PayPal で寄付</string>
     <string name="qksms_plus_coming_soon">近日登場</string>
     <string name="qksms_plus_themes_title">プレミアムテーマ</string>
     <string name="qksms_plus_themes_summary">マテリアルデザインパレットで利用できない美しいテーマカラーのロックを解除します</string>
     <string name="qksms_plus_emoji_title">カスタム自動絵文字</string>
     <string name="qksms_plus_emoji_summary">カスタム自動絵文字のショートカットを作成します</string>
     <string name="qksms_plus_backup_title">メッセージのバックアップ</string>
-    <string name="qksms_plus_backup_summary">メッセージを自動的にバックアップします。携帯電話を変更したり、お使いの携帯電話をなくしても、もう二度と履歴がなくなる心配はいりません。</string>
-    <string name="qksms_plus_scheduled_title">スケジュールされたメッセージ</string>
-    <string name="qksms_plus_scheduled_summary">特定の日時に自動的に送信されるようにメッセージをスケジュールする</string>
-    <string name="qksms_plus_delayed_title">送信を遅らせる</string>
+    <string name="qksms_plus_backup_summary">メッセージを自動的にバックアップします。携帯電話を変更したり、お使いの携帯電話をなくしても、もう二度と履歴がなくなる心配はいりません</string>
+    <string name="qksms_plus_scheduled_title">送信予約メッセージ</string>
+    <string name="qksms_plus_scheduled_summary">メッセージが特定の日時に自動的に送信されるように予約する</string>
+    <string name="qksms_plus_delayed_title">遅延送信</string>
     <string name="qksms_plus_delayed_summary">メッセージを送信する前に、数秒間待ちます</string>
     <string name="qksms_plus_night_title">自動夜間モード</string>
     <string name="qksms_plus_night_summary">時間に基づいて夜間モードを有効にします</string>
     <string name="qksms_plus_blacklist_title">高度なブロック</string>
     <string name="qksms_plus_blacklist_summary">キーワードを含む、またはパターンに一致するメッセージをブロックします</string>
     <string name="qksms_plus_forward_title">自動転送</string>
-    <string name="qksms_plus_forward_summary">特定の送信者からのメッセージを自動的に転送します</string>
+    <string name="qksms_plus_forward_summary">特定の差出人からのメッセージを自動的に転送します</string>
     <string name="qksms_plus_respond_title">自動応答</string>
     <string name="qksms_plus_respond_summary">あらかじめ設定された応答で、受信したメッセージに自動的に返信します</string>
-    <string name="qksms_plus_more_title">さらに</string>
-    <string name="qksms_plus_more_summary">QKMSは活発に開発中です、そして、あなたの購入はすべての将来のQKMS+機能を含みます！</string>
-    <string name="widget_loading">ロード中...</string>
+    <string name="qksms_plus_more_title">その他</string>
+    <string name="qksms_plus_more_summary">QKSMS は活発に開発中で、購入にはすべての将来の QKSMS+ 機能が含まれます！</string>
+    <string name="widget_loading">読み込み中...</string>
     <string name="widget_more">さらに会話を表示</string>
     <string name="qkreply_menu_read">既読にする</string>
-    <string name="qkreply_menu_call">電話する</string>
+    <string name="qkreply_menu_call">通話</string>
     <string name="qkreply_menu_delete">削除</string>
-    <string name="qkreply_menu_expand">もっと見せる</string>
-    <string name="qkreply_menu_collapse">少なく表示</string>
+    <string name="qkreply_menu_expand">表示を増やす</string>
+    <string name="qkreply_menu_collapse">表示を減らす</string>
     <string name="qkreply_menu_view">会話を開く</string>
     <string name="theme_material">マテリアル</string>
     <string name="theme_hex">16 進数</string>
     <string name="theme_apply">適用</string>
     <string-array name="notification_actions">
-        <item>無し</item>
+        <item>なし</item>
         <item>アーカイブ</item>
         <item>削除</item>
         <item>ブロック</item>
@@ -344,23 +348,23 @@
     <string name="button_continue">続行</string>
     <string name="button_cancel">キャンセル</string>
     <string name="button_delete">削除</string>
-    <string name="button_save">保存する</string>
+    <string name="button_save">保存</string>
     <string name="button_stop">やめる</string>
     <string name="button_more">さらに</string>
-    <string name="button_set">据える</string>
+    <string name="button_set">設定</string>
     <string name="button_undo">元に戻す</string>
     <string name="toast_copied">コピーしました</string>
     <string name="toast_archived">会話をアーカイブしました</string>
-    <string name="toast_qksms_plus">これを使用するには QKSMS+ のロックを解除する必要があります</string>
+    <string name="toast_qksms_plus">使用するには QKSMS+ のロックを解除する必要があります</string>
     <plurals name="notification_new_messages">
-        <item quantity="other">%s 新着メッセージ</item>
+        <item quantity="other">%s 件の新着メッセージ</item>
     </plurals>
     <string name="notification_message_failed_title">メッセージは送信されませんでした</string>
     <string name="notification_message_failed_text">%s へのメッセージの送信に失敗しました</string>
     <string-array name="night_modes">
         <item>システム</item>
         <item>無効</item>
-        <item>常にON</item>
+        <item>常に ON</item>
         <item>自動</item>
     </string-array>
     <string-array name="notification_preview_options">
@@ -369,16 +373,16 @@
         <item>コンテンツを隠す</item>
     </string-array>
     <string-array name="text_sizes">
-        <item>小さい</item>
-        <item>普通の</item>
-        <item>大き</item>
-        <item>大きい</item>
+        <item>小</item>
+        <item>標準</item>
+        <item>大</item>
+        <item>最大</item>
     </string-array>
     <string-array name="delayed_sending_labels">
         <item>遅延なし</item>
-        <item>3秒</item>
-        <item>5秒</item>
-        <item>10秒</item>
+        <item>3 秒</item>
+        <item>5 秒</item>
+        <item>10 秒</item>
     </string-array>
     <string-array name="mms_sizes">
         <item>自動</item>
@@ -392,16 +396,16 @@
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>
-        <item>しばらくお待ちください</item>
+        <item>ちょっと待ってください</item>
         <item>今、途中です</item>
         <item>ありがとう</item>
-        <item>良さそうですね</item>
-        <item>最近どうですか?</item>
+        <item>いいですね</item>
+        <item>最近どうですか？</item>
         <item>了解</item>
         <item>いいえ</item>
         <item>好きです</item>
         <item>ごめんなさい</item>
-        <item>大爆笑です</item>
-        <item>いいんだよ</item>
+        <item>爆笑</item>
+        <item>大丈夫</item>
     </string-array>
 </resources>

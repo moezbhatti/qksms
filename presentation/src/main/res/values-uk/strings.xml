@@ -41,10 +41,10 @@
     <string name="main_menu_unarchive">Розархівувати</string>
     <string name="main_menu_delete">Видалити</string>
     <string name="main_menu_add_contact">Додати до контактів</string>
-    <string name="main_menu_pin">Закріпити</string>
+    <string name="main_menu_pin">Закріпити вгорі</string>
     <string name="main_menu_unpin">Відкріпити</string>
-    <string name="main_menu_read">Позначити як прочитане</string>
-    <string name="main_menu_unread">Позначити як непрочитане</string>
+    <string name="main_menu_read">Позначити прочитаним</string>
+    <string name="main_menu_unread">Позначити непрочитаним</string>
     <string name="main_menu_block">Блокувати</string>
     <string name="main_syncing">Синхронізація повідомлень&#8230;</string>
     <string name="main_sender_you">Ви: %s</string>
@@ -61,6 +61,7 @@
     <string name="main_permission_required">Вимагається дозвіл</string>
     <string name="main_permission_sms">Для надсилання та перегляду SMS-повідомлень QKSMS потрібен дозвіл</string>
     <string name="main_permission_contacts">Для перегляду ваших контактів QKSMS потрібен дозвіл</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">Дозволити</string>
     <string name="drawer_inbox">Вхідні</string>
     <string name="drawer_archived">Архівні</string>
@@ -73,7 +74,7 @@
     <string name="drawer_plus_banner_summary">Розблокувати нові дивовижні можливості та підтримати розробку</string>
     <string name="rate_title">Подобається QKSMS?</string>
     <string name="rate_summary">Поділись любов\'ю та оціни нас на Google Play!</string>
-    <string name="rate_okay">Добре!</string>
+    <string name="rate_okay">Гаразд!</string>
     <string name="rate_dismiss">ВІДХИЛИТИ</string>
     <string name="dialog_delete_title">Видалити</string>
     <plurals name="dialog_delete_message">
@@ -147,26 +148,26 @@
     <string name="backup_title">Резервне копіювання</string>
     <string name="backup_backing_up">Резервне копіювання повідомлень</string>
     <string name="backup_restoring">Відновити з резервної копії</string>
-    <string name="backup_last">Остання резервна копія</string>
     <string name="backup_loading">Завантаження&#8230;</string>
     <string name="backup_never">Ніколи</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Відновити</string>
     <string name="backup_restore_summary">Оберіть резервну копію</string>
     <string name="backup_restore_error_plus">Для використання резервного копіювання та відновлення розблокуйте QKSMS+</string>
     <string name="backup_restore_error_backup">Триває створення резервної копії&#8230;</string>
     <string name="backup_restore_error_restore">Триває відновлення&#8230;</string>
     <string name="backup_restore_confirm_title">Відновити з резервної копії</string>
-    <string name="backup_restore_confirm_message">Відновити повідомлення з цієї резервної копії?</string>
     <string name="backup_restore_stop_title">Зупинити відновлення</string>
     <string name="backup_restore_stop_message">Повідомлення, які були відновлені залишатимуться на пристрої</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Резервні копії</string>
     <string name="backup_restore_dialog_empty">Резервних копій не знайдено</string>
-    <plurals name="backup_message_count">
-        <item quantity="one">%d повідомлення</item>
-        <item quantity="few">%d повідомлення</item>
-        <item quantity="many">%d повідомлень</item>
-        <item quantity="other">%d повідомлення</item>
-    </plurals>
     <string name="backup_disclaimer">На даний момент підтримуються лише SMS-повідомлення. Підтримка MMS-повідомлень та створення резервних копій за розкладом буде реалізована незабаром!</string>
     <string name="backup_now">Створити резервну копію</string>
     <string name="backup_progress_parsing">Аналіз резервної копії&#8230;</string>
@@ -191,7 +192,7 @@
     </string-array>
     <string name="settings_category_appearance">Зовнішній вигляд</string>
     <string name="settings_category_general">Загальні</string>
-    <string name="settings_category_qkreply">QK Відповідь</string>
+    <string name="settings_category_qkreply">Швидка відповідь</string>
     <string name="settings_theme_title">Тема</string>
     <string name="settings_night_title">Нічний режим</string>
     <string name="settings_black_title">Повністю чорний нічний режим</string>
@@ -216,7 +217,7 @@
     <string name="settings_qkreply_summary">Виринаюче вікно для нових повідомлень</string>
     <string name="settings_qkreply_tap_dismiss_title">Торкніться, щоб вимкнути</string>
     <string name="settings_qkreply_tap_dismiss_summary">Торкніться за межами виринаючого вікна, щоб закрити його</string>
-    <string name="settings_delayed_title">Затримка відправлення</string>
+    <string name="settings_delayed_title">Затримка надсилання</string>
     <string name="settings_swipe_actions">Дії жестів</string>
     <string name="settings_swipe_actions_summary">Налаштуйте використання жестів для розмови</string>
     <string name="settings_swipe_actions_right">Провести праворуч</string>
@@ -228,8 +229,8 @@
         <item>Видалити</item>
         <item>Заблокувати</item>
         <item>Виклик</item>
-        <item>Позначити як прочитане</item>
-        <item>Позначити як непрочитане</item>
+        <item>Позначити прочитаним</item>
+        <item>Позначити непрочитаним</item>
     </string-array>
     <string name="settings_delivery_title">Звіти про доставку</string>
     <string name="settings_delivery_summary">Підтвердження успішного надсилання повідомлень</string>
@@ -270,7 +271,7 @@
     <string name="blocking_manager_qksms_summary">Вбудована функція блокування QKSMS</string>
     <string name="blocking_manager_call_blocker_summary">Блокуйте спам-повідомлення, невідомі номери та дзвінки за допомогою чорного списку та за розкладом</string>
     <string name="blocking_manager_call_control_summary">Автоматична фільтрація дзвінків та повідомлень в одному зручному місці! Community IQ™ дозволить запобігти отримуванню небажаних повідомлень від відомих спільноті спамерів</string>
-    <string name="blocking_manager_sia_summary">Автоматично фільтрувати повідомлення від небажаних номерів, використовуючи додаток «Should I Answer»</string>
+    <string name="blocking_manager_sia_summary">Автоматично фільтрувати повідомлення від небажаних номерів за допомогою застосунку «Should I Answer»</string>
     <string name="blocking_manager_copy_title">Скопіювати заблоковані номери</string>
     <string name="blocking_manager_copy_summary">Продовжити з %s і записати їх замість наявних заблокованих номерів</string>
     <string name="blocked_numbers_title">Заблоковані номери</string>
@@ -295,7 +296,7 @@
         <item quantity="many">Перейти до %s на дозволити ці номери</item>
         <item quantity="other">Перейти до %s на дозволити ці номери</item>
     </plurals>
-    <string name="about_title">Про додаток</string>
+    <string name="about_title">Про застосунок</string>
     <string name="about_version_title">Версія</string>
     <string name="about_developer_title">Розробник</string>
     <string name="about_source_title">Вихідний код</string>
@@ -337,7 +338,7 @@
     <string name="qksms_plus_more_summary">QKSMS перебуває у активній розробці, і Ваша покупка буде включати в себе всі майбутні можливості QKSMS +!</string>
     <string name="widget_loading">Завантаження&#8230;</string>
     <string name="widget_more">Переглянути більше бесід</string>
-    <string name="qkreply_menu_read">Позначити як прочитане</string>
+    <string name="qkreply_menu_read">Позначити прочитаним</string>
     <string name="qkreply_menu_call">Зателефонувати</string>
     <string name="qkreply_menu_delete">Видалити</string>
     <string name="qkreply_menu_expand">Показати більше</string>
@@ -352,7 +353,7 @@
         <item>Видалити</item>
         <item>Заблокувати</item>
         <item>Виклик</item>
-        <item>Позначити як прочитане</item>
+        <item>Позначити прочитаним</item>
         <item>Відповісти</item>
     </string-array>
     <string name="button_yes">Так</string>
@@ -400,18 +401,18 @@
     </string-array>
     <string-array name="mms_sizes">
         <item>Автоматично</item>
-        <item>100 Кб</item>
-        <item>200 Кб</item>
-        <item>300 Кб</item>
-        <item>600 Кб</item>
-        <item>1000 Кб</item>
-        <item>2000 Кб</item>
+        <item>100 кБ</item>
+        <item>200 кБ</item>
+        <item>300 кБ</item>
+        <item>600 кБ</item>
+        <item>1000 кБ</item>
+        <item>2000 кБ</item>
         <item>Без стиснення</item>
     </string-array>
     <string-array name="qk_responses">
-        <item>Добре</item>
+        <item>Гаразд</item>
         <item>Одну хвилинку</item>
-        <item>Мені по дорозі</item>
+        <item>В дорозі</item>
         <item>Дякую</item>
         <item>Звучить цікаво</item>
         <item>Що сталося?</item>
