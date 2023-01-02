@@ -38,6 +38,8 @@ interface BackupRepository {
 
     fun getBackupDocumentTree(): DocumentFile?
 
+    fun getBackupPathUriForPicker(): Uri
+
     fun persistBackupDirectory(directory: Uri)
 
     fun performBackup()

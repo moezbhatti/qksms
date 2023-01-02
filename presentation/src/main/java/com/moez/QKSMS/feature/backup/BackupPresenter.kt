@@ -68,7 +68,7 @@ class BackupPresenter @Inject constructor(
         view.setBackupLocationClicks()
                 .observeOn(AndroidSchedulers.mainThread())
                 .autoDisposable(view.scope())
-                .subscribe { view.selectFolder(backupRepo.getDefaultBackupPath().toUri()) } // TODO: Pass in current directory
+                .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
 
         view.restoreClicks()
                 .withLatestFrom(
@@ -80,7 +80,7 @@ class BackupPresenter @Inject constructor(
                         !upgraded -> context.makeToast(R.string.backup_restore_error_plus)
                         backupProgress.running -> context.makeToast(R.string.backup_restore_error_backup)
                         restoreProgress.running -> context.makeToast(R.string.backup_restore_error_restore)
-                        else -> view.selectFile(backupRepo.getDefaultBackupPath().toUri())
+                        else -> view.selectFile(backupRepo.getBackupPathUriForPicker())
                     }
                 }
                 .autoDisposable(view.scope())
@@ -102,7 +102,7 @@ class BackupPresenter @Inject constructor(
         view.locationRationaleConfirmClicks()
                 .doOnNext { newState { copy(showLocationRationale = false) } }
                 .autoDisposable(view.scope())
-                .subscribe { view.selectFolder(backupRepo.getDefaultBackupPath().toUri()) }
+                .subscribe { view.selectFolder(backupRepo.getBackupPathUriForPicker()) }
 
         view.locationRationaleCancelClicks()
                 .doOnNext { newState { copy(showLocationRationale = false) } }

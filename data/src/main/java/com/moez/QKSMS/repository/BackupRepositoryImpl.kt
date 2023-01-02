@@ -24,6 +24,7 @@ import android.net.Uri
 import android.os.Environment
 import android.provider.Telephony
 import androidx.core.content.contentValuesOf
+import androidx.core.net.toUri
 import androidx.documentfile.provider.DocumentFile
 import com.moez.QKSMS.common.util.extensions.now
 import com.moez.QKSMS.model.BackupFile
@@ -95,6 +96,11 @@ class BackupRepositoryImpl @Inject constructor(
                 .takeIf { uri -> uri != Uri.EMPTY }
                 ?.let { uri -> DocumentFile.fromTreeUri(context, uri) }
                 ?.takeIf { dir -> dir.exists() && dir.canRead() && dir.canWrite() }
+    }
+
+    override fun getBackupPathUriForPicker(): Uri {
+        return prefs.backupDirectory.get().takeIf { uri -> uri != Uri.EMPTY }
+                ?: getDefaultBackupPath().toUri()
     }
 
     override fun persistBackupDirectory(directory: Uri) {
