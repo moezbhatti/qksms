@@ -18,23 +18,31 @@
  */
 package com.moez.QKSMS.feature.backup
 
+import android.net.Uri
 import com.moez.QKSMS.common.base.QkViewContract
-import com.moez.QKSMS.model.BackupFile
 import io.reactivex.Observable
 
 interface BackupView : QkViewContract<BackupState> {
-
-    fun activityVisible(): Observable<*>
+    fun setBackupLocationClicks(): Observable<*>
     fun restoreClicks(): Observable<*>
-    fun restoreFileSelected(): Observable<BackupFile>
-    fun restoreConfirmed(): Observable<*>
+
+    fun backupClicks(): Observable<*>
+
+    fun locationRationaleConfirmClicks(): Observable<*>
+    fun locationRationaleCancelClicks(): Observable<*>
+
+    fun selectedBackupErrorClicks(): Observable<*>
+
+    fun confirmRestoreBackupConfirmClicks(): Observable<*>
+    fun confirmRestoreBackupCancelClicks(): Observable<*>
+
     fun stopRestoreClicks(): Observable<*>
     fun stopRestoreConfirmed(): Observable<*>
-    fun fabClicks(): Observable<*>
+    fun stopRestoreCancel(): Observable<*>
 
-    fun requestStoragePermission()
-    fun selectFile()
-    fun confirmRestore()
-    fun stopRestore()
+    fun documentTreeSelected(): Observable<Uri>
+    fun documentSelected(): Observable<Uri>
 
+    fun selectFolder(initialUri: Uri)
+    fun selectFile(initialUri: Uri)
 }

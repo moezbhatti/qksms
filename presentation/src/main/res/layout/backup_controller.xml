@@ -119,12 +119,12 @@
             </androidx.constraintlayout.widget.ConstraintLayout>
 
             <com.moez.QKSMS.common.widget.PreferenceView
-                android:id="@+id/backup"
+                android:id="@+id/location"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                app:icon="@drawable/ic_history_black_24dp"
-                app:title="@string/backup_last"
-                tools:summary="@string/backup_never" />
+                app:icon="@drawable/ic_baseline_folder_24"
+                app:title="@string/backup_location_title"
+                app:summary="@string/backup_location_summary" />
 
             <com.moez.QKSMS.common.widget.PreferenceView
                 android:id="@+id/restore"

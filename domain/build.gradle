@@ -38,6 +38,8 @@ android {
 }
 
 dependencies {
+    // androidx
+    implementation "androidx.documentfile:documentfile:$androidx_documentfile_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"

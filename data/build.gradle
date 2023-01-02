@@ -51,6 +51,7 @@ dependencies {
     implementation "androidx.appcompat:appcompat:$androidx_appcompat_version"
     implementation "androidx.core:core-ktx:$androidx_core_version"
     implementation "androidx.exifinterface:exifinterface:$androidx_exifinterface_version"
+    implementation "androidx.documentfile:documentfile:$androidx_documentfile_version"
 
     // glide
     implementation "com.github.bumptech.glide:glide:$glide_version"
