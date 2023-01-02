@@ -4,6 +4,7 @@ buildscript {
     ext.androidx_appcompat_version = '1.3.1'
     ext.androidx_constraintlayout_version = '1.1.3'
     ext.androidx_core_version = '1.1.0'
+    ext.androidx_documentfile_version = '1.0.1'
     ext.androidx_emoji_version = '1.0.0'
     ext.androidx_exifinterface_version = '1.0.0'
     ext.androidx_testrunner_version = '1.1.0-alpha3'

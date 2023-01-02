@@ -18,76 +18,110 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import android.Manifest
-import android.app.Activity
+import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
+import android.net.Uri
 import android.view.View
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AlertDialog
-import androidx.core.app.ActivityCompat
 import androidx.core.view.children
 import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
 import com.moez.QKSMS.common.util.DateFormatter
+import com.moez.QKSMS.common.util.QkActivityResultContracts
 import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint
+import com.moez.QKSMS.common.util.extensions.setNegativeButton
 import com.moez.QKSMS.common.util.extensions.setPositiveButton
+import com.moez.QKSMS.common.util.extensions.setShowing
 import com.moez.QKSMS.common.util.extensions.setTint
 import com.moez.QKSMS.common.widget.PreferenceView
 import com.moez.QKSMS.injection.appComponent
-import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.repository.BackupRepository
 import io.reactivex.Observable
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.backup_controller.*
-import kotlinx.android.synthetic.main.backup_list_dialog.view.*
 import kotlinx.android.synthetic.main.preference_view.view.*
 import javax.inject.Inject
 
 class BackupController : QkController<BackupView, BackupState, BackupPresenter>(), BackupView {
 
-    @Inject lateinit var adapter: BackupAdapter
-    @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
-    private val activityVisibleSubject: Subject<Unit> = PublishSubject.create()
-    private val confirmRestoreSubject: Subject<Unit> = PublishSubject.create()
-    private val stopRestoreSubject: Subject<Unit> = PublishSubject.create()
+    private val selectFolderCancelSubject: Subject<Unit> = PublishSubject.create()
+    private val selectFolderConfirmSubject: Subject<Unit> = PublishSubject.create()
 
-    private val backupFilesDialog by lazy {
-        val view = View.inflate(activity, R.layout.backup_list_dialog, null)
-                .apply { files.adapter = adapter.apply { emptyView = empty } }
+    private val restoreErrorConfirmSubject: Subject<Unit> = PublishSubject.create()
 
-        AlertDialog.Builder(activity!!)
-                .setView(view)
-                .setCancelable(true)
-                .create()
-    }
+    private val confirmRestoreCancelSubject: Subject<Unit> = PublishSubject.create()
+    private val confirmRestoreConfirmSubject: Subject<Unit> = PublishSubject.create()
 
-    private val confirmRestoreDialog by lazy {
-        AlertDialog.Builder(activity!!)
-                .setTitle(R.string.backup_restore_confirm_title)
-                .setMessage(R.string.backup_restore_confirm_message)
-                .setPositiveButton(R.string.backup_restore_title, confirmRestoreSubject)
-                .setNegativeButton(R.string.button_cancel, null)
-                .create()
-    }
+    private val stopRestoreConfirmSubject: Subject<Unit> = PublishSubject.create()
+    private val stopRestoreCancelSubject: Subject<Unit> = PublishSubject.create()
+
+    private val documentTreeSelectedSubject: Subject<Uri> = PublishSubject.create()
+    private val documentSelectedSubject: Subject<Uri> = PublishSubject.create()
 
     private val stopRestoreDialog by lazy {
         AlertDialog.Builder(activity!!)
                 .setTitle(R.string.backup_restore_stop_title)
                 .setMessage(R.string.backup_restore_stop_message)
-                .setPositiveButton(R.string.button_stop, stopRestoreSubject)
-                .setNegativeButton(R.string.button_cancel, null)
+                .setPositiveButton(R.string.button_stop, stopRestoreConfirmSubject)
+                .setNegativeButton(R.string.button_cancel, stopRestoreCancelSubject)
+                .setCancelable(false)
                 .create()
     }
+
+    private val selectLocationRationaleDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_select_location_rationale_title)
+                .setMessage(R.string.backup_select_location_rationale_message)
+                .setPositiveButton(R.string.button_continue, selectFolderConfirmSubject)
+                .setNegativeButton(R.string.button_cancel, selectFolderCancelSubject)
+                .setCancelable(false)
+                .create()
+    }
+
+    private val selectedBackupErrorDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_selected_backup_error_title)
+                .setMessage(R.string.backup_selected_backup_error_message)
+                .setPositiveButton(R.string.button_continue, restoreErrorConfirmSubject)
+                .setCancelable(false)
+                .create()
+    }
+
+    private val selectedBackupDetailsDialog by lazy {
+        AlertDialog.Builder(activity!!)
+                .setTitle(R.string.backup_selected_backup_details_title)
+                .setPositiveButton(R.string.backup_restore_title, confirmRestoreConfirmSubject)
+                .setNegativeButton(R.string.button_cancel, confirmRestoreCancelSubject)
+                .setCancelable(false)
+                .create()
+    }
+
+    private lateinit var openDirectory: ActivityResultLauncher<Uri>
+    private lateinit var openDocument: ActivityResultLauncher<QkActivityResultContracts.OpenDocumentParams>
 
     init {
         appComponent.inject(this)
         layoutRes = R.layout.backup_controller
+    }
+
+    override fun onContextAvailable(context: Context) {
+        // Init activity result contracts
+        openDirectory = themedActivity!!.registerForActivityResult(
+                ActivityResultContracts.OpenDocumentTree(),
+                documentTreeSelectedSubject::onNext)
+
+        openDocument = themedActivity!!.registerForActivityResult(
+                QkActivityResultContracts.OpenDocument(),
+                documentSelectedSubject::onNext)
     }
 
     override fun onAttach(view: View) {
@@ -113,11 +147,6 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
                 .mapNotNull { it as? PreferenceView }
                 .map { it.titleView }
                 .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
-    }
-
-    override fun onActivityResumed(activity: Activity) {
-        super.onActivityResumed(activity)
-        activityVisibleSubject.onNext(Unit)
     }
 
     override fun render(state: BackupState) {
@@ -158,9 +187,14 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
             }
         }
 
-        backup.summary = state.lastBackup
+        selectLocationRationaleDialog.setShowing(state.showLocationRationale)
 
-        adapter.data = state.backups
+        selectedBackupErrorDialog.setShowing(state.showSelectedBackupError)
+
+        selectedBackupDetailsDialog.setMessage(state.selectedBackupDetails)
+        selectedBackupDetailsDialog.setShowing(state.selectedBackupDetails != null)
+
+        stopRestoreDialog.setShowing(state.showStopRestoreDialog)
 
         fabIcon.setImageResource(when (state.upgraded) {
             true -> R.drawable.ic_file_upload_black_24dp
@@ -173,29 +207,40 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
         })
     }
 
-    override fun activityVisible(): Observable<*> = activityVisibleSubject
+    override fun setBackupLocationClicks(): Observable<*> = location.clicks()
 
     override fun restoreClicks(): Observable<*> = restore.clicks()
 
-    override fun restoreFileSelected(): Observable<BackupFile> = adapter.backupSelected
-            .doOnNext { backupFilesDialog.dismiss() }
+    override fun locationRationaleConfirmClicks(): Observable<*> = selectFolderConfirmSubject
 
-    override fun restoreConfirmed(): Observable<*> = confirmRestoreSubject
+    override fun locationRationaleCancelClicks(): Observable<*> = selectFolderCancelSubject
+
+    override fun selectedBackupErrorClicks(): Observable<*> = restoreErrorConfirmSubject
+
+    override fun confirmRestoreBackupConfirmClicks(): Observable<*> = confirmRestoreConfirmSubject
+
+    override fun confirmRestoreBackupCancelClicks(): Observable<*> = confirmRestoreCancelSubject
 
     override fun stopRestoreClicks(): Observable<*> = progressCancel.clicks()
 
-    override fun stopRestoreConfirmed(): Observable<*> = stopRestoreSubject
+    override fun stopRestoreConfirmed(): Observable<*> = stopRestoreConfirmSubject
 
-    override fun fabClicks(): Observable<*> = fab.clicks()
+    override fun stopRestoreCancel(): Observable<*> = stopRestoreCancelSubject
 
-    override fun requestStoragePermission() {
-        ActivityCompat.requestPermissions(activity!!, arrayOf(Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+    override fun backupClicks(): Observable<*> = fab.clicks()
+
+    override fun documentTreeSelected(): Observable<Uri> = documentTreeSelectedSubject
+
+    override fun documentSelected(): Observable<Uri> = documentSelectedSubject
+
+    override fun selectFolder(initialUri: Uri) {
+        openDirectory.launch(initialUri)
     }
 
-    override fun selectFile() = backupFilesDialog.show()
-
-    override fun confirmRestore() = confirmRestoreDialog.show()
-
-    override fun stopRestore() = stopRestoreDialog.show()
+    override fun selectFile(initialUri: Uri) {
+        openDocument.launch(QkActivityResultContracts.OpenDocumentParams(
+                mimeTypes = listOf("application/json"),
+                initialUri = initialUri))
+    }
 
 }

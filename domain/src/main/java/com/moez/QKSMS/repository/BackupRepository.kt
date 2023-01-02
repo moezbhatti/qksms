@@ -18,6 +18,8 @@
  */
 package com.moez.QKSMS.repository
 
+import android.net.Uri
+import androidx.documentfile.provider.DocumentFile
 import com.moez.QKSMS.model.BackupFile
 import io.reactivex.Observable
 
@@ -32,19 +34,24 @@ interface BackupRepository {
         class Finished : Progress(true, false)
     }
 
+    fun getDefaultBackupPath(): String
+
+    fun getBackupDocumentTree(): DocumentFile?
+
+    fun getBackupPathUriForPicker(): Uri
+
+    fun persistBackupDirectory(directory: Uri)
+
     fun performBackup()
 
     fun getBackupProgress(): Observable<Progress>
 
-    /**
-     * Returns a list of all local backups
-     */
-    fun getBackups(): Observable<List<BackupFile>>
+    fun parseBackup(uri: Uri): BackupFile
 
-    fun performRestore(filePath: String)
-
-    fun stopRestore()
+    fun performRestore(uri: Uri)
 
     fun getRestoreProgress(): Observable<Progress>
+
+    fun stopRestore()
 
 }

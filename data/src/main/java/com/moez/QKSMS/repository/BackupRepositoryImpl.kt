@@ -18,26 +18,27 @@
  */
 package com.moez.QKSMS.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
+import android.content.Intent
+import android.net.Uri
 import android.os.Environment
 import android.provider.Telephony
 import androidx.core.content.contentValuesOf
+import androidx.core.net.toUri
+import androidx.documentfile.provider.DocumentFile
+import com.moez.QKSMS.common.util.extensions.now
 import com.moez.QKSMS.model.BackupFile
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.util.Preferences
-import com.moez.QKSMS.util.QkFileObserver
-import com.moez.QKSMS.util.tryOrNull
 import com.squareup.moshi.Moshi
 import io.reactivex.Observable
-import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.BehaviorSubject
 import io.reactivex.subjects.Subject
 import io.realm.Realm
 import okio.buffer
 import okio.source
 import timber.log.Timber
-import java.io.File
-import java.io.FileOutputStream
 import java.text.SimpleDateFormat
 import java.util.*
 import javax.inject.Inject
@@ -51,10 +52,6 @@ class BackupRepositoryImpl @Inject constructor(
     private val prefs: Preferences,
     private val syncRepo: SyncRepository
 ) : BackupRepository {
-
-    companion object {
-        private val BACKUP_DIRECTORY = Environment.getExternalStorageDirectory().toString() + "/QKSMS/Backups"
-    }
 
     data class Backup(
         val messageCount: Int = 0,
@@ -91,11 +88,35 @@ class BackupRepositoryImpl @Inject constructor(
 
     @Volatile private var stopFlag: Boolean = false
 
+    override fun getDefaultBackupPath(): String {
+        return "${Environment.getExternalStorageDirectory()}/QKSMS/Backups"
+    }
+
+    override fun getBackupDocumentTree(): DocumentFile? {
+        return prefs.backupDirectory.get()
+                .takeIf { uri -> uri != Uri.EMPTY }
+                ?.let { uri -> DocumentFile.fromTreeUri(context, uri) }
+                ?.takeIf { dir -> dir.exists() && dir.canRead() && dir.canWrite() }
+    }
+
+    override fun getBackupPathUriForPicker(): Uri {
+        return prefs.backupDirectory.get().takeIf { uri -> uri != Uri.EMPTY }
+                ?: getDefaultBackupPath().toUri()
+    }
+
+    override fun persistBackupDirectory(directory: Uri) {
+        context.contentResolver.takePersistableUriPermission(directory,
+                Intent.FLAG_GRANT_READ_URI_PERMISSION or Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+        prefs.backupDirectory.set(directory)
+
+        Timber.v("Updated backup directory: $directory")
+    }
+
     override fun performBackup() {
         // If a backup or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
-        var messageCount = 0
+        var messageCount: Int
 
         // Map all the messages into our object we'll use for the Json mapping
         val backupMessages = Realm.getDefaultInstance().use { realm ->
@@ -119,13 +140,15 @@ class BackupRepositoryImpl @Inject constructor(
         val json = adapter.toJson(Backup(messageCount, backupMessages)).toByteArray()
 
         try {
-            // Create the directory and file
-            val dir = File(BACKUP_DIRECTORY).apply { mkdirs() }
-            val timestamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(System.currentTimeMillis())
-            val file = File(dir, "backup-$timestamp.json")
+            val timestamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now())
+            val inputStream = getBackupDocumentTree()
+                    ?.createFile("application/json", "backup-$timestamp.json")
+                    ?.let { file -> context.contentResolver.openOutputStream(file.uri) }
+                    ?: throw Exception("Failed to open output stream")
 
-            // Write the log to the file
-            FileOutputStream(file, true).use { fileOutputStream -> fileOutputStream.write(json) }
+            inputStream.use { stream ->
+                stream.write(json)
+            }
         } catch (e: Exception) {
             Timber.w(e)
         }
@@ -151,36 +174,34 @@ class BackupRepositoryImpl @Inject constructor(
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
-    override fun getBackups(): Observable<List<BackupFile>> = QkFileObserver(BACKUP_DIRECTORY).observable
-            .map { File(BACKUP_DIRECTORY).listFiles() ?: arrayOf() }
-            .subscribeOn(Schedulers.io())
-            .observeOn(Schedulers.computation())
-            .map { files ->
-                files.mapNotNull { file ->
-                    val adapter = moshi.adapter(BackupMetadata::class.java)
-                    val backup = tryOrNull(false) {
-                        file.source().buffer().use(adapter::fromJson)
-                    } ?: return@mapNotNull null
+    @SuppressLint("Recycle") // InputStream is closed by Okio BufferedSource
+    override fun parseBackup(uri: Uri): BackupFile {
+        val adapter = moshi.adapter(BackupMetadata::class.java)
 
-                    val path = file.path
-                    val date = file.lastModified()
-                    val messages = backup.messageCount
-                    val size = file.length()
-                    BackupFile(path, date, messages, size)
-                }
-            }
-            .map { files -> files.sortedByDescending { file -> file.date } }
+        val file = DocumentFile.fromSingleUri(context, uri)
+                ?: throw IllegalArgumentException("Couldn't open backup file")
 
-    override fun performRestore(filePath: String) {
+        val metadata = context.contentResolver.openInputStream(file.uri)
+                ?.source()
+                ?.buffer()
+                ?.use(adapter::fromJson)
+                ?: throw IllegalArgumentException("Couldn't parse backup file")
+
+        return BackupFile(file.lastModified(), metadata.messageCount)
+    }
+
+    override fun performRestore(uri: Uri) {
         // If a backupFile or restore is already running, don't do anything
         if (isBackupOrRestoreRunning()) return
 
         restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
-        val file = File(filePath)
-        val backup = file.source().buffer().use { source ->
-            moshi.adapter(Backup::class.java).fromJson(source)
-        }
+        val adapter = moshi.adapter(Backup::class.java)
+        val backup = DocumentFile.fromSingleUri(context, uri)
+                ?.let { file -> context.contentResolver.openInputStream(file.uri) }
+                ?.source()
+                ?.buffer()
+                ?.use(adapter::fromJson)
 
         val messageCount = backup?.messages?.size ?: 0
         var errorCount = 0
@@ -234,11 +255,11 @@ class BackupRepositoryImpl @Inject constructor(
         Timer().schedule(1000) { restoreProgress.onNext(BackupRepository.Progress.Idle()) }
     }
 
+    override fun getRestoreProgress(): Observable<BackupRepository.Progress> = restoreProgress
+
     override fun stopRestore() {
         stopFlag = true
     }
-
-    override fun getRestoreProgress(): Observable<BackupRepository.Progress> = restoreProgress
 
     private fun isBackupOrRestoreRunning(): Boolean {
         return backupProgress.blockingFirst().running || restoreProgress.blockingFirst().running

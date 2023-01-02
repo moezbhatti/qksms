@@ -164,26 +164,27 @@
     <string name="backup_title">Backup and restore</string>
     <string name="backup_backing_up">Backing up messages</string>
     <string name="backup_restoring">Restoring from backup</string>
-    <string name="backup_last">Last backup</string>
     <string name="backup_loading">Loading…</string>
     <string name="backup_never">Never</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">Restore</string>
     <string name="backup_restore_summary">Select a backup</string>
     <string name="backup_restore_error_plus">Please unlock QKSMS+ to use backup and restore</string>
     <string name="backup_restore_error_backup">Backup in progress…</string>
     <string name="backup_restore_error_restore">Restore in progress…</string>
     <string name="backup_restore_confirm_title">Restore from backup</string>
-    <string name="backup_restore_confirm_message">Are you sure you would like to restore your messages from this backup?</string>
     <string name="backup_restore_stop_title">Stop restore</string>
     <string name="backup_restore_stop_message">Messages that have already been restored will remain on your device</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">Backups</string>
     <string name="backup_restore_dialog_summary" translatable="false">/QKSMS/Backups</string>
     <string name="backup_restore_dialog_empty">No backups found</string>
-    <plurals name="backup_message_count">
-        <item quantity="zero">No messages</item>
-        <item quantity="one">%d message</item>
-        <item quantity="other">%d messages</item>
-    </plurals>
     <string name="backup_disclaimer">Currently, only SMS is supported by Backup and Restore. MMS support and scheduled backups will be coming soon!</string>
     <string name="backup_now">Backup now</string>
     <string name="backup_progress_parsing">Parsing backup…</string>

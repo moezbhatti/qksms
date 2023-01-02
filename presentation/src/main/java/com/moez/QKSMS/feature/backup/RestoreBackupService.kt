@@ -22,6 +22,7 @@ import android.annotation.SuppressLint
 import android.app.Service
 import android.content.Context
 import android.content.Intent
+import android.net.Uri
 import android.os.IBinder
 import androidx.core.app.NotificationManagerCompat
 import androidx.core.content.ContextCompat
@@ -43,12 +44,12 @@ class RestoreBackupService : Service() {
 
         private const val ACTION_START = "com.moez.QKSMS.ACTION_START"
         private const val ACTION_STOP = "com.moez.QKSMS.ACTION_STOP"
-        private const val EXTRA_FILE_PATH = "com.moez.QKSMS.EXTRA_FILE_PATH"
+        private const val EXTRA_FILE_URI = "com.moez.QKSMS.EXTRA_FILE_URI"
 
-        fun start(context: Context, filePath: String) {
+        fun start(context: Context, backupFile: Uri) {
             val intent = Intent(context, RestoreBackupService::class.java)
                     .setAction(ACTION_START)
-                    .putExtra(EXTRA_FILE_PATH, filePath)
+                    .putExtra(EXTRA_FILE_URI, backupFile.toString())
 
             ContextCompat.startForegroundService(context, intent)
         }
@@ -100,7 +101,7 @@ class RestoreBackupService : Service() {
 
         // Start the restore
         Observable.just(intent)
-                .map { it.getStringExtra(EXTRA_FILE_PATH) }
+                .map { Uri.parse(it.getStringExtra(EXTRA_FILE_URI)) }
                 .map(backupRepo::performRestore)
                 .subscribeOn(Schedulers.io())
                 .subscribe({}, Timber::w)
