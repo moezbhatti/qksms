@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.repository
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.content.Intent
 import android.net.Uri
@@ -139,11 +140,13 @@ class BackupRepositoryImpl @Inject constructor(
         val json = adapter.toJson(Backup(messageCount, backupMessages)).toByteArray()
 
         try {
-            val dir = getBackupDocumentTree()!!
             val timestamp = SimpleDateFormat("yyyyMMddHHmmss", Locale.getDefault()).format(now())
-            val file = dir.createFile("application/json", "backup-$timestamp.json")!!
+            val inputStream = getBackupDocumentTree()
+                    ?.createFile("application/json", "backup-$timestamp.json")
+                    ?.let { file -> context.contentResolver.openOutputStream(file.uri) }
+                    ?: throw Exception("Failed to open output stream")
 
-            context.contentResolver.openOutputStream(file.uri)!!.use { stream ->
+            inputStream.use { stream ->
                 stream.write(json)
             }
         } catch (e: Exception) {
@@ -171,17 +174,18 @@ class BackupRepositoryImpl @Inject constructor(
 
     override fun getBackupProgress(): Observable<BackupRepository.Progress> = backupProgress
 
+    @SuppressLint("Recycle") // InputStream is closed by Okio BufferedSource
     override fun parseBackup(uri: Uri): BackupFile {
         val adapter = moshi.adapter(BackupMetadata::class.java)
 
         val file = DocumentFile.fromSingleUri(context, uri)
-                ?: throw IllegalArgumentException("Invalid backup file")
+                ?: throw IllegalArgumentException("Couldn't open backup file")
 
-        val inputStream = context.contentResolver.openInputStream(file.uri)
-                ?: throw IllegalArgumentException("Invalid backup file")
-
-        val metadata = inputStream.source().buffer().use(adapter::fromJson)
-                ?: throw IllegalArgumentException("Invalid backup file")
+        val metadata = context.contentResolver.openInputStream(file.uri)
+                ?.source()
+                ?.buffer()
+                ?.use(adapter::fromJson)
+                ?: throw IllegalArgumentException("Couldn't parse backup file")
 
         return BackupFile(file.lastModified(), metadata.messageCount)
     }
@@ -193,11 +197,11 @@ class BackupRepositoryImpl @Inject constructor(
         restoreProgress.onNext(BackupRepository.Progress.Parsing())
 
         val adapter = moshi.adapter(Backup::class.java)
-        val file = DocumentFile.fromSingleUri(context, uri)
-                ?: throw IllegalArgumentException("Invalid backup file")
-        val inputStream = context.contentResolver.openInputStream(file.uri)
-                ?: throw IllegalArgumentException("Invalid backup file")
-        val backup = inputStream.source().buffer().use(adapter::fromJson)
+        val backup = DocumentFile.fromSingleUri(context, uri)
+                ?.let { file -> context.contentResolver.openInputStream(file.uri) }
+                ?.source()
+                ?.buffer()
+                ?.use(adapter::fromJson)
 
         val messageCount = backup?.messages?.size ?: 0
         var errorCount = 0
