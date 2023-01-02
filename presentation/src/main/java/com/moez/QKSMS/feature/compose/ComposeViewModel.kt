@@ -433,7 +433,7 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { part ->
                     if (permissionManager.hasStorage()) {
-                        messageRepo.savePart(part.id)?.let(navigator::viewFile)
+                        messageRepo.savePart(part.id)?.let { navigator.viewFile(it, part.type) }
                     } else {
                         view.requestStoragePermission()
                     }

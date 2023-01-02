@@ -260,23 +260,21 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    fun viewFile(file: File) {
-        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
+    fun viewFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(data, type)
+                .setDataAndType(uri, mimeType.lowercase())
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .let { Intent.createChooser(it, null) }
 
         startActivityExternal(intent)
     }
 
-    fun shareFile(file: File) {
-        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
+    fun shareFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_SEND)
-                .setType(type)
-                .putExtra(Intent.EXTRA_STREAM, data)
+                .setType(mimeType.lowercase())
+                .putExtra(Intent.EXTRA_STREAM, uri)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .let { Intent.createChooser(it, null) }
 
         startActivityExternal(intent)
     }

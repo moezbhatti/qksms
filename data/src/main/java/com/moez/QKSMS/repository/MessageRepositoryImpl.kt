@@ -26,8 +26,10 @@ import android.content.Context
 import android.content.Intent
 import android.graphics.BitmapFactory
 import android.media.MediaScannerConnection
+import android.net.Uri
 import android.os.Build
 import android.os.Environment
+import android.provider.MediaStore
 import android.provider.Telephony
 import android.provider.Telephony.Mms
 import android.provider.Telephony.Sms
@@ -44,6 +46,8 @@ import com.klinker.android.send_message.Transaction
 import com.moez.QKSMS.common.util.extensions.now
 import com.moez.QKSMS.compat.TelephonyCompat
 import com.moez.QKSMS.extensions.anyOf
+import com.moez.QKSMS.extensions.isImage
+import com.moez.QKSMS.extensions.isVideo
 import com.moez.QKSMS.manager.ActiveConversationManager
 import com.moez.QKSMS.manager.KeyManager
 import com.moez.QKSMS.model.Attachment
@@ -61,6 +65,8 @@ import io.realm.Case
 import io.realm.Realm
 import io.realm.RealmResults
 import io.realm.Sort
+import okio.buffer
+import okio.source
 import timber.log.Timber
 import java.io.File
 import java.io.FileNotFoundException
@@ -167,36 +173,53 @@ class MessageRepositoryImpl @Inject constructor(
                 .findAllAsync()
     }
 
-    override fun savePart(id: Long): File? {
+    override fun savePart(id: Long): Uri? {
         val part = getPart(id) ?: return null
 
         val extension = MimeTypeMap.getSingleton().getExtensionFromMimeType(part.type) ?: return null
         val date = part.messages?.first()?.date
-        val dir = File(Environment.getExternalStorageDirectory(), "QKSMS/Media").apply { mkdirs() }
         val fileName = part.name?.takeIf { name -> name.endsWith(extension) }
                 ?: "${part.type.split("/").last()}_$date.$extension"
-        var file: File
-        var index = 0
-        do {
-            file = File(dir, if (index == 0) fileName else fileName.replace(".$extension", " ($index).$extension"))
-            index++
-        } while (file.exists())
 
-        try {
-            FileOutputStream(file).use { outputStream ->
+        val values = contentValuesOf(
+                MediaStore.MediaColumns.DISPLAY_NAME to fileName,
+                MediaStore.MediaColumns.MIME_TYPE to part.type,
+        )
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            values.put(MediaStore.MediaColumns.IS_PENDING, 1)
+            values.put(MediaStore.MediaColumns.RELATIVE_PATH, when {
+                part.isImage() -> "${Environment.DIRECTORY_PICTURES}/QKSMS"
+                part.isVideo() -> "${Environment.DIRECTORY_MOVIES}/QKSMS"
+                else -> "${Environment.DIRECTORY_DOWNLOADS}/QKSMS"
+            })
+        }
+
+        val contentUri = when {
+            part.isImage() -> MediaStore.Images.Media.EXTERNAL_CONTENT_URI
+            part.isVideo() -> MediaStore.Video.Media.EXTERNAL_CONTENT_URI
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q -> MediaStore.Downloads.EXTERNAL_CONTENT_URI
+            else -> MediaStore.Files.getContentUri("external")
+        }
+        val resolver = context.contentResolver
+        val uri = resolver.insert(contentUri, values)
+        Timber.v("Saving $fileName (${part.type}) to $uri")
+
+        uri?.let {
+            resolver.openOutputStream(uri)?.use { outputStream ->
                 context.contentResolver.openInputStream(part.getUri())?.use { inputStream ->
                     inputStream.copyTo(outputStream, 1024)
                 }
             }
-        } catch (e: FileNotFoundException) {
-            e.printStackTrace()
-        } catch (e: IOException) {
-            e.printStackTrace()
+            Timber.v("Saved $fileName (${part.type}) to $uri")
+
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                resolver.update(uri, contentValuesOf(MediaStore.MediaColumns.IS_PENDING to 0), null, null)
+                Timber.v("Marked $uri as not pending")
+            }
         }
 
-        MediaScannerConnection.scanFile(context, arrayOf(file.path), null, null)
-
-        return file.takeIf { it.exists() }
+        return uri
     }
 
     /**

@@ -31,7 +31,6 @@ import androidx.core.view.isVisible
 import com.jakewharton.rxbinding2.view.clicks
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.base.QkController
-import com.moez.QKSMS.common.util.DateFormatter
 import com.moez.QKSMS.common.util.QkActivityResultContracts
 import com.moez.QKSMS.common.util.extensions.getLabel
 import com.moez.QKSMS.common.util.extensions.setBackgroundTint

@@ -81,9 +81,11 @@ class GalleryViewModel @Inject constructor(
         view.optionsItemSelected()
                 .filter { itemId -> itemId == R.id.share }
                 .filter { permissions.hasStorage().also { if (!it) view.requestStoragePermission() } }
-                .withLatestFrom(view.pageChanged()) { _, part -> part.id }
+                .withLatestFrom(view.pageChanged()) { _, part -> part }
                 .autoDisposable(view.scope())
-                .subscribe { partId -> messageRepo.savePart(partId)?.let(navigator::shareFile) }
+                .subscribe { part ->
+                    messageRepo.savePart(part.id)?.let { navigator.shareFile(it, part.type) }
+                }
     }
 
 }
