@@ -51,7 +51,6 @@ import javax.inject.Inject
 
 class BackupController : QkController<BackupView, BackupState, BackupPresenter>(), BackupView {
 
-    @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
 
     private val selectFolderCancelSubject: Subject<Unit> = PublishSubject.create()
