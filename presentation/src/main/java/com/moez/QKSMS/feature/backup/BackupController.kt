@@ -18,7 +18,6 @@
  */
 package com.moez.QKSMS.feature.backup
 
-import android.app.Activity
 import android.content.Context
 import android.content.res.ColorStateList
 import android.graphics.Typeface
@@ -54,8 +53,6 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
 
     @Inject lateinit var dateFormatter: DateFormatter
     @Inject override lateinit var presenter: BackupPresenter
-
-    private val activityVisibleSubject: Subject<Unit> = PublishSubject.create()
 
     private val selectFolderCancelSubject: Subject<Unit> = PublishSubject.create()
     private val selectFolderConfirmSubject: Subject<Unit> = PublishSubject.create()
@@ -151,11 +148,6 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
                 .mapNotNull { it as? PreferenceView }
                 .map { it.titleView }
                 .forEach { it.setTypeface(it.typeface, Typeface.BOLD) }
-    }
-
-    override fun onActivityResumed(activity: Activity) {
-        super.onActivityResumed(activity)
-        activityVisibleSubject.onNext(Unit)
     }
 
     override fun render(state: BackupState) {
