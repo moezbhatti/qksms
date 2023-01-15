@@ -114,13 +114,15 @@ class BackupController : QkController<BackupView, BackupState, BackupPresenter>(
 
     override fun onContextAvailable(context: Context) {
         // Init activity result contracts
-        openDirectory = themedActivity!!.registerForActivityResult(
-                ActivityResultContracts.OpenDocumentTree(),
-                documentTreeSelectedSubject::onNext)
+        openDirectory = themedActivity!!
+            .registerForActivityResult(ActivityResultContracts.OpenDocumentTree()) { uri ->
+                uri?.let(documentTreeSelectedSubject::onNext)
+            }
 
-        openDocument = themedActivity!!.registerForActivityResult(
-                QkActivityResultContracts.OpenDocument(),
-                documentSelectedSubject::onNext)
+        openDocument = themedActivity!!
+            .registerForActivityResult(QkActivityResultContracts.OpenDocument()) { uri ->
+                uri?.let(documentSelectedSubject::onNext)
+            }
     }
 
     override fun onAttach(view: View) {
