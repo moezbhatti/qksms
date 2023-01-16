@@ -26,7 +26,7 @@
     <string name="title_notification_prefs">Powiadomienia</string>
     <string name="title_theme">Motyw</string>
     <string name="title_conversations">Przeszukaj skrzynkę odbiorczą&#8230;</string>
-    <string name="title_compose">Nowa wiadomość</string>
+    <string name="title_compose">Wpisz nazwisko lub numer</string>
     <string name="setup_skip">Pomiń</string>
     <string name="setup_next">Kontynuuj</string>
     <string name="menu_add_person">Dodaj osobę</string>
@@ -56,7 +56,7 @@
     <string name="archived_empty_text">Miejsce dla twoich zarchiwizowanych rozmów</string>
     <string name="main_fab_cd">Rozpocznij nową rozmowę</string>
     <string name="main_default_sms_title">Pokochaj SMSowanie na nowo</string>
-    <string name="main_default_sms_message">Ustaw QKSMS jako domyślną aplikację do osbługi SMSów i MMSów</string>
+    <string name="main_default_sms_message">Ustaw QKSMS jako domyślną aplikację do SMSów i MMSów</string>
     <string name="main_default_sms_change">Zmień</string>
     <string name="main_permission_required">Wymagane uprawnienie</string>
     <string name="main_permission_sms">QKSMS wymaga uprawnień do wysyłania i przeglądania wiadomości</string>
@@ -99,7 +99,7 @@
     <string name="compose_messages_empty">To jest początek rozmowy. Powiedz coś miłego!</string>
     <string name="compose_vcard_label">Karta kontaktu</string>
     <string name="compose_scheduled_for">Zaplanowane na</string>
-    <string name="compose_scheduled_future">Wybrany czas musi być w przyszłości</string>
+    <string name="compose_scheduled_future">Wybrany czas musi być w przyszłości!</string>
     <string name="compose_scheduled_plus">Musisz odblokować QKSMS+, aby móc używac planowanych widomości</string>
     <string name="compose_scheduled_toast">Dodano do zaplanowanych wiadomości</string>
     <string name="compose_hint">Napisz wiadomość&#8230;</string>
@@ -161,11 +161,11 @@
     <string name="backup_restore_stop_title">Zatrzymaj przywracanie</string>
     <string name="backup_restore_stop_message">Wiadomości, które już zostały przywrócone, pozostaną w urządzeniu</string>
     <string name="backup_select_location_rationale_title">Wybierz lokalizację kopii zapasowej</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_message">Wybierz katalog do zapisania kopii zapasowych</string>
+    <string name="backup_details">%1$s\n%2$d wiadomości</string>
+    <string name="backup_selected_backup_error_title">Błąd</string>
+    <string name="backup_selected_backup_error_message">Nie można odczytać pliku kopii zapasowej</string>
+    <string name="backup_selected_backup_details_title">Szczegóły kopii zapasowej</string>
     <string name="backup_restore_dialog_title">Kopie zapasowe</string>
     <string name="backup_restore_dialog_empty">Nie znaleziono kopii zapasowych</string>
     <string name="backup_disclaimer">Obecnie można wykonywać i przwracać tylko kopie zapasowe SMSów. Wsparcie dla MMSów i planowane kopie zapasowe zostaną wprawdzone wkrótce.</string>
@@ -192,7 +192,7 @@
     </string-array>
     <string name="settings_category_appearance">Wygląd</string>
     <string name="settings_category_general">Ogólne</string>
-    <string name="settings_category_qkreply">QK Reply</string>
+    <string name="settings_category_qkreply">Szybka odpowiedź</string>
     <string name="settings_theme_title">Motyw</string>
     <string name="settings_night_title">Tryb nocny</string>
     <string name="settings_black_title">Czarne tło w trybie nocnym</string>
@@ -213,7 +213,7 @@
     <string name="settings_vibration_title">Wibracje</string>
     <string name="settings_ringtone_title">Dźwięki</string>
     <string name="settings_ringtone_none">Brak</string>
-    <string name="settings_qkreply_title">QK Reply</string>
+    <string name="settings_qkreply_title">Szybka odpowiedź</string>
     <string name="settings_qkreply_summary">Powiadomienia o nowych wiadomościach</string>
     <string name="settings_qkreply_tap_dismiss_title">Dotknij, aby odrzucić</string>
     <string name="settings_qkreply_tap_dismiss_summary">Dotknij gdziekolwiek poza okienkiem, aby zamknąć</string>
@@ -298,14 +298,14 @@
     </plurals>
     <string name="about_title">O aplikacji</string>
     <string name="about_version_title">Wersja</string>
-    <string name="about_developer_title">Deweloper</string>
+    <string name="about_developer_title">Programista</string>
     <string name="about_source_title">Kod źródłowy</string>
     <string name="about_changelog_title">Lista zmian</string>
     <string name="about_contact_title">Kontakt</string>
     <string name="about_license_title">Licencja</string>
     <string name="about_copyright_title">Prawa autorskie</string>
     <string name="qksms_plus_description_title">Wesprzyj rozwój, odblokuj wszystko</string>
-    <string name="qksms_plus_description_summary">Możesz wesprzeć głodującego dewelopera za jedyne %s</string>
+    <string name="qksms_plus_description_summary">Możesz wesprzeć głodującego programistę za jedyne %s</string>
     <!-- Substitutions are for price and currency. Ex: Lifetime upgrade for $1.99 USD -->
     <string name="qksms_plus_upgrade">Dożywotnie aktualizacja za %1$s %2$s</string>
     <!-- Substitutions are for price and currency. Ex: Unlock + donate for $4.99 USD -->
@@ -313,21 +313,21 @@
     <string name="qksms_plus_thanks_title">Dziękujemy za wsparcie aplikacji QKSMS!</string>
     <string name="qksms_plus_thanks_summary">Masz teraz dostęp do wszystkich funkcji QKSMS+</string>
     <string name="qksms_plus_error">Wystąpił błąd. Spróbuj ponownie.</string>
-    <string name="qksms_plus_free_title">Aplikacja QKSMS+ jest bezpłatna dla użytkowników F-Droid! Jeśli chcesz wesprzeć jej rozwój, rzuć pieniążka.</string>
+    <string name="qksms_plus_free_title">Aplikacja QKSMS+ jest bezpłatna dla użytkowników F-Droid! Jeśli chcesz wesprzeć jej rozwój, przekaż dotację.</string>
     <string name="qksms_plus_donate">Wsparcie za pośrednictwem serwisu PayPal</string>
     <string name="qksms_plus_coming_soon">Już wkrótce</string>
     <string name="qksms_plus_themes_title">Motywy premium</string>
     <string name="qksms_plus_themes_summary">Odblokuj piękne kolory motywów, które nie są dostępne w palecie Material Design</string>
     <string name="qksms_plus_emoji_title">Własne automatyczne emoji</string>
-    <string name="qksms_plus_emoji_summary">Twórz niestandardowe skróty do automatycznych emoji</string>
+    <string name="qksms_plus_emoji_summary">Twórz własne skróty do automatycznych emoji</string>
     <string name="qksms_plus_backup_title">Kopie zapasowe wiadomości</string>
     <string name="qksms_plus_backup_summary">Automatycznie wykonuj kopie zapasowe wiadomości. Nie martw się o ich utratę, jeśli zmienisz lub zgubisz urządzenie.</string>
     <string name="qksms_plus_scheduled_title">Zaplanowane wiadomości</string>
-    <string name="qksms_plus_scheduled_summary">Zaplanuj wysyłanie wiadomości na określony czas i dzień</string>
+    <string name="qksms_plus_scheduled_summary">Zaplanuj wysyłanie wiadomości w określonym czasie</string>
     <string name="qksms_plus_delayed_title">Opóźnione wysyłanie</string>
-    <string name="qksms_plus_delayed_summary">Poczekaj kilka sekund przed wysłaniem wiadomości</string>
+    <string name="qksms_plus_delayed_summary">Poczekaj kilka sekund przed wysłaniem wiadomości.</string>
     <string name="qksms_plus_night_title">Automatyczny tryb nocny</string>
-    <string name="qksms_plus_night_summary">Włączaj tryb nocny w oparciu o porę dnia.</string>
+    <string name="qksms_plus_night_summary">Włączaj tryb nocny na podstawie pory dnia.</string>
     <string name="qksms_plus_blacklist_title">Zaawansowane blokowanie</string>
     <string name="qksms_plus_blacklist_summary">Blokuj wiadomości, które zawierają słowa kluczowe lub dopasowane wzorce.</string>
     <string name="qksms_plus_forward_title">Automatyczne przekazywanie</string>
@@ -385,7 +385,7 @@
     <string-array name="notification_preview_options">
         <item>Pokazuj nadawcę i treść wiadomości</item>
         <item>Pokazuj nadawcę</item>
-        <item>Ukrywaj zawartość</item>
+        <item>Ukryj zawartość</item>
     </string-array>
     <string-array name="text_sizes">
         <item>Mały</item>
@@ -407,7 +407,7 @@
         <item>600 KB</item>
         <item>1000 KB</item>
         <item>2000 KB</item>
-        <item>Wyłączona</item>
+        <item>Bez kompresji</item>
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>

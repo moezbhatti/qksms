@@ -61,7 +61,7 @@
     <string name="main_permission_required">アクセス権限を許可してください</string>
     <string name="main_permission_sms">QKSMS は SMS メッセージを送信および表示する権限を必要とします</string>
     <string name="main_permission_contacts">QKSMS はあなたの連絡先を閲覧する権限を必要とします</string>
-    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
+    <string name="main_permission_notifications">QKSMS は通知を表示する権限を必要とします</string>
     <string name="main_permission_allow">許可</string>
     <string name="drawer_inbox">受信トレイ</string>
     <string name="drawer_archived">アーカイブ済み</string>
@@ -147,8 +147,8 @@
     <string name="backup_restoring">バックアップから復元</string>
     <string name="backup_loading">読み込み中...</string>
     <string name="backup_never">なし</string>
-    <string name="backup_location_title">Backup location</string>
-    <string name="backup_location_summary">Set folder</string>
+    <string name="backup_location_title">バックアップの場所</string>
+    <string name="backup_location_summary">フォルダーを設定</string>
     <string name="backup_restore_title">復元</string>
     <string name="backup_restore_summary">バックアップを選択</string>
     <string name="backup_restore_error_plus">バックアップと復元を使用するには QKSMS+ のロックを解除してください</string>
@@ -157,12 +157,12 @@
     <string name="backup_restore_confirm_title">バックアップから復元</string>
     <string name="backup_restore_stop_title">復元を停止</string>
     <string name="backup_restore_stop_message">既に復元されたメッセージはあなたのデバイスに残ります</string>
-    <string name="backup_select_location_rationale_title">Select backup location</string>
-    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
-    <string name="backup_details">%1$s\n%2$d messages</string>
-    <string name="backup_selected_backup_error_title">Error</string>
-    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
-    <string name="backup_selected_backup_details_title">Backup details</string>
+    <string name="backup_select_location_rationale_title">バックアップの場所を選択</string>
+    <string name="backup_select_location_rationale_message">バックアップを保存するフォルダーを選択してください</string>
+    <string name="backup_details">%1$s\n%2$d メッセージ</string>
+    <string name="backup_selected_backup_error_title">エラー</string>
+    <string name="backup_selected_backup_error_message">バックアップファイルを読み込めませんでした</string>
+    <string name="backup_selected_backup_details_title">バックアップの詳細</string>
     <string name="backup_restore_dialog_title">バックアップ</string>
     <string name="backup_restore_dialog_empty">バックアップが見つかりません</string>
     <string name="backup_disclaimer">現在、SMS のみバックアップと復元に対応しています。 MMS 対応と定期バックアップは近日中に公開されます！</string>
@@ -396,7 +396,7 @@
     </string-array>
     <string-array name="qk_responses">
         <item>OK</item>
-        <item>ちょっと待ってください</item>
+        <item>ちょっと待って</item>
         <item>今、途中です</item>
         <item>ありがとう</item>
         <item>いいですね</item>
