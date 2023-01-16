@@ -1,5 +1,20 @@
 [
   {
+    "versionCode": "2219",
+    "versionName": "3.10.0",
+    "added": [
+      "Support for Call Blocker (blocking manager)"
+    ],
+    "improved": [
+      "Support for Scoped Storage"
+    ],
+    "fixed": [
+      "Incorrect handling of shared text that contains a comma",
+      "Crash in billing flow",
+      "Crash when viewing VCard attachment with no name"
+    ]
+  },
+  {
     "versionCode": "2218",
     "versionName": "3.9.4",
     "fixed": [
