@@ -1,5 +1,12 @@
 [
   {
+    "versionCode": "2220",
+    "versionName": "3.10.1",
+    "fixed": [
+      "Crash when launching the app"
+    ]
+  },
+  {
     "versionCode": "2219",
     "versionName": "3.10.0",
     "added": [
