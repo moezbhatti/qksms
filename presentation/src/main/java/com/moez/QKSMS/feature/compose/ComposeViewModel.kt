@@ -345,7 +345,12 @@ class ComposeViewModel @Inject constructor(
                 .filter { it == R.id.delete }
                 .filter { permissionManager.isDefaultSms().also { if (!it) view.requestDefaultSms() } }
                 .withLatestFrom(view.messagesSelectedIntent, conversation) { _, messages, conversation ->
-                    deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
+                    view.showDeleteDialog(
+                        count = messages.size,
+                        onConfirm = {
+                            deleteMessages.execute(DeleteMessages.Params(messages, conversation.id))
+                        }
+                    )
                 }
                 .autoDisposable(view.scope())
                 .subscribe { view.clearSelection() }
