@@ -349,6 +349,15 @@ class ComposeActivity : QkThemedActivity(), ComposeView {
         }
     }
 
+    override fun showDeleteDialog(count: Int, onConfirm: () -> Unit) {
+        AlertDialog.Builder(this)
+            .setTitle(R.string.dialog_delete_title)
+            .setMessage(resources?.getQuantityString(R.plurals.dialog_delete_message, count, count))
+            .setPositiveButton(R.string.button_delete) { _, _ -> onConfirm() }
+            .setNegativeButton(R.string.button_cancel, null)
+            .show()
+    }
+
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
         menuInflater.inflate(R.menu.compose, menu)
         return super.onCreateOptionsMenu(menu)

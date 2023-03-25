@@ -71,5 +71,5 @@ interface ComposeView : QkView<ComposeState> {
     fun setDraft(draft: String)
     fun scrollToMessage(id: Long)
     fun showQksmsPlusSnackbar(@StringRes message: Int)
-
+    fun showDeleteDialog(count: Int, onConfirm: () -> Unit)
 }
