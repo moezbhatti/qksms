@@ -122,6 +122,8 @@
     <string name="compose_schedule_cd">排程訊息</string>
     <string name="compose_contact_cd">附加聯絡人</string>
     <string name="compose_contact_error">讀取聯絡人時出錯</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">已選取%1$d (%2$s) SIM卡</string>
     <string name="compose_sim_cd">%s 已選擇，變更 SIM 卡</string>

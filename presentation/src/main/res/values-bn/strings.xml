@@ -123,6 +123,8 @@
     <string name="compose_schedule_cd">বার্তা পাঠানোর সময়সূচি নির্ধারণ করো</string>
     <string name="compose_contact_cd">একটি পরিচিতি সংযুক্ত করুন</string>
     <string name="compose_contact_error">পরিচিতি পড়তে ত্রুটি</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">সিম %1$d (%2$s) নির্বাচিত</string>
     <string name="compose_sim_cd">নির্বাচিত, %s সিম কার্ড পরিবর্তন করুন</string>

@@ -29,6 +29,7 @@ import com.moez.QKSMS.common.base.QkViewHolder
 import com.moez.QKSMS.common.util.extensions.getDisplayName
 import com.moez.QKSMS.extensions.mapNotNull
 import com.moez.QKSMS.model.Attachment
+import com.moez.QKSMS.util.GlideApp
 import ezvcard.Ezvcard
 import io.reactivex.Observable
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -36,6 +37,7 @@ import io.reactivex.schedulers.Schedulers
 import io.reactivex.subjects.PublishSubject
 import io.reactivex.subjects.Subject
 import kotlinx.android.synthetic.main.attachment_contact_list_item.*
+import kotlinx.android.synthetic.main.attachment_file_list_item.*
 import kotlinx.android.synthetic.main.attachment_image_list_item.*
 import kotlinx.android.synthetic.main.attachment_image_list_item.view.*
 import javax.inject.Inject
@@ -47,6 +49,9 @@ class AttachmentAdapter @Inject constructor(
     companion object {
         private const val VIEW_TYPE_IMAGE = 0
         private const val VIEW_TYPE_CONTACT = 1
+        private const val VIEW_TYPE_VIDEO = 2
+        private const val VIEW_TYPE_FILE = 3
+
     }
 
     val attachmentDeleted: Subject<Attachment> = PublishSubject.create()
@@ -58,6 +63,11 @@ class AttachmentAdapter @Inject constructor(
                     .apply { thumbnailBounds.clipToOutline = true }
 
             VIEW_TYPE_CONTACT -> inflater.inflate(R.layout.attachment_contact_list_item, parent, false)
+
+            VIEW_TYPE_VIDEO -> inflater.inflate(R.layout.attachment_image_list_item, parent, false)
+                    .apply { thumbnailBounds.clipToOutline = true }
+
+            VIEW_TYPE_FILE -> inflater.inflate(R.layout.attachment_file_list_item, parent, false)
 
             else -> null!! // Impossible
         }
@@ -87,12 +97,41 @@ class AttachmentAdapter @Inject constructor(
                         holder.name?.text = displayName
                         holder.name?.isVisible = displayName.isNotEmpty()
                     }
+            is Attachment.Video -> {
+                GlideApp.with(context).load(attachment.getUri()).fitCenter().into(holder.thumbnail)
+            }
+            is Attachment.File -> {
+                Observable.just(attachment.getName(context))
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { name ->
+                            holder.filename?.text = name
+                            holder.filename?.isVisible = name?.isNotEmpty() ?: false
+                        }
+                Observable.just(attachment.getSize(context))
+                        .map { bytes ->
+                            when (bytes) {
+                                in 0..999 -> "$bytes B"
+                                in 1000..999999 -> "${"%.1f".format(bytes / 1000f)} KB"
+                                in 1000000..9999999 -> "${"%.1f".format(bytes / 1000000f)} MB"
+                                else -> "${"%.1f".format(bytes / 1000000000f)} GB"
+                            }
+                        }
+                        .subscribeOn(Schedulers.computation())
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe { size ->
+                            holder.size?.text = size
+                            holder.size?.isVisible = size?.isNotEmpty() ?: false
+                        }
+            }
         }
     }
 
     override fun getItemViewType(position: Int) = when (getItem(position)) {
         is Attachment.Image -> VIEW_TYPE_IMAGE
         is Attachment.Contact -> VIEW_TYPE_CONTACT
+        is Attachment.Video -> VIEW_TYPE_VIDEO
+        is Attachment.File -> VIEW_TYPE_FILE
     }
 
 }

@@ -122,6 +122,8 @@
     <string name="compose_schedule_cd">예약 전송 메시지</string>
     <string name="compose_contact_cd">연락처 첨부</string>
     <string name="compose_contact_error">연락처를 불러오는 중에 문제가 발생했습니다</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) 선택 됨</string>
     <string name="compose_sim_cd">%s 선택됨, SIM 카드를 변경하세요.</string>

@@ -125,6 +125,8 @@
     <string name="compose_schedule_cd">תזמון הודעה</string>
     <string name="compose_contact_cd">צרף איש קשר</string>
     <string name="compose_contact_error">שגיאה בקריאת איש קשר</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">נבחר SIM מס׳ %1$d ‏(%2$s)</string>
     <string name="compose_sim_cd">%s נבחר, החלף כרטיס SIM</string>

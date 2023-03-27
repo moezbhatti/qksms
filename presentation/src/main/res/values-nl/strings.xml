@@ -123,6 +123,8 @@
     <string name="compose_schedule_cd">Bericht plannen</string>
     <string name="compose_contact_cd">Een contactpersoon toevoegen</string>
     <string name="compose_contact_error">Fout bij het lezen van contact</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Simkaart %1$d (%2$s) geselecteerd</string>
     <string name="compose_sim_cd">%s geselecteerd, wijzig SIM-kaart</string>

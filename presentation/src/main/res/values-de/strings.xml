@@ -123,6 +123,8 @@
     <string name="compose_schedule_cd">Plane Nachricht</string>
     <string name="compose_contact_cd">Kontakt anhängen</string>
     <string name="compose_contact_error">Fehler beim Lesen des Kontaktes</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) ausgewählt</string>
     <string name="compose_sim_cd">%s ausgewählt, SIM-Karte ändern</string>

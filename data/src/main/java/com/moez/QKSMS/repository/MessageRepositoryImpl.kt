@@ -162,6 +162,8 @@ class MessageRepositoryImpl @Inject constructor(
                 .contains("type", "image/")
                 .or()
                 .contains("type", "video/")
+                .or()
+                .contains("type", "audio/")
                 .endGroup()
                 .sort("id", Sort.DESCENDING)
                 .findAllAsync()
@@ -346,14 +348,20 @@ class MessageRepositoryImpl @Inject constructor(
             val maxHeight = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_IMAGE_HEIGHT)
                     .takeIf { prefs.mmsSize.get() == -1 } ?: Int.MAX_VALUE
 
-            var remainingBytes = when (prefs.mmsSize.get()) {
-                -1 -> smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+            val carrierLimit = smsManager.carrierConfigValues.getInt(SmsManager.MMS_CONFIG_MAX_MESSAGE_SIZE)
+
+            val compressionLimit = when (prefs.mmsSize.get()) {
+                -1 -> carrierLimit
                 0 -> Int.MAX_VALUE
                 else -> prefs.mmsSize.get() * 1024
             } * 0.9 // Ugly, but buys us a bit of wiggle room
 
+            var bytesUsed = 0.0
+
+            var hasNotSkippedAttachment = true
+
             signedBody.takeIf { it.isNotEmpty() }?.toByteArray()?.let { bytes ->
-                remainingBytes -= bytes.size
+                bytesUsed += bytes.size
                 parts += MMSPart("text", ContentType.TEXT_PLAIN, bytes)
             }
 
@@ -362,9 +370,52 @@ class MessageRepositoryImpl @Inject constructor(
                     .mapNotNull { attachment -> attachment as? Attachment.Contact }
                     .map { attachment -> attachment.vCard.toByteArray() }
                     .map { vCard ->
-                        remainingBytes -= vCard.size
+                        bytesUsed += vCard.size
                         MMSPart("contact", ContentType.TEXT_VCARD, vCard)
                     }
+
+            val videoBytesByAttachment = attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.Video }
+                    .associateWith { attachment ->
+                        var uri = attachment.getUri() ?: return@associateWith byteArrayOf()
+                        val inputStream = context.contentResolver.openInputStream(uri) ?: return@associateWith  byteArrayOf()
+                        inputStream.readBytes()
+                    }
+                    .toMutableMap()
+
+            videoBytesByAttachment.forEach { (attachment, bytes) ->
+                val contentType: String = attachment.getContentType(context) ?: return@forEach
+                if (bytes.size < carrierLimit - bytesUsed) {
+                    parts += MMSPart("video", contentType, bytes)
+                    bytesUsed += bytes.size
+                } else {
+                    Timber.w("Video file of ${bytes.size / 1024}Kb cannot be sent in ${(carrierLimit - bytesUsed).toInt() / 1024}Kb remaining space.")
+                    hasNotSkippedAttachment = false
+                }
+            }
+
+            val fileBytesByAttachment = attachments
+                    .mapNotNull { attachment -> attachment as? Attachment.File }
+                    .associateWith { attachment ->
+                        val uri = attachment.getUri() ?: return@associateWith byteArrayOf()
+                        val inputStream = context.contentResolver.openInputStream(uri) ?: return@associateWith byteArrayOf()
+                        inputStream.readBytes()
+                    }
+                    .toMutableMap()
+
+            fileBytesByAttachment.forEach { (attachment, bytes) ->
+                val contentType: String = attachment.getContentType(context) ?: return@forEach
+                if (contentType.let(ContentType::isSupportedAudioType)) {
+                    if (bytes.size < carrierLimit - bytesUsed) {
+                        parts += MMSPart(attachment.getName(context)
+                                ?: "Attachment", contentType, bytes)
+                        bytesUsed += bytes.size
+                    } else {
+                        Timber.w("File of ${bytes.size / 1024}Kb cannot be sent in ${(carrierLimit - bytesUsed).toInt() / 1024}Kb remaining space.")
+                        hasNotSkippedAttachment = false
+                    }
+                }
+            }
 
             val imageBytesByAttachment = attachments
                     .mapNotNull { attachment -> attachment as? Attachment.Image }
@@ -378,10 +429,10 @@ class MessageRepositoryImpl @Inject constructor(
                     .toMutableMap()
 
             val imageByteCount = imageBytesByAttachment.values.sumBy { byteArray -> byteArray.size }
-            if (imageByteCount > remainingBytes) {
+            if (imageByteCount > compressionLimit - bytesUsed) {
                 imageBytesByAttachment.forEach { (attachment, originalBytes) ->
                     val uri = attachment.getUri() ?: return@forEach
-                    val maxBytes = originalBytes.size / imageByteCount.toFloat() * remainingBytes
+                    val maxBytes = originalBytes.size / imageByteCount.toFloat() * (compressionLimit - bytesUsed)
 
                     // Get the image dimensions
                     val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
@@ -430,7 +481,10 @@ class MessageRepositoryImpl @Inject constructor(
             // We need to strip the separators from outgoing MMS, or else they'll appear to have sent and not go through
             val transaction = Transaction(context)
             val recipients = addresses.map(phoneNumberUtils::normalizeNumber)
-            transaction.sendNewMessage(subId, threadId, recipients, parts, null, null)
+
+            if (parts.isNotEmpty() && hasNotSkippedAttachment) {
+                transaction.sendNewMessage(subId, threadId, recipients, parts, null, null)
+            }
         }
     }
 

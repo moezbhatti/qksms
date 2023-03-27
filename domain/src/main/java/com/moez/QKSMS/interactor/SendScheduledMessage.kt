@@ -47,7 +47,18 @@ class SendScheduledMessage @Inject constructor(
                 }
                 .map { message ->
                     val threadId = TelephonyCompat.getOrCreateThreadId(context, message.recipients)
-                    val attachments = message.attachments.mapNotNull(Uri::parse).map { Attachment.Image(it) }
+                    val attachments = message.attachments.mapNotNull(Uri::parse).mapNotNull { uri ->
+                        val contentType: String? = uri.let(context.contentResolver::getType)
+                        if (contentType?.startsWith("image/") == true) {
+                            Attachment.Image(uri)
+                        } else if (contentType?.startsWith("video") == true) {
+                            Attachment.Video(uri)
+                        } else if (contentType != null) {
+                            Attachment.File(uri)
+                        } else {
+                            null
+                        }
+                    }
                     SendMessage.Params(message.subId, threadId, message.recipients, message.body, attachments)
                 }
                 .flatMap(sendMessage::buildObservable)

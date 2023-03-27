@@ -123,6 +123,8 @@
     <string name="compose_schedule_cd">Pianifica messaggio</string>
     <string name="compose_contact_cd">Collegare un contatto</string>
     <string name="compose_contact_error">Errore nella lettura del contatto</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) selezionata</string>
     <string name="compose_sim_cd">%s selezionato, cambiare SIM</string>

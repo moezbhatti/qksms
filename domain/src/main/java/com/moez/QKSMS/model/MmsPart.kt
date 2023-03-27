@@ -44,6 +44,7 @@ open class MmsPart : RealmObject() {
         type == "text/x-vCard" -> "Contact card"
         type.startsWith("image") -> "Photo"
         type.startsWith("video") -> "Video"
+        type.startsWith("audio") -> "Audio"
         else -> null
     }
 
