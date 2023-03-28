@@ -122,6 +122,8 @@
     <string name="compose_schedule_cd">スケジュールメッセージ</string>
     <string name="compose_contact_cd">連絡先を添付する</string>
     <string name="compose_contact_error">連絡先の読み取りエラー</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) を選択しました</string>
     <string name="compose_sim_cd">%s 選択、SIMカードを交換</string>

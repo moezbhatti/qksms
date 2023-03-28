@@ -123,6 +123,8 @@
     <string name="compose_schedule_cd">Mesajı zamanlama</string>
     <string name="compose_contact_cd">Bir kişi ekle</string>
     <string name="compose_contact_error">Kişi okunurken hata oluştu</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">SIM %1$d (%2$s) seçili</string>
     <string name="compose_sim_cd">Seçili, %s SIM kartı değiştirin</string>

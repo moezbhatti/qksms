@@ -367,7 +367,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,gallery,galleryLabel,camera,cameraLabel,attachingBackground" />
+        app:constraint_referenced_ids="contact,contactLabel,schedule,scheduleLabel,gallery,galleryLabel,camera,cameraLabel,attachingBackground,audio,audioLabel,video,videoLabel" />
 
     <View
         android:id="@+id/attachingBackground"
@@ -495,7 +495,7 @@
         android:src="@drawable/ic_camera_alt_black_24dp"
         android:tint="?android:attr/textColorSecondary"
         android:visibility="visible"
-        app:layout_constraintBottom_toTopOf="@id/attach"
+        app:layout_constraintBottom_toTopOf="@id/audio"
         app:layout_constraintEnd_toEndOf="@id/attach"
         app:layout_constraintStart_toStartOf="@id/attach" />
 
@@ -515,6 +515,74 @@
         app:layout_constraintBottom_toBottomOf="@id/camera"
         app:layout_constraintStart_toEndOf="@id/gallery"
         app:layout_constraintTop_toTopOf="@id/camera" />
+
+    <ImageView
+        android:id="@+id/audio"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_audio_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_audiotrack_black_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/video"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/audioLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_4dp"
+        android:backgroundTint="?attr/bubbleColor"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/compose_audio_cd"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/audio"
+        app:layout_constraintStart_toEndOf="@id/gallery"
+        app:layout_constraintTop_toTopOf="@id/audio" />
+
+    <ImageView
+        android:id="@+id/video"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:layout_marginBottom="16dp"
+        android:background="@drawable/circle"
+        android:backgroundTint="?attr/bubbleColor"
+        android:contentDescription="@string/compose_video_cd"
+        android:elevation="4dp"
+        android:padding="10dp"
+        android:src="@drawable/ic_play_circle_filled_white_24dp"
+        android:tint="?android:attr/textColorSecondary"
+        android:visibility="visible"
+        app:layout_constraintBottom_toTopOf="@id/attach"
+        app:layout_constraintEnd_toEndOf="@id/attach"
+        app:layout_constraintStart_toStartOf="@id/attach" />
+
+    <com.moez.QKSMS.common.widget.QkTextView
+        android:id="@+id/videoLabel"
+        android:layout_width="wrap_content"
+        android:layout_height="32dp"
+        android:layout_marginStart="8dp"
+        android:background="@drawable/rounded_rectangle_4dp"
+        android:backgroundTint="?attr/bubbleColor"
+        android:elevation="4dp"
+        android:gravity="center_vertical"
+        android:paddingStart="8dp"
+        android:paddingEnd="8dp"
+        android:text="@string/compose_video_cd"
+        android:textColor="?android:attr/textColorPrimary"
+        app:layout_constraintBottom_toBottomOf="@id/video"
+        app:layout_constraintStart_toEndOf="@id/gallery"
+        app:layout_constraintTop_toTopOf="@id/video" />
 
     <ImageView
         android:id="@+id/attach"

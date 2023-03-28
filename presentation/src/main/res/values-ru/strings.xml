@@ -125,6 +125,8 @@
     <string name="compose_schedule_cd">Запланировать сообщение</string>
     <string name="compose_contact_cd">Прикрепить контакт</string>
     <string name="compose_contact_error">Ошибка чтения контакта</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Выбрана SIM-карта %1$d (%2$s)</string>
     <string name="compose_sim_cd">Выбрано %s, сменить SIM-карту</string>

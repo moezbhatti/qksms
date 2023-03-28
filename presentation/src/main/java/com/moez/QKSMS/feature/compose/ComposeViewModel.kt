@@ -509,6 +509,18 @@ class ComposeViewModel @Inject constructor(
                 .autoDisposable(view.scope())
                 .subscribe { view.requestGallery() }
 
+        // Attach an audio file
+        view.attachAudioIntent
+                .doOnNext { newState { copy(attaching = false) } }
+                .autoDisposable(view.scope())
+                .subscribe { view.requestAudio() }
+
+        // Attach a video file
+        view.attachVideoIntent
+                .doOnNext { newState { copy(attaching = false) } }
+                .autoDisposable(view.scope())
+                .subscribe { view.requestVideo() }
+
         // Choose a time to schedule the message
         view.scheduleIntent
                 .doOnNext { newState { copy(attaching = false) } }
@@ -523,6 +535,30 @@ class ComposeViewModel @Inject constructor(
         Observable.merge(
                 view.attachmentSelectedIntent.map { uri -> Attachment.Image(uri) },
                 view.inputContentIntent.map { inputContent -> Attachment.Image(inputContent = inputContent) })
+                .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
+                .doOnNext(attachments::onNext)
+                .autoDisposable(view.scope())
+                .subscribe { newState { copy(attaching = false) } }
+
+        Observable.merge(
+                view.audioSelectedIntent.map { uri ->
+                    Attachment.File(uri)
+                },
+                view.inputContentIntent.map { inputContent ->
+                    Attachment.File(inputContent = inputContent)
+                })
+                .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
+                .doOnNext(attachments::onNext)
+                .autoDisposable(view.scope())
+                .subscribe { newState { copy(attaching = false) } }
+
+        Observable.merge(
+                view.videoSelectedIntent.map { uri ->
+                    Attachment.Video(uri)
+                },
+                view.inputContentIntent.map { inputContent ->
+                    Attachment.Video(inputContent = inputContent)
+                })
                 .withLatestFrom(attachments) { attachment, attachments -> attachments + attachment }
                 .doOnNext(attachments::onNext)
                 .autoDisposable(view.scope())
@@ -658,9 +694,14 @@ class ComposeViewModel @Inject constructor(
                         state.scheduled != 0L -> {
                             newState { copy(scheduled = 0) }
                             val uris = attachments
-                                    .mapNotNull { it as? Attachment.Image }
-                                    .map { it.getUri() }
-                                    .map { it.toString() }
+                                    .mapNotNull { attachment ->
+                                        when(attachment) {
+                                            is Attachment.Image -> attachment.getUri()
+                                            is Attachment.Video -> attachment.getUri()
+                                            is Attachment.File -> attachment.getUri()
+                                            else -> null
+                                        }
+                                    }.mapNotNull { it.toString() }
                             val params = AddScheduledMessage
                                     .Params(state.scheduled, subId, addresses, sendAsGroup, body, uris)
                             addScheduledMessage.execute(params)

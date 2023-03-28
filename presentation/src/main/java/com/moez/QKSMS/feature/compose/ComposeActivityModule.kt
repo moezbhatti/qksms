@@ -91,6 +91,14 @@ class ComposeActivityModule {
                     text?.let(Attachment::Contact)
                 }
 
+                ContentType.isVideoType(mimeType) -> {
+                    Attachment.Video(uri)
+                }
+
+                ContentType.isSupportedType(mimeType) -> {
+                    Attachment.File(uri)
+                }
+
                 else -> null
             }
         })

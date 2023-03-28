@@ -124,6 +124,8 @@
     <string name="compose_schedule_cd">Планирај поруку</string>
     <string name="compose_contact_cd">Приложи контакт</string>
     <string name="compose_contact_error">Грешка при учитавању контакта</string>
+    <string name="compose_audio_cd">Attach audio</string>
+    <string name="compose_video_cd">Attach a video</string>
     <!-- Example: SIM 1 (Verizon) selected-->
     <string name="compose_sim_changed_toast">Изабрана SIM картица %1$d (%2$s)</string>
     <string name="compose_sim_cd">Изабрано: %s; промените SIM картицу</string>
