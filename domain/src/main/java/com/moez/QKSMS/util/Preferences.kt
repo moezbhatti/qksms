@@ -111,6 +111,7 @@ class Preferences @Inject constructor(
     val swipeLeft = rxPrefs.getInteger("swipeLeft", SWIPE_ACTION_ARCHIVE)
     val autoEmoji = rxPrefs.getBoolean("autoEmoji", true)
     val delivery = rxPrefs.getBoolean("delivery", false)
+    val messageSound = rxPrefs.getBoolean("messageSound", false)
     val signature = rxPrefs.getString("signature", "")
     val unicode = rxPrefs.getBoolean("unicode", false)
     val mobileOnly = rxPrefs.getBoolean("mobileOnly", false)

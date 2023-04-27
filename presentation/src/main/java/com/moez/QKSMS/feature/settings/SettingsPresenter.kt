@@ -100,6 +100,9 @@ class SettingsPresenter @Inject constructor(
         disposables += prefs.delivery.asObservable()
                 .subscribe { enabled -> newState { copy(deliveryEnabled = enabled) } }
 
+        disposables += prefs.messageSound.asObservable()
+            .subscribe { enabled -> newState { copy(messageSoundEnabled = enabled) } }
+
         disposables += prefs.signature.asObservable()
                 .subscribe { signature -> newState { copy(signature = signature) } }
 
@@ -177,6 +180,8 @@ class SettingsPresenter @Inject constructor(
                         R.id.delayed -> view.showDelayDurationDialog()
 
                         R.id.delivery -> prefs.delivery.set(!prefs.delivery.get())
+
+                        R.id.outgoing_message_sound -> prefs.messageSound.set(!prefs.messageSound.get())
 
                         R.id.signature -> view.showSignatureDialog(prefs.signature.get())
 
