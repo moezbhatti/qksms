@@ -19,10 +19,13 @@
 package com.moez.QKSMS.feature.compose
 
 import android.content.Context
+import android.media.AudioManager
+import android.media.MediaPlayer
 import android.net.Uri
 import android.os.Vibrator
 import android.provider.ContactsContract
 import android.telephony.SmsMessage
+import android.util.Log
 import androidx.core.content.getSystemService
 import com.moez.QKSMS.R
 import com.moez.QKSMS.common.Navigator
@@ -112,6 +115,7 @@ class ComposeViewModel @Inject constructor(
     private val searchSelection: Subject<Long> = BehaviorSubject.createDefault(-1)
 
     private var shouldShowContacts = threadId == 0L && addresses.isEmpty()
+    var audioPlayer: MediaPlayer? = null
 
     init {
         val initialConversation = threadId.takeIf { it != 0L }
@@ -653,6 +657,13 @@ class ComposeViewModel @Inject constructor(
                     }
                     val sendAsGroup = !state.editingMode || state.sendAsGroup
 
+                    //check if outgoing message sound is enabled then play sent sound every time user send messages
+                    if (prefs.messageSound.get()) {
+                        audioPlayer = MediaPlayer.create(context, R.raw.sentsound)
+                        audioPlayer?.setAudioStreamType(AudioManager.STREAM_MUSIC)
+                        audioPlayer?.isLooping = false
+                        audioPlayer?.start()
+                    }
                     when {
                         // Scheduling a message
                         state.scheduled != 0L -> {

@@ -144,6 +144,14 @@
             app:title="@string/settings_swipe_actions" />
 
         <com.moez.QKSMS.common.widget.PreferenceView
+            android:id="@+id/outgoing_message_sound"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:icon="@drawable/ic_outgoing_sound"
+            app:title="@string/outgoing_message_sound"
+            app:widget="@layout/settings_switch_widget" />
+
+        <com.moez.QKSMS.common.widget.PreferenceView
             android:id="@+id/delivery"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
