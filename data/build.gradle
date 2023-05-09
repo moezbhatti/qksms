@@ -42,6 +42,7 @@ android {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
     }
+    namespace 'com.moez.QKSMS.data'
 }
 
 dependencies {
