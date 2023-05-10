@@ -20,6 +20,7 @@ package com.moez.QKSMS.common.util.extensions
 
 import android.app.job.JobScheduler
 import android.content.Context
+import android.content.pm.PackageInfo
 import android.content.res.ColorStateList
 import android.graphics.Color
 import android.util.TypedValue
@@ -27,6 +28,7 @@ import android.widget.Toast
 import androidx.annotation.StringRes
 import androidx.core.content.ContextCompat
 import androidx.core.content.getSystemService
+import androidx.core.content.pm.PackageInfoCompat
 import com.moez.QKSMS.util.tryOrNull
 
 fun Context.getColorCompat(colorRes: Int): Int {
@@ -85,7 +87,7 @@ fun Context.isInstalled(packageName: String): Boolean {
 }
 
 val Context.versionCode: Int
-    get() = packageManager.getPackageInfo(packageName, 0).versionCode
+    get() = PackageInfoCompat.getLongVersionCode(PackageInfo()).toInt()
 
 val Context.jobScheduler: JobScheduler
     get() = getSystemService()!!

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019,2021 Moez Bhatti <moez.bhatti@gmail.com>,to268
   ~
   ~ This file is part of QKSMS.
   ~
@@ -102,6 +102,7 @@
     <string name="compose_hint">Écrire un message&#8230;</string>
     <string name="compose_menu_copy">Copier le texte</string>
     <string name="compose_menu_forward">Transférer</string>
+    <string name="compose_menu_speech">Énoncer le texte</string>
     <string name="compose_menu_delete">Supprimer</string>
     <string name="compose_menu_previous">Précédent</string>
     <string name="compose_menu_next">Suivant</string>

@@ -29,7 +29,7 @@ import javax.inject.Inject
 class UpgradeButtonExperiment @Inject constructor(
     context: Context,
     analytics: AnalyticsManager
-) : Experiment<@StringRes Int>(context, analytics) {
+) : Experiment<@receiver:StringRes Int>(context, analytics) {
 
     override val key: String = "Upgrade Button"
 

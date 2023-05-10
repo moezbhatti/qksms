@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!--
-  ~ Copyright (C) 2019 Moez Bhatti <moez.bhatti@gmail.com>
+  ~ Copyright (C) 2019,2021 Moez Bhatti <moez.bhatti@gmail.com>,to268
   ~
   ~ This file is part of QKSMS.
   ~
@@ -66,6 +66,13 @@
         android:id="@+id/forward"
         android:icon="@drawable/ic_forward_black_24dp"
         android:title="@string/compose_menu_forward"
+        android:visible="false"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/speech"
+        android:icon="@drawable/ic_speech_black_24dp"
+        android:title="@string/compose_menu_speech"
         android:visible="false"
         app:showAsAction="ifRoom" />
 

@@ -64,7 +64,7 @@ class BackupPresenter @Inject constructor(
                 .distinctUntilChanged()
                 .switchMap { backupRepo.getBackups() }
                 .doOnNext { backups -> newState { copy(backups = backups) } }
-                .map { backups -> backups.map { it.date }.max() ?: 0L }
+                .map { backups -> backups.maxOfOrNull { it.date } ?: 0L }
                 .map { lastBackup ->
                     when (lastBackup) {
                         0L -> context.getString(R.string.backup_never)

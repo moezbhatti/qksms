@@ -1,5 +1,5 @@
 /*
- * Copyright (C) 2017 Moez Bhatti <moez.bhatti@gmail.com>
+ * Copyright (C) 2017,2021 Moez Bhatti <moez.bhatti@gmail.com>,to268
  *
  * This file is part of QKSMS.
  *
@@ -74,29 +74,29 @@ import javax.inject.Inject
 import javax.inject.Named
 
 class ComposeViewModel @Inject constructor(
-    @Named("query") private val query: String,
-    @Named("threadId") private val threadId: Long,
-    @Named("addresses") private val addresses: List<String>,
-    @Named("text") private val sharedText: String,
-    @Named("attachments") private val sharedAttachments: Attachments,
-    private val contactRepo: ContactRepository,
-    private val context: Context,
-    private val activeConversationManager: ActiveConversationManager,
-    private val addScheduledMessage: AddScheduledMessage,
-    private val billingManager: BillingManager,
-    private val cancelMessage: CancelDelayedMessage,
-    private val conversationRepo: ConversationRepository,
-    private val deleteMessages: DeleteMessages,
-    private val markRead: MarkRead,
-    private val messageDetailsFormatter: MessageDetailsFormatter,
-    private val messageRepo: MessageRepository,
-    private val navigator: Navigator,
-    private val permissionManager: PermissionManager,
-    private val phoneNumberUtils: PhoneNumberUtils,
-    private val prefs: Preferences,
-    private val retrySending: RetrySending,
-    private val sendMessage: SendMessage,
-    private val subscriptionManager: SubscriptionManagerCompat
+        @Named("query") private val query: String,
+        @Named("threadId") private val threadId: Long,
+        @Named("addresses") private val addresses: List<String>,
+        @Named("text") private val sharedText: String,
+        @Named("attachments") private val sharedAttachments: Attachments,
+        private val contactRepo: ContactRepository,
+        private val context: Context,
+        private val activeConversationManager: ActiveConversationManager,
+        private val addScheduledMessage: AddScheduledMessage,
+        private val billingManager: BillingManager,
+        private val cancelMessage: CancelDelayedMessage,
+        private val conversationRepo: ConversationRepository,
+        private val deleteMessages: DeleteMessages,
+        private val markRead: MarkRead,
+        private val messageDetailsFormatter: MessageDetailsFormatter,
+        private val messageRepo: MessageRepository,
+        private val navigator: Navigator,
+        private val permissionManager: PermissionManager,
+        private val phoneNumberUtils: PhoneNumberUtils,
+        private val prefs: Preferences,
+        private val retrySending: RetrySending,
+        private val sendMessage: SendMessage,
+        private val subscriptionManager: SubscriptionManagerCompat
 ) : QkViewModel<ComposeView, ComposeState>(ComposeState(
         editingMode = threadId == 0L && addresses.isEmpty(),
         threadId = threadId,
@@ -339,6 +339,16 @@ class ComposeViewModel @Inject constructor(
                 .map(messageDetailsFormatter::format)
                 .autoDisposable(view.scope())
                 .subscribe { view.showDetails(it) }
+
+        // Speech text
+        view.optionsItemIntent
+                .filter { it == R.id.speech }
+                .withLatestFrom(view.messagesSelectedIntent) { _, messages -> messages }
+                .mapNotNull { messages -> messages.firstOrNull().also { view.clearSelection() } }
+                .mapNotNull(messageRepo::getMessage)
+                .mapNotNull(Message::getText)
+                .autoDisposable(view.scope())
+                .subscribe { view.speechText(it) }
 
         // Delete the messages
         view.optionsItemIntent
