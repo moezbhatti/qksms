@@ -38,7 +38,3 @@ dependencies {
 
     implementation project(":android-smsmms")
 }
-
-repositories {
-    mavenCentral()
-}

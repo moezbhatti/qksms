@@ -108,7 +108,7 @@ class GalleryPagerAdapter @Inject constructor(private val context: Context) : Qk
             }
 
             VIEW_TYPE_VIDEO -> {
-                val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory(null)
+                val videoTrackSelectionFactory = AdaptiveTrackSelection.Factory()
                 val trackSelector = DefaultTrackSelector(videoTrackSelectionFactory)
                 val exoPlayer = ExoPlayerFactory.newSimpleInstance(context, trackSelector)
                 holder.video.player = exoPlayer

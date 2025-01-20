@@ -15,7 +15,7 @@ buildscript {
     ext.coroutines_version = '1.4.3'
     ext.dagger_version = "2.16"
     ext.espresso_version = '3.1.0-alpha3'
-    ext.exoplayer_version = "2.8.1"
+    ext.exoplayer_version = "2.13.3"
     ext.glide_version = "4.8.0"
     ext.junit_version = '4.12'
     ext.kotlin_version = '1.7.20'
@@ -37,9 +37,10 @@ buildscript {
     ext.abiCodes = ['armeabi-v7a': 1, 'arm64-v8a': 2]
 
     repositories {
-        maven { url 'https://maven.google.com' }
-        jcenter()
+        gradlePluginPortal()
+        mavenCentral()
         google()
+        maven { url "https://jitpack.io" }
     }
 
     dependencies {
@@ -53,15 +54,10 @@ buildscript {
 
 allprojects {
     repositories {
-        google()
-        jcenter()
-        maven { url "https://jitpack.io" }
-        maven { url 'https://maven.google.com' }
-        maven {
-            name 'glide-snapshot'
-            url 'https://oss.sonatype.org/content/repositories/snapshots'
-        }
         mavenCentral()
+        google()
+        maven { url "https://jitpack.io" }
+
     }
 }
 
