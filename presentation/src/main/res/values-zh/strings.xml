@@ -27,7 +27,7 @@
     <string name="title_theme">主題</string>
     <string name="title_conversations">在收件箱中搜索...</string>
     <string name="title_compose">編輯</string>
-    <string name="setup_skip">跳过</string>
+    <string name="setup_skip">跳過</string>
     <string name="setup_next">繼續</string>
     <string name="menu_add_person">增加傳送人</string>
     <string name="menu_call">致電</string>
@@ -46,7 +46,7 @@
     <string name="main_menu_read">標示已讀</string>
     <string name="main_menu_unread">標示未讀</string>
     <string name="main_menu_block">攔截</string>
-    <string name="main_syncing">正在同步...</string>
+    <string name="main_syncing">正在同步&#8230;</string>
     <string name="main_sender_you">您：%s</string>
     <string name="main_draft">草稿</string>
     <string name="main_message_results_title">信息中的結果</string>
@@ -61,6 +61,7 @@
     <string name="main_permission_required">需要授權</string>
     <string name="main_permission_sms">需要允許QKSMS發送和查看SMS訊息</string>
     <string name="main_permission_contacts">需要允許QKSMS查看您的連絡人</string>
+    <string name="main_permission_notifications">QKSMS needs permission to display notifications</string>
     <string name="main_permission_allow">允許</string>
     <string name="drawer_inbox">收件箱</string>
     <string name="drawer_archived">已存檔</string>
@@ -98,7 +99,7 @@
     <string name="compose_scheduled_future">所選時間必須是未來時間</string>
     <string name="compose_scheduled_plus">您必須解鎖 QKSMS+ 以使用排程簡訊</string>
     <string name="compose_scheduled_toast">已新增至排程訊息</string>
-    <string name="compose_hint">寫一條訊息...</string>
+    <string name="compose_hint">寫一條訊息&#8230;</string>
     <string name="compose_menu_copy">複製文本</string>
     <string name="compose_menu_forward">轉寄</string>
     <string name="compose_menu_delete">刪除</string>
@@ -126,7 +127,7 @@
     <string name="compose_sim_changed_toast">已選取%1$d (%2$s) SIM卡</string>
     <string name="compose_sim_cd">%s 已選擇，變更 SIM 卡</string>
     <string name="compose_send_cd">發送訊息</string>
-    <string name="message_status_sending">正在發送...</string>
+    <string name="message_status_sending">正在發送&#8230;</string>
     <string name="message_status_delivered">已傳遞 %s</string>
     <string name="message_status_failed">發送失敗，點擊重試</string>
     <string name="info_title">詳細資訊</string>
@@ -144,23 +145,26 @@
     <string name="backup_title">備份和還原</string>
     <string name="backup_backing_up">正在備份訊息</string>
     <string name="backup_restoring">正在從備份還原</string>
-    <string name="backup_last">上次備份</string>
     <string name="backup_loading">載入中&#8230;</string>
     <string name="backup_never">從未備份</string>
+    <string name="backup_location_title">Backup location</string>
+    <string name="backup_location_summary">Set folder</string>
     <string name="backup_restore_title">還原</string>
     <string name="backup_restore_summary">選擇備份</string>
     <string name="backup_restore_error_plus">請解鎖 QKSMS+ 以使用備份和還原功能</string>
     <string name="backup_restore_error_backup">正在進行備份&#8230;</string>
     <string name="backup_restore_error_restore">正在進行還原&#8230;</string>
     <string name="backup_restore_confirm_title">從備份還原</string>
-    <string name="backup_restore_confirm_message">您確定要從此備份還原訊息嗎？</string>
     <string name="backup_restore_stop_title">停止還原</string>
     <string name="backup_restore_stop_message">已還原的訊息將保留在您的裝置上</string>
+    <string name="backup_select_location_rationale_title">Select backup location</string>
+    <string name="backup_select_location_rationale_message">Please select a folder to save your backups to</string>
+    <string name="backup_details">%1$s\n%2$d messages</string>
+    <string name="backup_selected_backup_error_title">Error</string>
+    <string name="backup_selected_backup_error_message">Couldn\'t read backup file</string>
+    <string name="backup_selected_backup_details_title">Backup details</string>
     <string name="backup_restore_dialog_title">備份</string>
     <string name="backup_restore_dialog_empty">未能找到備份</string>
-    <plurals name="backup_message_count">
-        <item quantity="other">%d 條訊息</item>
-    </plurals>
     <string name="backup_disclaimer">目前只有簡訊支援備份和還原，多媒體和排程簡訊備份將在不久後加入！</string>
     <string name="backup_now">立即備份</string>
     <string name="backup_progress_parsing">正在解析備份&#8230;</string>
@@ -233,14 +237,14 @@
     <string name="settings_unicode_summary">刪除訊息中字母上的讀音符號</string>
     <string name="settings_mobile_title">僅限手機號碼</string>
     <string name="settings_mobile_summary">撰寫訊息時，只顯示手機號碼</string>
-    <string name="settings_auto_delete">Delete old messages automatically</string>
-    <string name="settings_auto_delete_dialog_message">Messages will be deleted after the specified number of days</string>
-    <string name="settings_auto_delete_dialog_hint">Number of days</string>
-    <string name="settings_auto_delete_never">Never</string>
-    <string name="settings_auto_delete_warning">Delete old messages automatically?</string>
-    <string name="settings_auto_delete_warning_message">If you proceed, %1$d messages will be deleted now</string>
+    <string name="settings_auto_delete">自動刪除舊訊息</string>
+    <string name="settings_auto_delete_dialog_message">會在指定的天數後刪除訊息</string>
+    <string name="settings_auto_delete_dialog_hint">天數</string>
+    <string name="settings_auto_delete_never">永不</string>
+    <string name="settings_auto_delete_warning">要自動刪除舊訊息嗎？</string>
+    <string name="settings_auto_delete_warning_message">如果繼續，現在會刪除 %1$d 條訊息</string>
     <plurals name="settings_auto_delete_summary">
-        <item quantity="other">After %d days</item>
+        <item quantity="other">%d 天後</item>
     </plurals>
     <string name="settings_long_as_mms_title">以MMS傳送長訊息</string>
     <string name="settings_long_as_mms_summary">若您較長的訊息無法傳送或是以錯誤順序傳送，您可以改用MMS方式傳送訊息。（可能會有額外費用）</string>
@@ -259,7 +263,7 @@
     <string name="blocking_manager_title">封鎖管理器</string>
     <string name="blocking_manager_qksms_title">QKSMS</string>
     <string name="blocking_manager_qksms_summary">QKSMS內建封鎖功能</string>
-    <string name="blocking_manager_call_blocker_summary">Block spam messages, numbers &amp; unknown calls with blacklist &amp; Schedule</string>
+    <string name="blocking_manager_call_blocker_summary">使用黑名單與排程封鎖垃圾訊息、號碼和未知來電</string>
     <string name="blocking_manager_call_control_summary">自動過濾來電與簡訊！群眾智慧Community IQ™能讓你遠離不想要的垃圾簡訊</string>
     <string name="blocking_manager_sia_summary">使用\"Should I Answer\"應用過濾未知號碼的消息</string>
     <string name="blocking_manager_copy_title">複製封鎖號碼</string>
@@ -296,7 +300,7 @@
     <string name="qksms_plus_upgrade_donate">解鎖並捐贈只需 %1$s %2$s</string>
     <string name="qksms_plus_thanks_title">感謝您對 QKSMS 的支持！</string>
     <string name="qksms_plus_thanks_summary">現在您可以使用 QKSMS+ 的全部功能！</string>
-    <string name="qksms_plus_error">An error has occurred, please try again</string>
+    <string name="qksms_plus_error">發生錯誤，請再試一次</string>
     <string name="qksms_plus_free_title">QKSMS+對F-Droid用戶免費！如果您想支持開發，可以隨意捐款。</string>
     <string name="qksms_plus_donate">使用PayPal捐贈</string>
     <string name="qksms_plus_coming_soon">即將推出</string>
@@ -320,7 +324,7 @@
     <string name="qksms_plus_respond_summary">使用預設回應自動回覆傳入郵件</string>
     <string name="qksms_plus_more_title">更多</string>
     <string name="qksms_plus_more_summary">QKSMS 正在積極開發中，您的購買將包含後續 QKSMS+ 的所有功能！</string>
-    <string name="widget_loading">載入中...</string>
+    <string name="widget_loading">載入中&#8230;</string>
     <string name="widget_more">查看更多對話</string>
     <string name="qkreply_menu_read">標示已讀</string>
     <string name="qkreply_menu_call">致電</string>

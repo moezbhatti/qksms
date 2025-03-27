@@ -31,7 +31,10 @@
         <item name="android:windowBackground">@color/backgroundDark</item>
     </style>
 
-    <style name="AppTheme" parent="AppBaseTheme" />
+    <style name="AppTheme" parent="AppBaseTheme">
+        <item name="android:statusBarColor">@color/backgroundLight</item>
+        <item name="android:windowLightStatusBar">true</item>
+    </style>
 
     <style name="AppBaseTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <item name="android:divider">@color/separatorLight</item>

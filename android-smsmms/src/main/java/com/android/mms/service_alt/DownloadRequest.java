@@ -28,7 +28,6 @@ import android.os.Bundle;
 import android.provider.Telephony;
 import android.text.TextUtils;
 
-import com.android.mms.service_alt.exception.MmsHttpException;
 import com.google.android.mms.MmsException;
 import com.google.android.mms.pdu_alt.GenericPdu;
 import com.google.android.mms.pdu_alt.PduHeaders;
@@ -73,44 +72,6 @@ public class DownloadRequest extends MmsRequest {
 
         mDownloadedIntent = downloadedIntent;
         mContentUri = contentUri;
-    }
-
-    @Override
-    protected byte[] doHttp(Context context, MmsNetworkManager netMgr, ApnSettings apn)
-            throws MmsHttpException {
-        final MmsHttpClient mmsHttpClient = netMgr.getOrCreateHttpClient();
-        if (mmsHttpClient == null) {
-            Timber.e("MMS network is not ready!");
-            throw new MmsHttpException(0/*statusCode*/, "MMS network is not ready");
-        }
-        return mmsHttpClient.execute(
-                mLocationUrl,
-                null/*pud*/,
-                MmsHttpClient.METHOD_GET,
-                apn.isProxySet(),
-                apn.getProxyAddress(),
-                apn.getProxyPort(),
-                mMmsConfig);
-    }
-
-    @Override
-    protected PendingIntent getPendingIntent() {
-        return mDownloadedIntent;
-    }
-
-    @Override
-    protected int getQueueType() {
-        return 1;
-    }
-
-    @Override
-    protected Uri persistIfRequired(Context context, int result, byte[] response) {
-        if (!mRequestManager.getAutoPersistingPref()) {
-            notifyOfDownload(context);
-            return null;
-        }
-
-        return persist(context, response, mMmsConfig, mLocationUrl, mSubId, mCreator);
     }
 
     public static Uri persist(Context context, byte[] response, MmsConfig.Overridden mmsConfig,
@@ -264,41 +225,6 @@ public class DownloadRequest extends MmsRequest {
 //                    null,
 //                    null, Activity.RESULT_OK, null, null);
 //        }
-    }
-
-    /**
-     * Transfer the received response to the caller (for download requests write to content uri)
-     *
-     * @param fillIn   the intent that will be returned to the caller
-     * @param response the pdu to transfer
-     */
-    @Override
-    protected boolean transferResponse(Intent fillIn, final byte[] response) {
-        return mRequestManager.writePduToContentUri(mContentUri, response);
-    }
-
-    @Override
-    protected boolean prepareForHttpRequest() {
-        return true;
-    }
-
-    /**
-     * Try downloading via the carrier app.
-     *
-     * @param context                        The context
-     * @param carrierMessagingServicePackage The carrier messaging service handling the download
-     */
-    public void tryDownloadingByCarrierApp(Context context, String carrierMessagingServicePackage) {
-//        final CarrierDownloadManager carrierDownloadManger = new CarrierDownloadManager();
-//        final CarrierDownloadCompleteCallback downloadCallback =
-//                new CarrierDownloadCompleteCallback(context, carrierDownloadManger);
-//        carrierDownloadManger.downloadMms(context, carrierMessagingServicePackage,
-//                downloadCallback);
-    }
-
-    @Override
-    protected void revokeUriPermission(Context context) {
-        context.revokeUriPermission(mContentUri, Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
     }
 
     private String getContentLocation(Context context, Uri uri)

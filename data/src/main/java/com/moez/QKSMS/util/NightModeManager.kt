@@ -99,11 +99,11 @@ class NightModeManager @Inject constructor(
     private fun updateAlarms() {
         val dayCalendar = createCalendar(prefs.nightEnd.get())
         val day = Intent(context, NightModeReceiver::class.java)
-        val dayIntent = PendingIntent.getBroadcast(context, 0, day, 0)
+        val dayIntent = PendingIntent.getBroadcast(context, 0, day, PendingIntent.FLAG_IMMUTABLE)
 
         val nightCalendar = createCalendar(prefs.nightStart.get())
         val night = Intent(context, NightModeReceiver::class.java)
-        val nightIntent = PendingIntent.getBroadcast(context, 1, night, 0)
+        val nightIntent = PendingIntent.getBroadcast(context, 1, night, PendingIntent.FLAG_IMMUTABLE)
 
         context.sendBroadcast(day)
         context.sendBroadcast(night)

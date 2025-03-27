@@ -152,9 +152,7 @@ class MessagesAdapter @Inject constructor(
             view = layoutInflater.inflate(R.layout.message_list_item_in, parent, false)
         }
 
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-            view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
-        }
+        view.body.hyphenationFrequency = Layout.HYPHENATION_FREQUENCY_NONE
 
         val partsAdapter = partsAdapterProvider.get()
         partsAdapter.clicks.subscribe(partClicks)

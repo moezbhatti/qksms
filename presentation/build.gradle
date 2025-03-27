@@ -23,16 +23,15 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
-    buildToolsVersion "29.0.3"
+    compileSdkVersion 33
     flavorDimensions "analytics"
 
     defaultConfig {
         applicationId "com.moez.QKSMS"
-        minSdkVersion 21
-        targetSdkVersion 29
-        versionCode 2218
-        versionName "3.9.4"
+        minSdkVersion 23
+        targetSdkVersion 33
+        versionCode 2220
+        versionName "3.10.1"
         setProperty("archivesBaseName", "QKSMS-v${versionName}")
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
@@ -61,14 +60,15 @@ android {
         jvmTarget = "1.8"
     }
 
-    lintOptions {
-        abortOnError false
-    }
 
     productFlavors {
         withAnalytics { dimension "analytics" }
         noAnalytics { dimension "analytics" }
     }
+    lint {
+        abortOnError false
+    }
+    namespace 'com.moez.QKSMS'
 
     if (System.getenv("CI") == "true") {
         signingConfigs.release.storeFile = file("../keystore")
@@ -142,7 +142,7 @@ dependencies {
     })
 
     // realm
-    implementation("io.realm:android-adapters:$realm_adapters_version") { transitive = false }
+    implementation("com.github.realm:realm-android-adapters:$realm_adapters_version") { transitive = false }
     kapt "io.realm:realm-annotations:$realm_version"
     kapt "io.realm:realm-annotations-processor:$realm_version"
 
@@ -176,7 +176,7 @@ dependencies {
 
     implementation "com.github.chrisbanes:PhotoView:2.0.0"
     implementation "com.f2prateek.rx.preferences2:rx-preferences:$rx_preferences_version"
-    implementation "com.google.android:flexbox:0.3.1"
+    implementation "com.google.android.flexbox:flexbox:3.0.0"
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "com.squareup.moshi:moshi-kotlin:$moshi_version"
     implementation "me.leolin:ShortcutBadger:1.1.22"

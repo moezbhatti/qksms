@@ -33,3 +33,11 @@ fun AlertDialog.Builder.setNegativeButton(@StringRes textId: Int, subject: Subje
 fun AlertDialog.Builder.setNeutralButton(@StringRes textId: Int, subject: Subject<Unit>): AlertDialog.Builder {
     return setNeutralButton(textId) { _, _ -> subject.onNext(Unit) }
 }
+
+fun AlertDialog.setShowing(show: Boolean) {
+    if (isShowing && !show) {
+        dismiss()
+    } else if (!isShowing && show) {
+        show()
+    }
+}

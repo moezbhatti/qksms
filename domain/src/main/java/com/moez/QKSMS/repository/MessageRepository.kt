@@ -18,6 +18,7 @@
  */
 package com.moez.QKSMS.repository
 
+import android.net.Uri
 import com.moez.QKSMS.model.Attachment
 import com.moez.QKSMS.model.Message
 import com.moez.QKSMS.model.MmsPart
@@ -40,7 +41,7 @@ interface MessageRepository {
 
     fun getPartsForConversation(threadId: Long): RealmResults<MmsPart>
 
-    fun savePart(id: Long): File?
+    fun savePart(id: Long): Uri?
 
     /**
      * Retrieves the list of messages which should be shown in the notification

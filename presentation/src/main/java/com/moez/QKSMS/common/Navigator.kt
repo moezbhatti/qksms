@@ -260,25 +260,31 @@ class Navigator @Inject constructor(
         startActivityExternal(intent)
     }
 
-    fun viewFile(file: File) {
-        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
+    fun viewFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_VIEW)
-                .setDataAndType(data, type)
+                .setDataAndType(uri, mimeType.lowercase())
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .let { Intent.createChooser(it, null) }
 
         startActivityExternal(intent)
     }
 
-    fun shareFile(file: File) {
-        val data = FileProvider.getUriForFile(context, "${context.packageName}.fileprovider", file)
-        val type = MimeTypeMap.getSingleton().getMimeTypeFromExtension(file.name.split(".").last())
+    fun shareFile(uri: Uri, mimeType: String) {
         val intent = Intent(Intent.ACTION_SEND)
-                .setType(type)
-                .putExtra(Intent.EXTRA_STREAM, data)
+                .setType(mimeType.lowercase())
+                .putExtra(Intent.EXTRA_STREAM, uri)
                 .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+                .let { Intent.createChooser(it, null) }
 
         startActivityExternal(intent)
+    }
+
+    fun showPermissions() {
+        val intent = Intent()
+        intent.action = Settings.ACTION_APPLICATION_DETAILS_SETTINGS
+        intent.data = Uri.fromParts("package", context.packageName, null)
+
+        startActivity(intent)
     }
 
     fun showNotificationSettings(threadId: Long = 0) {
@@ -297,6 +303,14 @@ class Navigator @Inject constructor(
             val intent = Intent(Settings.ACTION_CHANNEL_NOTIFICATION_SETTINGS)
                     .putExtra(Settings.EXTRA_CHANNEL_ID, channelId)
                     .putExtra(Settings.EXTRA_APP_PACKAGE, context.packageName)
+            startActivity(intent)
+        }
+    }
+
+    fun showExactAlarmsSettings() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.S) {
+            val intent = Intent(Settings.ACTION_REQUEST_SCHEDULE_EXACT_ALARM)
+                    .setData(Uri.parse("package:${context.packageName}"))
             startActivity(intent)
         }
     }

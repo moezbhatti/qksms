@@ -35,7 +35,6 @@ import com.moez.QKSMS.util.GlideApp
 import com.moez.QKSMS.util.tryOrNull
 import javax.inject.Inject
 
-@RequiresApi(Build.VERSION_CODES.M)
 class QkChooserTargetService : ChooserTargetService() {
 
     @Inject lateinit var conversationRepo: ConversationRepository

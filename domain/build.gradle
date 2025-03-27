@@ -23,7 +23,7 @@ apply plugin: 'kotlin-android-extensions'
 apply plugin: 'kotlin-kapt'
 
 android {
-    compileSdkVersion 29
+    compileSdkVersion 33
 
     compileOptions {
         sourceCompatibility 1.8
@@ -31,12 +31,15 @@ android {
     }
 
     defaultConfig {
-        minSdkVersion 21
-        targetSdkVersion 29
+        minSdkVersion 23
+        targetSdkVersion 33
     }
+    namespace 'com.moez.QKSMS.domain'
 }
 
 dependencies {
+    // androidx
+    implementation "androidx.documentfile:documentfile:$androidx_documentfile_version"
 
     // dagger
     implementation "com.google.dagger:dagger:$dagger_version"
@@ -62,8 +65,4 @@ dependencies {
     implementation "com.jakewharton.timber:timber:$timber_version"
     implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     implementation project(":common")
-}
-
-repositories {
-    mavenCentral()
 }

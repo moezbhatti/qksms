@@ -4,7 +4,7 @@ jobs:
   build:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-29
+      - image: cimg/android:2022.12.1
     steps:
       - checkout
       - restore_cache:
@@ -36,7 +36,7 @@ jobs:
   test:
     working_directory: ~/code
     docker:
-      - image: circleci/android:api-29
+      - image: cimg/android:2022.12.1
     steps:
       - checkout
       - restore_cache:

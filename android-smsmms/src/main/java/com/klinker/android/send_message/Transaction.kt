@@ -101,7 +101,7 @@ class Transaction @JvmOverloads constructor(private val context: Context, settin
 
             sentIntent.putExtra(EXTRA_CONTENT_URI, messageUri.toString())
             sentIntent.putExtra(EXTRA_FILE_PATH, sendFile.path)
-            val sentPI = PendingIntent.getBroadcast(context, 0, sentIntent, PendingIntent.FLAG_CANCEL_CURRENT)
+            val sentPI = PendingIntent.getBroadcast(context, 0, sentIntent, PendingIntent.FLAG_CANCEL_CURRENT or PendingIntent.FLAG_IMMUTABLE)
 
             val updatedIntent = Intent(MMS_UPDATED).putExtra("uri", messageUri.toString())
             BroadcastUtils.addClassName(context, updatedIntent, MMS_UPDATED)

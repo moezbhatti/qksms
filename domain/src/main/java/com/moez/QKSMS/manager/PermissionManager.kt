@@ -28,10 +28,14 @@ interface PermissionManager {
 
     fun hasContacts(): Boolean
 
+    fun hasNotifications(): Boolean
+
     fun hasPhone(): Boolean
 
     fun hasCalling(): Boolean
 
     fun hasStorage(): Boolean
+
+    fun hasExactAlarms(): Boolean
 
 }

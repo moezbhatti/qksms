@@ -551,15 +551,11 @@ public class MmsConfig {
             final TelephonyManager telephonyManager = (TelephonyManager) context.getSystemService(
                     Context.TELEPHONY_SERVICE);
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            try {
+                Method method = telephonyManager.getClass().getMethod("getLine1NumberForSubscriber", int.class);
+                return (String) method.invoke(telephonyManager, subId);
+            } catch (Exception e) {
                 return telephonyManager.getLine1Number();
-            } else {
-                try {
-                    Method method = telephonyManager.getClass().getMethod("getLine1NumberForSubscriber", int.class);
-                    return (String) method.invoke(telephonyManager, subId);
-                } catch (Exception e) {
-                    return telephonyManager.getLine1Number();
-                }
             }
         }
 
@@ -581,16 +577,12 @@ public class MmsConfig {
 
             String nai = "";
 
-            if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP_MR1) {
+            try {
+                Method method = telephonyManager.getClass().getMethod("getNai", int.class);
+                Method getSlotId = SubscriptionManager.class.getMethod("getSlotId", int.class);
+                nai = (String) method.invoke(telephonyManager, getSlotId.invoke(null, subId));
+            } catch (Exception e) {
                 nai = SystemPropertiesProxy.get(context, "persist.radio.cdma.nai");
-            } else {
-                try {
-                    Method method = telephonyManager.getClass().getMethod("getNai", int.class);
-                    Method getSlotId = SubscriptionManager.class.getMethod("getSlotId", int.class);
-                    nai = (String) method.invoke(telephonyManager, getSlotId.invoke(null, subId));
-                } catch (Exception e) {
-                    nai = SystemPropertiesProxy.get(context, "persist.radio.cdma.nai");
-                }
             }
 
             Timber.v("MmsConfig.getNai: nai=" + nai);

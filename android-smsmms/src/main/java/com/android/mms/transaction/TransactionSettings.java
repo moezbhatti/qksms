@@ -35,17 +35,6 @@ public class TransactionSettings {
     private String mProxyAddress;
     private int mProxyPort = -1;
 
-    private static final String[] APN_PROJECTION = {
-            Telephony.Carriers.TYPE,            // 0
-            Telephony.Carriers.MMSC,            // 1
-            Telephony.Carriers.MMSPROXY,        // 2
-            Telephony.Carriers.MMSPORT          // 3
-    };
-    private static final int COLUMN_TYPE         = 0;
-    private static final int COLUMN_MMSC         = 1;
-    private static final int COLUMN_MMSPROXY     = 2;
-    private static final int COLUMN_MMSPORT      = 3;
-
     /**
      * Constructor that uses the default settings of the MMS Client.
      *
@@ -53,29 +42,6 @@ public class TransactionSettings {
      */
     public TransactionSettings(Context context, String apnName) {
         Timber.v("TransactionSettings: apnName: " + apnName);
-//        String selection = "current" + " IS NOT NULL";
-//        String[] selectionArgs = null;
-//        if (!TextUtils.isEmpty(apnName)) {
-//            selection += " AND " + "apn" + "=?";
-//            selectionArgs = new String[]{ apnName.trim() };
-//        }
-//
-//        Cursor cursor;
-//
-//        try {
-//            cursor = SqliteWrapper.query(context, context.getContentResolver(),
-//                                Telephony.Carriers.CONTENT_URI,
-//                                APN_PROJECTION, selection, selectionArgs, null);
-//
-//                Timber.v("TransactionSettings looking for apn: " + selection + " returned: " +
-//                        (cursor == null ? "null cursor" : (cursor.getCount() + " hits")));
-//        } catch (SecurityException e) {
-//            Timber.e(e, "exception thrown");
-//            cursor = null;
-//        }
-//
-//        if (cursor == null) {
-//            Timber.e("Apn is not found in Database!");
         if (Transaction.Companion.getSettings() == null) {
             Transaction.Companion.setSettings(Utils.getDefaultSendSettings(context));
         }
@@ -109,46 +75,6 @@ public class TransactionSettings {
                 Timber.e(e, "could not get proxy: " + Transaction.Companion.getSettings().getPort());
             }
         }
-//        }
-
-//        boolean sawValidApn = false;
-//        try {
-//            while (cursor.moveToNext() && TextUtils.isEmpty(mServiceCenter)) {
-//                // Read values from APN settings
-//                if (isValidApnType(cursor.getString(COLUMN_TYPE), "mms")) {
-//                    sawValidApn = true;
-//
-//                    String mmsc = cursor.getString(COLUMN_MMSC);
-//                    if (mmsc == null) {
-//                        continue;
-//                    }
-//
-//                    mServiceCenter = NetworkUtils.trimV4AddrZeros(mmsc.trim());
-//                    mProxyAddress = NetworkUtils.trimV4AddrZeros(
-//                            cursor.getString(COLUMN_MMSPROXY));
-//                    if (isProxySet()) {
-//                        String portString = cursor.getString(COLUMN_MMSPORT);
-//                        try {
-//                            mProxyPort = Integer.parseInt(portString);
-//                        } catch (NumberFormatException e) {
-//                            if (TextUtils.isEmpty(portString)) {
-//                                Timber.w("mms port not set!");
-//                            } else {
-//                                Timber.e(e, "Bad port number format: " + portString);
-//                            }
-//                        }
-//                    }
-//                }
-//            }
-//        } finally {
-//            cursor.close();
-//        }
-//
-//        Timber.v("APN setting: MMSC: " + mServiceCenter + " looked for: " + selection);
-//
-//        if (sawValidApn && TextUtils.isEmpty(mServiceCenter)) {
-//            Timber.e("Invalid APN setting: MMSC is empty");
-//        }
     }
 
     /**
@@ -186,17 +112,4 @@ public class TransactionSettings {
         return (mProxyAddress != null) && (mProxyAddress.trim().length() != 0);
     }
 
-    static private boolean isValidApnType(String types, String requestType) {
-        // If APN type is unspecified, assume APN_TYPE_ALL.
-        if (TextUtils.isEmpty(types)) {
-            return true;
-        }
-
-        for (String t : types.split(",")) {
-            if (t.equals(requestType) || t.equals("*")) {
-                return true;
-            }
-        }
-        return false;
-    }
 }

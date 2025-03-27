@@ -17,20 +17,21 @@
   ~ You should have received a copy of the GNU General Public License
   ~ along with QKSMS.  If not, see <http://www.gnu.org/licenses/>.
   -->
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.moez.QKSMS">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.CALL_PHONE" />
     <!-- Used for starting foreground service for backup/restore on Android P+ -->
     <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.POST_NOTIFICATIONS"/>
     <uses-permission android:name="android.permission.READ_CONTACTS" />
     <uses-permission android:name="android.permission.READ_SMS" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.RECEIVE_MMS" />
     <uses-permission android:name="android.permission.RECEIVE_SMS" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
     <uses-permission android:name="android.permission.SEND_SMS" />
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
@@ -48,6 +49,7 @@
 
         <activity
             android:name=".feature.main.MainActivity"
+            android:exported="true"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -59,6 +61,7 @@
         </activity>
         <activity
             android:name=".feature.compose.ComposeActivity"
+            android:exported="true"
             android:parentActivityName=".feature.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
@@ -118,12 +121,16 @@
         <activity android:name=".feature.backup.BackupActivity" />
         <activity android:name=".feature.contacts.ContactsActivity" />
 
-        <receiver android:name=".receiver.BootReceiver">
+        <receiver
+            android:name=".receiver.BootReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-        <receiver android:name=".receiver.DefaultSmsChangedReceiver">
+        <receiver
+            android:name=".receiver.DefaultSmsChangedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.action.DEFAULT_SMS_PACKAGE_CHANGED" />
             </intent-filter>
@@ -131,6 +138,7 @@
         <receiver android:name=".receiver.DeleteMessagesReceiver" />
         <receiver
             android:name=".receiver.SmsReceiver"
+            android:exported="true"
             android:permission="android.permission.BROADCAST_SMS">
             <intent-filter>
                 <action android:name="android.provider.Telephony.SMS_DELIVER" />
@@ -138,6 +146,7 @@
         </receiver>
         <receiver
             android:name=".receiver.MmsReceiver"
+            android:exported="true"
             android:permission="android.permission.BROADCAST_WAP_PUSH">
             <intent-filter>
                 <action android:name="android.provider.Telephony.WAP_PUSH_DELIVER" />
@@ -161,13 +170,18 @@
         <receiver android:name=".receiver.MarkReadReceiver" />
         <receiver android:name=".receiver.RemoteMessagingReceiver" />
         <receiver android:name=".receiver.NightModeReceiver" />
-        <receiver android:name=".receiver.SmsProviderChangedReceiver">
+        <receiver
+            android:name=".receiver.SmsProviderChangedReceiver"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.provider.action.EXTERNAL_PROVIDER_CHANGE" />
             </intent-filter>
         </receiver>
+
         <receiver android:name=".receiver.SendScheduledMessageReceiver" />
-        <receiver android:name=".feature.widget.WidgetProvider">
+        <receiver
+            android:name=".feature.widget.WidgetProvider"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
                 <action android:name="com.moez.QKSMS.intent.action.ACTION_NOTIFY_DATASET_CHANGED" />
@@ -184,6 +198,7 @@
         <service
             android:name=".feature.widget.WidgetService"
             android:permission="android.permission.BIND_REMOTEVIEWS" />
+
         <service
             android:name=".service.AutoDeleteService"
             android:permission="android.permission.BIND_JOB_SERVICE" />
@@ -201,8 +216,10 @@
                 <data android:scheme="mmsto" />
             </intent-filter>
         </service>
+
         <service
             android:name=".common.util.QkChooserTargetService"
+            android:exported="false"
             android:label="@string/app_name"
             android:permission="android.permission.BIND_CHOOSER_TARGET_SERVICE">
             <intent-filter>
@@ -228,5 +245,13 @@
         </provider>
 
     </application>
+
+    <queries>
+        <package android:name="com.cuiet.blockCalls" />
+        <package android:name="com.flexaspect.android.everycallcontrol" />
+        <package android:name="org.mistergroup.muzutozvednout" />
+        <package android:name="org.mistergroup.shouldianswer" />
+        <package android:name="org.mistergroup.shouldianswerpersonal" />
+    </queries>
 
 </manifest>

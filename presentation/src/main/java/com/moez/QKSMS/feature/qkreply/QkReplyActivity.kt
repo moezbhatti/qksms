@@ -74,15 +74,6 @@ class QkReplyActivity : QkThemedActivity(), QkReplyView {
         messages.adapter?.registerAdapterDataObserver(object : RecyclerView.AdapterDataObserver() {
             override fun onChanged() = messages.scrollToPosition(adapter.itemCount - 1)
         })
-
-        // These theme attributes don't apply themselves on API 21
-        if (Build.VERSION.SDK_INT <= 22) {
-            toolbar.setBackgroundTint(resolveThemeColor(R.attr.colorPrimary))
-            background.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
-            messageBackground.setBackgroundTint(resolveThemeColor(R.attr.bubbleColor))
-            composeBackgroundGradient.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
-            composeBackgroundSolid.setBackgroundTint(resolveThemeColor(android.R.attr.windowBackground))
-        }
     }
 
     override fun render(state: QkReplyState) {
